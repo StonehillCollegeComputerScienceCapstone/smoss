@@ -1,9 +1,5 @@
 class TriangleMNA:
 
-    a = 0
-    b = 0
-    c = 0
-
     def display(self):
         print ("Displays the sides of the triangle")
 
@@ -19,7 +15,15 @@ class TriangleMNA:
     def isEquilateral(self, a, b, c):
         return False
 
+    def isValidTriangle(self, a, b, c):
+        return False
+
 def main():
-    print ("Hello World!")
+    print('Enter three integers:')
+    a = input()
+    b = input()
+    c = input()
+    t = TriangleMNA()
+    t.isValidInput(a, b, c)
 
 if __name__ == '__main__': main()

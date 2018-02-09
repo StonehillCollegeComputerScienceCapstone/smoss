@@ -1,56 +1,81 @@
 import unittest
-import TriangleMNA
+from TriangleMNA import TriangleMNA
 
 class TriangleUnitTestMNA(unittest.TestCase):
 
     # Tests if all input values are ints
     def test_isValidInput(self):
-        self.assertTrue(TriangleMNA.isValidInput(1, 1, 1))
+        t = TriangleMNA()
+        self.assertTrue(t.isValidInput(1, 1, 1))
 
     # Tests if all input values are not strings
     def test_isStringInput(self):
-        self.assertFalse(TriangleMNA.isValidInput('hello', 'world', 'string'))
-        self.assertFalse(TriangleMNA.isValidInput(' ', ' ', ' '))
+        t = TriangleMNA()
+        self.assertFalse(t.isValidInput('hello', 'world', 'string'))
+        self.assertFalse(t.isValidInput(' ', ' ', ' '))
 
     # Tests if all input values are not doubles
     def test_isDoubleInput(self):
-        self.assertFalse(TriangleMNA.isValidInput(3.14, 2.718, 0.5))
+        t = TriangleMNA()
+        self.assertFalse(t.isValidInput(3.14, 2.718, 0.5))
 
     # Tests if all input values are not strings
     def test_isNoneInput(self):
-        self.assertFalse(TriangleMNA.isValidInput(None, None, None))
+        t = TriangleMNA()
+        self.assertFalse(t.isValidInput(None, None, None))
+        self.assertFalse(t.isValidInput(1, None, None))
+        self.assertFalse(t.isValidInput(None, 1, None))
+        self.assertFalse(t.isValidInput(None, None, 1))
+        self.assertFalse(t.isValidInput(1, 1, None))
+        self.assertFalse(t.isValidInput(None, 1, 1))
+        self.assertFalse(t.isValidInput(1, None, 1))
 
     # Tests if all input values are not negative
     def test_isNegativeInput(self):
-        self.assertFalse(TriangleMNA.isValidInput(-1, -2, -3))
+        t = TriangleMNA()
+        self.assertFalse(t.isValidInput(-1, -2, -3))
 
     # Tests if all input values are not zero
     def test_isZeroInput(self):
-        self.assertFalse(TriangleMNA.isValidInput(0, 0, 0))
+        t = TriangleMNA()
+        self.assertFalse(t.isValidInput(0, 0, 0))
 
     # Tests if all input values are different
     def test_isScalene(self):
-        self.assertTrue(TriangleMNA.isScalene(2, 3, 4))
+        t = TriangleMNA()
+        self.assertTrue(t.isScalene(2, 3, 4))
+        self.assertFalse(t.isScalene(2, 2, 3))
+        self.assertFalse(t.isScalene(2, 3, 2))
+        self.assertFalse(t.isScalene(3, 2, 2))
+        self.assertFalse(t.isScalene(1, 1, 1))
 
     # Tests if any two input values are the same
     def test_isIsosceles(self):
-        self.assertTrue(TriangleMNA.isIsosceles(2, 2, 3))
-        self.assertTrue(TriangleMNA.isIsosceles(2, 3, 2))
-        self.assertTrue(TriangleMNA.isIsosceles(3, 2, 2))
+        t = TriangleMNA()
+        self.assertTrue(t.isIsosceles(2, 2, 3))
+        self.assertTrue(t.isIsosceles(2, 3, 2))
+        self.assertTrue(t.isIsosceles(3, 2, 2))
+        self.assertFalse(t.isIsosceles(2, 3, 4))
+        self.assertFalse(t.isIsosceles(1, 1, 1))
 
     # Tests if all input values are the same
     def test_isEquilateral(self):
-        self.assertTrue(TriangleMNA.isEquilateral(1, 1, 1))
+        t = TriangleMNA()
+        self.assertTrue(t.isEquilateral(1, 1, 1))
+        self.assertFalse(t.isEquilateral(2, 3, 4))
+        self.assertFalse(t.isEquilateral(2, 2, 3))
+        self.assertFalse(t.isEquilateral(2, 3, 2))
+        self.assertFalse(t.isEquilateral(3, 2, 2))
 
     # Triangle inequality theorem
     def test_isValidTriangle(self):
-        self.assertFalse(TriangleMNA.isValidTriangle(2, 1, 1))
-        self.assertFalse(TriangleMNA.isValidTriangle(1, 2, 1))
-        self.assertFalse(TriangleMNA.isValidTriangle(1, 1, 2))
-        self.assertFalse(TriangleMNA.isValidTriangle(3, 1, 1))
-        self.assertFalse(TriangleMNA.isValidTriangle(1, 3, 1))
-        self.assertFalse(TriangleMNA.isValidTriangle(1, 1, 3))
-
+        t = TriangleMNA()
+        self.assertTrue(t.isValidTriangle(3, 2, 2))
+        self.assertTrue(t.isValidTriangle(2, 3, 2))
+        self.assertTrue(t.isValidTriangle(2, 2, 3))
+        self.assertFalse(t.isValidTriangle(3, 1, 1))
+        self.assertFalse(t.isValidTriangle(1, 3, 1))
+        self.assertFalse(t.isValidTriangle(1, 1, 3))
 
 if __name__ == '__main__':
     unittest.main()
