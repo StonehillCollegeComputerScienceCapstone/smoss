@@ -27,17 +27,52 @@ class TriangleMMNV:
 
 
 
+
+
+
     def isScalene(self, a, b, c):
-        return False
+        testAB = a is not b
+        testBC = b is not c
+        testCA = c is not a
+
+        return testAB and testBC and testCA
+
+
+
+
+
 
     def isIsosceles(self, a, b, c):
-        return False
+        AB = a is b
+        BC = b is c
+        CA = c is a
+        ABC = a is b is c
+
+        return (AB or BC or CA) and not ABC
+
+
+
+
+
+
 
     def isEquilateral(self, a, b, c):
-        return False
+        testAB = a is b
+        testBC = b is c
+        testCA = c is a
+
+        return testAB and testBC and testCA
+
+
+
+
+
 
     def isValidTriangle (self, a, b, c):
         return False
+
+
+
 
 
 def main ():
