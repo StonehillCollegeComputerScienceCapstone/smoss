@@ -69,7 +69,11 @@ class TriangleMMNV:
 
 
     def isValidTriangle (self, a, b, c):
-        return False
+        GT_c = (a + b) > c
+        GT_a = (b + c) > a
+        GT_b = (a + c) > b
+
+        return GT_a and GT_b and GT_c
 
 
 
