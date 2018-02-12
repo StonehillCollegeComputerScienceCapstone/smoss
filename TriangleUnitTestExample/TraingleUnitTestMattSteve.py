@@ -1,7 +1,7 @@
 #MAtt Peters, Steve MacSwain
 import unittest
 import sys
-from TriangleUnitTestExample.TriangleMattSteve import Triangle
+from TriangleMattSteve import Triangle
 
 class TestTriangleMethods(unittest.TestCase):
 

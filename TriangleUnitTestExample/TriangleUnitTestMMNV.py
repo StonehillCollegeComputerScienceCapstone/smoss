@@ -2,7 +2,7 @@
 #!/usr/bin/python3
 
 import unittest
-from TriangleUnitTestExample.TriangleMMNV import TriangleMMNV
+from TriangleMMNV import TriangleMMNV
 
 class TriangleUnitTestMMNV (unittest.TestCase):
 
