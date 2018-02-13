@@ -1,7 +1,7 @@
 import unittest
 import math
 import sys
-from TriangleUnitTestExample.SamNickTriangle import SamNickTriangle
+from SamNickTriangle import SamNickTriangle
 
 class SamNickTriangleTest(unittest.TestCase):
     def test_valid_int(self):
