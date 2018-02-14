@@ -24,8 +24,6 @@ class MossURLsTests(unittest.TestCase):
     def test_invalidHTML(self):
         self.assertFalse(self.MossURLsData.parseHTML("")) #NEED SOME SORT OF BAD HTML
 
-
-
     def tearDown(self):
         self.MossURLsData = None
 
