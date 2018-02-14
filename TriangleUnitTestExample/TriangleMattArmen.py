@@ -18,11 +18,13 @@ class TriangleMattArmen:
         return True
 
     def isIsosceles(self, a, b, c):
-        if ((a != b) and (a != c) and (b != c)):
-            return False
-        return True
+        if ((a == b and a != c) or (a == c and a != b) or (b == c and b != a)):
+            return True
+        return False
 
     def isEquilateral(self, a, b, c):
+        if ((a == b) and (b == c) and (a == c)):
+            return True
         return False
 
     def isValidTriangle(self, a, b, c):
