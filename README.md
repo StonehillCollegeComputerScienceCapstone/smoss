@@ -17,7 +17,7 @@ Sam Bradford
 * Armen Andonian
 * Will Greelish
 * Nikolay Lisichenok
-* Stephen McSwain
+* Stephen MacSwain
 * Victoria Moeckel
 * Matthew Peters
 * Matthew Young  
