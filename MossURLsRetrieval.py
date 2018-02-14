@@ -1,8 +1,6 @@
 from Result import Result
 import urllib
 import urllib.request, urllib.error
-import html.parser
-import sys
 
 class MossURLsRetrieval:
     def __init__(self):
