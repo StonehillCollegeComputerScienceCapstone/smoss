@@ -1,7 +1,7 @@
 #Class MossParser
 #This class is designed to take a url as input and creates a csv file of results from MOSS in the same directory
 #as this program
-
+import validators
 
 class MossParser:
 
@@ -19,7 +19,8 @@ class MossParser:
         #-> csvStrings = processTableStrings(tableStrings)
 
         #Create, save, and close the csv file
-
+    def testUrl(self,urlArg):
+        return validators.url(urlArg)
 
 
 
