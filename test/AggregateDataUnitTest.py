@@ -48,13 +48,6 @@ class MyTestCase(unittest.TestCase):
 
 
 
-
-
-
-
-
-
-
     def test_validAveragePercentUpper(self):
         ag = AggregateData()
         jsonObject = {}
