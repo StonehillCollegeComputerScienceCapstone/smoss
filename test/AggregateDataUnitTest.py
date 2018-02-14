@@ -1,33 +1,59 @@
 import unittest
-import json
+from Result import Result
 from AggregateData import AggregateData
 
 
 class MyTestCase(unittest.TestCase):
-    def test_sixFields(self):
-        jsonObject = {}
-        ag = AggregateData()
 
-        self.assertTrue(ag.isValid(jsonObject))
-        self.assertFalse(ag.isValid(jsonObject))
-
-    def test_isJSON(self):
-        array = []
-        x = 10
-        s = "Hello"
-        jsonObject = {}
+    def test_isValidArray(self):
+        results = []
+        result1 = Result(1, "file1", "file2", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
+        result2 = Result(2, "file1", "file2", "http://moss.stanford.edu/results/299782670/", 50, 10, 5)
+        results.append(result1)
+        results.append(result2)
 
         ag = AggregateData()
-        self.assertFalse(ag.isValid(array))
-        self.assertFalse(ag.isValid(x))
-        self.assertFalse(ag.isValid(s))
-        self.assertTrue(ag.isValid(jsonObject))
 
-    def test_averagePercent(self):
+        self.assertTrue(ag.isValid(results))
+
+    def test_isEmptyArray(self):
+        results = []
         ag = AggregateData()
-        jsonObject = {}
-        self.assertEqual(ag.calculateAveragePercent(jsonObject), 10)
-        self.assertNotEqual(ag.calculateAveragePercent(jsonObject), 3)
+        self.assertFalse(ag.isValid(results))
+
+    def test_averagePercentArrayEmpty(self):
+        ag = AggregateData()
+        percents = []
+        self.assertFalse(ag.percentsValid(percents))
+
+    def test_averagePercentArrayExists(self):
+        ag = AggregateData()
+        percents = [1, 2, 3]
+        self.assertTrue(ag.percentsValid(percents)
+
+    # Percents should be only numbers
+    # Percents should be only positive
+
+    def test_averagePercentRoundUp(self):
+        ag = AggregateData()
+        percents = [55, 28, 90, 70]
+        self.assertEqual(ag.calculateAveragePercent(percents), 61)
+
+    def test_averagePercentRoundDown(self):
+        ag = AggregateData()
+        percents = [55, 28, 90, 70, 73]
+        self.assertEqual(ag.calculateAveragePercent(percents), 63)
+
+
+
+
+
+
+
+
+
+
+
 
     def test_validAveragePercentUpper(self):
         ag = AggregateData()

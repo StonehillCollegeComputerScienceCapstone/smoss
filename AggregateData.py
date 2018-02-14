@@ -5,6 +5,9 @@ class AggregateData:
     def isValid(self, object):
         return False
 
+    def percentsValid(self, percents):
+        return False
+
     def calculateAveragePercent(self, object):
         sum = 0
         average = -1
@@ -28,9 +31,8 @@ class AggregateData:
         return {}
 
 def main():
-    object = {}
-    json_object = json.dumps(object)
-
-    print(type(json_object))
+    array = [3, 2]
+    if array:
+        print("Array exists")
 
 if __name__ == '__main__': main()
