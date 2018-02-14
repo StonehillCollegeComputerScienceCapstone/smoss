@@ -20,7 +20,7 @@ class MossParserUnitTest(unittest.TestCase):
             mystr = mybytes.decode("utf8")
             fp.close()
 
-            self.assertTrue(mp.getHtml("http://www.python.org") = mystr)
+            self.assertTrue(mp.getHtml("http://www.python.org") == mystr)
 
 
     #Test the processing of a valid html file into a list of table element strings
