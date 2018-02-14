@@ -3,9 +3,9 @@ import csv
 class SortResults:
 
     def __init__(self):
-        #CSV input file name
+        # CSV input file name
         self.inputFileName = "MOSSinput.csv"
-        #Lists that hold the csv information
+        # Lists that hold the csv information
         self.user1 = []
         self.user2 = []
         self.fileName1 = []
@@ -14,11 +14,11 @@ class SortResults:
         self.match2 = []
         self.linesMatched = []
         self.URL = []
-        #Main list that holds dictionaries in the format
-        #("CSV column title", value)
+        # Main list that holds dictionaries in the format
+        # ("CSV column title", value)
         self.MOSSresults = []
 
-    #Checks to make sure there is a csv file
+    # Checks to make sure there is a csv file
     def isValidFilename(self):
         if len(self.inputFileName) <= 5:
             return False
@@ -27,7 +27,7 @@ class SortResults:
             return True
         return False
 
-    #Creates a list from the csv file
+    # Creates a list from the csv file
     def createMainList(self):
         with open(self.inputFileName) as f:
             inputFile = csv.DictReader(f)
@@ -40,10 +40,10 @@ class SortResults:
         else:
             return False
 
-    #Parses the main list into individual category lists
+    # Parses the main list into individual category lists
     def createCategoryLists(self):
         for dict in self.MOSSresults:
-            for key,value in dict.items():
+            for key, value in dict.items():
                 if key == "User1":
                     self.user1.append(value.rstrip())
                 if key == "User2":
@@ -60,5 +60,23 @@ class SortResults:
                     self.linesMatched.append(value.rstrip())
                 if key == "URL":
                     self.URL.append(value)
+
+    def isValidStringList(self, listName):
+        for key in listName:
+            if key.isdigit():
+                return False
+        return True
+
+    def isValidMatchedList(self, listName):
+        for key in listName:
+            if not key.isdigit():
+                return False
+        return True
+
+    def isValidLength(self):
+        if len(self.user1) == len(self.user2) == len(self.match1) == len(self.match2) == len(self.URL) == len(self.linesMatched):
+            return True
+        else:
+            return False
 
 
