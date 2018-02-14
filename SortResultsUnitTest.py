@@ -93,7 +93,7 @@ class MyTestCase(unittest.TestCase):
         sr.match1.append("testString")
         self.assertFalse(sr.isValidMatchedList(sr.match1))
 
-    def testInvalidMatch1List(self):
+    def testValidMatch1List(self):
         sr = SortResults()
         sr.createMainList()
         sr.match1.append("3")
@@ -111,7 +111,7 @@ class MyTestCase(unittest.TestCase):
         sr.match2.append("testString")
         self.assertFalse(sr.isValidMatchedList(sr.match2))
 
-    def testInvalidMatch2List(self):
+    def testValidMatch2List(self):
         sr = SortResults()
         sr.createMainList()
         sr.match2.append("3")
@@ -147,7 +147,7 @@ class MyTestCase(unittest.TestCase):
         sr.URL.append("testString")
         self.assertTrue(sr.isValidStringList(sr.URL))
 
-    def testInvalidURLList(self):
+    def testValidURLList(self):
         sr = SortResults()
         sr.createMainList()
         sr.URL.append("3")
