@@ -20,3 +20,11 @@ class MossURLsTests(unittest.TestCase):
 
     def test_validHTML(self):
         self.assertTrue(self.MossURLsData.parseHTML("http://moss.stanford.edu/results/299782671/"))
+
+    def test_invalidHTML(self):
+        self.assertFalse(self.MossURLsData.parseHTML("")) #NEED SOME SORT OF BAD HTML
+
+
+
+    def tearDown(self):
+        self.MossURLsData = None

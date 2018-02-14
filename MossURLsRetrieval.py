@@ -1,9 +1,9 @@
-
+from Result import Result
 
 class MossURLsRetrieval:
     def __init__(self):
         self.urls = []
-        self.html = ""
+        self.Results = []
         #potentially a data variable?
 
     def getURL(self, url):
