@@ -16,9 +16,9 @@ class MossParserUnitTest(unittest.TestCase):
         def testValidURL(self):
             mp = MossParser()
             html = urllib.request.urlopen("http://www.python.org")
-            mybytes = fp.read()
+            mybytes = html.read()
             mystr = mybytes.decode("utf8")
-            fp.close()
+            html.close()
 
             self.assertTrue(mp.getHtml("http://www.python.org") == mystr)
 
