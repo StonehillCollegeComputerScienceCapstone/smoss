@@ -16,6 +16,7 @@ class MossURLsRetrieval:
         if ("moss.stanford.edu/results" not in url): #this can be changed by Stanford at any time
             return False
         if (url in self.urls): #URL already exists in list
+            print(url, " is duplicate")
             return False
         try:
             connection = urllib.request.urlopen(url)
@@ -26,15 +27,4 @@ class MossURLsRetrieval:
             print(e)
             return False
         self.urls.append(url)
-        return True
-
-    def gatherData(self):
-        for url in self.urls:
-            self.parseHTML(url)
-
-    def parseHTML(self, url):
-        #take url, send request for html
-        #take html, parse that it is correctly formated
-        #maybe break up the data?
-        #otherwise, append to html string
         return True
