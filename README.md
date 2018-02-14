@@ -15,7 +15,7 @@ Sam Bradford
 
 **Development Team:**  
 * Armen Andonian
-* Will Greelish
+* William Greelish
 * Nikolay Lisichenok
 * Stephen MacSwain
 * Victoria Moeckel

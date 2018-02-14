@@ -2,23 +2,32 @@ import json
 
 class AggregateData:
 
-    def display(self):
-        print ("Method example")
-
     def isValid(self, object):
         return False
 
     def calculateAveragePercent(self, object):
-        return -1
+        sum = 0
+        average = -1
+        count = 0
+        for x in object:
+            sum = sum + x.percent
+            count = count + 1
+
+        average = sum / count
+
+        return average
 
     def calculateTotalLines(self, object):
-        return -1
+        sum = 0
+        for x in object:
+            sum = sum + x.lines
+
+        return sum
 
     def generateJSON(self, object):
         return {}
 
 def main():
-    print('Main method')
     object = {}
     json_object = json.dumps(object)
 
