@@ -3,175 +3,147 @@ from SortResults import SortResults
 
 class MyTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.sr = SortResults();
+        self.sr.inputFileName = "MOSSresults.csv"
+
     def testValidInputFileLower(self):
-        sr = SortResults()
-        sr.inputFileName = "MOSSresults.csv"
-        self.assertTrue(sr.isValidFilename())
+        self.assertTrue(self.sr.isValidFilename())
 
     def testValidInputFileJustExtension(self):
-        sr = SortResults()
-        sr.inputFileName = ".csv"
-        self.assertFalse(sr.isValidFilename())
+        self.sr.inputFileName = ".csv"
+        self.assertFalse(self.sr.isValidFilename())
 
     def testValidInputFileUpper(self):
-        sr = SortResults()
-        sr.inputFileName = "MOSSresults.CSV"
-        self.assertTrue(sr.isValidFilename())
+        self.sr.inputFileName = "MOSSresults.CSV"
+        self.assertTrue(self.sr.isValidFilename())
 
     def testValidInputFileXLS(self):
-        sr = SortResults()
-        sr.inputFileName = "MOSSresults.XLS"
-        self.assertFalse(sr.isValidFilename())
+        self.sr.inputFileName = "MOSSresults.XLS"
+        self.assertFalse(self.sr.isValidFilename())
 
     def testValidInputFileXLSX(self):
-        sr = SortResults()
-        sr.inputFileName = "MOSSresults.XLSX"
-        self.assertFalse(sr.isValidFilename())
+        self.sr.inputFileName = "MOSSresults.XLSX"
+        self.assertFalse(self.sr.isValidFilename())
 
     def testMainList(self):
-        sr = SortResults()
-        sr.inputFileName = "MOSSinput.csv"
-        sr.createMainList()
-        self.assertEqual(3, len(sr.MOSSresults))
+        self.sr.createMainList()
+        self.assertEqual(3, len(self.sr.MOSSresults))
 
     def testMainListBadFile(self):
-        sr = SortResults()
-        sr.inputFileName = "MOSSinput.csv"
-        self.assertTrue(sr.createMainList())
+        self.assertTrue(self.sr.createMainList())
 
     def testUser1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.user1.append("testString")
-        self.assertTrue(sr.isValidStringList(sr.user1))
+        self.sr.createMainList()
+        self.sr.user1.append("testString")
+        self.assertTrue(self.sr.isValidStringList(self.sr.user1))
 
     def testInvalidUser1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.user1.append("3")
-        self.assertFalse(sr.isValidStringList(sr.user1))
+        self.sr.createMainList()
+        self.sr.user1.append("3")
+        self.assertFalse(self.sr.isValidStringList(self.sr.user1))
 
     def testUser2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.user2.append("testString")
-        self.assertTrue(sr.isValidStringList(sr.user2))
+        self.sr.createMainList()
+        self.sr.user2.append("testString")
+        self.assertTrue(self.sr.isValidStringList(self.sr.user2))
 
     def testInvalidUser2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.user2.append("3")
-        self.assertFalse(sr.isValidStringList(sr.user2))
+        self.sr.createMainList()
+        self.sr.user2.append("3")
+        self.assertFalse(self.sr.isValidStringList(self.sr.user2))
 
     def testFileName1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.fileName1.append("testString")
-        self.assertTrue(sr.isValidStringList(sr.fileName1))
+        self.sr.createMainList()
+        self.sr.fileName1.append("testString")
+        self.assertTrue(self.sr.isValidStringList(self.sr.fileName1))
 
     def testInvalidFileName1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.fileName1.append("3")
-        self.assertFalse(sr.isValidStringList(sr.fileName1))
+        self.sr.createMainList()
+        self.sr.fileName1.append("3")
+        self.assertFalse(self.sr.isValidStringList(self.sr.fileName1))
 
     def testFileName2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.fileName2.append("testString")
-        self.assertTrue(sr.isValidStringList(sr.fileName2))
+        self.sr.createMainList()
+        self.sr.fileName2.append("testString")
+        self.assertTrue(self.sr.isValidStringList(self.sr.fileName2))
 
     def testInvalidFileName2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.fileName2.append("3")
-        self.assertFalse(sr.isValidStringList(sr.fileName2))
+        self.sr.createMainList()
+        self.sr.fileName2.append("3")
+        self.assertFalse(self.sr.isValidStringList(self.sr.fileName2))
 
     def testMatch1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.match1.append("testString")
-        self.assertFalse(sr.isValidMatchedList(sr.match1))
+        self.sr.createMainList()
+        self.sr.match1.append("testString")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.match1))
 
     def testInvalidMatch1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.match1.append("3")
-        self.assertTrue(sr.isValidMatchedList(sr.match1))
+        self.sr.createMainList()
+        self.sr.match1.append("3")
+        self.assertTrue(self.sr.isValidMatchedList(self.sr.match1))
 
     def testInvalidMatch1List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.match1.append("3.0")
-        self.assertFalse(sr.isValidMatchedList(sr.match1))
+        self.sr.createMainList()
+        self.sr.match1.append("3.0")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.match1))
 
     def testMatch2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.match2.append("testString")
-        self.assertFalse(sr.isValidMatchedList(sr.match2))
+        self.sr.createMainList()
+        self.sr.match2.append("testString")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.match2))
 
     def testInvalidMatch2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.match2.append("3")
-        self.assertTrue(sr.isValidMatchedList(sr.match2))
+        self.sr.createMainList()
+        self.sr.match2.append("3")
+        self.assertTrue(self.sr.isValidMatchedList(self.sr.match2))
 
     def testInvalidMatch2List(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.match2.append("3.0")
-        self.assertFalse(sr.isValidMatchedList(sr.match2))
+        self.sr.createMainList()
+        self.sr.match2.append("3.0")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.match2))
 
     def testInvalidLinesMatchedList(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.linesMatched.append("testString")
-        self.assertFalse(sr.isValidMatchedList(sr.linesMatched))
+        self.sr.createMainList()
+        self.sr.linesMatched.append("testString")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.linesMatched))
 
     def testInvalidFloatLinesMatchedList(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.linesMatched.append("3.0")
-        self.assertFalse(sr.isValidMatchedList(sr.linesMatched))
+        self.sr.createMainList()
+        self.sr.linesMatched.append("3.0")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.linesMatched))
 
     def testLinesMatchedList(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.linesMatched.append("3")
-        self.assertTrue(sr.isValidMatchedList(sr.linesMatched))
+        self.sr.createMainList()
+        self.sr.linesMatched.append("3")
+        self.assertTrue(self.sr.isValidMatchedList(self.sr.linesMatched))
 
     def testURLList(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.URL.append("testString")
-        self.assertTrue(sr.isValidStringList(sr.URL))
+        self.sr.createMainList()
+        self.sr.URL.append("testString")
+        self.assertTrue(self.sr.isValidStringList(self.sr.URL))
 
     def testInvalidURLList(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.URL.append("3")
-        self.assertFalse(sr.isValidStringList(sr.URL))
+        self.sr.createMainList()
+        self.sr.URL.append("3")
+        self.assertFalse(self.sr.isValidStringList(self.sr.URL))
 
     def testInvalidURLList(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.URL.append("3")
-        self.assertFalse(sr.isValidStringList(sr.URL))
+        self.sr.createMainList()
+        self.sr.URL.append("3")
+        self.assertFalse(self.sr.isValidStringList(self.sr.URL))
 
     def testValidLength(self):
-        sr = SortResults()
-        sr.createMainList()
-        self.assertTrue(sr.isValidLength())
+        self.sr.createMainList()
+        self.assertTrue(self.sr.isValidLength())
 
     def testInvalidValidLength(self):
-        sr = SortResults()
-        sr.createMainList()
-        sr.user2.append("testString")
-        self.assertFalse(sr.isValidLength())
+        self.sr.createMainList()
+        self.sr.user2.append("testString")
+        self.assertFalse(self.sr.isValidLength())
 
-
-
+    def tearDown(self):
+        self.sr = None
 
     if __name__ == '__main__':
         unittest.main()
