@@ -44,10 +44,28 @@ class MyTestCase(unittest.TestCase):
         jsonObject = {}
         self.assertGreaterEqual(ag.calculateTotalLines(jsonObject), -1)
 
-    def test_isValidReturn(self):
+    def test_isValidReturnObject(self):
         ag = AggregateData()
         jsonObject = {}
         self.assertIsInstance(ag.generateJSON(jsonObject), json)
+
+    def test_isValidReturnNames(self):
+        ag = AggregateData()
+        jsonObject = {}
+        data = ag.generateJSON(jsonObject)
+        self.assertIsNotNone(data.names)
+
+    def test_isValidReturnPercentages(self):
+        ag = AggregateData()
+        jsonObject = {}
+        data = ag.generateJSON(jsonObject)
+        self.assertIsNotNone(data.percentages)
+
+    def test_isValidReturnAverages(self):
+        ag = AggregateData()
+        jsonObject = {}
+        data = ag.generateJSON(jsonObject)
+        self.assertIsNotNone(data.averages)
 
 
 if __name__ == '__main__':
