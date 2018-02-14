@@ -8,7 +8,6 @@ class MyTestCase(unittest.TestCase):
         self.sr.inputFileName = "MOSSresults.csv"
 
     def testValidInputFileLower(self):
-        self.sr.inputFileName = "MOSSresults.csv"
         self.assertTrue(self.sr.isValidFilename())
 
     def testValidInputFileJustExtension(self):
@@ -143,7 +142,8 @@ class MyTestCase(unittest.TestCase):
         self.sr.user2.append("testString")
         self.assertFalse(self.sr.isValidLength())
 
-
+    def tearDown(self):
+        self.sr = None
 
     if __name__ == '__main__':
         unittest.main()
