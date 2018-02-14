@@ -16,11 +16,11 @@ class MossParserUnitTest(unittest.TestCase):
         def testValidURL(self):
             mp = MossParser()
             html = urllib.request.urlopen("http://www.python.org")
-            mybytes = fp.read()
+            mybytes = html.read()
             mystr = mybytes.decode("utf8")
-            fp.close()
+            html.close()
 
-            self.assertTrue(mp.getHtml("http://www.python.org") = mystr)
+            self.assertTrue(mp.getHtml("http://www.python.org") == mystr)
 
 
     #Test the processing of a valid html file into a list of table element strings
@@ -55,39 +55,39 @@ class MossParserUnitTest(unittest.TestCase):
                                                      "43","10","http://moss.stanford.edu/results/299782671/match15.html"))
     #test for invalid MOSS result object- no user 1
 
-            def testInvalidMossResultUser1:
+            def testInvalidMossResultUser1():
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("", "squareroot26.java", "22", "Sally", "squareroot3.java",
                                                      "43", "10", "http://moss.stanford.edu/results/299782671/match15.html"))
 
-            def testInvalidMossResultUser2:
+            def testInvalidMossResultUser2():
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "squareroot26.java", "22", "", "squareroot3.java",
                                                      "43", "10", "http://moss.stanford.edu/results/299782671/match15.html"))
-            def testInvalidMossResultFile1:
+            def testInvalidMossResultFile1():
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "", "22", "Sally", "squareroot3.java",
                                                      "43", "10", "http://moss.stanford.edu/results/299782671/match15.html"))
-            def testInvalidMossResultFile2:
+            def testInvalidMossResultFile2():
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "squareroot26.java", "22", "Sally", "",
                                                      "43", "10", "http://moss.stanford.edu/results/299782671/match15.html"))
-            def testInvalidMossResultLines1:
+            def testInvalidMossResultLines1():
                 MP=MossParser()
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "squareroot26.java", "", "Sally", "squareroot3.java",
                                                      "43", "10", "http://moss.stanford.edu/results/299782671/match15.html"))
-            def testInvalidMossResultLines2:
+            def testInvalidMossResultLines2():
                 MP=MossParser()
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "squareroot26.java", "22", "Sally", "squareroot3.java",
                                                      "", "10", "http://moss.stanford.edu/results/299782671/match15.html"))
-            def testInvalidMossResultLinesMatched:
+            def testInvalidMossResultLinesMatched():
                 MP=MossParser()
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "squareroot26.java", "22", "Sally", "squareroot3.java",
                                                      "43", "", "http://moss.stanford.edu/results/299782671/match15.html"))
-            def testInvalidMossResultUrl:
+            def testInvalidMossResultUrl():
                 MP=MossParser()
                 mp = MossParser()
                 self.assertFalse(mp.isValidMossResult("Sally", "squareroot26.java", "22", "Sally", "squareroot3.java",
