@@ -1,6 +1,7 @@
 import unittest
 from MossURLsRetrieval import MossURLsRetrieval
 
+
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
         self.MossURLsData = MossURLsRetrieval()
