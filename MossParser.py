@@ -5,20 +5,20 @@
 
 class MossParser:
 
-    #Grab an input from the user
+    def main(self):
+        print ("need to work on class")
+        #If this is not a valid URL display error and exit
 
-    #If this is not a valid URL display error and exit
+        #get the html text from the URL
+        #-> html = getHtml(some_url)
 
-    #get the html text from the URL
-    #-> html = getHtml(some_url)
+        #Process the html into table strings
+        #-> tableStrings = processHtml(html)
 
-    #Process the html into table strings
-    #-> tableStrings = processHtml(html)
+        #Process the table strings into csv strings
+        #-> csvStrings = processTableStrings(tableStrings)
 
-    #Process the table strings into csv strings
-    #-> csvStrings = processTableStrings(tableStrings)
-
-    #Create, save, and close the csv file
+        #Create, save, and close the csv file
 
 
 
