@@ -1,4 +1,5 @@
 import unittest
+import urllib
 from MossParser import MossParser
 class MossParserUnitTest(unittest.TestCase):
 
@@ -222,7 +223,7 @@ class MossParserUnitTest(unittest.TestCase):
         def testInvalidHtmlProcessing(self):
             mp = MossParser()
 
-            self.assertFalse(["""<td><td><a href="http://moss.stanford.edu/results/299782671/match0.html">squareroot29.java (93%)</a>
+            self.assertNotEqual(["""<td><td><a href="http://moss.stanford.edu/results/299782671/match0.html">squareroot29.java (93%)</a>
         </td><td><a href="http://moss.stanford.edu/results/299782671/match0.html">squareroot36.java (80%)</a>
     </td><td align="right">38
     </td></tr>""",
@@ -419,16 +420,17 @@ class MossParserUnitTest(unittest.TestCase):
                             </td><td align="right">12
                             </td></tr>"""
 
-            testString = processTableString()
-            assertTrue(tableString == testString)
+            testString = mp.processTableString()
+            self.assertTrue(tableString == testString)
 
     #Test for invalid csvstrings being made from the processTableStrings method
         def testInvalidProcessTableString(self):
+            mp=MossParser()
             tableString = """"<tr><td><a href="http://moss.stanford.edu/results/322457013/match0.html">warmup36.java (94%)</a>
                             </td><td><a href="http://moss.stanford.edu/results/322457013/match0.html">warmup435.java (94%)</a>
                             </td></tr>"""
-            testString = processTableString()
-            assertFalse(tableString == testString)
+            testString = mp.processTableString()
+            self.assertFalse(tableString == testString)
 
 
     #test for valid Moss Result Object
