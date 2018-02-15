@@ -86,6 +86,8 @@ class MyTestCase(unittest.TestCase):
     def test_averagePercentCorrect(self):
         percents = [1, 2, 3]
         self.assertEqual(self.ag.average(percents), 2)
+        percents = [2, 2, 2]
+        self.assertEqual(self.ag.average(percents), 2)
 
     # Average should be an int
     def test_averagePercentReturnInt(self):
@@ -148,6 +150,10 @@ class MyTestCase(unittest.TestCase):
 
 #
 # getAggregateLines()
+#
+
+#
+# sort()
 #
 
 
