@@ -1,6 +1,7 @@
 import csv
 import webbrowser
 import os
+from flask import render_template
 
 class SortResults:
 
@@ -86,7 +87,12 @@ class SortResults:
         filename = os.path.join(dir, "MOSSoutput.html")
         webbrowser.open("file://" + filename, new=0)
 
+    def userList(self):
+        test=self.user1
+        return render_template("Mossoutput.html", test=test)
+
 sr = SortResults()
 sr.createMainList()
 sr.createCategoryLists()
 sr.renderWebpage()
+sr.userList()
