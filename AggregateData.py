@@ -1,34 +1,32 @@
-import json
-
 class AggregateData:
 
-    def isValid(self, object):
+    def validResults(self, results):
         return False
 
-    def percentsValid(self, percents):
+    def validArray(self, array):
         return False
 
-    def calculateAveragePercent(self, object):
+    def validPercents(self, percents):
+        return False
+
+    def averagePercent(self, percents):
         sum = 0
         average = -1
         count = 0
-        for x in object:
-            sum = sum + x.percent
+        for percent in percents:
+            sum = sum + percent
             count = count + 1
 
         average = sum / count
 
         return average
 
-    def calculateTotalLines(self, object):
+    def totalLines(self, lines):
         sum = 0
-        for x in object:
-            sum = sum + x.lines
+        for line in lines:
+            sum = sum + line
 
         return sum
-
-    def generateJSON(self, object):
-        return {}
 
 def main():
     array = [3, 2]
