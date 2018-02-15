@@ -1,4 +1,6 @@
 import csv
+import webbrowser
+import os
 
 class SortResults:
 
@@ -79,4 +81,12 @@ class SortResults:
         else:
             return False
 
+    def renderWebpage(self):
+        dir = os.path.dirname(__file__)
+        filename = os.path.join(dir, "MOSSoutput.html")
+        webbrowser.open("file://" + filename, new=0)
 
+sr = SortResults()
+sr.createMainList()
+sr.createCategoryLists()
+sr.renderWebpage()
