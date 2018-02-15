@@ -6,6 +6,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
+
 class SortResults:
 
     def __init__(self):
@@ -92,18 +93,20 @@ class SortResults:
         filename = os.path.join(dir, "MOSSoutput.html")
         webbrowser.open("file://" + filename, new=0)
 
+    def getUser1(self):
+        return self.user1[:]
+
     @app.route('/')
-    def userList(self):
-        test = self.user1
+    def userList():
+        test = ['Hello', 'World']
         test = json.dumps(test)
-        #dir = os.path.dirname(__file__)
-        #filename = os.path.join(dir, "/templates/MOSSoutput.html")
-        filename = "/templates/MOSSoutput.html"
+        dir = os.path.dirname(__file__)
+        filename = os.path.join(dir, "/templates/MOSSoutput.html")
+        filename = "/MOSSoutput.html"
         return render_template(filename, test=test)
 
-
-sr = SortResults()
-sr.createMainList()
-sr.createCategoryLists()
-#sr.renderWebpage()
-sr.userList()
+if __name__ == '__main__':
+    sr = SortResults()
+    sr.createMainList()
+    sr.createCategoryLists()
+    app.run(debug = True)
