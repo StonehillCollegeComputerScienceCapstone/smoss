@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>MOSS Output</title>
+
     <script>
-function myFunction() {
-    var number = "123";
-    document.getElementById("myText").innerHTML = number;
-}
-</script>
+        var counts = JSON.parse("{{ test }}");
+    </script>
+
+    <script>
+        function myFunction() {
+            var jsonStr = JSON.stringify(counts);
+            document.body.innerHTML = jsonStr;
+        }
+    </script>
 </head>
 <body onload="myFunction()">
 
