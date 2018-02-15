@@ -69,7 +69,7 @@ class SortResults:
 
     def isValidMatchedList(self, listName):
         for key in listName:
-            if not key.isdigit():
+            if not key.isdigit() or int(key) <= 0:
                 return False
         return True
 
