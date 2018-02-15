@@ -1,4 +1,10 @@
 import csv
+import webbrowser
+import os
+import json
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 class SortResults:
 
@@ -34,6 +40,8 @@ class SortResults:
             for row in inputFile:
                 self.MOSSresults.append(row)
         f.close()
+
+        print(self.MOSSresults)
 
         if len(self.MOSSresults) > 0:
             return True
@@ -79,4 +87,23 @@ class SortResults:
         else:
             return False
 
+    def renderWebpage(self):
+        dir = os.path.dirname(__file__)
+        filename = os.path.join(dir, "MOSSoutput.html")
+        webbrowser.open("file://" + filename, new=0)
 
+    @app.route('/')
+    def userList(self):
+        test = self.user1
+        test = json.dumps(test)
+        #dir = os.path.dirname(__file__)
+        #filename = os.path.join(dir, "/templates/MOSSoutput.html")
+        filename = "/templates/MOSSoutput.html"
+        return render_template(filename, test=test)
+
+
+sr = SortResults()
+sr.createMainList()
+sr.createCategoryLists()
+#sr.renderWebpage()
+sr.userList()
