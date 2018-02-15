@@ -31,6 +31,13 @@ class MossParser:
         #for now prompt user for input of url, maybe later make it argument passed in by command line or other means
         urlInput=input("Please enter the url: ")
         return urlInput
+
+    def writeToCsv(csvStrings):
+        f = open("csv.txt")
+        for item in csvStrings:
+            f.write(item + '\n')
+        f.close()
+
     def displayInvalidUrl(self):
         #when there is web functionality, redirect to page displaying error.
         #for now just display error message
@@ -45,6 +52,7 @@ class MossParser:
         except:
             #The url wasn't valid
             return False
+
     def processHtml(self,html):
         #parse until table
         htmlParser=myHtmlParser()
