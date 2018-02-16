@@ -14,3 +14,6 @@ class Aggregation:
 
     def set_data(self, data):
         self.data = data
+
+    def to_string(self):
+        return self.name + "\t" + self.data
