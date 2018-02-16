@@ -2,6 +2,7 @@
 # This class is designed to take a url as input and creates a csv file of results from MOSS in the same directory
 # as this program
 import urllib
+import urllib.request
 from html.parser import HTMLParser
 
 
@@ -107,15 +108,11 @@ class MossParser:
         tableString=tableString.replace(" ",", ")
         tableString=tableString.replace(" (","(")
         return tableString
-    def writeToCsv(self,csvStrings):
-        #stub
-        print("stub")
 class myHtmlParser (HTMLParser):
     tableString=""
     seenTable=False
     seenEndOfTable=False
     def handle_starttag(self, tag, attrs):
-        print("Encountered a start tag:", tag)
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString=self.tableString+tag+" "
             for attr in attrs:
@@ -126,17 +123,14 @@ class myHtmlParser (HTMLParser):
             self.seenTable=True
 
     def handle_endtag(self, tag):
-        print("Encountered an end tag :", tag)
         if(self.seenTable and (not self.seenEndOfTable)):
             if(tag=="table"):
                 self.seenEndOfTable=True
-                print("End of tableString")
             else:
                self.tableString=self.tableString+tag+" "
     def handle_data(self, data):
-        print("Encountered some data  :", data)
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-mp=MossParser()
-mp.main()
+# mp=MossParser()
+# mp.main()

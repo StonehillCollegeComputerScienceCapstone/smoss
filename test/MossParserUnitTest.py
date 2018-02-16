@@ -227,7 +227,7 @@ class MossParserUnitTest(unittest.TestCase):
 """<tr><td><a href="http://moss.stanford.edu/results/299782671/match46.html">squareroot2.java (29%)</a>
     </td><td><a href="http://moss.stanford.edu/results/299782671/match46.html">squareroot22.java (19%)</a>
 </td><td align="right">
-</td></tr>"""],mp.processHtml())
+</td></tr>"""],mp.processHtml(mp.getHtml("http://moss.stanford.edu/results/299782671/")))
 
 
 
@@ -422,7 +422,7 @@ class MossParserUnitTest(unittest.TestCase):
                          """<tr><td><a href="http://moss.stanford.edu/results/299782671/match46.html">squareroot2.java (29%)</a>
                              </td><td><a href="http://moss.stanford.edu/results/299782671/match46.html">squareroot22.java (19%)</a>
                          </td><td align="right">
-                         </td></tr>"""], mp.processHtml())
+                         </td></tr>"""], mp.processHtml(mp.getHtml("http://moss.stanford.edu/results/299782671/")))
 
     #6. Test for valid csvstrings being made from the processTableStrings method
         def testValidProcessTableStrings(self):

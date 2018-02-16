@@ -1,4 +1,11 @@
 import csv
+import webbrowser
+import os
+import json
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
 
 class SortResults:
 
@@ -18,6 +25,7 @@ class SortResults:
         # ("CSV column title", value)
         self.MOSSresults = []
 
+
     # Checks to make sure there is a csv file
     def isValidFilename(self):
         if len(self.inputFileName) <= 5:
@@ -34,6 +42,8 @@ class SortResults:
             for row in inputFile:
                 self.MOSSresults.append(row)
         f.close()
+
+        print(self.MOSSresults)
 
         if len(self.MOSSresults) > 0:
             return True
@@ -79,4 +89,33 @@ class SortResults:
         else:
             return False
 
+def getFilePath():
+    dir = os.path.dirname(__file__)
+    filename = os.path.join(dir, "MOSSinput.csv")
+    return filename
+    # webbrowser.open("file://" + filename, new=0)
+
+#def userList():
+    #sr = SortResults()
+    #sr.createMainList()
+    #sr.createCategoryLists()                           NOT USED FOR NOW
+    #test = json.dumps(sr.MOSSresults)
+    #filename = "/MOSSoutput.html"
+    #return render_template(filename, test=test)
+
+def get_csv():
+    csv_path = getFilePath()
+    csv_file = open(csv_path, 'r')
+    csv_obj = csv.DictReader(csv_file)
+    csv_list = list(csv_obj)
+    return csv_list
+
+@app.route('/')
+def index():
+    template="MOSSoutput.html"
+    object_list = get_csv()
+    return render_template(template, object_list=object_list)
+
+if __name__ == '__main__':
+    app.run(debug = True, use_reloader=True)
 
