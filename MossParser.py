@@ -2,6 +2,7 @@
 # This class is designed to take a url as input and creates a csv file of results from MOSS in the same directory
 # as this program
 import urllib
+import urllib.request
 from html.parser import HTMLParser
 
 

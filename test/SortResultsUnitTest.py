@@ -5,7 +5,7 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.sr = SortResults();
-        self.sr.inputFileName = "MOSSresults.csv"
+        self.sr.inputFileName = "MOSSinput.csv"
 
     def testValidInputFileLower(self):
         self.assertTrue(self.sr.isValidFilename())
