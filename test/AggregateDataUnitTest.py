@@ -7,19 +7,19 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.ag = AggregateData()
+        self.results = []
+        result1 = Result(1, "file1", "file2", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
+        result2 = Result(2, "file1", "file3", "http://moss.stanford.edu/results/299782670/", 50, 10, 5)
+        self.results.append(result1)
+        self.results.append(result2)
+        self.names = self.ag.populateNames(self.results)
 
 #
 # validResults()
 #
     # Results should be an array of Result
     def test_isValidResults(self):
-        results = []
-        result1 = Result(1, "file1", "file2", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
-        result2 = Result(2, "file1", "file2", "http://moss.stanford.edu/results/299782670/", 50, 10, 5)
-        results.append(result1)
-        results.append(result2)
-
-        self.assertTrue(self.ag.validResults(results))
+        self.assertTrue(self.ag.validResults(self.results))
 
     # Results should not be empty
     def test_isEmptyResults(self):
@@ -135,22 +135,38 @@ class MyTestCase(unittest.TestCase):
 #
 # populateNames()
 #
+    # Should return an array
+    def test_returnsList(self):
+        self.assertTrue(isinstance(self.names, list))
+
+    # Should return an array of strings
+    def test_returnsListStrings(self):
+        for name in self.names:
+            self.assertTrue(isinstance(name, str))
+
+    # Should return an array of the correct names
+    def test_returnsListNames(self):
+        self.assertTrue(self.names[0] == "file1")
+        self.assertTrue(self.names[1] == "file2")
+        self.assertTrue(self.names[2] == "file3")
 
 #
 # parsePercents()
 #
+    # Should return an array
+    def test_returnsListPercents(self):
+        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "file1"), list))
+        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "file2"), list))
+        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "file3"), list))
 
 #
 # parseLines()
 #
-
-#
-# getAggregatePercents()
-#
-
-#
-# getAggregateLines()
-#
+    # Should return an array
+    def test_returnsListLines(self):
+        self.assertTrue(isinstance(self.ag.parseLines(self.results, "file1"), list))
+        self.assertTrue(isinstance(self.ag.parseLines(self.results, "file2"), list))
+        self.assertTrue(isinstance(self.ag.parseLines(self.results, "file3"), list))
 
 #
 # sort()
