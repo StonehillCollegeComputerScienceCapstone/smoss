@@ -30,8 +30,9 @@ class MossParser ():
     def writeToCsv(self,csvStrings):
         f = open(self.csvFileName, 'a')
         for item in csvStrings:
-            for value in item:
+            for value in item[:-1]:
                 f.write(value+",")
+            f.write(item[-1])
             f.write('\n')
         f.close()
 
@@ -128,5 +129,5 @@ class myHtmlParser (HTMLParser):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-#mp=MossParser("csv.txt")
-#mp.parse("http://moss.stanford.edu/results/299782671/")
+mp=MossParser("csv.txt")
+mp.parse("http://moss.stanford.edu/results/299782671/")
