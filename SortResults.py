@@ -89,16 +89,11 @@ class SortResults:
         else:
             return False
 
-
-
-
-
-
 def getFilePath():
     dir = os.path.dirname(__file__)
     filename = os.path.join(dir, "MOSSinput.csv")
     return filename
-        # webbrowser.open("file://" + filename, new=0)
+    # webbrowser.open("file://" + filename, new=0)
 
 #def userList():
     #sr = SortResults()
@@ -110,7 +105,7 @@ def getFilePath():
 
 def get_csv():
     csv_path = getFilePath()
-    csv_file = open(csv_path, 'rb')
+    csv_file = open(csv_path, 'r')
     csv_obj = csv.DictReader(csv_file)
     csv_list = list(csv_obj)
     return csv_list
