@@ -7,7 +7,7 @@ class MossURLsTests(unittest.TestCase):
         self.Display = DisplayAggregateData()
 
     def test_invalid_Address(self):
-        self.Display.set
+        self.Display.set_Address("")
 
     def tearDown(self):
         self.Display = None
