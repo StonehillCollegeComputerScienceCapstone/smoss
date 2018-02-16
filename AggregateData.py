@@ -68,6 +68,7 @@ class AggregateData:
 
         return names
 
+    # Returns an array of assignment numbers in results
     def getAssignmentNumbers(self, results):
         numbers = []
         for result in results:
@@ -78,19 +79,37 @@ class AggregateData:
 
     # Returns an array of highest percents based on a given name
     def parsePercents(self, results, name):
-        percents = []
-        num = 1
-        assignmentNumbers = self.getAssignmentNumbers()
+        maxPercents = []
+        assignmentNumbers = self.getAssignmentNumbers(results)
 
-        for result in results:
-            if result.assignment_number == num:
-                percents
-
-        return percents
+        for number in assignmentNumbers:
+            percents = []
+            for result in results:
+                if (result.assignment_number == number) and (result.file_one == name):
+                    percents.append(result.file_one_percent)
+                elif (result.assignment_number == number) and (result.file_two == name):
+                    percents.append(result.file_two_percent)
+            maxPercents.append(max(percents))
+        print(name + " percents")
+        print(maxPercents)
+        return maxPercents
 
     # Returns an array of lines matched based on a given name
     def parseLines(self, results, name):
-        return []
+        maxLines = []
+        assignmentNumbers = self.getAssignmentNumbers(results)
+
+        for number in assignmentNumbers:
+            lines = []
+            for result in results:
+                if (result.assignment_number == number) and (result.file_one == name):
+                    lines.append(result.lines_matched)
+                elif (result.assignment_number == number) and (result.file_two == name):
+                    lines.append(result.lines_matched)
+            maxLines.append(max(lines))
+        print(name + " lines")
+        print(maxLines)
+        return maxLines
 
     # Calculates the average of a given array
     def average(self, array):
@@ -104,10 +123,7 @@ class AggregateData:
 
     # Calculates the total sum of a given array
     def total(self, array):
-        sum = 0
-        for value in array:
-            sum = sum + value
-        return sum
+        return sum(array)
 
     # Sorts the passed in array
     def sort(self, array):
@@ -164,6 +180,7 @@ def main():
     # Display data
     print("Highest Average Percent")
     ag.display(aggregatePercents)
+    print()
     print("Highest Lines Matched")
     ag.display(aggregateLines)
 

@@ -8,10 +8,25 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.ag = AggregateData()
         self.results = []
-        result1 = Result(1, "file1", "file2", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
-        result2 = Result(2, "file1", "file3", "http://moss.stanford.edu/results/299782670/", 50, 10, 5)
+        result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
+        result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
+        result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
+        result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
+        result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
+        result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
+        result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
+        result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
+        result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
         self.results.append(result1)
         self.results.append(result2)
+        self.results.append(result3)
+        self.results.append(result4)
+        self.results.append(result5)
+        self.results.append(result6)
+        self.results.append(result7)
+        self.results.append(result8)
+        self.results.append(result9)
+
         self.names = self.ag.populateNames(self.results)
 
 #
@@ -75,9 +90,9 @@ class MyTestCase(unittest.TestCase):
     # Percents should not exceed 100
     def test_percentsUpperBound(self):
         percents = [99, 100, 1]
-        self.assertTrue(self.ag.validArray(percents))
+        self.assertTrue(self.ag.validPercents(percents))
         percents = [101, 200, 500]
-        self.assertFalse(self.ag.validArray(percents))
+        self.assertFalse(self.ag.validPercents(percents))
     
 #
 # averagePercent()
@@ -120,7 +135,7 @@ class MyTestCase(unittest.TestCase):
         self.assertGreaterEqual(self.ag.average(percents), 0)
 
 #
-# totalLines()
+# total()
 #
     # Total lines should be the correct value
     def test_totalLinesCorrect(self):
@@ -146,27 +161,46 @@ class MyTestCase(unittest.TestCase):
 
     # Should return an array of the correct names
     def test_returnsListNames(self):
-        self.assertTrue(self.names[0] == "file1")
-        self.assertTrue(self.names[1] == "file2")
-        self.assertTrue(self.names[2] == "file3")
+        self.assertTrue("Matt" in self.names)
+        self.assertTrue("Armen" in self.names)
+        self.assertTrue("Sam" in self.names)
 
 #
 # parsePercents()
 #
     # Should return an array
     def test_returnsListPercents(self):
-        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "file1"), list))
-        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "file2"), list))
-        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "file3"), list))
+        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "Matt"), list))
+        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "Armen"), list))
+        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "Sam"), list))
+
+    # Should return these values
+    def test_returnsMaxPercents(self):
+        # Matt
+        percents = self.ag.parsePercents(self.results, "Matt")
+        self.assertTrue(90 in percents)
+        self.assertTrue(33 in percents)
+
+        # Armen
+        percents = self.ag.parsePercents(self.results, "Armen")
+        self.assertTrue(70 in percents)
+        self.assertTrue(70 in percents)
+        self.assertTrue(79 in percents)
+
+        # Sam
+        percents = self.ag.parsePercents(self.results, "Sam")
+        self.assertTrue(43 in percents)
+        self.assertTrue(34 in percents)
+        self.assertTrue(88 in percents)
 
 #
 # parseLines()
 #
     # Should return an array
     def test_returnsListLines(self):
-        self.assertTrue(isinstance(self.ag.parseLines(self.results, "file1"), list))
-        self.assertTrue(isinstance(self.ag.parseLines(self.results, "file2"), list))
-        self.assertTrue(isinstance(self.ag.parseLines(self.results, "file3"), list))
+        self.assertTrue(isinstance(self.ag.parseLines(self.results, "Matt"), list))
+        self.assertTrue(isinstance(self.ag.parseLines(self.results, "Armen"), list))
+        self.assertTrue(isinstance(self.ag.parseLines(self.results, "Sam"), list))
 
 #
 # sort()
