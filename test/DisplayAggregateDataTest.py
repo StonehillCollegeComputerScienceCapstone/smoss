@@ -22,6 +22,9 @@ class DisplayAggregateDataTest(unittest.TestCase):
         self.assertTrue(self.Display.print_to_file(file_name))
         self.assertTrue(os.path.exists(file_name))
 
+        # remove the generated file
+        os.remove(file_name)
+
     def tearDown(self):
         self.Display = None
 
