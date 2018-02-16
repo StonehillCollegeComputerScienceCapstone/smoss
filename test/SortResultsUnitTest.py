@@ -1,4 +1,5 @@
 import unittest
+from SortResults import app
 from SortResults import SortResults
 
 class MyTestCase(unittest.TestCase):
@@ -151,6 +152,16 @@ class MyTestCase(unittest.TestCase):
         self.sr.createMainList()
         self.sr.user2.append("testString")
         self.assertFalse(self.sr.isValidLength())
+
+    def testHTTPResponse400OK(self):
+        self.app = app.test_client()
+        self.app.testing = True
+        # sends HTTP GET request to the application
+        # on the specified path
+        result = self.app.get('/')
+        # assert the status code of the response
+        self.assertEqual(result.status_code, 200)
+
 
     def tearDown(self):
         self.sr = None
