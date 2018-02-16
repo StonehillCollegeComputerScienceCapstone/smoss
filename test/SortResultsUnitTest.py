@@ -5,7 +5,7 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.sr = SortResults();
-        self.sr.inputFileName = "MOSSresults.csv"
+        self.sr.inputFileName = "MOSSinput.csv"
 
     def testValidInputFileLower(self):
         self.assertTrue(self.sr.isValidFilename())
@@ -88,6 +88,11 @@ class MyTestCase(unittest.TestCase):
         self.sr.match1.append("3.0")
         self.assertFalse(self.sr.isValidMatchedList(self.sr.match1))
 
+    def testInvalidZeroMatch1List(self):
+        self.sr.createMainList()
+        self.sr.match1.append("0")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.match1))
+
     def testMatch2List(self):
         self.sr.createMainList()
         self.sr.match2.append("testString")
@@ -103,6 +108,11 @@ class MyTestCase(unittest.TestCase):
         self.sr.match2.append("3.0")
         self.assertFalse(self.sr.isValidMatchedList(self.sr.match2))
 
+    def testInvalidZeroMatch2List(self):
+        self.sr.createMainList()
+        self.sr.match2.append("0")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.match2))
+
     def testInvalidLinesMatchedList(self):
         self.sr.createMainList()
         self.sr.linesMatched.append("testString")
@@ -111,6 +121,11 @@ class MyTestCase(unittest.TestCase):
     def testInvalidFloatLinesMatchedList(self):
         self.sr.createMainList()
         self.sr.linesMatched.append("3.0")
+        self.assertFalse(self.sr.isValidMatchedList(self.sr.linesMatched))
+
+    def testInvalidZeroLinesMatchedList(self):
+        self.sr.createMainList()
+        self.sr.linesMatched.append("0")
         self.assertFalse(self.sr.isValidMatchedList(self.sr.linesMatched))
 
     def testLinesMatchedList(self):
@@ -122,11 +137,6 @@ class MyTestCase(unittest.TestCase):
         self.sr.createMainList()
         self.sr.URL.append("testString")
         self.assertTrue(self.sr.isValidStringList(self.sr.URL))
-
-    def testInvalidURLList(self):
-        self.sr.createMainList()
-        self.sr.URL.append("3")
-        self.assertFalse(self.sr.isValidStringList(self.sr.URL))
 
     def testInvalidURLList(self):
         self.sr.createMainList()

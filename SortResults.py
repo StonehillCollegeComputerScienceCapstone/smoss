@@ -1,4 +1,11 @@
 import csv
+import webbrowser
+import os
+import json
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
 
 class SortResults:
 
@@ -35,6 +42,8 @@ class SortResults:
                 self.MOSSresults.append(row)
         f.close()
 
+        print(self.MOSSresults)
+
         if len(self.MOSSresults) > 0:
             return True
         else:
@@ -69,7 +78,7 @@ class SortResults:
 
     def isValidMatchedList(self, listName):
         for key in listName:
-            if not key.isdigit():
+            if not key.isdigit() or int(key) <= 0:
                 return False
         return True
 
@@ -79,4 +88,25 @@ class SortResults:
         else:
             return False
 
+    def renderWebpage(self):
+        dir = os.path.dirname(__file__)
+        filename = os.path.join(dir, "MOSSoutput.html")
+        webbrowser.open("file://" + filename, new=0)
 
+    def getUser1(self):
+        return self.user1[:]
+
+    @app.route('/')
+    def userList():
+        test = ['Hello', 'World']
+        test = json.dumps(test)
+        dir = os.path.dirname(__file__)
+        filename = os.path.join(dir, "/templates/MOSSoutput.html")
+        filename = "/MOSSoutput.html"
+        return render_template(filename, test=test)
+
+if __name__ == '__main__':
+    sr = SortResults()
+    sr.createMainList()
+    sr.createCategoryLists()
+    app.run(debug = True)

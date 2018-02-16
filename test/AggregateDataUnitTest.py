@@ -1,71 +1,160 @@
 import unittest
-import json
+from Result import Result
 from AggregateData import AggregateData
 
 
 class MyTestCase(unittest.TestCase):
-    def test_sixFields(self):
-        jsonObject = {}
-        ag = AggregateData()
 
-        self.assertTrue(ag.isValid(jsonObject))
-        self.assertFalse(ag.isValid(jsonObject))
+    def setUp(self):
+        self.ag = AggregateData()
 
-    def test_isJSON(self):
-        array = []
-        x = 10
-        s = "Hello"
-        jsonObject = {}
+#
+# validResults()
+#
+    # Results should be an array of Result
+    def test_isValidResults(self):
+        results = []
+        result1 = Result(1, "file1", "file2", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
+        result2 = Result(2, "file1", "file2", "http://moss.stanford.edu/results/299782670/", 50, 10, 5)
+        results.append(result1)
+        results.append(result2)
 
-        ag = AggregateData()
-        self.assertFalse(ag.isValid(array))
-        self.assertFalse(ag.isValid(x))
-        self.assertFalse(ag.isValid(s))
-        self.assertTrue(ag.isValid(jsonObject))
+        self.assertTrue(self.ag.validResults(results))
 
-    def test_averagePercent(self):
-        ag = AggregateData()
-        jsonObject = {}
-        self.assertEqual(ag.calculateAveragePercent(jsonObject), 10)
-        self.assertNotEqual(ag.calculateAveragePercent(jsonObject), 3)
+    # Results should not be empty
+    def test_isEmptyResults(self):
+        results = []
+        self.assertFalse(self.ag.validResults(results))
 
-    def test_validAveragePercentUpper(self):
-        ag = AggregateData()
-        jsonObject = {}
-        self.assertLessEqual(ag.calculateAveragePercent(jsonObject), 100)
+#
+# validArray()
+#
+    # Array should not be empty
+    def test_arrayEmpty(self):
+        percents = []
+        self.assertFalse(self.ag.validArray(percents))
 
-    def test_validAveragePercentLower(self):
-        ag = AggregateData()
-        jsonObject = {}
-        self.assertGreaterEqual(ag.calculateAveragePercent(jsonObject), -1)
+    # Array should have values
+    def test_arrayExists(self):
+        percents = [1, 2, 3]
+        self.assertTrue(self.ag.validArray(percents))
 
-    def test_validTotalLinesMatchedLower(self):
-        ag = AggregateData()
-        jsonObject = {}
-        self.assertGreaterEqual(ag.calculateTotalLines(jsonObject), -1)
+    # Array should only be numbers
+    def test_arrayNumbers(self):
+        percents = [1, 2, 3]
+        self.assertTrue(self.ag.validArray(percents))
 
-    def test_isValidReturnObject(self):
-        ag = AggregateData()
-        jsonObject = {}
-        self.assertIsInstance(ag.generateJSON(jsonObject), json)
+    # Array should not be decimals
+    def test_arrayDecimals(self):
+        percents = [1.5, 2.1, 3.99]
+        self.assertFalse(self.ag.validArray(percents))
 
-    def test_isValidReturnNames(self):
-        ag = AggregateData()
-        jsonObject = {}
-        data = ag.generateJSON(jsonObject)
-        self.assertIsNotNone(data.names)
+    # Array should not be None
+    def test_arrayNone(self):
+        percents = [None, None, None]
+        self.assertFalse(self.ag.validArray(percents))
 
-    def test_isValidReturnPercentages(self):
-        ag = AggregateData()
-        jsonObject = {}
-        data = ag.generateJSON(jsonObject)
-        self.assertIsNotNone(data.percentages)
+    # Array should not be Strings
+    def test_arrayString(self):
+        percents = ["Hello", "world", "!"]
+        self.assertFalse(self.ag.validArray(percents))
 
-    def test_isValidReturnAverages(self):
-        ag = AggregateData()
-        jsonObject = {}
-        data = ag.generateJSON(jsonObject)
-        self.assertIsNotNone(data.averages)
+    # Array should be positive
+    def test_arrayNegative(self):
+        percents = [-1, -2, -3]
+        self.assertFalse(self.ag.validArray(percents))
+
+    # Array should not have more than one data type
+    def test_arrayMixed(self):
+        percents = [-1, "Hello", None, 2, 4.5]
+        self.assertFalse(self.ag.validArray(percents))
+
+#
+# validPercents()
+#
+    # Percents should not exceed 100
+    def test_percentsUpperBound(self):
+        percents = [99, 100, 1]
+        self.assertTrue(self.ag.validArray(percents))
+        percents = [101, 200, 500]
+        self.assertFalse(self.ag.validArray(percents))
+    
+#
+# averagePercent()
+#
+    # Average should return the correct value
+    def test_averagePercentCorrect(self):
+        percents = [1, 2, 3]
+        self.assertEqual(self.ag.average(percents), 2)
+        percents = [2, 2, 2]
+        self.assertEqual(self.ag.average(percents), 2)
+
+    # Average should be an int
+    def test_averagePercentReturnInt(self):
+        percents = [1, 2, 3]
+        self.assertTrue(isinstance(self.ag.average(percents), int))
+
+    # Average should round up when > .5
+    def test_averagePercentRoundUp(self):
+        percents = [55, 28, 90, 70]
+        self.assertEqual(self.ag.average(percents), 61)
+
+    # Average should round up when = .5
+    def test_averagePercentRoundHalf(self):
+        percents = [3.5, 3.5, 3.5]
+        self.assertEqual(self.ag.average(percents), 4)
+
+    # Average should round down when < .5
+    def test_averagePercentRoundDown(self):
+        percents = [55, 28, 90, 70, 73]
+        self.assertEqual(self.ag.average(percents), 63)
+
+    # Average should not be more than 100
+    def test_averagePercentUpper(self):
+        percents = [55, 28, 90, 70, 73]
+        self.assertLessEqual(self.ag.average(percents), 100)
+
+    # Average should not be negative
+    def test_averagePercentLower(self):
+        percents = [55, 28, 90, 70, 73]
+        self.assertGreaterEqual(self.ag.average(percents), 0)
+
+#
+# totalLines()
+#
+    # Total lines should be the correct value
+    def test_totalLinesCorrect(self):
+        lines = [1, 2, 3]
+        self.assertEqual(self.ag.total(lines), 6)
+
+    # Total lines should be greater than or equal to 0
+    def test_totalLinesLower(self):
+        lines = [1, 2, 3]
+        self.assertGreaterEqual(self.ag.total(lines), 0)
+
+#
+# populateNames()
+#
+
+#
+# parsePercents()
+#
+
+#
+# parseLines()
+#
+
+#
+# getAggregatePercents()
+#
+
+#
+# getAggregateLines()
+#
+
+#
+# sort()
+#
 
 
 if __name__ == '__main__':

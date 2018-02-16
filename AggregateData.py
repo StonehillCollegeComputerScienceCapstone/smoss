@@ -1,36 +1,53 @@
-import json
-
 class AggregateData:
 
-    def isValid(self, object):
+    # Validates data has been received to aggregate
+    def validResults(self, results):
         return False
 
-    def calculateAveragePercent(self, object):
+    # Validates the array can be aggregated
+    def validArray(self, array):
+        return False
+
+    # Validates the percents array can be aggregated
+    def validPercents(self, percents):
+        return False
+
+    # Returns an array of names from Results
+    def populateNames(self):
+        return []
+
+    # Returns an array of highest percents based on a given name
+    def parsePercents(self, results, name):
+        return []
+
+    # Returns an array of lines matched based on a given name
+    def parseLines(self, results, name):
+        return []
+
+    # Calculates the average of a given array
+    def average(self, array):
         sum = 0
-        average = -1
         count = 0
-        for x in object:
-            sum = sum + x.percent
+        for value in array:
+            sum = sum + value
             count = count + 1
-
         average = sum / count
+        return round(average)
 
-        return average
-
-    def calculateTotalLines(self, object):
+    # Calculates the total sum of a given array
+    def total(self, array):
         sum = 0
-        for x in object:
-            sum = sum + x.lines
-
+        for value in array:
+            sum = sum + value
         return sum
 
-    def generateJSON(self, object):
-        return {}
+    def getAggregatePercents(self):
+        return []
+
+    def getAggregateLines(self):
+        return []
 
 def main():
-    object = {}
-    json_object = json.dumps(object)
-
-    print(type(json_object))
+    print('Hello world')
 
 if __name__ == '__main__': main()
