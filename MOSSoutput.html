@@ -2,23 +2,25 @@
     <head>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   		<script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
     </head>
 
     <body>
-          <h1>Moss Results</h1>
-          <HR>
+        <h1>Moss Results</h1>
+        <HR>
             [ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
-          <HR>
+        </HR>
 
-         <script>$(document).ready(function() {
-             $('#example').dataTable();
+        <p>
+        </p>
 
-             })
-         </script>
+        <script>
+            $(document).ready(function() {
+                $('#example').dataTable();
+            })
+        </script>
 
-          <table id = "example"  class = "display" border=1 cellpadding=7>
+        <table id="example" class ="display" border=1 cellpadding=7>
             <thead>
             <tr>
                 <th>User One</th>
@@ -29,25 +31,21 @@
                 <th>User Two's Filename</th>
                 <th>Lines Matched</th>
                 <th>URL</th>
-
             </tr>
             </thead>
-              <tbody>
-              <tr>
-                   {% for obj in object_list %}
-                <td>{{ obj.User1 }}</td>
-                <td>{{ obj.Match2 }}</td>
-                <td>{{ obj.User2 }}</td>
-                <td>{{ obj.Match2 }}</td>
-                <td>{{ obj.FileName1 }}</td>
-                <td>{{ obj.FileName2 }}</td>
-                <td>{{ obj.Lines_Matched }}</td>
-                <td>{{ obj.URL }}</td>
-            </tr>
 
-            {% endfor %}
-            </tr>
-              </tbody>
-          </table>
+            <tbody>
+                <tr>{% for obj in object_list %}
+                    <td>{{ obj.User1 }}</td>
+                    <td>{{ obj.Match2 }}</td>
+                    <td>{{ obj.User2 }}</td>
+                    <td>{{ obj.Match2 }}</td>
+                    <td>{{ obj.FileName1 }}</td>
+                    <td>{{ obj.FileName2 }}</td>
+                    <td>{{ obj.Lines_Matched }}</td>
+                    <td>{{ obj.URL }}</td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>
