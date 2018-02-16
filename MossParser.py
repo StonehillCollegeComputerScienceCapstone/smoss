@@ -18,7 +18,7 @@ class MossParser:
         else:
             # get the html text from the URL
             html = self.getHtml(urlInput)
-            print('Have HTML, now going to process')
+            #print('Have HTML, now going to process')
             # Process the html into table strings
             tableStrings = self.processHtml(html)
 
@@ -33,10 +33,12 @@ class MossParser:
         urlInput=input("Please enter the url: ")
         return urlInput
 
-    def writeToCsv(csvStrings):
-        f = open("csv.txt")
+    def writeToCsv(self,csvStrings):
+        f = open("csv.txt",'w')
         for item in csvStrings:
-            f.write(item + '\n')
+            for value in item:
+                f.write(value+",")
+            f.write('\n')
         f.close()
 
     def displayInvalidUrl(self):
@@ -58,7 +60,7 @@ class MossParser:
         #parse until table
         htmlParser=myHtmlParser()
         htmlParser.feed(html)
-        print("Table String: ", htmlParser.tableString)
+        #print("Table String: ", htmlParser.tableString)
         #here we have all of the rows in one long string
         #now we parse through the string and split them up into individual strings
         #first take out \n
@@ -92,12 +94,12 @@ class MossParser:
 
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
-            print(tableString)
+            #print(tableString)
             tableStringValues=tableString.split(",")
-            print(tableStringValues)
+            #print(tableStringValues)
             csvString=[tableStringValues[1].strip(),tableStringValues[2],tableStringValues[4].strip(),tableStringValues[5],tableStringValues[6],tableStringValues[0]]
             csvStrings.append(csvString)
-        return csvString
+        return csvStrings
     def formatTableString(self,tableString):
         tableString.lstrip()
         tableString = tableString.replace("td a href", '')
@@ -132,5 +134,5 @@ class myHtmlParser (HTMLParser):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-# mp=MossParser()
-# mp.main()
+#mp=MossParser()
+#mp.main()
