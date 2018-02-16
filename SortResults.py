@@ -25,6 +25,7 @@ class SortResults:
         # ("CSV column title", value)
         self.MOSSresults = []
 
+
     # Checks to make sure there is a csv file
     def isValidFilename(self):
         if len(self.inputFileName) <= 5:
@@ -88,25 +89,38 @@ class SortResults:
         else:
             return False
 
-    def renderWebpage(self):
-        dir = os.path.dirname(__file__)
-        filename = os.path.join(dir, "MOSSoutput.html")
-        webbrowser.open("file://" + filename, new=0)
 
-    def getUser1(self):
-        return self.user1[:]
 
-    @app.route('/')
-    def userList():
-        test = ['Hello', 'World']
-        test = json.dumps(test)
-        dir = os.path.dirname(__file__)
-        filename = os.path.join(dir, "/templates/MOSSoutput.html")
-        filename = "/MOSSoutput.html"
-        return render_template(filename, test=test)
+
+
+
+def getFilePath():
+    dir = os.path.dirname(__file__)
+    filename = os.path.join(dir, "MOSSinput.csv")
+    return filename
+        # webbrowser.open("file://" + filename, new=0)
+
+#def userList():
+    #sr = SortResults()
+    #sr.createMainList()
+    #sr.createCategoryLists()                           NOT USED FOR NOW
+    #test = json.dumps(sr.MOSSresults)
+    #filename = "/MOSSoutput.html"
+    #return render_template(filename, test=test)
+
+def get_csv():
+    csv_path = getFilePath()
+    csv_file = open(csv_path, 'rb')
+    csv_obj = csv.DictReader(csv_file)
+    csv_list = list(csv_obj)
+    return csv_list
+
+@app.route('/')
+def index():
+    template="MOSSoutput.html"
+    object_list = get_csv()
+    return render_template(template, object_list=object_list)
 
 if __name__ == '__main__':
-    sr = SortResults()
-    sr.createMainList()
-    sr.createCategoryLists()
-    app.run(debug = True)
+    app.run(debug = True, use_reloader=True)
+
