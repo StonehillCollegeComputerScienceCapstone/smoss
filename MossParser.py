@@ -139,5 +139,5 @@ class myHtmlParser (HTMLParser):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-mp=MossParser()
-mp.main()
+# mp=MossParser()
+# mp.main()
