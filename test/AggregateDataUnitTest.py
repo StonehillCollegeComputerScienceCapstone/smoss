@@ -1,12 +1,12 @@
 import unittest
 from Result import Result
+from Aggregation import Aggregation
 from AggregateData import AggregateData
 
 
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.ag = AggregateData()
         self.results = []
         result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
         result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
@@ -27,6 +27,7 @@ class MyTestCase(unittest.TestCase):
         self.results.append(result8)
         self.results.append(result9)
 
+        self.ag = AggregateData(self.results)
         self.names = self.ag.populateNames(self.results)
 
 #
@@ -193,6 +194,20 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(34 in percents)
         self.assertTrue(88 in percents)
 
+    # Should return these values
+    def test_lengthPercents(self):
+        # Matt
+        percents = self.ag.parsePercents(self.results, "Matt")
+        self.assertEqual(len(percents), 3)
+
+        # Armen
+        percents = self.ag.parsePercents(self.results, "Armen")
+        self.assertEqual(len(percents), 3)
+
+        # Sam
+        percents = self.ag.parsePercents(self.results, "Sam")
+        self.assertEqual(len(percents), 3)
+
 #
 # parseLines()
 #
@@ -202,9 +217,54 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(isinstance(self.ag.parseLines(self.results, "Armen"), list))
         self.assertTrue(isinstance(self.ag.parseLines(self.results, "Sam"), list))
 
+    # Should return these values
+    def test_returnsMaxLines(self):
+        # Matt
+        lines = self.ag.parseLines(self.results, "Matt")
+        self.assertTrue(77 in lines)
+        self.assertTrue(45 in lines)
+        self.assertTrue(100 in lines)
+
+        # Armen
+        lines = self.ag.parseLines(self.results, "Armen")
+        self.assertTrue(20 in lines)
+        self.assertTrue(45 in lines)
+        self.assertTrue(20 in lines)
+
+        # Sam
+        lines = self.ag.parseLines(self.results, "Sam")
+        self.assertTrue(77 in lines)
+        self.assertTrue(15 in lines)
+        self.assertTrue(100 in lines)
+
+    # Should return these lengths
+    def test_lengthLines(self):
+        # Matt
+        lines = self.ag.parseLines(self.results, "Matt")
+        self.assertEqual(len(lines), 3)
+
+        # Armen
+        lines = self.ag.parseLines(self.results, "Armen")
+        self.assertEqual(len(lines), 3)
+
+        # Sam
+        lines = self.ag.parseLines(self.results, "Sam")
+        self.assertEqual(len(lines), 3)
+
 #
 # sort()
 #
+    # Should return these results after sort
+    def test_sortResults(self):
+        array = []
+        array.append(Aggregation("Matt", 71))
+        array.append(Aggregation("Armen", 73))
+        array.append(Aggregation("Sam", 55))
+        array = self.ag.sort(array)
+
+        self.assertEqual(array[0].data, 73)
+        self.assertEqual(array[1].data, 71)
+        self.assertEqual(array[2].data, 55)
 
 
 if __name__ == '__main__':

@@ -1,31 +1,16 @@
 import sys
+from operator import attrgetter
 from Result import Result
 from Aggregation import Aggregation
 
 class AggregateData:
 
-    # Example data
-    def example(self):
-        results = []
-        result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
-        result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
-        result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
-        result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
-        result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
-        result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
-        result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
-        result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
-        result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
-        results.append(result1)
-        results.append(result2)
-        results.append(result3)
-        results.append(result4)
-        results.append(result5)
-        results.append(result6)
-        results.append(result7)
-        results.append(result8)
-        results.append(result9)
-        return results
+    # Constructor for AggregateData
+    def __init__(self, results):
+        self.results = results
+        self.top_percents = []
+        self.top_lines = []
+        self.aggregateData()  # Aggregates the data
 
     # Validates data has been received to aggregate
     def validResults(self, results):
@@ -76,7 +61,6 @@ class AggregateData:
                 numbers.append(result.assignment_number)
         return numbers
 
-
     # Returns an array of highest percents based on a given name
     def parsePercents(self, results, name):
         maxPercents = []
@@ -90,8 +74,6 @@ class AggregateData:
                 elif (result.assignment_number == number) and (result.file_two == name):
                     percents.append(result.file_two_percent)
             maxPercents.append(max(percents))
-        print(name + " percents")
-        print(maxPercents)
         return maxPercents
 
     # Returns an array of lines matched based on a given name
@@ -107,8 +89,6 @@ class AggregateData:
                 elif (result.assignment_number == number) and (result.file_two == name):
                     lines.append(result.lines_matched)
             maxLines.append(max(lines))
-        print(name + " lines")
-        print(maxLines)
         return maxLines
 
     # Calculates the average of a given array
@@ -125,64 +105,93 @@ class AggregateData:
     def total(self, array):
         return sum(array)
 
-    # Sorts the passed in array
-    def sort(self, array):
-        return
-
     # Displays the passed in array
     def display(self, array):
         for object in array:
             print(object.to_string())
 
+    # Sorts the Aggregation objects based on the data field
+    def sort(self, array):
+        return sorted(array, key=attrgetter('data'), reverse=True)
+
+    # Aggregates the data and populates the two fields
+    def aggregateData(self):
+        if (not self.validResults):
+            print("Results not valid!")
+            sys.exit()
+
+        names = self.populateNames(self.results)
+
+        aggregatePercents = []
+        aggregateLines = []
+
+        for name in names:
+            # Parse the highest percents for a given name
+            percents = self.parsePercents(self.results, name)
+            if ((not self.validArray(percents)) or (not self.validPercents(percents))):
+                print("Percents array not valid!")
+                sys.exit()
+
+            # Parse the highest lines matched for a given name
+            lines = self.parseLines(self.results, name)
+            if (not self.validArray(percents)):
+                print("Lines array not valid!")
+                sys.exit()
+
+            # Calculate average percent and total lines
+            avgPercent = self.average(percents)
+            totalLines = self.total(lines)
+
+            # Create an Aggregation object with the data
+            aggPercents = Aggregation(name, avgPercent)
+            aggLines = Aggregation(name, totalLines)
+
+            # Append Aggregation object array
+            aggregatePercents.append(aggPercents)
+            aggregateLines.append(aggLines)
+
+        # Sort data
+        aggregatePercents = self.sort(aggregatePercents)
+        aggregateLines = self.sort(aggregateLines)
+
+        # We only want the top ten results
+        self.top_percents = aggregatePercents[:10]
+        self.top_lines = aggregateLines[:10]
+
+# Example data
+def example():
+    results = []
+    result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
+    result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
+    result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
+    result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
+    result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
+    result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
+    result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
+    result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
+    result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
+    results.append(result1)
+    results.append(result2)
+    results.append(result3)
+    results.append(result4)
+    results.append(result5)
+    results.append(result6)
+    results.append(result7)
+    results.append(result8)
+    results.append(result9)
+    return results
+
 def main():
-    ag = AggregateData()
-
-    # Get results and ensure they are valid
-    results = ag.example() # Obtained from Sam and Nikolay
-    if (not ag.validResults):
-        print("Results not valid!")
-        sys.exit()
-
-    names = ag.populateNames(results)
-
-    aggregatePercents = []
-    aggregateLines = []
-
-    for name in names:
-        # Parse the highest percents for a given name
-        percents = ag.parsePercents(results, name)
-        if ((not ag.validArray(percents)) or (not ag.validPercents(percents))):
-            print("Percents array not valid!")
-            sys.exit()
-
-        # Parse the highest lines matched for a given name
-        lines = ag.parseLines(results, name)
-        if (not ag.validArray(percents)):
-            print("Lines array not valid!")
-            sys.exit()
-
-        # Calculate average percent and total lines
-        avgPercent = ag.average(percents)
-        totalLines = ag.total(lines)
-
-        # Create an Aggregation object with the data
-        aggPercents = Aggregation(name, avgPercent)
-        aggLines = Aggregation(name, totalLines)
-
-        # Append Aggregation object array
-        aggregatePercents.append(aggPercents)
-        aggregateLines.append(aggLines)
-
-    # Sort data
-    ag.sort(aggregatePercents)
-    ag.sort(aggregateLines)
+    results = example()  # Obtained from Sam and Nikolay
+    ag = AggregateData(results)
 
     # Display data
     print("Highest Average Percent")
-    ag.display(aggregatePercents)
+    ag.display(ag.top_percents)
     print()
     print("Highest Lines Matched")
-    ag.display(aggregateLines)
+    ag.display(ag.top_lines)
+
 
 
 if __name__ == '__main__': main()
