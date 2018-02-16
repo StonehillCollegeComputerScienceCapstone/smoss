@@ -28,7 +28,7 @@ class MossParser ():
             self.writeToCsv(csvStrings)
 
     def writeToCsv(self,csvStrings):
-        f = open(self.csvFileName, 'w')
+        f = open(self.csvFileName, 'a')
         for item in csvStrings:
             for value in item:
                 f.write(value+",")
