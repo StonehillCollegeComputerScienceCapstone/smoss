@@ -4,8 +4,8 @@ import os
 import json
 from flask import Flask, render_template
 
-app = Flask(__name__)
-
+#app = Flask(__name__)
+app = Flask(__name__, template_folder=os.path.dirname ('./'))
 
 class SortResults:
 
@@ -42,8 +42,6 @@ class SortResults:
             for row in inputFile:
                 self.MOSSresults.append(row)
         f.close()
-
-        print(self.MOSSresults)
 
         if len(self.MOSSresults) > 0:
             return True
@@ -112,7 +110,7 @@ def get_csv():
 
 @app.route('/')
 def index():
-    template="MOSSoutput.html"
+    template = "MOSSoutput.html"
     object_list = get_csv()
     return render_template(template, object_list=object_list)
 
