@@ -104,6 +104,9 @@ class MossParser ():
         tableString=tableString.replace("  ",",")
         tableString=tableString.replace(" ",", ")
         tableString=tableString.replace(" (","(")
+        tableString=tableString.replace("(","")
+        tableString=tableString.replace(")","")
+        tableString=tableString.replace("%","")
         return tableString
 class myHtmlParser (HTMLParser):
     tableString=""
@@ -129,5 +132,6 @@ class myHtmlParser (HTMLParser):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-mp=MossParser("csv.txt")
-mp.parse("http://moss.stanford.edu/results/299782671/")
+#use these for testing/running locally 
+#mp=MossParser("csv.txt")
+#mp.parse("http://moss.stanford.edu/results/299782671/")
