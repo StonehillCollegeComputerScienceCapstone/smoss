@@ -20,7 +20,9 @@ app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
 
 
-
+#
+#   _Index ():     Generates the landing page for SMOSS.
+#
 @app.route ('/')
 def _Index ():
     print ('[BackendServer]\tIndex page displayed!')
@@ -34,11 +36,21 @@ def _Index ():
 #   _MOSSOutput (): Formerly held within SortResults.py, this displays the MOSSoutput template at localhost:5000/moss
 #
 @app.route ('/moss')
-def _MOSSOutput():
+def _MOSSOutput ():
     print ('[BackendServer]\tMOSS Output page displayed!')
     template = "templates/MOSSoutput.html"
-    object_list = sorter.get_csv()
-    return render_template(template, object_list=object_list)
+    objectList= sorter.get_csv()
+    return render_template (template, object_list = objectList)
+
+
+#
+#   _ErrorHandler ():   Displays the generic error page with output on the error type
+#
+@app.errorhandler (403)
+@app.errorhandler (404)
+def _ErrorHandler (errorCode):
+    template = "templates/errorpage.html"
+    return render_template (template, errorCode = errorCode)
 
 
 
