@@ -21,16 +21,22 @@ sorter = SortResults ()
 
 
 
+@app.route ('/')
+def _Index ():
+    print ('[BackendServer]\tIndex page displayed!')
+    template = 'templates/index.html'
+    return render_template (template)
+
 
 
 
 #
 #   _MOSSOutput (): Formerly held within SortResults.py, this displays the MOSSoutput template at localhost:5000/moss
 #
-@app.route('/moss')
+@app.route ('/moss')
 def _MOSSOutput():
-    print ('[BackendServer]\t')
-    template = "MOSSoutput.html"
+    print ('[BackendServer]\tMOSS Output page displayed!')
+    template = "templates/MOSSoutput.html"
     object_list = sorter.get_csv()
     return render_template(template, object_list=object_list)
 
