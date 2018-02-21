@@ -7,7 +7,7 @@ class SortResults:
 
     def __init__(self):
         # CSV input file name
-        self.inputFileName = "MOSSinput.csv"
+        self.inputFileName = "csv.csv"
         # Lists that hold the csv information
         self.user1 = []
         self.user2 = []
@@ -85,7 +85,7 @@ class SortResults:
 
     def getFilePath(self):
         dir = os.path.dirname(__file__)
-        filename = os.path.join(dir, "MOSSinput.csv")
+        filename = os.path.join(dir, "csv.csv")
         return filename
         # webbrowser.open("file://" + filename, new=0)
 
