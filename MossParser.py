@@ -132,6 +132,6 @@ class myHtmlParser (HTMLParser):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-#use these for testing/running locally 
-#mp=MossParser("csv.txt")
+#use these for testing/running locally
+#mp=MossParser("csv.csv")
 #mp.parse("http://moss.stanford.edu/results/299782671/")
