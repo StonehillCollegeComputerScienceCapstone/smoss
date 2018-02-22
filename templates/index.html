@@ -8,6 +8,7 @@
 
 		<!-- External Javascript -->
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src={{url_for('static', filename='smoss.js')}}></script>
 
 		<!-- CSS: -->
 		<link rel="stylesheet" href={{url_for('static', filename='skeleton.css')}} />
@@ -30,16 +31,7 @@
                 <input class="button-primary" type="submit" value="Submit"> 
             </form>
             <h4>Added URL's:</h4>
-            <div id="urlList">
-                <div class="row">
-                    <div class="eleven columns">
-                        <p>Link one</p>
-                    </div>
-                    <div class="one column">
-                        <input type="button" class="delete button" onclick="removeLinkedUrl()" value=" X ">
-                    </div>
-                </div>
-            </div>
+            <div id="urlList"></div>
         </div>
     </body>
 </html>
