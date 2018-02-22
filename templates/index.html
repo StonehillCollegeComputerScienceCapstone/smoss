@@ -10,24 +10,34 @@
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 		<!-- CSS: -->
-        <link rel="stylesheet" href={{url_for('static', filename='smoss.css')}} />
 		<link rel="stylesheet" href={{url_for('static', filename='skeleton.css')}} />
+        <link rel="stylesheet" href={{url_for('static', filename='smoss.css')}} />
     </head>
 
     <body>
+        <h1>SMOSS</h1>
         <div class="container">
-            <h1>SMOSS Environment</h1>
-            <p>Welcome to the Stonehill College MOSS submission and analysis environment. Please select one of the pipelines below to begin:</p>
-            <div class="row">
-                <div class="six columns">
-                    <h3>Assignment Review</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <a class="button button-primary" href=#>View Now</a>            
+            <h3>Enter a URL to Analyze:</h3>
+            <form>
+                <div class="row">
+                    <div class="eleven columns">
+                        <input class="u-full-width" type="text" placeholder="http://moss.stanford.edu/results/#####" id="urlInput">
+                    </div>
+                    <div class="one column">
+                        <input class="button" type="button" value="Add" onclick="addURLToList()">
+                    </div>
                 </div>
-                <div class="six columns">
-                    <h3>Cross-Assignment Analysis</h3>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    <a class="button button-primary" href=#>Analyze Now</a>            
+                <input class="button-primary" type="submit" value="Submit"> 
+            </form>
+            <h4>Added URL's:</h4>
+            <div id="urlList">
+                <div class="row">
+                    <div class="eleven columns">
+                        <p>Link one</p>
+                    </div>
+                    <div class="one column">
+                        <input type="button" class="delete button" onclick="removeLinkedUrl()" value=" X ">
+                    </div>
                 </div>
             </div>
         </div>
