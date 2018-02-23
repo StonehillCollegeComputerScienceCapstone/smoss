@@ -46,16 +46,16 @@ class MossURLsRetrieval:
         file_data_name = "get_results.csv"
         m = MossParser(file_data_name)
         assignment_num = 0
-# assignment_num, f1, f2, url, f1_percent, f2_percent, lines_matched
+
         for url in self.urls:
             m.parse(url)
             file_data = open(file_data_name)
             lines = file_data.readlines()
             for line in lines:
-                # print(line)
                 data = line.split(',')
-                r = Result(assignment_num, data[0], data[2], data[5], data[1], data[3], data[4])
+                r = Result(assignment_num, data[0], data[2], data[5].strip(), data[1], data[3], data[4])
                 self.results.append(r)
+
             file_data.close()
             assignment_num = assignment_num + 1
         return True
