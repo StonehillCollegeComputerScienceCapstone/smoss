@@ -7,9 +7,10 @@ install:
   - pip install flask
   - npm install -g qunit
 
- notifications:
-    slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
-
 script:
   - python -m unittest -v test/*.py
   - qunit
+
+notifications:
+  slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
+
