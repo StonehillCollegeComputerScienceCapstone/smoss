@@ -39,7 +39,8 @@ def _Index ():
 def _MOSSOutput ():
     print ('[BackendServer]\tMOSS Output page displayed!')
     template = "templates/MOSSoutput.html"
-    objectList= sorter.get_csv()
+    objectList = sorter.get_csv()
+    sorter.validateData (objectList)
     return render_template (template, object_list = objectList)
 
 
