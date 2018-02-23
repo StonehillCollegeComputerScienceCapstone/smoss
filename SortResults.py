@@ -2,7 +2,6 @@ import csv
 import webbrowser
 import os
 import json
-
 class SortResults:
 
     def __init__(self):
@@ -22,6 +21,8 @@ class SortResults:
         self.MOSSresults = []
 
 
+
+
     # Checks to make sure there is a csv file
     def isValidFilename(self):
         if len(self.inputFileName) <= 5:
@@ -29,6 +30,7 @@ class SortResults:
         self.inputFileName = self.inputFileName.lower()
         if self.inputFileName.endswith('.csv'):
             return True
+
         return False
 
     # Creates a list from the csv file

@@ -5,7 +5,7 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.sr = SortResults();
-        self.sr.inputFileName = "MOSSinput.csv"
+        self.sr.inputFileName = "csv.csv"
 
     def testValidInputFileLower(self):
         self.assertTrue(self.sr.isValidFilename())
@@ -15,15 +15,15 @@ class MyTestCase(unittest.TestCase):
         self.assertFalse(self.sr.isValidFilename())
 
     def testValidInputFileUpper(self):
-        self.sr.inputFileName = "MOSSresults.CSV"
+        self.sr.inputFileName = "csv.CSV"
         self.assertTrue(self.sr.isValidFilename())
 
     def testValidInputFileXLS(self):
-        self.sr.inputFileName = "MOSSresults.XLS"
+        self.sr.inputFileName = "csv.XLS"
         self.assertFalse(self.sr.isValidFilename())
 
     def testValidInputFileXLSX(self):
-        self.sr.inputFileName = "MOSSresults.XLSX"
+        self.sr.inputFileName = "csv.XLSX"
         self.assertFalse(self.sr.isValidFilename())
 
     #def testMainList(self):
