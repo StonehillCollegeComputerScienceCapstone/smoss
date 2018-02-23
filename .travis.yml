@@ -1,0 +1,13 @@
+language: python
+
+python:
+  - 3.5
+
+
+install:
+  pip install flask
+  npm install -g qunit
+
+script:
+  python -m unittest -v test/*.py
+  qunit
