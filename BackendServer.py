@@ -41,6 +41,7 @@ def _MOSSOutput ():
     template, value = getValidorInvalidPageTemplate()
     return render_template (template, value = value)
 
+
 def getValidorInvalidPageTemplate():
     if not(sorter.vailidateData()):
         template = "templates/errorpage.html"
