@@ -43,7 +43,7 @@ def _MOSSOutput ():
 
 
 def getValidorInvalidPageTemplate():
-    if not(sorter.vailidateData()):
+    if not(sorter.validateData()):
         template = "templates/errorpage.html"
         value = "Invalid File Data"
     else:

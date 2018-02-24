@@ -152,7 +152,150 @@ class MyTestCase(unittest.TestCase):
         self.sr.match2.append("testString")
         self.assertFalse(self.sr.isValidLength())
 
+    def testValidateDatainvalidlength(self):
+        self.sr.createMainList()
+        self.sr.linesMatched.append("22")
+        self.assertFalse(self.sr.validateData())
 
+    def testValidateDataValidlength(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidFilename1(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("3")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataValidFilename1(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidFilename2(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("3")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataValidFilename2(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidMatch1(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("test")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataValidMatch1(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidMatch2(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("test")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataValidMatch2(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidURL(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("3")
+        self.sr.linesMatched.append("22")
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataValidURL(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidLinesMatched(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("test")
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataValidLinesMatched(self):
+        self.sr.createMainList()
+        self.sr.fileName1.append("test.java")
+        self.sr.fileName2.append("hello.java")
+        self.sr.match1.append("22")
+        self.sr.match2.append("22")
+        self.sr.URL.append("test.html")
+        self.sr.linesMatched.append("22")
+        self.assertTrue(self.sr.validateData())
+
+    def testValidateDataInvalidInputFile(self):
+        self.sr.createMainList()
+        self.sr.inputFileName = "csv.XLS"
+        self.assertFalse(self.sr.validateData())
+
+    def testValidateDataInvalidInputFile(self):
+        self.sr.createMainList()
+        self.sr.inputFileName = "csv.csv"
+        self.assertTrue(self.sr.validateData())
 
 
     def tearDown(self):
