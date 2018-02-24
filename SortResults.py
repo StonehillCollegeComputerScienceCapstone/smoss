@@ -103,3 +103,23 @@ class SortResults:
         csv_obj = csv.DictReader(csv_file)
         csv_list = list(csv_obj)
         return csv_list
+
+    def vailidateData(self):
+        if not(self.isValidLength()):
+            return False
+        if not(self.isValidStringList(self.fileName1)):
+            return False
+        if not(self.isValidStringList(self.fileName2)):
+            return False
+        if not(self.isValidStringList(self.URL)):
+            return False
+        if not(self.isValidMatchedList(self.match1)):
+            return False
+        if not(self.isValidMatchedList(self.match2)):
+            return False
+        if not(self.isValidMatchedList(self.linesMatched)):
+            return False
+        if not(self.isValidFilename()):
+            return False
+        print("All data is Valid")
+        return True

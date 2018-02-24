@@ -37,11 +37,18 @@ def _Index ():
 #
 @app.route ('/moss')
 def _MOSSOutput ():
-    print ('[BackendServer]\tMOSS Output page displayed!')
-    template = "templates/MOSSoutput.html"
-    objectList = sorter.get_csv()
-    sorter.validateData (objectList)
-    return render_template (template, object_list = objectList)
+    print('[BackendServer]\tMOSS Output page displayed!')
+    template, value = getValidorInvalidPageTemplate()
+    return render_template (template, value = value)
+
+def getValidorInvalidPageTemplate():
+    if not(sorter.vailidateData()):
+        template = "templates/errorpage.html"
+        value = "Invalid File Data"
+    else:
+        template = "templates/MOSSoutput.html"
+        value = sorter.get_csv()
+    return template, value
 
 
 #
@@ -51,7 +58,7 @@ def _MOSSOutput ():
 @app.errorhandler (404)
 def _ErrorHandler (errorCode):
     template = "templates/errorpage.html"
-    return render_template (template, errorCode = errorCode)
+    return render_template (template, value = errorCode)
 
 
 
