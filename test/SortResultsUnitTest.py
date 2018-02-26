@@ -4,7 +4,7 @@ from SortResults import SortResults
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.sr = SortResults();
+        self.sr = SortResults()
         self.sr.inputFileName = "csv.csv"
 
     def testValidInputFileLower(self):
@@ -83,7 +83,7 @@ class MyTestCase(unittest.TestCase):
         self.sr.match1.append("3")
         self.assertTrue(self.sr.isValidMatchedList(self.sr.match1))
 
-    def testInvalidMatch1List(self):
+    def testInvalidMatch1DoubleList(self):
         self.sr.createMainList()
         self.sr.match1.append("3.0")
         self.assertFalse(self.sr.isValidMatchedList(self.sr.match1))
@@ -103,7 +103,7 @@ class MyTestCase(unittest.TestCase):
         self.sr.match2.append("3")
         self.assertTrue(self.sr.isValidMatchedList(self.sr.match2))
 
-    def testInvalidMatch2List(self):
+    def testInvalidMatch2DoubleList(self):
         self.sr.createMainList()
         self.sr.match2.append("3.0")
         self.assertFalse(self.sr.isValidMatchedList(self.sr.match2))
@@ -292,7 +292,7 @@ class MyTestCase(unittest.TestCase):
         self.sr.inputFileName = "csv.XLS"
         self.assertFalse(self.sr.validateData())
 
-    def testValidateDataInvalidInputFile(self):
+    def testValidateDataInvalidInputFileCSV(self):
         self.sr.createMainList()
         self.sr.inputFileName = "csv.csv"
         self.assertTrue(self.sr.validateData())

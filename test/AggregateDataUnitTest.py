@@ -8,15 +8,17 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.results = []
-        result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
-        result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
-        result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
-        result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
-        result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
-        result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
-        result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
-        result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
-        result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
+        self.validURL = "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
+
+        result1 = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
+        result2 = Result(1, "Matt", "Sam", self.validURL, 80, 43, 77)
+        result3 = Result(1, "Armen", "Sam", self.validURL, 12, 10, 8)
+        result4 = Result(2, "Matt", "Armen", self.validURL, 33, 70, 45)
+        result5 = Result(2, "Matt", "Sam", self.validURL, 16, 17, 15)
+        result6 = Result(2, "Armen", "Sam", self.validURL, 50, 34, 5)
+        result7 = Result(3, "Matt", "Armen", self.validURL, 76, 79, 20)
+        result8 = Result(3, "Matt", "Sam", self.validURL, 90, 88, 100)
+        result9 = Result(3, "Armen", "Sam", self.validURL, 10, 6, 2)
         self.results.append(result1)
         self.results.append(result2)
         self.results.append(result3)

@@ -161,16 +161,17 @@ class AggregateData:
 
 # Example data
     def example(self):  # Put this in the class to have the example
+        validURL = "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
         results = []
-        result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
-        result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
-        result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
-        result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
-        result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
-        result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
-        result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
-        result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
-        result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
+        result1 = Result(1, "Matt", "Armen", validURL, 90, 70, 20)
+        result2 = Result(1, "Matt", "Sam", validURL, 80, 43, 77)
+        result3 = Result(1, "Armen", "Sam", validURL, 12, 10, 8)
+        result4 = Result(2, "Matt", "Armen", validURL, 33, 70, 45)
+        result5 = Result(2, "Matt", "Sam", validURL, 16, 17, 15)
+        result6 = Result(2, "Armen", "Sam", validURL, 50, 34, 5)
+        result7 = Result(3, "Matt", "Armen", validURL, 76, 79, 20)
+        result8 = Result(3, "Matt", "Sam", validURL, 90, 88, 100)
+        result9 = Result(3, "Armen", "Sam", validURL, 10, 6, 2)
         results.append(result1)
         results.append(result2)
         results.append(result3)
