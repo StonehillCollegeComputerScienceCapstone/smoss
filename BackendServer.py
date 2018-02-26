@@ -18,7 +18,7 @@ import os
 
 
 
-# Global Variables
+# Global Variable
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
 #mossURLSetrieval = MossURLsRetrieval()
