@@ -3,17 +3,36 @@ import urllib
 from MossParser import MossParser
 class MossParserUnitTest(unittest.TestCase):
 
-    #Test for valid URL
+#1. Test testValidURL() on an valid url
+#2. Test testValidURL() on an invalid url
+#3. Test getHtml() on a valid url
+#4. Test processHtml() on valid output
+#5. Test processHtml() on invalid output
+#6. Test processTableString() on a valid output
+#7. Test processTableString() on an invalid output
+#8. Test isValidMossResult() on a valid output
+#9-17 Test isValidMossResults() on many invalid outputs
+#18. Test getName()
+
+
+    #18. Test getName()
+        def testValidURL(self):
+            mp = MossParser("csv.txt")
+            string = "msmith_HomeValue.java (21%)"
+            assertEqual(mp.getName(string), "msmith")
+
+
+    #1. Test for valid URL
         def testValidURL(self):
             mp = MossParser("csv.txt")
             self.assertTrue(mp.testUrl("http://moss.stanford.edu/results/322457013"))
 
-    #Test for inValid URL
+    #2. Test for inValid URL
         def testInvalidURL(self):
             mp = MossParser("csv.txt")
             self.assertFalse(mp.testUrl("http://mosdf23s.stanford.edu/resdawesults/3224570wdsd13"))
 
-    #Test method which takes a url string and returns an html file
+    #3. Test method which takes a url string and returns an html file
         def testValidURL(self):
             mp = MossParser("csv.txt")
             html = urllib.request.urlopen("http://www.python.org")
@@ -24,7 +43,7 @@ class MossParserUnitTest(unittest.TestCase):
             self.assertTrue(mp.getHtml("http://www.python.org") == mystr)
 
 
-    #Test the processing of a valid html file into a list of table element strings
+    #4. Test the processing of a valid html file into a list of table element strings
         def testValidHtmlProcessing(self):
             mp=MossParser("csv.txt")
 
@@ -219,7 +238,7 @@ class MossParserUnitTest(unittest.TestCase):
 
 
 
-        #Test the processing of an invalid html file into a list of table elements strings
+        #5. Test the processing of an invalid html file into a list of table elements strings
         def testInvalidHtmlProcessing(self):
             mp = MossParser("csv.txt")
 
@@ -412,7 +431,7 @@ class MossParserUnitTest(unittest.TestCase):
                          </td><td align="right">
                          </td></tr>"""], mp.processHtml(mp.getHtml("http://moss.stanford.edu/results/299782671/")))
 
-    #Test for valid csvstrings being made from the processTableStrings method
+    #6. Test for valid csvstrings being made from the processTableStrings method
         def testValidProcessTableStrings(self):
             mp = MossParser("csv.txt")
             tableString = """"<tr><td><a href="http://moss.stanford.edu/results/322457013/match0.html">warmup36.java (94%)</a>
@@ -423,7 +442,7 @@ class MossParserUnitTest(unittest.TestCase):
             testString = mp.processTableString()
             self.assertTrue(tableString == testString)
 
-    #Test for invalid csvstrings being made from the processTableStrings method
+    #7. Test for invalid csvstrings being made from the processTableStrings method
         def testInvalidProcessTableString(self):
             mp=MossParser("csv.txt")
             tableString = """"<tr><td><a href="http://moss.stanford.edu/results/322457013/match0.html">warmup36.java (94%)</a>
@@ -433,13 +452,14 @@ class MossParserUnitTest(unittest.TestCase):
             self.assertFalse(tableString == testString)
 
 
-    #test for valid Moss Result Object
+    #8. Test for valid Moss Result Object
 
             def testValidMossResult():
                 mp=MossParser("csv.txt")
                 self.assertTrue(mp.isValidMossResult("Sally","squareroot26.java","22","Sally","squareroot3.java",
                                                      "43","10","http://moss.stanford.edu/results/299782671/match15.html"))
-    #test for invalid MOSS result object- no user 1
+
+    #9 - 17. Test for invalid MOSS results
 
             def testInvalidMossResultUser1():
                 mp = MossParser("csv.txt")

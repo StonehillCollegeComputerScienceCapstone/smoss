@@ -89,14 +89,6 @@ class SortResults:
         return filename
         # webbrowser.open("file://" + filename, new=0)
 
-    # def userList():
-        # sr = SortResults()
-        # sr.createMainList()
-        # sr.createCategoryLists()                           NOT USED FOR NOW
-        # test = json.dumps(sr.MOSSresults)
-        # filename = "/MOSSoutput.html"
-        # return render_template(filename, test=test)
-
     def get_csv(self):
         csv_path = self.getFilePath()
         csv_file = open(csv_path, 'r')

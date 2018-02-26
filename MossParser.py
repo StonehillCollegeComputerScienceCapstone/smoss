@@ -19,7 +19,6 @@ class MossParser ():
         else:
             # get the html text from the URL
             html = self.getHtml(urlInput)
-            #print('Have HTML, now going to process')
             # Process the html into table strings
             tableStrings = self.processHtml(html)
 
@@ -29,7 +28,7 @@ class MossParser ():
 
     def writeToCsv(self,csvStrings):
         f = open(self.csvFileName, 'w')
-        f.write("FileName1,Match1,FileName2,Match2,Lines_Matched,URL")
+        f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
         f.write('\n')
         for item in csvStrings:
             for value in item[:-1]:
@@ -37,6 +36,13 @@ class MossParser ():
             f.write(item[-1])
             f.write('\n')
         f.close()
+
+    def getName(self,s):
+        s=s.replace("_",",")
+        values=s.split(",")
+        print(values)
+        return values[0]
+
 
     def displayInvalidUrl(self):
         #when there is web functionality, redirect to page displaying error.
@@ -57,10 +63,8 @@ class MossParser ():
         #parse until table
         htmlParser=myHtmlParser()
         htmlParser.feed(html)
-        #print("Table String: ", htmlParser.tableString)
         #here we have all of the rows in one long string
         #now we parse through the string and split them up into individual strings
-        #first take out \n
         stripped=htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
         splitStrings=stripped.split("tr")
@@ -93,8 +97,12 @@ class MossParser ():
             tableString=self.formatTableString(tableString)
             #print(tableString)
             tableStringValues=tableString.split(",")
-            #print(tableStringValues)
-            csvString=[tableStringValues[1].strip(),tableStringValues[2],tableStringValues[4].strip(),tableStringValues[5],tableStringValues[6],tableStringValues[0]]
+            name1=self.getName(tableStringValues[1].strip())
+            name2 = self.getName(tableStringValues[4].strip())
+            print(tableStringValues)
+            print(name1)
+            print(name2)
+            csvString=[name1,tableStringValues[1].strip(),tableStringValues[2],name2,tableStringValues[4].strip(),tableStringValues[5],tableStringValues[6],tableStringValues[0]]
             csvStrings.append(csvString)
         return csvStrings
     def formatTableString(self,tableString):
@@ -136,4 +144,4 @@ class myHtmlParser (HTMLParser):
 
 #use these for testing/running locally
 #mp=MossParser("csv.csv")
-#mp.parse("http://moss.stanford.edu/results/299782671/")
+#mp.parse("http://moss.stanford.edu/results/582293048/")
