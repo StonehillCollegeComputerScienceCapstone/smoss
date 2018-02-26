@@ -12,7 +12,14 @@ class MossParserUnitTest(unittest.TestCase):
 #7. Test processTableString() on an invalid output
 #8. Test isValidMossResult() on a valid output
 #9-17 Test isValidMossResults() on many invalid outputs
+#18. Test getName()
 
+
+    #18. Test getName()
+        def testValidURL(self):
+            mp = MossParser("csv.txt")
+            string = "msmith_HomeValue.java (21%)"
+            assertTrue(mp.getName(string), "msmith")
 
 
     #1. Test for valid URL
