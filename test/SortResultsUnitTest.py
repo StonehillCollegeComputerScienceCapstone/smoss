@@ -159,6 +159,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidlength(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -169,6 +171,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataInvalidFilename1(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("3")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -179,6 +183,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidFilename1(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -189,6 +195,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataInvalidFilename2(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("3")
         self.sr.match1.append("22")
@@ -199,6 +207,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidFilename2(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -209,6 +219,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataInvalidMatch1(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("test")
@@ -219,6 +231,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidMatch1(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -229,6 +243,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataInvalidMatch2(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -239,6 +255,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidMatch2(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -249,6 +267,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataInvalidURL(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -259,6 +279,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidURL(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -269,6 +291,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataInvalidLinesMatched(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")
@@ -279,6 +303,8 @@ class MyTestCase(unittest.TestCase):
 
     def testValidateDataValidLinesMatched(self):
         self.sr.createMainList()
+        self.sr.user1.append("User1")
+        self.sr.user2.append("User2")
         self.sr.fileName1.append("test.java")
         self.sr.fileName2.append("hello.java")
         self.sr.match1.append("22")

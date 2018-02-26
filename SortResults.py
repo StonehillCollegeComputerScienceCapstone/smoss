@@ -78,7 +78,7 @@ class SortResults:
         return True
 
     def isValidLength(self):
-        if len(self.fileName1) == len(self.fileName2) == len(self.match1) == len(self.match2) == len(self.URL) == len(self.linesMatched):
+        if len(self.user1) == len(self.user2) == len(self.fileName1) == len(self.fileName2) == len(self.match1) == len(self.match2) == len(self.URL) == len(self.linesMatched):
             return True
         else:
             return False
