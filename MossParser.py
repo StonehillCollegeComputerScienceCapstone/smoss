@@ -37,6 +37,13 @@ class MossParser ():
             f.write('\n')
         f.close()
 
+    def getName(self,s):
+        result = ""
+        for c in s:
+            if c == '_':
+                return result
+            result = result + s[i]
+
     def displayInvalidUrl(self):
         #when there is web functionality, redirect to page displaying error.
         #for now just display error message

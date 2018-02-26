@@ -16,10 +16,10 @@ class MossParserUnitTest(unittest.TestCase):
 
 
     #18. Test getName()
-        #def testValidURL(self):
-        #    mp = MossParser("csv.txt")
-        #    string = "msmith_HomeValue.java (21%)"
-        #    assertTrue(mp.getName(string), "msmith")
+        def testValidURL(self):
+            mp = MossParser("csv.txt")
+            string = "msmith_HomeValue.java (21%)"
+            assertEqual(mp.getName(string), "msmith")
 
 
     #1. Test for valid URL
