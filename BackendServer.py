@@ -11,6 +11,9 @@
 
 from flask import *
 from SortResults import SortResults
+from AggregateData import AggregateData
+from MossURLsRetrieval import MossURLsRetrieval
+from FileRetrieval import FileRetrieval
 import os
 
 
@@ -18,7 +21,14 @@ import os
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
+#mossURLSetrieval = MossURLsRetrieval()
+#mossURLSetrieval.get_file_urls("FileInput.txt")
+#mossURLSetrieval.get_results()
+#aggregate = AggregateData(mossURLSetrieval.results)
 
+aggregate = AggregateData(None)
+aggregate.results = aggregate.example()  #using AggregateData's example for AggregateOutput
+aggregate.aggregateData()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
@@ -30,8 +40,6 @@ def _Index ():
     return render_template (template)
 
 
-
-
 #
 #   _MOSSOutput (): Formerly held within SortResults.py, this displays the MOSSoutput template at localhost:5000/moss
 #
@@ -41,6 +49,12 @@ def _MOSSOutput ():
     template, value = getValidorInvalidPageTemplate()
     return render_template (template, value = value)
 
+@app.route ('/mossaggregate')
+def _MOSSAggregateOutput ():
+    print('[BackendServer]\tMOSS Aggregate Output page displayed!')
+    template, percentsValues = getValidorInvalidAggregateLinesTemplate()
+    template, linesValues = getValidorInvalidAggregatePercentTemplate()
+    return render_template (template, percentsValues = percentsValues, linesValues = linesValues),
 
 def getValidorInvalidPageTemplate():
     if not(sorter.validateData()):
@@ -51,6 +65,15 @@ def getValidorInvalidPageTemplate():
         value = sorter.get_csv()
     return template, value
 
+def getValidorInvalidAggregatePercentTemplate():
+    template = "templates/MOSSAggregateOutput.html"  # Displaying AggregateData's example
+    percentsValues = aggregate.top_percents
+    return template, percentsValues
+
+def getValidorInvalidAggregateLinesTemplate():
+    template = "templates/MOSSAggregateOutput.html"  # Displaying AggregateData's example
+    linesValues = aggregate.top_lines
+    return template, linesValues
 
 #
 #   _ErrorHandler ():   Displays the generic error page with output on the error type

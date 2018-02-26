@@ -9,8 +9,9 @@ class AggregateData:
     def __init__(self, results):
         self.results = results
         self.top_percents = []
-        self.top_lines = []
-        self.aggregateData()  # Aggregates the data
+        self.top_percents = []
+        if (not (results is None)):  # This adjustment made for using the example outside of this class
+            self.aggregateData()
 
     # Validates data has been received to aggregate
     def validResults(self, results):
@@ -159,31 +160,36 @@ class AggregateData:
         self.top_lines = aggregateLines[:10]
 
 # Example data
-def example():
-    results = []
-    result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
-    result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
-    result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
-    result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
-    result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
-    result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
-    result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
-    result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
-    result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
-    results.append(result1)
-    results.append(result2)
-    results.append(result3)
-    results.append(result4)
-    results.append(result5)
-    results.append(result6)
-    results.append(result7)
-    results.append(result8)
-    results.append(result9)
-    return results
+    def example(self):  # Put this in the class to have the example
+        results = []
+        result1 = Result(1, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 90, 70, 20)
+        result2 = Result(1, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 80, 43, 77)
+        result3 = Result(1, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 12, 10, 8)
+        result4 = Result(2, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 33, 70, 45)
+        result5 = Result(2, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 16, 17, 15)
+        result6 = Result(2, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 50, 34, 5)
+        result7 = Result(3, "Matt", "Armen", "http://moss.stanford.edu/results/299782671/", 76, 79, 20)
+        result8 = Result(3, "Matt", "Sam", "http://moss.stanford.edu/results/299782671/", 90, 88, 100)
+        result9 = Result(3, "Armen", "Sam", "http://moss.stanford.edu/results/299782670/", 10, 6, 2)
+        results.append(result1)
+        results.append(result2)
+        results.append(result3)
+        results.append(result4)
+        results.append(result5)
+        results.append(result6)
+        results.append(result7)
+        results.append(result8)
+        results.append(result9)
+        return results
 
 def main():
-    results = example()  # Obtained from Sam and Nikolay
-    ag = AggregateData(results)
+
+#    results = example()  # Obtained from Sam and Nikolay
+#   ag = AggregateData(results)
+
+    ag = AggregateData(None)  #adjusted to get this main's example to work with example() being part of the class
+    ag.results = ag.example()
+    ag.aggregateData()
 
     # Display data
     print("Highest Average Percent")
