@@ -30,6 +30,12 @@ class MossURLsTests(unittest.TestCase):
         self.MossURLsData.get_file_urls("FileInput.txt")
         self.assertEqual(len(self.MossURLsData.urls), 5)
 
+    def test_Result_Objects(self):
+        self.MossURLsData.get_file_urls("FileInput.txt")  # URLs file to parse
+        self.assertTrue(self.MossURLsData.get_results())  # checking for errors in the parsing
+        self.assertTrue(self.MossURLsData.results)  # checks that it is not null
+
+
     def tearDown(self):
         self.MossURLsData = None
 

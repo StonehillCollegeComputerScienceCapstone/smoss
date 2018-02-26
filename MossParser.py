@@ -6,19 +6,20 @@ import urllib.request
 from html.parser import HTMLParser
 
 
-class MossParser:
-    def main(self):
+class MossParser ():
+    def __init__(self,csvFileName):
+        self.csvFileName = csvFileName
+    def parse(self,urlInput):
         print("need to work on class")
         # If this is not a valid URL display error and exit
         # using http://moss.stanford.edu/results/299782671/ to test
-        urlInput = self.getInput()
         validUrl=self.testUrl(urlInput)
         if(not validUrl):
             self.displayInvalidUrl()
         else:
             # get the html text from the URL
             html = self.getHtml(urlInput)
-            print('Have HTML, now going to process')
+            #print('Have HTML, now going to process')
             # Process the html into table strings
             tableStrings = self.processHtml(html)
 
@@ -26,17 +27,15 @@ class MossParser:
             csvStrings = self.processTableStrings(tableStrings)
             self.writeToCsv(csvStrings)
 
-
-    #Create, save, and close the csv file
-    def getInput(self):
-        #for now prompt user for input of url, maybe later make it argument passed in by command line or other means
-        urlInput=input("Please enter the url: ")
-        return urlInput
-
-    def writeToCsv(csvStrings):
-        f = open("csv.txt")
+    def writeToCsv(self,csvStrings):
+        f = open(self.csvFileName, 'w')
+        f.write("FileName1,Match1,FileName2,Match2,Lines_Matched,URL")
+        f.write('\n')
         for item in csvStrings:
-            f.write(item + '\n')
+            for value in item[:-1]:
+                f.write(value+",")
+            f.write(item[-1])
+            f.write('\n')
         f.close()
 
     def displayInvalidUrl(self):
@@ -58,7 +57,7 @@ class MossParser:
         #parse until table
         htmlParser=myHtmlParser()
         htmlParser.feed(html)
-        print("Table String: ", htmlParser.tableString)
+        #print("Table String: ", htmlParser.tableString)
         #here we have all of the rows in one long string
         #now we parse through the string and split them up into individual strings
         #first take out \n
@@ -92,12 +91,12 @@ class MossParser:
 
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
-            print(tableString)
+            #print(tableString)
             tableStringValues=tableString.split(",")
-            print(tableStringValues)
+            #print(tableStringValues)
             csvString=[tableStringValues[1].strip(),tableStringValues[2],tableStringValues[4].strip(),tableStringValues[5],tableStringValues[6],tableStringValues[0]]
             csvStrings.append(csvString)
-        return csvString
+        return csvStrings
     def formatTableString(self,tableString):
         tableString.lstrip()
         tableString = tableString.replace("td a href", '')
@@ -107,6 +106,9 @@ class MossParser:
         tableString=tableString.replace("  ",",")
         tableString=tableString.replace(" ",", ")
         tableString=tableString.replace(" (","(")
+        tableString=tableString.replace("(","")
+        tableString=tableString.replace(")","")
+        tableString=tableString.replace("%","")
         return tableString
 class myHtmlParser (HTMLParser):
     tableString=""
@@ -132,5 +134,6 @@ class myHtmlParser (HTMLParser):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
 
-# mp=MossParser()
-# mp.main()
+#use these for testing/running locally
+#mp=MossParser("csv.csv")
+#mp.parse("http://moss.stanford.edu/results/299782671/")

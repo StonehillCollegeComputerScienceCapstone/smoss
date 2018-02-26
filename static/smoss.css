@@ -1,0 +1,33 @@
+/*
+    FILE:       smoss.css
+    AUTHOR:     mmiddleton
+    DATE:       22 FEB 2018
+*/
+  
+/*
+        Code for /:
+-----------------------------------------------*/
+form * .button-primary {
+    width: 100%;
+}
+  
+.delete {
+    background-color: #FF5555 !important;
+    color: peachpuff !important;
+}
+
+.delete:hover {
+    border-color: #4F0B0B !important;
+    background-color: #B21A1A !important;
+    font-weight: bolder !important;    
+}
+
+.container h4 {
+    text-align: center;
+}
+
+#urlList p {
+    padding: 1% 0;
+    margin: 0;
+    vertical-align: middle;
+}

@@ -2,16 +2,13 @@ import csv
 import webbrowser
 import os
 import json
-from flask import Flask, render_template
-
-app = Flask(__name__)
 
 
 class SortResults:
 
     def __init__(self):
         # CSV input file name
-        self.inputFileName = "MOSSinput.csv"
+        self.inputFileName = "csv.csv"
         # Lists that hold the csv information
         self.user1 = []
         self.user2 = []
@@ -24,7 +21,6 @@ class SortResults:
         # Main list that holds dictionaries in the format
         # ("CSV column title", value)
         self.MOSSresults = []
-
 
     # Checks to make sure there is a csv file
     def isValidFilename(self):
@@ -42,8 +38,6 @@ class SortResults:
             for row in inputFile:
                 self.MOSSresults.append(row)
         f.close()
-
-        print(self.MOSSresults)
 
         if len(self.MOSSresults) > 0:
             return True
@@ -84,38 +78,56 @@ class SortResults:
         return True
 
     def isValidLength(self):
-        if len(self.user1) == len(self.user2) == len(self.match1) == len(self.match2) == len(self.URL) == len(self.linesMatched):
+        if len(self.fileName1) == len(self.fileName2) == len(self.match1) == len(self.match2) == len(self.URL) == len(self.linesMatched):
             return True
         else:
             return False
 
-def getFilePath():
-    dir = os.path.dirname(__file__)
-    filename = os.path.join(dir, "MOSSinput.csv")
-    return filename
-    # webbrowser.open("file://" + filename, new=0)
+    def getFilePath(self):
+        dir = os.path.dirname(__file__)
+        filename = os.path.join(dir, "csv.csv")
+        return filename
+        # webbrowser.open("file://" + filename, new=0)
 
-#def userList():
-    #sr = SortResults()
-    #sr.createMainList()
-    #sr.createCategoryLists()                           NOT USED FOR NOW
-    #test = json.dumps(sr.MOSSresults)
-    #filename = "/MOSSoutput.html"
-    #return render_template(filename, test=test)
+    # def userList():
+        # sr = SortResults()
+        # sr.createMainList()
+        # sr.createCategoryLists()                           NOT USED FOR NOW
+        # test = json.dumps(sr.MOSSresults)
+        # filename = "/MOSSoutput.html"
+        # return render_template(filename, test=test)
 
-def get_csv():
-    csv_path = getFilePath()
-    csv_file = open(csv_path, 'r')
-    csv_obj = csv.DictReader(csv_file)
-    csv_list = list(csv_obj)
-    return csv_list
+    def get_csv(self):
+        csv_path = self.getFilePath()
+        csv_file = open(csv_path, 'r')
+        csv_obj = csv.DictReader(csv_file)
+        csv_list = list(csv_obj)
+        return csv_list
 
-@app.route('/')
-def index():
-    template="MOSSoutput.html"
-    object_list = get_csv()
-    return render_template(template, object_list=object_list)
-
-if __name__ == '__main__':
-    app.run(debug = True, use_reloader=True)
-
+    def validateData(self):
+        if not(self.isValidLength()):
+            print("Length is False")
+            return False
+        if not(self.isValidStringList(self.fileName1)):
+            print("FileName1 is False")
+            return False
+        if not(self.isValidStringList(self.fileName2)):
+            print("FileName2 is False")
+            return False
+        if not(self.isValidStringList(self.URL)):
+            print("URL is False")
+            return False
+        if not(self.isValidMatchedList(self.match1)):
+            print("Match1 is False")
+            return False
+        if not(self.isValidMatchedList(self.match2)):
+            print("Match2 is False")
+            return False
+        if not(self.isValidMatchedList(self.linesMatched)):
+            print("LinesMatched is False")
+            return False
+        if not(self.isValidFilename()):
+            print("CSVFILENAME is False")
+            return False
+        print("All data is Valid")
+        return True

@@ -2,12 +2,14 @@ import urllib
 import urllib.request
 import urllib.error
 from FileRetrieval import FileRetrieval
-
+from Result import Result
+from MossParser import MossParser
 
 class MossURLsRetrieval:
     def __init__(self):
         self.urls = []
         self.file = FileRetrieval()
+        self.results = []
         # potentially a data variable?
 
     def get_url(self, url):
@@ -39,3 +41,37 @@ class MossURLsRetrieval:
         for url in self.file.url_list:
             self.get_url(url)  # checks the validity of the URLs given from file
         return True
+
+    def get_results(self):
+        file_data_name = "get_results.csv"
+        m = MossParser(file_data_name)
+        assignment_num = 0
+
+        for url in self.urls:
+            m.parse(url)
+            file_data = open(file_data_name)
+            lines = file_data.readlines()
+            for line in lines:
+                data = line.split(',')
+                r = Result(assignment_num, data[0], data[2], data[5].strip(), data[1], data[3], data[4])
+                self.results.append(r)
+
+            file_data.close()
+            assignment_num = assignment_num + 1
+        return True
+
+def main():
+    murl = MossURLsRetrieval()
+    murl.get_file_urls("FileInput.txt")
+    murl.get_results()
+    for r in murl.results:
+        print("------------------- assignment number: ")
+        print(r.assignment_number)
+        print(r.file_one )
+        print(r.file_two )
+        print(r.url )
+        print(r.file_one_percent)
+        print(r.file_two_percent )
+        print(r.lines_matched)
+
+if __name__ == '__main__': main()
