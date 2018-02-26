@@ -19,7 +19,6 @@ class MossParser ():
         else:
             # get the html text from the URL
             html = self.getHtml(urlInput)
-            #print('Have HTML, now going to process')
             # Process the html into table strings
             tableStrings = self.processHtml(html)
 
@@ -57,10 +56,8 @@ class MossParser ():
         #parse until table
         htmlParser=myHtmlParser()
         htmlParser.feed(html)
-        #print("Table String: ", htmlParser.tableString)
         #here we have all of the rows in one long string
         #now we parse through the string and split them up into individual strings
-        #first take out \n
         stripped=htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
         splitStrings=stripped.split("tr")
