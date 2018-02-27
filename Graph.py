@@ -1,4 +1,3 @@
-from networkx import nx
 from AggregateData import AggregateData
 
 class Graph:
