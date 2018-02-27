@@ -1,21 +1,37 @@
+from networkx import nx
 from AggregateData import AggregateData
+
 
 class Graph:
 
-    def __init__(self):
-        self.x = 2
+    def __init__(self, results):
+        self.graph = nx.Graph()
+        self.createNodes()
+        self.createEdges(results)
 
     def print(self):
         print('print')
 
-    def cmp(self, a, b):
-        return (a > b) - (a < b)
-
-    def getNames(self):
+    def validResults(self, results):
+        if results and isinstance(results, list):
+            #
+            #Make sure all results have the same assignment number
+            #
+            return True
         return False
 
-    def pairNames(self, names):
+    def getNames(self, results):
         return False
+
+    def createNodes(self):
+        return False
+
+    def chooseGreaterPercent(self, result):
+        return False
+
+    def createEdges(self, results):
+        return False
+
 
 
 def main():
