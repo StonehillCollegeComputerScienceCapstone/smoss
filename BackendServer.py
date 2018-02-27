@@ -15,6 +15,7 @@ from AggregateData import AggregateData
 from MossURLsRetrieval import MossURLsRetrieval
 from FileRetrieval import FileRetrieval
 import os
+import cgi, cgitb
 
 
 
@@ -29,14 +30,15 @@ sorter = SortResults ()
 aggregate = AggregateData(None)
 aggregate.results = aggregate.example()  #using AggregateData's example for AggregateOutput
 aggregate.aggregateData()
+urlRetrieval = MossURLsRetrieval()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
 #
 @app.route ('/')
 def _Index ():
-    print ('[BackendServer]\tIndex page displayed!')
-    template = 'templates/index.html'
+    print('[BackendServer]\tIndex page displayed!')
+    template = "templates/index.html"
     return render_template (template)
 
 
@@ -46,7 +48,7 @@ def _Index ():
 @app.route ('/moss')
 def _MOSSOutput ():
     print('[BackendServer]\tMOSS Output page displayed!')
-    template, value = getValidorInvalidPageTemplate()
+    template, value = getValidorInvalidMossTemplate()
     return render_template (template, value = value)
 
 @app.route ('/mossaggregate')
@@ -56,7 +58,24 @@ def _MOSSAggregateOutput ():
     template, linesValues = getValidorInvalidAggregatePercentTemplate()
     return render_template (template, percentsValues = percentsValues, linesValues = linesValues),
 
-def getValidorInvalidPageTemplate():
+@app.route('/URLvalidation')
+def _MOSSurlvalidation():
+    template, value = getValidorInvalidURL()
+    return render_template(template, value=value)
+
+def getValidorInvalidURL():
+    url = "http://moss.stanford.edu/results/582293048/"
+    if not(urlRetrieval.get_url(url)):
+        template = "templates/errorpage.html"
+        value = "Invalid URL"
+    else:
+        template = 'templates/invalidURL.html'
+        value = "URL is Valid"
+    return template, value
+
+
+
+def getValidorInvalidMossTemplate():
     if not(sorter.validateData()):
         template = "templates/errorpage.html"
         value = "Invalid File Data"
