@@ -1,5 +1,5 @@
 # SMOSS  
-[![Build Status](https://travis-ci.org/CSC400-S18/smoss.svg?branch=master)](https://travis-ci.org/CSC400-S18/smoss)  
+[![Build Status](https://travis-ci.org/CSC400-S18/smoss.svg?branch=master)](https://travis-ci.org/CSC400-S18/smoss)
 [![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=ejkvb0U0OEZUc29QVjV3bFZCeEVQRXBqSmRWQStDK1JISmRYTW5oV1g1UT0tLTN1VEdlTloyMzUwSWQ5NUM2WmNqRlE9PQ==--dbb6829fee77e081b6e9118a0ff5bea88c608631)](https://www.browserstack.com/automate/public-build/ejkvb0U0OEZUc29QVjV3bFZCeEVQRXBqSmRWQStDK1JISmRYTW5oV1g1UT0tLTN1VEdlTloyMzUwSWQ5NUM2WmNqRlE9PQ==--dbb6829fee77e081b6e9118a0ff5bea88c608631)
   
 SMOSS, or *Stonehill MOSS*, is a shell for the plagiarism detection system offered by Stanford University. This repository comprises the efforts of the Spring 2018 Computer Science Capstone class.
@@ -10,10 +10,21 @@ SMOSS, or *Stonehill MOSS*, is a shell for the plagiarism detection system offer
 *Taken from the official Stanford MOSS [website](https://theory.stanford.edu/~aiken/moss/).*
 
 ## Our Resources:  
-- **Front-End Automation:** We're happy to use *BrowserStack* for our automated Front-End testing. You should [check them out](https://www.browserstack.com/) to see if their product will work for your team.  
-- **Backend Testing:** Our team uses *[unittest](https://docs.python.org/3/library/unittest.html)* for our Python testing and *[QUnit](https://qunitjs.com/)* from jQuery for all of our Javascript testing.  
-- **Build Automation/Continious Integration:** Our project is powered by [Travis-CI](https://travis-ci.org/)! 
-
+**Front-End Automation:**  
+[![BrowserStack Logo](https://p3.zdusercontent.com/attachment/1015988/7xX5umxndDM8UucDwUtwNr5D1?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..Yp6zo7GuSzEFD9HH4jUngA.amj2Wu8g5-JR9Hjl_lANYax3LmXBfitJj_DYoPlWXpXQSmez1wJmCekjQCjTd5kSOebZblW26tbwhqThClx6Hg2cS8hqI7kYzqoMMfjldSyHBnVX2lAHA_hrzCVo8qWeY4j9A6oAZaZgTEv6Xho1UGsLiSgaEr79XDiFo8bocMGXEgTRBtZcFQFvzw8HaYafGPUzcfj3NR2Lwkb0J6x-8onryXuFIdQAV2ir_VyOMP3iTcPRQjhPqANSkwTePPX_4OgQRAezFEJPn-8DYZBLElKPeKkv4j5W3M8bkwzsxs0.J9X6-sU4VLvYnwJ-Q6QNqQ)](https://www.browserstack.com)  
+We're happy to use *BrowserStack* for our automated Front-End testing. You should check them out to see if their product will work for your team.  
+<br>  
+<br>  
+**Backend Testing:**  
+[![QUnit Logo](https://antfroger.github.io/slides-javascript-unit-testing/images/qunit.png)](https://qunitjs.com/)  
+Our team uses *[unittest](https://docs.python.org/3/library/unittest.html)* for our Python testing and jQuery's QUnit for all of our Javascript testing.  
+<br>  
+<br>  
+**Build Automation/Continious Integration:**  
+[![Travis-CI Logo](https://travis-ci.com/images/logos/TravisCI-Full-Color.png)](https://travis-ci.org/)  
+Our project is proudly powered by Travis CI.  
+<br>  
+<br>  
 ## Our Team:  
 The Capstone class utilizes Agile software development and was composed as follows:
 
