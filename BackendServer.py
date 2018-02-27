@@ -64,10 +64,10 @@ def _MOSSurlvalidation():
     return render_template(template, value=value)
 
 def getValidorInvalidURL():
-    url = "http://moss.stanford.edu/results/582293048/"
-    if not(urlRetrieval.get_url(url)):
+    valid, url =urlRetrieval.get_file_urls("FileInput.txt")
+    if not(valid):
         template = "templates/errorpage.html"
-        value = "Invalid URL"
+        value = ("Invalid URL: "+ url)
     else:
         template = 'templates/invalidURL.html'
         value = "URL is Valid"
