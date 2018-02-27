@@ -4,6 +4,7 @@ from AggregateData import AggregateData
 class Graph:
 
     def __init__(self):
+        self.x = 2
 
     def print(self):
         print('print')
