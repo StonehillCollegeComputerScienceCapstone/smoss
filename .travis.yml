@@ -10,7 +10,7 @@ install:
 script:
 - python -m unittest -v test/*Test.py
 - qunit
-- python test/front_end/*.py
+- python test/FrontEndTestSuite.py
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
