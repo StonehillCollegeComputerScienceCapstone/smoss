@@ -8,20 +8,38 @@ class Graph:
         self.graph = nx.Graph()
         self.createNodes()
         self.createEdges(results)
+        self.names = []
 
     def print(self):
         print('print')
 
     def validResults(self, results):
+        currAssignmentNum = -1
+        assignments = {}
         if results and isinstance(results, list):
-            #
-            #Make sure all results have the same assignment number
-            #
-            return True
-        return False
+            for result in results:
+                currAssignmentNum = result.assignment_number
+                if currAssignmentNum in assignments:
+                    assignments[currAssignmentNum] += 1
+                else:
+                    assignments[currAssignmentNum] = 1
+            listKeys = [*assignments]
+            if len(assignments) == 1:
+                return listKeys[0]
+            else:
+                currMajority = -1
+                assignmentNum = -1
+                for key,value in assignments.items():
+                    if value > currMajority:
+                        currMajority = value
+                        assignmentNum = key
+                return assignmentNum
+        return -1
 
     def getNames(self, results):
-        return False
+        ag = AggregateData(results)
+        self.names = ag.populateNames(results)
+        return self.names
 
     def createNodes(self):
         return False
