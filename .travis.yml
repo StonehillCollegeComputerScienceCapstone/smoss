@@ -4,13 +4,18 @@ python:
   - 3.5
 
 install:
-  - pip install flask
+  - pip install -r requirements.txt
   - npm install -g qunit
 
 script:
-  - python -m unittest -v test/*.py
-  - qunit
+- python -m unittest -v test/*.py
+- qunit
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
 
+addons:
+  browserstack:
+    username: michaelmiddleton2
+    access_key:
+      secure: W78mgOzVMjBRb3m33He5w1WYDtsDNTqVzScaP46dJVSEFKa9cbV8c0ggSBkfAZCskQU7lWYT6TKB7nInF4Yozti+FmC53M5YSq8SM7NjHoFiStCcybKUmKlc+GIY3R/ne4AOqwOTXwBYltBmhqZ8FN5Wey2g9aduTIZYDkbopTZ8HJMB34lld2iqQkdsxReer3SCmr9Lz7CbwyNcRfyPFyY9HgFkcDU9MXfFcTknAUBhqygzCFG/371bN6wECMaEinn+YHOTOsBoLPHIgQ6Q+iDMMwT38p7qc5MUeZs9EvwJtdafrmz9vli5VOrd5KSNuaC+kE9+ksbi9vG+rxoBFhe1eg3EQmE89wW1HZGdFM/U0u5/vbRBnDE3+MkRvs+PY022XSNGOl2kroWIozYfjVnuu3bbGgbptziShUigu5f5rhywzpaIWyEtMF3jZLcwHWulq79Zkl1qPR+0Kg3DUq41vLGuiZe2AhUtScSddIJuQC+NXqvvPTie+kOzaLaAayi+W+SmB2q/hIyjThg0AihyuBPHj793r5bOIQKRm39cTmJ7zZSkZJIF5+MSWNVYR2VaBTZpsW9pb2ZrLZt5kbJekHJMULS/HZk0zAlEgK3dMDc2f3uZUDXsGvyTuzSdPA31YK5o/OyaDcmfg1MjQRK4Qvsor3vDzlEmbRNjudY=

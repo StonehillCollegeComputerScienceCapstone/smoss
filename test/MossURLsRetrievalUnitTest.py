@@ -5,19 +5,20 @@ from MossURLsRetrieval import MossURLsRetrieval
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
         self.MossURLsData = MossURLsRetrieval()
+        self.validUrl =  "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
 
-#    def test_Valid_URL(self):
-#       self.assertTrue(self.MossURLsData.get_url("http://moss.stanford.edu/results/418632582/"))  # valid URL
+    def test_Valid_URL(self):
+        self.assertTrue(self.MossURLsData.get_url(self.validUrl))  # valid URL
 
     def test_Invalid_URL(self):
         self.assertFalse(self.MossURLsData.get_url("notURL"))  # this is not a valid URL
         self.assertFalse(self.MossURLsData.get_url(1))  # in case file reading goes wrong to this
         self.assertFalse(self.MossURLsData.get_url("http://moss.stanford.edu/results/12121212121212/"))  # 404 not found
 
-#    def test_Invalid_Same_URL(self):
-#        self.assertTrue(self.MossURLsData.get_url("http://moss.stanford.edu/results/418632582/"))
+    def test_Invalid_Same_URL(self):
+        self.assertTrue(self.MossURLsData.get_url(self.validUrl))
         # trying to get the information from the same URL will fail
-#        self.assertFalse(self.MossURLsData.get_url("http://moss.stanford.edu/results/418632582/"))
+        self.assertFalse(self.MossURLsData.get_url(self.validUrl))
 
     def test_Read_URLs_From_Valid_File(self):
         self.assertTrue(self.MossURLsData.get_file_urls("FileInput.txt"))

@@ -39,7 +39,15 @@ class MossURLsRetrieval:
         if not self.file.open_and_read_file(file):  # FileRetrieval returns if the file is valid
             return False
         for url in self.file.url_list:
-            self.get_url(url)  # checks the validity of the URLs given from file
+            self.get_url(url)# checks the validity of the URLs given from file
+        return True
+
+    def getValidity(self, file):
+        if not self.file.open_and_read_file(file):  # FileRetrieval returns if the file is valid
+            return False
+        for url in self.file.url_list:
+            if not(self.get_url(url)):# checks the validity of the URLs given from file
+                return False, url #returns the url that is invalid
         return True
 
     def get_results(self):
