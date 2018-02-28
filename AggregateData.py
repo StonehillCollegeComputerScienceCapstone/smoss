@@ -46,20 +46,24 @@ class AggregateData:
         names = []
 
         # For every row from MOSS
+
         for result in results:
-            if result.file_one not in names:
-                names.append(result.file_one)
-            if result.file_two not in names:
-                names.append(result.file_two)
+            if (result.file_one != "FileName1"):
+                if result.file_one not in names:
+                    names.append(result.file_one)
+                if result.file_two not in names:
+                    names.append(result.file_two)
 
         return names
 
     # Returns an array of assignment numbers in results
     def getAssignmentNumbers(self, results):
         numbers = []
+
         for result in results:
-            if (result.assignment_number not in numbers):
-                numbers.append(result.assignment_number)
+            if (result.file_one != "FileName1"):
+                if (result.assignment_number not in numbers):
+                    numbers.append(result.assignment_number)
         return numbers
 
     # Returns an array of highest percents based on a given name
@@ -69,11 +73,13 @@ class AggregateData:
 
         for number in assignmentNumbers:
             percents = []
+
             for result in results:
-                if (result.assignment_number == number) and (result.file_one == name):
-                    percents.append(result.file_one_percent)
-                elif (result.assignment_number == number) and (result.file_two == name):
-                    percents.append(result.file_two_percent)
+                if (result.file_one != "FileName1"):
+                    if (result.assignment_number == number) and (result.file_one == name):
+                        percents.append(int(result.file_one_percent))
+                    elif (result.assignment_number == number) and (result.file_two == name):
+                        percents.append(int(result.file_two_percent))
             maxPercents.append(max(percents))
         return maxPercents
 
@@ -84,11 +90,13 @@ class AggregateData:
 
         for number in assignmentNumbers:
             lines = []
+
             for result in results:
-                if (result.assignment_number == number) and (result.file_one == name):
-                    lines.append(result.lines_matched)
-                elif (result.assignment_number == number) and (result.file_two == name):
-                    lines.append(result.lines_matched)
+                if (result.file_one != "FileName1"):
+                    if (result.assignment_number == number) and (result.file_one == name):
+                        lines.append(int(result.lines_matched))
+                    elif (result.assignment_number == number) and (result.file_two == name):
+                        lines.append(int(result.lines_matched))
             maxLines.append(max(lines))
         return maxLines
 
