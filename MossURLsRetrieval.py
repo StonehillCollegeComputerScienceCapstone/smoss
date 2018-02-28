@@ -61,7 +61,7 @@ class MossURLsRetrieval:
             lines = file_data.readlines()
             for line in lines:
                 data = line.split(',')
-                r = Result(assignment_num, data[0], data[2], data[5].strip(), data[1], data[3], data[4])
+                r = Result(assignment_num, data[0], data[3], data[7].strip(), data[2], data[5], data[6])
                 self.results.append(r)
 
             file_data.close()

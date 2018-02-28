@@ -48,7 +48,7 @@ class AggregateData:
         # For every row from MOSS
 
         for result in results:
-            if (result.file_one != "FileName1"):
+            if (result.file_one != "User1"):
                 if result.file_one not in names:
                     names.append(result.file_one)
                 if result.file_two not in names:
@@ -61,7 +61,7 @@ class AggregateData:
         numbers = []
 
         for result in results:
-            if (result.file_one != "FileName1"):
+            if (result.file_one != "User1"):
                 if (result.assignment_number not in numbers):
                     numbers.append(result.assignment_number)
         return numbers
@@ -75,7 +75,7 @@ class AggregateData:
             percents = []
 
             for result in results:
-                if (result.file_one != "FileName1"):
+                if (result.file_one != "User1"):
                     if (result.assignment_number == number) and (result.file_one == name):
                         percents.append(int(result.file_one_percent))
                     elif (result.assignment_number == number) and (result.file_two == name):
@@ -92,7 +92,7 @@ class AggregateData:
             lines = []
 
             for result in results:
-                if (result.file_one != "FileName1"):
+                if (result.file_one != "User1"):
                     if (result.assignment_number == number) and (result.file_one == name):
                         lines.append(int(result.lines_matched))
                     elif (result.assignment_number == number) and (result.file_two == name):
