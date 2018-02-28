@@ -77,12 +77,10 @@ def getValidorInvalidMossTemplate():
     return template, value
 
 def getValidorInvalidAggregatePercentTemplate():
-    template = "templates/MOSSAggregateOutput.html"  # Displaying AggregateData's example
     percentsValues = aggregate.top_percents
     return percentsValues
 
 def getValidorInvalidAggregateLinesTemplate():
-    template = "templates/MOSSAggregateOutput.html"  # Displaying AggregateData's example
     linesValues = aggregate.top_lines
     return linesValues
 
