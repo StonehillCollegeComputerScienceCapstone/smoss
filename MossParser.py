@@ -10,21 +10,13 @@ class MossParser ():
     def __init__(self,csvFileName):
         self.csvFileName = csvFileName
     def parse(self,urlInput):
-        print("need to work on class")
-        # If this is not a valid URL display error and exit
-        # using http://moss.stanford.edu/results/299782671/ to test
-        validUrl=self.testUrl(urlInput)
-        if(not validUrl):
-            self.displayInvalidUrl()
-        else:
-            # get the html text from the URL
-            html = self.getHtml(urlInput)
-            # Process the html into table strings
-            tableStrings = self.processHtml(html)
-
-            # Process the table strings into csv strings
-            csvStrings = self.processTableStrings(tableStrings)
-            self.writeToCsv(csvStrings)
+        # get the html text from the URL
+        html = self.getHtml(urlInput)
+        # Process the html into table strings
+        tableStrings = self.processHtml(html)
+        # Process the table strings into csv strings
+        csvStrings = self.processTableStrings(tableStrings)
+        self.writeToCsv(csvStrings)
 
     def writeToCsv(self,csvStrings):
         f = open(self.csvFileName, 'w')
@@ -40,14 +32,7 @@ class MossParser ():
     def getName(self,s):
         s=s.replace("_",",")
         values=s.split(",")
-        print(values)
         return values[0]
-
-
-    def displayInvalidUrl(self):
-        #when there is web functionality, redirect to page displaying error.
-        #for now just display error message
-        print('Invalid URL was entered')
 
     def testUrl(self,urlArg):
         request = urllib.request.Request(urlArg)
@@ -82,19 +67,13 @@ class MossParser ():
         return mystr
     def processTableStrings(self,tableStrings):
         #go through list and turn them into Result object
-        #FileName1, Match1, FileName2, Match2, Lines
-        #Matched, URL
         csvStrings=[]
 
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
-            #print(tableString)
             tableStringValues=tableString.split(",")
             name1=self.getName(tableStringValues[1].strip())
             name2 = self.getName(tableStringValues[4].strip())
-            print(tableStringValues)
-            print(name1)
-            print(name2)
             csvString=[name1,tableStringValues[1].strip(),tableStringValues[2],name2,tableStringValues[4].strip(),tableStringValues[5],tableStringValues[6],tableStringValues[0]]
             csvStrings.append(csvString)
         return csvStrings
