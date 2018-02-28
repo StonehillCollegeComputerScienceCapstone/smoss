@@ -13,9 +13,7 @@ from flask import *
 from SortResults import SortResults
 from AggregateData import AggregateData
 from MossURLsRetrieval import MossURLsRetrieval
-from FileRetrieval import FileRetrieval
 import os
-import cgi, cgitb
 
 
 
@@ -28,18 +26,31 @@ mossURLSetrieval.get_results()
 aggregate = AggregateData(mossURLSetrieval.results)
 urlRetrieval = MossURLsRetrieval()
 
+
 #
 #   _Index ():     Generates the landing page for SMOSS.
 #
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
     print('[BackendServer]\tIndex page displayed!')
+    if request.method == "POST":
+        url = request.form['text']
+
+        if not(getValidorInvalidURL(url)):
+            template = "templates/errorpage.html"
+            error = ("Invalid URL: "+url)
+            return render_template(template, value=error)
+        else:
+
+            return redirect('/moss')
+
     template = "templates/index.html"
     return render_template (template)
 
 
 #
-#   _MOSSOutput (): Formerly held within SortResults.py, this displays the MOSSoutput template at localhost:5000/moss
+#   _MOSSOutput (): Formerly held within SortResults.py
+# , this displays the MOSSoutput template at localhost:5000/moss
 #
 @app.route ('/moss')
 def _MOSSOutput ():
@@ -55,16 +66,12 @@ def _MOSSurlvalidation():
     template, value = getValidorInvalidURL()
     return render_template(template, value=value)
 
-def getValidorInvalidURL():
-    valid, url = urlRetrieval.getValidity("FileInput.txt")
+def getValidorInvalidURL(urlName):
+    valid = urlRetrieval.get_url(urlName)
     if not(valid):
-        template = "templates/errorpage.html"
-        value = ("Invalid URL: " + url)
+        return False
     else:
-        template = 'templates/invalidURL.html'
-        value = "URL is Valid"
-    return template, value
-
+        return True
 
 
 def getValidorInvalidMossTemplate():
