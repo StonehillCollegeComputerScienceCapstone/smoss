@@ -31,7 +31,7 @@ urlRetrieval = MossURLsRetrieval()
 #
 #   _Index ():     Generates the landing page for SMOSS.
 #
-@app.route ('/')
+@app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
     print('[BackendServer]\tIndex page displayed!')
     template = "templates/index.html"
@@ -45,14 +45,9 @@ def _Index ():
 def _MOSSOutput ():
     print('[BackendServer]\tMOSS Output page displayed!')
     template, value = getValidorInvalidMossTemplate()
-    return render_template (template, value = value)
-
-@app.route ('/mossaggregate')
-def _MOSSAggregateOutput ():
-    print('[BackendServer]\tMOSS Aggregate Output page displayed!')
-    template, percentsValues = getValidorInvalidAggregateLinesTemplate()
-    template, linesValues = getValidorInvalidAggregatePercentTemplate()
-    return render_template (template, percentsValues = percentsValues, linesValues = linesValues),
+    percentsValues = getValidorInvalidAggregateLinesTemplate()
+    linesValues = getValidorInvalidAggregatePercentTemplate()
+    return render_template(template, value = value,percentsValues=percentsValues, linesValues=linesValues),
 
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
@@ -61,10 +56,10 @@ def _MOSSurlvalidation():
     return render_template(template, value=value)
 
 def getValidorInvalidURL():
-    valid, url =urlRetrieval.getValidity("FileInput.txt")
+    valid, url = urlRetrieval.getValidity("FileInput.txt")
     if not(valid):
         template = "templates/errorpage.html"
-        value = ("Invalid URL: "+ url)
+        value = ("Invalid URL: " + url)
     else:
         template = 'templates/invalidURL.html'
         value = "URL is Valid"
@@ -84,12 +79,12 @@ def getValidorInvalidMossTemplate():
 def getValidorInvalidAggregatePercentTemplate():
     template = "templates/MOSSAggregateOutput.html"  # Displaying AggregateData's example
     percentsValues = aggregate.top_percents
-    return template, percentsValues
+    return percentsValues
 
 def getValidorInvalidAggregateLinesTemplate():
     template = "templates/MOSSAggregateOutput.html"  # Displaying AggregateData's example
     linesValues = aggregate.top_lines
-    return template, linesValues
+    return linesValues
 
 #
 #   _ErrorHandler ():   Displays the generic error page with output on the error type
