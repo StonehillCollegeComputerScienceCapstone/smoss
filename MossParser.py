@@ -74,13 +74,6 @@ class MossParser ():
         del(splitStrings[0])
         return splitStrings
 
-
-
-    def processTableString(self):
-        return """"<tr><td><a href="http://moss.stanford.edu/results/322457013/match0.html">warmup36.java (94%)</a>
-                         </td><td><a href="http://moss.stanford.edu/results/322457013/match0.html">warmup435.java (94%)</a>
-                            </td><td align="right">12
-                            </td></tr>"""
     def getHtml(self, urlArg):
         html = urllib.request.urlopen(urlArg)
         mybytes = html.read()
