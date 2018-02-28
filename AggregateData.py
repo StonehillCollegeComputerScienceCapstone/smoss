@@ -201,11 +201,11 @@ def main():
     ag.aggregateData()
 
     # Display data
-    print("Highest Average Percent")
-    ag.display(ag.top_percents)
-    print()
-    print("Highest Lines Matched")
-    ag.display(ag.top_lines)
+    #print("Highest Average Percent")
+    #ag.display(ag.top_percents)
+    #print()
+    #print("Highest Lines Matched")
+    #ag.display(ag.top_lines)
 
 
 

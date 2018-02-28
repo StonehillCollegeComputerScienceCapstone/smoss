@@ -16,21 +16,21 @@ class MossURLsRetrieval:
         # check to see if it has "moss.stanford.edu"
         # check that it exists (http response of 200?)
         if not isinstance(url, str):
-            print(url, "is invalid")
+            #print(url, "is invalid")
             return False
         if "moss.stanford.edu/results" not in url:  # this can be changed by Stanford at any time
-            print(url, "is invalid")
+            #print(url, "is invalid")
             return False
         if url in self.urls:  # URL already exists in list
-            print(url, "is duplicate")
+            #print(url, "is duplicate")
             return False
         try:
             urllib.request.urlopen(url)
         except urllib.error.HTTPError as e:  # case of 404 Not Found
-            print(url, e)
+            #print(url, e)
             return False
         except urllib.error.URLError as e:  # case connection refused
-            print(url, ": ", e)
+            #print(url, ": ", e)
             return False
         self.urls.append(url)
         return True
@@ -72,14 +72,14 @@ def main():
     murl = MossURLsRetrieval()
     murl.get_file_urls("FileInput.txt")
     murl.get_results()
-    for r in murl.results:
-        print("------------------- assignment number: ")
-        print(r.assignment_number)
-        print(r.file_one )
-        print(r.file_two )
-        print(r.url )
-        print(r.file_one_percent)
-        print(r.file_two_percent )
-        print(r.lines_matched)
+    #for r in murl.results:
+        #print("------------------- assignment number: ")
+        #print(r.assignment_number)
+        #print(r.file_one )
+        #print(r.file_two )
+        #print(r.url )
+        #print(r.file_one_percent)
+        #print(r.file_two_percent )
+        #print(r.lines_matched)
 
 if __name__ == '__main__': main()

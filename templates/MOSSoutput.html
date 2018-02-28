@@ -46,6 +46,35 @@
                     <td>{{ obj.URL }}</td>
                 </tr>{% endfor %}
             </tbody>
+            <table id="example1" class ="display" border=1 cellpadding=7>
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Total Number of Lines Matched</th>
+            </tr>
+            </thead>
+
+            <tbody>
+                <tr>{% for obj in percentsValues %}
+                    <td>{{ obj.get_name() }}</td>
+                    <td>{{ obj.get_data() }}</td>
+                </tr>{% endfor %}
+            </tbody>
+        </table>
+        <table id="example2" class ="display" border=1 cellpadding=7>
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Average Highest Percent Matched</th>
+            </tr>
+            </thead>
+        <tbody>
+                <tr>{% for obj in linesValues %}
+                    <td>{{ obj.get_name() }}</td>
+                    <td>{{ obj.get_data() }}</td>
+                </tr>{% endfor %}
+        </tbody>
+    </table>
         </table>
     </body>
 </html>
