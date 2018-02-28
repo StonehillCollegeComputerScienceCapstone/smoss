@@ -4,9 +4,6 @@ from Result import Result
 
 
 class MyTestCase(unittest.TestCase):
-    # def setUp(self):
-    #     self.x = 1;
-
 
     def setUp(self):
         self.results = []
@@ -26,16 +23,16 @@ class MyTestCase(unittest.TestCase):
 #
     # Results should be an array of Result
     def test_isValidResults(self):
-        self.assertEqual(self.g.validResults(self.results), 1)
+        self.assertTrue(self.g.validResults(self.results))
 
     # Results should not be empty
     def test_isEmptyResults(self):
         results = []
-        self.assertEqual(self.g.validResults(results), -1)
+        self.assertFalse(self.g.validResults(results))
 
     def testAssignmentNumber(self):
         self.results.append(Result(2, "Tori", "Will", self.validURL, 25, 33, 95))
-        self.assertEqual(self.g.validResults(self.results), 1)
+        self.assertFalse(self.g.validResults(self.results))
         self.results.pop()
 
 #Testing getNames

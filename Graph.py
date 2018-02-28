@@ -1,11 +1,8 @@
-from networkx import nx
 from AggregateData import AggregateData
-
 
 class Graph:
 
     def __init__(self, results):
-        self.graph = nx.Graph()
         self.createNodes()
         self.createEdges(results)
         self.names = []
@@ -14,27 +11,14 @@ class Graph:
         print('print')
 
     def validResults(self, results):
-        currAssignmentNum = -1
-        assignments = {}
         if results and isinstance(results, list):
+            assignmentNumber = results[0].assignment_number
             for result in results:
-                currAssignmentNum = result.assignment_number
-                if currAssignmentNum in assignments:
-                    assignments[currAssignmentNum] += 1
-                else:
-                    assignments[currAssignmentNum] = 1
-            listKeys = [*assignments]
-            if len(assignments) == 1:
-                return listKeys[0]
-            else:
-                currMajority = -1
-                assignmentNum = -1
-                for key,value in assignments.items():
-                    if value > currMajority:
-                        currMajority = value
-                        assignmentNum = key
-                return assignmentNum
-        return -1
+                if not (result.assignment_number == assignmentNumber):
+                    return False
+        else:
+            return False
+        return True
 
     def getNames(self, results):
         ag = AggregateData(results)
@@ -49,7 +33,6 @@ class Graph:
 
     def createEdges(self, results):
         return False
-
 
 
 def main():
