@@ -20,7 +20,6 @@ class FileRetrieval:
         for url in opening_file:
             self.url_list.extend(url.splitlines())
         opening_file.close()
-        print(self.url_list)
         self.file_name = file
         return True
 

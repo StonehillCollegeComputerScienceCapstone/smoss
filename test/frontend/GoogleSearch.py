@@ -29,7 +29,7 @@ class GoogleSearch (unittest.TestCase):
         }
         self.driver = webdriver.Remote (command_executor = url, desired_capabilities = desiredCapabilities)
 
-    def test_search_in_python_org (self):
+    def test_search_in_google_com (self):
         driver = self.driver
         driver.get ("http://www.google.com")
         elem = driver.find_element_by_name ("q")
