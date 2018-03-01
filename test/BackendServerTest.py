@@ -14,10 +14,11 @@ from flask import *
 from BackendServer import *
 
 class BackendServerTest (unittest.TestCase):
-    def testHTTPResponseSuccess (self):
-        self.app = app.test_client()
+    def setUp (self):
+        self.app = BackendServer.app.test_client()
         self.app.testing = True
-
+    
+    def testHTTPResponseSuccess (self):
         knownURLs = ['/', '/moss']
 
         for url in knownURLs:
@@ -27,9 +28,6 @@ class BackendServerTest (unittest.TestCase):
 
 
     def testHTTPResponseError (self):
-        self.app = app.test_client()
-        self.app.testing = True
-
         result = self.app.get ('/asdfqwnkd')
 
         # We assert 200 because we're handling the 404 internally. We will receive our generic error page with the information printed on it, however the status code will be 200.

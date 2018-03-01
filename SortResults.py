@@ -98,28 +98,19 @@ class SortResults:
 
     def validateData(self):
         if not(self.isValidLength()):
-            print("Length is False")
             return False
         if not(self.isValidStringList(self.fileName1)):
-            print("FileName1 is False")
             return False
         if not(self.isValidStringList(self.fileName2)):
-            print("FileName2 is False")
             return False
         if not(self.isValidStringList(self.URL)):
-            print("URL is False")
             return False
         if not(self.isValidMatchedList(self.match1)):
-            print("Match1 is False")
             return False
         if not(self.isValidMatchedList(self.match2)):
-            print("Match2 is False")
             return False
         if not(self.isValidMatchedList(self.linesMatched)):
-            print("LinesMatched is False")
             return False
         if not(self.isValidFilename()):
-            print("CSVFILENAME is False")
             return False
-        print("All data is Valid")
         return True
