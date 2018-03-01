@@ -9,6 +9,7 @@ from html.parser import HTMLParser
 class MossParser ():
     def __init__(self,csvFileName):
         self.csvFileName = csvFileName
+
     def parse(self,urlInput):
         # get the html text from the URL
         html = self.getHtml(urlInput)

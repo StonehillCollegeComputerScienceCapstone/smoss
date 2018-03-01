@@ -13,6 +13,7 @@ from flask import *
 from SortResults import SortResults
 from AggregateData import AggregateData
 from MossURLsRetrieval import MossURLsRetrieval
+from MossParser import MossParser
 import os
 
 
@@ -25,6 +26,7 @@ mossURLSetrieval.get_file_urls("FileInput.txt")
 mossURLSetrieval.get_results()
 aggregate = AggregateData(mossURLSetrieval.results)
 urlRetrieval = MossURLsRetrieval()
+parser = MossParser("csv.csv")
 
 
 #
@@ -34,14 +36,13 @@ urlRetrieval = MossURLsRetrieval()
 def _Index ():
     print('[BackendServer]\tIndex page displayed!')
     if request.method == "POST":
-        url = request.form['text']
-
+        url = request.form['text'] #input from the user
         if not(getValidorInvalidURL(url)):
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+url)
             return render_template(template, value=error)
         else:
-
+            parser.parse(url)
             return redirect('/moss')
 
     template = "templates/index.html"
