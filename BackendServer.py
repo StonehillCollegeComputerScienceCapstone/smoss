@@ -39,6 +39,7 @@ def _Index ():
     if request.method == "POST":
         inputURLs = request.form['text'] #input from the user
         urlList = inputURLs.split("\n")
+
         valid, url = getValidorInvalidURL(urlList)
         if not valid:
             template = "templates/errorpage.html"
@@ -58,9 +59,12 @@ def _MOSSselectpage():
 
     if request.method == "POST":
         selection = request.form['selection']
-        #parser.parse(selection)
         mossURLSetrieval.urls = []
-        mossURLSetrieval.urls.append(selection)
+        if (selection == "allURLs"):
+            mossURLSetrieval.urls = urlRetrieval.urls
+        #parser.parse(selection)
+        else:
+            mossURLSetrieval.urls.append(selection)
         mossURLSetrieval.get_results()
         aggregate.set_results(mossURLSetrieval.results)
         return redirect('moss')
