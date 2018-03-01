@@ -9,8 +9,13 @@ class AggregateData:
     def __init__(self, results):
         self.results = results
         self.top_percents = []
-        self.top_percents = []
+        self.top_lines = []
         if (not (results is None)):  # This adjustment made for using the example outside of this class
+            self.aggregateData()
+
+    def set_results(self, results):
+        self.results = results
+        if (not (results is None)):
             self.aggregateData()
 
     # Validates data has been received to aggregate

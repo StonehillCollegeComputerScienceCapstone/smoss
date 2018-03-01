@@ -22,11 +22,11 @@ import os
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
 mossURLSetrieval = MossURLsRetrieval()
-mossURLSetrieval.get_file_urls("FileInput.txt")
-mossURLSetrieval.get_results()
-aggregate = AggregateData(mossURLSetrieval.results)
+#mossURLSetrieval.get_file_urls("FileInput.txt")
+#mossURLSetrieval.get_results()
+aggregate = AggregateData(None)
 urlRetrieval = MossURLsRetrieval()
-parser = MossParser("csv.csv")
+#parser = MossParser("csv.csv")
 
 
 #
@@ -58,7 +58,11 @@ def _MOSSselectpage():
 
     if request.method == "POST":
         selection = request.form['selection']
-        parser.parse(selection)
+        #parser.parse(selection)
+        mossURLSetrieval.urls = []
+        mossURLSetrieval.urls.append(selection)
+        mossURLSetrieval.get_results()
+        aggregate.set_results(mossURLSetrieval.results)
         return redirect('moss')
 
     return render_template(template, urlList=urlRetrieval.urls)
@@ -71,7 +75,7 @@ def _MOSSselectpage():
 def _MOSSOutput ():
     print('[BackendServer]\tMOSS Output page displayed!')
     template, value = getValidorInvalidMossTemplate()
-    mossURLSetrieval.get_results()
+   # mossURLSetrieval.get_results()
     percentsValues = getValidorInvalidAggregateLinesTemplate()
     linesValues = getValidorInvalidAggregatePercentTemplate()
     return render_template(template, value=value, percentsValues=percentsValues, linesValues=linesValues),
