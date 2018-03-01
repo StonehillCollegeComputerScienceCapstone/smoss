@@ -1,0 +1,24 @@
+<html lang="en">
+    <head>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  		<script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+    </head>
+
+    <body>
+        <h1>Moss Results</h1>
+        <HR>
+            [ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
+        </HR>
+        <br>
+        <h1>Pick a URL to analyze:</h1>
+        <form method = "POST">
+        {% for obj in urlList %}
+            <input type="radio" name="selection" value={{ obj }}> {{ obj }}<br>
+                    <br>
+        {% endfor %}
+            <input type="submit" value="Submit">
+        </form>
+
+</body>
+</html>

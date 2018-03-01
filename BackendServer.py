@@ -35,20 +35,33 @@ parser = MossParser("csv.csv")
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
     print('[BackendServer]\tIndex page displayed!')
-    urlRetrieval.urls=[]
+    urlRetrieval.urls = []
     if request.method == "POST":
-        url = request.form['text'] #input from the user
-        if not(getValidorInvalidURL(url)):
+        inputURLs = request.form['text'] #input from the user
+        urlList = inputURLs.split("\n")
+        valid, url = getValidorInvalidURL(urlList)
+        if not valid:
             template = "templates/errorpage.html"
-            error = ("Invalid URL: "+url)
+            error = ("Invalid URL: "+ url)
             return render_template(template, value=error)
         else:
-            parser.parse(url)
-            return redirect('/moss')
+            urlRetrieval.urls=urlList
+            return redirect('selectionpage')
 
     template = "templates/index.html"
     return render_template (template)
 
+@app.route('/selectionpage',  methods = ['GET', 'POST'])
+def _MOSSselectpage():
+    print('[BackendServer]\tMOSS Selection page displayed!')
+    template = "templates/SelectionPage.html"
+
+    if request.method == "POST":
+        selection = request.form['selection']
+        parser.parse(selection)
+        return redirect('moss')
+
+    return render_template(template, urlList=urlRetrieval.urls)
 
 #
 #   _MOSSOutput (): Formerly held within SortResults.py
@@ -58,9 +71,11 @@ def _Index ():
 def _MOSSOutput ():
     print('[BackendServer]\tMOSS Output page displayed!')
     template, value = getValidorInvalidMossTemplate()
+    mossURLSetrieval.get_results()
     percentsValues = getValidorInvalidAggregateLinesTemplate()
     linesValues = getValidorInvalidAggregatePercentTemplate()
-    return render_template(template, value = value,percentsValues=percentsValues, linesValues=linesValues),
+    return render_template(template, value=value, percentsValues=percentsValues, linesValues=linesValues),
+
 
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
@@ -68,12 +83,14 @@ def _MOSSurlvalidation():
     template, value = getValidorInvalidURL()
     return render_template(template, value=value)
 
-def getValidorInvalidURL(urlName):
-    valid = urlRetrieval.get_url(urlName)
-    if not(valid):
-        return False
+
+def getValidorInvalidURL(urlList):
+
+    valid, url = urlRetrieval.getValidity(urlList)
+    if not valid:
+        return False, url
     else:
-        return True
+        return True, url
 
 
 def getValidorInvalidMossTemplate():
@@ -85,9 +102,11 @@ def getValidorInvalidMossTemplate():
         value = sorter.get_csv()
     return template, value
 
+
 def getValidorInvalidAggregatePercentTemplate():
     percentsValues = aggregate.top_percents
     return percentsValues
+
 
 def getValidorInvalidAggregateLinesTemplate():
     linesValues = aggregate.top_lines
@@ -96,12 +115,13 @@ def getValidorInvalidAggregateLinesTemplate():
 #
 #   _ErrorHandler ():   Displays the generic error page with output on the error type
 #
+
+
 @app.errorhandler (403)
 @app.errorhandler (404)
 def _ErrorHandler (errorCode):
     template = "templates/errorpage.html"
     return render_template (template, value = errorCode)
-
 
 
 if __name__ == '__main__':

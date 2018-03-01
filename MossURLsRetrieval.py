@@ -21,9 +21,9 @@ class MossURLsRetrieval:
         if "moss.stanford.edu/results" not in url:  # this can be changed by Stanford at any time
             #print(url, "is invalid")
             return False
-        if url in self.urls:  # URL already exists in list
-            #print(url, "is duplicate")
-            return False
+        #if url in self.urls:  # URL already exists in list
+         #   print(url, "is duplicate")
+          #  return False
         try:
             urllib.request.urlopen(url)
         except urllib.error.HTTPError as e:  # case of 404 Not Found
@@ -42,16 +42,16 @@ class MossURLsRetrieval:
             self.get_url(url)# checks the validity of the URLs given from file
         return True
 
-    def getValidity(self, file):
-        if not self.file.open_and_read_file(file):  # FileRetrieval returns if the file is valid
-            return False
-        for url in self.file.url_list:
-            if not(self.get_url(url)):# checks the validity of the URLs given from file
-                return False, url #returns the url that is invalid
-        return True
+    def getValidity(self, urlList):
+            for item in urlList:
+                #print("infor")
+                if not(self.get_url(item)):# checks the validity of the URLs given from file
+                    return False, item #returns the url that is invalid
+            success="success"
+            return True, success
 
     def get_results(self):
-        file_data_name = "get_results.csv"
+        file_data_name = "csv.csv"
         m = MossParser(file_data_name)
         assignment_num = 0
 
@@ -70,7 +70,7 @@ class MossURLsRetrieval:
 
 def main():
     murl = MossURLsRetrieval()
-    murl.get_file_urls("FileInput.txt")
+    #murl.get_file_urls("FileInput.txt")
     murl.get_results()
     #for r in murl.results:
         #print("------------------- assignment number: ")
