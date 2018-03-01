@@ -35,6 +35,7 @@ parser = MossParser("csv.csv")
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
     print('[BackendServer]\tIndex page displayed!')
+    urlRetrieval.urls=[]
     if request.method == "POST":
         url = request.form['text'] #input from the user
         if not(getValidorInvalidURL(url)):
