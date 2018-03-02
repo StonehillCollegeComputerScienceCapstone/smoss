@@ -17,19 +17,21 @@ class Graph:
         return True
 
     # Return an array of dictionary objects containing the names of every student
-    def getNames(self, results):
+    def getNodes(self, results):
         names = []
         ag = AggregateData(results)
         nameList = ag.populateNames(results)
 
         for n in nameList:
-            dict = {'name': n}
-            names.append(dict)
+            names.append({'name': n})
         return names
 
     # Return an array of dictionary objects
     def getEdges(self, results):
-        return False
+        edges = []
+        for result in results:
+            edges.append({'name1': result.file_one, 'name2': result.file_two, 'weight': self.chooseGreaterPercent(result)})
+        return edges
 
     def chooseGreaterPercent(self, result):
         if result.file_one_percent > result.file_two_percent:
@@ -38,7 +40,7 @@ class Graph:
 
     def getJsonObject(self, results):
         graph = {}
-        graph['nodes'] = self.getNames(results)
+        graph['nodes'] = self.getNodes(results)
         graph['edges'] = self.getEdges(results)
         return jsonify(graph)
 
