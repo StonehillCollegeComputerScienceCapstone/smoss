@@ -19,7 +19,7 @@ class MossParser ():
         csvStrings = self.processTableStrings(tableStrings)
         self.writeToCsv(csvStrings)
 
-    def parseMultiple(self, urlInputs):
+    def parseMultiple(self, urlInputs): #multiple urls
         counter = 0
         for url in urlInputs:
             html = self.getHtml(url)
