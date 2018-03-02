@@ -22,12 +22,9 @@ import re
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
-mossURLSretrieval = MossURLsRetrieval()
-#mossURLSetrieval.get_file_urls("FileInput.txt")
-#mossURLSetrieval.get_results()
+mossURLSetrieval = MossURLsRetrieval()
 aggregate = AggregateData(None)
 urlRetrieval = MossURLsRetrieval()
-#parser = MossParser("csv.csv")
 
 
 #

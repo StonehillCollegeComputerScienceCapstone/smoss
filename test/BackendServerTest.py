@@ -15,7 +15,7 @@ from BackendServer import *
 
 class BackendServerTest (unittest.TestCase):
     def setUp (self):
-        self.app = BackendServer.app.test_client()
+        self.app = app.test_client()
         self.app.testing = True
     
     def testHTTPResponseSuccess (self):

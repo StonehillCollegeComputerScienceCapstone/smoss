@@ -10,7 +10,9 @@ install:
 script:
 - python -m unittest -v test/*Test.py
 - qunit
-- python test/FrontEndTestSuite.py
+- ./BrowserStackLocal --key KzeJ27iophC6F8Lonvhi &
+- python BackendServer.py &
+- python -m unittest -v test/frontend/*Test.py
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
