@@ -15,6 +15,7 @@ from AggregateData import AggregateData
 from MossURLsRetrieval import MossURLsRetrieval
 from MossParser import MossParser
 import os
+import re
 
 
 
@@ -71,8 +72,8 @@ def _MOSSselectpage():
         mossURLSretrieval.get_results()
         aggregate.reInit(mossURLSretrieval.results)
         return redirect('moss')
-
-    return render_template(template, urlList=urlRetrieval.urls)
+    duplicateValues, urlList = checkForDuplicates(urlRetrieval.urls)
+    return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
 
 #
 #   _MOSSOutput (): Formerly held within SortResults.py
@@ -92,6 +93,17 @@ def _MOSSurlvalidation():
     print('[BackendServer]\tMOSS URL validation page displayed!')
     template, value = getValidorInvalidURL()
     return render_template(template, value=value)
+
+def checkForDuplicates(urlList):
+    nonDuplicates = set()
+    duplicates=set()
+    for url in urlList:
+        if url.rstrip() not in nonDuplicates:
+            nonDuplicates.add(url.rstrip())
+        else:
+            duplicates.add(url.rstrip())
+
+    return duplicates, nonDuplicates
 
 
 def getValidorInvalidURL(urlList):
