@@ -19,6 +19,27 @@ class MossParser ():
         csvStrings = self.processTableStrings(tableStrings)
         self.writeToCsv(csvStrings)
 
+    def parseMultiple(self, urlInputs):
+        counter = 0
+        for url in urlInputs:
+            html = self.getHtml(url)
+            tableStrings = self.processHtml(html)
+            csvStrings = self.processTableStrings(tableStrings)
+            if (counter != 0):
+                self.appendToCsv(csvStrings)
+            else:
+                self.writeToCsv(csvStrings)
+                counter = 1
+
+    def appendToCsv(self, csvStrings):
+        f = open(self.csvFileName, 'a')
+        for item in csvStrings:
+            for value in item[:-1]:
+                f.write(value + ",")
+            f.write(item[-1])
+            f.write('\n')
+        f.close()
+
     def writeToCsv(self,csvStrings):
         f = open(self.csvFileName, 'w')
         f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")

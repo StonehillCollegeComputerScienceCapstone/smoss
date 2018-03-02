@@ -71,6 +71,9 @@ class MossURLsRetrieval:
 
             file_data.close()
             assignment_num = assignment_num + 1
+        if (len(self.urls) > 1):
+            m.parseMultiple(self.urls)  #added this to get a csv file for all the assignments so the sortResults method can add all assignments to one table in html /moss
+                                        #will need to be adjusted because of time consumption
         return True
 
 def main():
