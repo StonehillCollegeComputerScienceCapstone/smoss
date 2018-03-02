@@ -20,6 +20,7 @@ class MossURLsRetrieval:
     def get_url(self, url):
         # check to see if it has "moss.stanford.edu"
         # check that it exists (http response of 200?)
+
         if not isinstance(url, str):
             #print(url, "is invalid")
             return False
@@ -48,12 +49,11 @@ class MossURLsRetrieval:
         return True
 
     def getValidity(self, urlList):
-            for item in urlList:
-                #print("infor")
-                if not(self.get_url(item)):# checks the validity of the URLs given from file
-                    return False, item #returns the url that is invalid
-            success="success"
-            return True, success
+        for item in urlList:
+            if not(self.get_url(item)):# checks the validity of the URLs given from file
+                return False, item #returns the url that is invalid
+        success="success"
+        return True, success
 
     def get_results(self):
         file_data_name = "csv.csv"
