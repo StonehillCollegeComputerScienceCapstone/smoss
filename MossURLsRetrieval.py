@@ -12,6 +12,11 @@ class MossURLsRetrieval:
         self.results = []
         # potentially a data variable?
 
+    def reInit(self):
+        self.urls = []
+        self.file = FileRetrieval()
+        self.results = []
+
     def get_url(self, url):
         # check to see if it has "moss.stanford.edu"
         # check that it exists (http response of 200?)

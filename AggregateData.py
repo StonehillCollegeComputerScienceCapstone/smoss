@@ -13,6 +13,13 @@ class AggregateData:
         if (not (results is None)):  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
+    def reInit(self, results):
+        self.results = results
+        self.top_percents = []
+        self.top_lines = []
+        if (not (results is None)):
+            self.aggregateData()
+
     def set_results(self, results):
         self.results = results
         if (not (results is None)):
@@ -85,7 +92,8 @@ class AggregateData:
                         percents.append(int(result.file_one_percent))
                     elif (result.assignment_number == number) and (result.file_two == name):
                         percents.append(int(result.file_two_percent))
-            maxPercents.append(max(percents))
+            if (percents != []):
+                maxPercents.append(max(percents))
         return maxPercents
 
     # Returns an array of lines matched based on a given name
@@ -102,7 +110,8 @@ class AggregateData:
                         lines.append(int(result.lines_matched))
                     elif (result.assignment_number == number) and (result.file_two == name):
                         lines.append(int(result.lines_matched))
-            maxLines.append(max(lines))
+            if (lines != []):
+                maxLines.append(max(lines))
         return maxLines
 
     # Calculates the average of a given array
