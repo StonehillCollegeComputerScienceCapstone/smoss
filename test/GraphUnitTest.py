@@ -18,6 +18,8 @@ class MyTestCase(unittest.TestCase):
 
         self.g = Graph(self.results)
 
+        self.JSON = self.g.getJsonObject(self.results)
+
 # Testing validResults
 
     # Results should be an array of Result
@@ -79,14 +81,65 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(isinstance(self.g.chooseGreaterPercent(r), int))
 
 #Test createJSON
-    def testJSON(self):
-        JSON = self.g.getJsonObject(self.results)
-        self.assertTrue(isinstance(JSON, dict))
 
+    #Test that JSON is a dictionary
+    def testJSONisDict(self):
+        self.assertTrue(isinstance(self.JSON, dict))
 
+    #Test that JSON only has nodes and edges
+    def testJSONMaxSize(self):
+        self.assertTrue(len(self.JSON) == 2)
 
+    #Test that JSON contains nodes
+    def testJSONForNodes(self):
+        self.assertTrue('nodes' in self.JSON)
 
+    #Test that JSON contains edges
+    def testJSONForEdges(self):
+        self.assertTrue('edges' in self.JSON)
 
+    #Test that graph has at least two nodes and at least one edge
+    def testGraphMinimumSize(self):
+        self.assertTrue(len(self.JSON['nodes']) >= 2)
+        self.assertTrue(len(self.JSON['edges']) >= 1)
+
+    #Test that graph does not contain more than [(nodes)*(nodes-1)]/2 edges
+    def testGraphMaxEdges(self):
+        numNodes = len(self.JSON['nodes'])
+        maxEdges = (numNodes * (numNodes - 1)) / 2
+        self.assertTrue(len(self.JSON['edges']) < maxEdges)
+
+    #Test that graph contains nodes which is a list of dictionaries
+    def testNodesIsListOfDict(self):
+        self.assertTrue(isinstance(self.JSON['nodes'], list))
+        nodes = self.JSON['nodes']
+        for node in nodes:
+            self.assertTrue(isinstance(node, dict))
+
+    # Test that graph contains edges which is a list of dictionaries
+    def testEdgesIsListOfDict(self):
+        self.assertTrue(isinstance(self.JSON['edges'], list))
+        edges = self.JSON['edges']
+        for edge in edges:
+            self.assertTrue(isinstance(edge, dict))
+
+    #Test that the nodes are in valid format
+    def testNodeFormat(self):
+        nodes = self.JSON['nodes']
+        for node in nodes:
+            self.assertTrue('name' in node)
+            self.assertTrue(isinstance(node['name'], str))
+
+    #Test that the edges are in valid format
+    def testEdgeFormat(self):
+        edges = self.JSON['edges']
+        for edge in edges:
+            self.assertTrue('name1' in edge)
+            self.assertTrue('name2' in edge)
+            self.assertTrue('weight' in edge)
+            self.assertTrue(isinstance(edge['name1'], str))
+            self.assertTrue(isinstance(edge['name2'], str))
+            self.assertTrue(isinstance(edge['name1'], str))
 
 if __name__ == '__main__':
     unittest.main()
