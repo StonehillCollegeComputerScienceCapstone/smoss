@@ -1,14 +1,10 @@
+from flask import *
 from AggregateData import AggregateData
 
 class Graph:
 
     def __init__(self, results):
-        self.createNodes()
-        self.createEdges(results)
-        self.names = []
-
-    def print(self):
-        print('print')
+        self.graph = self.getJsonObject(results)
 
     def validResults(self, results):
         if results and isinstance(results, list):
@@ -20,18 +16,33 @@ class Graph:
             return False
         return True
 
+    # Return an array of dictionary objects containing the names of every student
     def getNames(self, results):
+        names = []
         ag = AggregateData(results)
-        self.names = ag.populateNames(results)
-        return self.names
+        nameList = ag.populateNames(results)
 
-    def createNodes(self):
+        for n in nameList:
+            dict = {'name': n}
+            names.append(dict)
+        return names
+
+    # Return an array of dictionary objects
+    def getEdges(self, results):
         return False
 
     def chooseGreaterPercent(self, result):
-        return False
+        if result.file_one_percent > result.file_two_percent:
+            return result.file_one_percent
+        return result.file_two_percent
 
-    def createEdges(self, results):
+    def getJsonObject(self, results):
+        graph = {}
+        graph['nodes'] = self.getNames(results)
+        graph['edges'] = self.getEdges(results)
+        return jsonify(graph)
+
+    def printGraph(self):
         return False
 
 
