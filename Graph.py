@@ -1,4 +1,6 @@
+import json
 from flask import *
+from Result import Result
 from AggregateData import AggregateData
 
 class Graph:
@@ -42,13 +44,35 @@ class Graph:
         graph = {}
         graph['nodes'] = self.getNodes(results)
         graph['edges'] = self.getEdges(results)
-        return jsonify(graph)
 
-    def printGraph(self):
-        return False
+        jsonString = json.dumps(graph)
+        return json.loads(jsonString)
+
+    def print(self):
+        print('Nodes:')
+        for node in self.graph['nodes']:
+            print(node)
+        print('\nEdges:')
+        for edge in self.graph['edges']:
+            print(edge)
+
+# Example data
+def example():
+    results = []
+    validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
+    results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
+    results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
+    results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))
+    results.append(Result(1, "Armen", "Tori", validURL, 50, 34, 5))
+    results.append(Result(1, "Matt", "Stephen", validURL, 76, 79, 20))
+    results.append(Result(1, "Matt", "Will", validURL, 90, 88, 100))
+    results.append(Result(1, "Armen", "Sam", validURL, 10, 6, 2))
+
+    return results
 
 
 def main():
-    names = ['Matt', 'Tori', 'Will']
+    graph = Graph(example())
+    graph.print()
 
 if __name__ == '__main__': main()
