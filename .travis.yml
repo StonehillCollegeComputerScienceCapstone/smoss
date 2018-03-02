@@ -10,6 +10,7 @@ install:
 script:
 - python -m unittest -v test/*Test.py
 - qunit
+- ./BrowserStackLocal --key KzeJ27iophC6F8Lonvhi &
 - python BackendServer.py &
 - python -m unittest -v test/frontend/*Test.py
 
