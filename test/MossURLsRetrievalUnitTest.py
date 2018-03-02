@@ -15,10 +15,10 @@ class MossURLsTests(unittest.TestCase):
         self.assertFalse(self.MossURLsData.get_url(1))  # in case file reading goes wrong to this
         self.assertFalse(self.MossURLsData.get_url("http://moss.stanford.edu/results/12121212121212/"))  # 404 not found
 
-    def test_Invalid_Same_URL(self):
-        self.assertTrue(self.MossURLsData.get_url(self.validUrl))
+#    def test_Invalid_Same_URL(self): #user accidentally entered the same URL. Test should not break the code.
+#        self.assertTrue(self.MossURLsData.get_url(self.validUrl))
         # trying to get the information from the same URL will fail
-        self.assertFalse(self.MossURLsData.get_url(self.validUrl))
+#        self.assertFalse(self.MossURLsData.get_url(self.validUrl))
 
     def test_Read_URLs_From_Valid_File(self):
         self.assertTrue(self.MossURLsData.get_file_urls("FileInput.txt"))
