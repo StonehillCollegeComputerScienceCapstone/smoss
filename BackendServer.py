@@ -22,7 +22,7 @@ import re
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
-mossURLSetrieval = MossURLsRetrieval()
+mossURLSretrieval = MossURLsRetrieval()
 aggregate = AggregateData(None)
 urlRetrieval = MossURLsRetrieval()
 
