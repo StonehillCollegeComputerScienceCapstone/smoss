@@ -1,5 +1,6 @@
 import unittest
 import urllib
+import ssl
 from MossParser import MossParser
 class MossParserUnitTest(unittest.TestCase):
 
@@ -31,11 +32,11 @@ class MossParserUnitTest(unittest.TestCase):
     #3. Test method which takes a url string and returns an html file
         def testValidHtml(self):
             mp = MossParser("csv.txt")
-            html = urllib.request.urlopen("http://www.python.org")
+            html = urllib.request.urlopen("https://www.python.org")
             mybytes = html.read()
             mystr = mybytes.decode("utf8")
             html.close()
-            self.assertTrue(mp.getHtml("http://www.python.org") == mystr)
+            self.assertTrue(mp.getHtml("https://www.python.org") == mystr)
 
 
     #4. Test the processing of a valid html file into a list of table element strings
