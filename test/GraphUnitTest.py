@@ -1,6 +1,7 @@
 import unittest
 from Graph import Graph
 from Result import Result
+import json
 
 
 class MyTestCase(unittest.TestCase):
@@ -18,42 +19,32 @@ class MyTestCase(unittest.TestCase):
 
         self.g = Graph(self.results)
 
+# #
+# # validResults()
+# #
+#     # Results should be an array of Result
+#     def test_isValidResults(self):
+#         self.assertTrue(self.g.validResults(self.results))
 #
-# validResults()
+#     # Results should not be empty
+#     def test_isEmptyResults(self):
+#         results = []
+#         self.assertFalse(self.g.validResults(results))
 #
-    # Results should be an array of Result
-    def test_isValidResults(self):
-        self.assertTrue(self.g.validResults(self.results))
-
-    # Results should not be empty
-    def test_isEmptyResults(self):
-        results = []
-        self.assertFalse(self.g.validResults(results))
-
-    def testAssignmentNumber(self):
-        self.results.append(Result(2, "Tori", "Will", self.validURL, 25, 33, 95))
-        self.assertFalse(self.g.validResults(self.results))
-        self.results.pop()
-
-#Testing getNames
-
-    def testGetNamesReturnsList(self):
-        names = self.g.getNames(self.results)
-        self.assertTrue(isinstance(names, list))
-
-    def testNamesGreaterThan1(self):
-        names = self.g.getNames(self.results)
-        self.assertGreater(len(names), 1)
-
-# #Testing createNodes
+#     def testAssignmentNumber(self):
+#         self.results.append(Result(2, "Tori", "Will", self.validURL, 25, 33, 95))
+#         self.assertFalse(self.g.validResults(self.results))
+#         self.results.pop()
 #
-#     def testGreaterThanOneNode(self):
-#         self.assertGreater(self.g.graph.number_of_nodes(), 1)
+# #Testing getNames
 #
-#     def testNumNamesMatchNumNodes(self):
+#     def testGetNamesReturnsList(self):
 #         names = self.g.getNames(self.results)
-#         self.assertEqual(len(names), self.g.graph.number_of_nodes())
+#         self.assertTrue(isinstance(names, list))
 #
+#     def testNamesGreaterThan1(self):
+#         names = self.g.getNames(self.results)
+#         self.assertGreater(len(names), 1)
 #
 # #Testing chooseGreaterPercent
 #
@@ -89,24 +80,15 @@ class MyTestCase(unittest.TestCase):
 #         r = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
 #         self.assertTrue(isinstance(self.g.chooseGreaterPercent(r), int))
 #
-# #Testing createEdges
-#
-#     def testPositiveEdges(self):
-#         self.assertGreater(self.g.graph.number_of_edges(), 0)
-#
-#     def testNumResultsMatchNumEdges(self):
-#         self.assertEqual(len(self.results), self.g.graph.number_of_edges())
-#
-#     def testMaxEdges(self):
-#         numNodes = self.g.graph.number_of_nodes()
-#         maxNodes = ((numNodes*(numNodes-1))/2)
-#         self.assertLessEqual(self.g.graph.number_of_edges(), maxNodes)
-#
-#     def testEdgeWeight(self):
-#         self.assertEqual(self.g.graph["Matt"]["Armen"]['weight'], 90)
-#         self.assertEqual(self.g.graph["Stephen"]["Sam"]['weight'], 80)
-#         self.assertEqual(self.g.graph["Armen"]["Sam"]['weight'], 10)
-#         self.assertNotEqual(self.g.graph["Armen"]["Tori"]['weight'], 34)
+# #Test createJSON
+#     def testJSON(self):
+#         JSON = self.createJSON(self.results)
+#         self.assertTrue(isinstance(JSON, json))
+
+
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
