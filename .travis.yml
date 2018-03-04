@@ -9,6 +9,7 @@ install:
 
 before_script:
   - python BackendServer.py &
+  - ./BrowserStack -k KzeJ27iophC6F8Lonvhi &
 
 script:
   - python -m unittest -v test/*Test.py
