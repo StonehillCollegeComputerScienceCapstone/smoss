@@ -38,7 +38,7 @@ class SingleURLSubmissionTest (unittest.TestCase):
         desiredCapabilities = {
             'os' : 'Windows',
             'os_version' : '10',
-            'browserstack.timezone' : 'UTC-05:00'
+            'browserstack.timezone' : 'UTC-05:00',
             'browserstack.selenium_version' : '3.5.2',  
             'browser' : 'Chrome',
             'browser_version' : '64.0',
