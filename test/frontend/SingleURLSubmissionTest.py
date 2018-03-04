@@ -44,7 +44,6 @@ class SingleURLSubmissionTest (unittest.TestCase):
             'browser_version' : '64.0',
             'project' : 'SMOSS',
             'name' : testName,
-            'browserstack.local' : 'true'
         }
         
         self.driver = webdriver.Remote (command_executor = self.url, desired_capabilities = desiredCapabilities)
