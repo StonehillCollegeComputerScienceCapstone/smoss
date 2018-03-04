@@ -19,7 +19,7 @@ class SingleURLSubmissionTest (unittest.TestCase):
     driver = None
 
     def setUp (self):
-        self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + ""@hub.browserstack.com:80/wd/hub"
+        self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
 
     def test_input_of_invalid_link (self):
         self.initializeConnection ('Single URL Submission - Test Invalid Link')
