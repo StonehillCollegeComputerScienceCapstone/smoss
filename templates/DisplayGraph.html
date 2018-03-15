@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Sizing</title>
+
+  <style type="text/css">
+    html, body {
+      font: 10pt arial;
+    }
+    #mynetwork {
+      width: 600px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+  </style>
+
+  <script type="text/javascript" src="../static/vis.js"></script>
+  <link href="../static/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript">
+    var nodes = null;
+    var edges = null;
+    var network = null;
+
+    function draw() {
+      // create people.
+      // value corresponds with the age of the person
+      nodes = [
+        {id: 1,  value: 5,  label: 'Matt' },
+        {id: 2,  value: 5, label: 'Armen'},
+        {id: 3,  value: 5, label: 'Stephen'},
+        {id: 4,  value: 5, label: 'Sam' },
+        {id: 5,  value: 5, label: 'Tori' },
+        {id: 6,  value: 5, label: 'Will'}
+      ];
+
+      // create connections between people
+      // value corresponds with the amount of contact between two people
+      edges = [
+        {from: 1, to: 2, value: .9,   title: '90% matched'},
+        {from: 3, to: 4, value: .8,   title: '80% matched'},
+        {from: 1, to: 5,value:  .7,   title: '70% matched'},
+        {from: 2, to: 5, value: .5,   title: '50% matched'},
+        {from: 1, to: 3, value: .79,  title: '79% matched'},
+        {from: 1, to: 6, value: .9,   title: '90% matched'},
+        {from: 2, to: 4,value:  .1,   title: '10% matched'}
+      ];
+
+      // Instantiate our network object.
+      var container = document.getElementById('mynetwork');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+        nodes: {
+          shape: 'dot',
+        }
+      };
+      network = new vis.Network(container, data, options);
+    }
+  </script>
+
+</head>
+<body onload="draw()">
+<p>
+  Graph of Student Nodes and Percentage Matched Edges
+</p>
+<div id="mynetwork"></div>
+</body>
+</html>
