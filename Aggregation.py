@@ -3,17 +3,17 @@ class Aggregation:
         self.name = name
         self.data = data
 
-    def get_name(self):
+    def getName(self):
         return self.name
 
-    def set_name(self, name):
+    def setName(self, name):
         self.name = name
 
-    def get_data(self):
+    def getData(self):
         return self.data
 
-    def set_data(self, data):
+    def setData(self, data):
         self.data = data
 
-    def to_string(self):
+    def toString(self):
         return self.name + " \t" + str(self.data)
