@@ -20,19 +20,19 @@ class AggregateData:
         if (not (results is None)):
             self.aggregateData()
 
-    def set_results(self, results):
+    def setResults(self, results):
         self.results = results
         if (not (results is None)):
             self.aggregateData()
 
     # Validates data has been received to aggregate
-    def validResults(self, results):
+    def validateResults(self, results):
         if results and isinstance(results, list):
             return True
         return False
 
     # Validates the array can be aggregated
-    def validArray(self, array):
+    def validateArray(self, array):
         # Must be an array
         if (not array) or (not isinstance(array, list)):
             return False
@@ -46,7 +46,7 @@ class AggregateData:
         return True
 
     # Validates the percents array can be aggregated
-    def validPercents(self, percents):
+    def validatePercents(self, percents):
         # Must contain ints <= 100
         for value in percents:
             if (value > 100):
@@ -115,7 +115,7 @@ class AggregateData:
         return maxLines
 
     # Calculates the average of a given array
-    def average(self, array):
+    def calculateAverage(self, array):
         sum = 0
         count = 0
         for value in array:
@@ -125,11 +125,11 @@ class AggregateData:
         return round(average)
 
     # Calculates the total sum of a given array
-    def total(self, array):
+    def calculateSum(self, array):
         return sum(array)
 
     # Displays the passed in array
-    def display(self, array):
+    def displayArray(self, array):
         for object in array:
             print(object.to_string())
 
@@ -139,7 +139,7 @@ class AggregateData:
 
     # Aggregates the data and populates the two fields
     def aggregateData(self):
-        if (not self.validResults):
+        if (not self.validateResults):
             print("Results not valid!")
             sys.exit()
 
@@ -151,19 +151,19 @@ class AggregateData:
         for name in names:
             # Parse the highest percents for a given name
             percents = self.parsePercents(self.results, name)
-            if ((not self.validArray(percents)) or (not self.validPercents(percents))):
+            if ((not self.validateArray(percents)) or (not self.validatePercents(percents))):
                 print("Percents array not valid!")
                 sys.exit()
 
             # Parse the highest lines matched for a given name
             lines = self.parseLines(self.results, name)
-            if (not self.validArray(percents)):
+            if (not self.validateArray(percents)):
                 print("Lines array not valid!")
                 sys.exit()
 
             # Calculate average percent and total lines
-            avgPercent = self.average(percents)
-            totalLines = self.total(lines)
+            avgPercent = self.calculateAverage(percents)
+            totalLines = self.calculateSum(lines)
 
             # Create an Aggregation object with the data
             aggPercents = Aggregation(name, avgPercent)
