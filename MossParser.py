@@ -55,7 +55,7 @@ class MossParser ():
 
     def getName(self,s):
         values=s.split("_")
-        return values[0]
+        return values[1]
 
     def testUrl(self,urlArg):
         request = urllib.request.Request(urlArg)
@@ -115,7 +115,7 @@ class MossParser ():
 
     def yearMatch(self,tableList):
         for item in tableList:
-            print(item)
+            #print(item)
             item = self.formatTableString(item)
             tableListValues = item.split(",")
             fileName1 = tableListValues[1].strip()
