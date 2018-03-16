@@ -15,7 +15,7 @@ class FileRetrievalTest(unittest.TestCase):
 
     def test_Correct_Number_of_Lines_Read(self):
         self.input_file.open_and_read_file("FileInput.txt")
-        self.assertEqual(len(self.input_file.url_list), 11)
+        self.assertEqual(len(self.input_file.url_list), 3)
 
 #    def test_File_Open_With_Popup(self): #this is a pop up to open a file if we need it for the future
 #        self.assertTrue(self.input_file.pop_up_open_file()) #actually a file here

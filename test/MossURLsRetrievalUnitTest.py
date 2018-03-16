@@ -5,7 +5,7 @@ from MossURLsRetrieval import MossURLsRetrieval
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
         self.MossURLsData = MossURLsRetrieval()
-        self.validUrl =  "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
+        self.validUrl =  "http://moss.stanford.edu/results/558206563" # Change this when URL expires
 
     def test_Valid_URL(self):
         self.assertTrue(self.MossURLsData.get_url(self.validUrl))  # valid URL
@@ -29,7 +29,7 @@ class MossURLsTests(unittest.TestCase):
 
     def test_Number_of_Valid_URLs_Read(self):
         self.MossURLsData.get_file_urls("FileInput.txt")
-        self.assertEqual(len(self.MossURLsData.urls), 5)
+        self.assertEqual(len(self.MossURLsData.urls), 2)
 
     def test_Result_Objects(self):
         self.MossURLsData.get_file_urls("FileInput.txt")  # URLs file to parse
