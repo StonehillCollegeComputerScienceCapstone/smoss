@@ -17,7 +17,11 @@ class MossParserUnitTest(unittest.TestCase):
             mp = MossParser("csv.txt")
             string = "msmith_HomeValue.java (21%)"
             self.assertEqual(mp.getName(string), "msmith")
-
+    #7. Test for same year assignment
+        def testYearMatch(self):
+            mp = MossParser("csv.txt")
+            FileList={ "2018_msmith_HomeValue.java","2018_msmith_HomeValue.java"}
+            self.assertFalse(mp.yearMatch(FileList))
 
     #1. Test for valid URL
         def testValidURL(self):

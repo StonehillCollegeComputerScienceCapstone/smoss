@@ -54,7 +54,7 @@ class MossParser ():
     def getName(self,s):
         s=s.replace("_",",")
         values=s.split(",")
-        return values[0]
+        return values[1]
 
     def testUrl(self,urlArg):
         request = urllib.request.Request(urlArg)
@@ -90,15 +90,43 @@ class MossParser ():
     def processTableStrings(self,tableStrings):
         #go through list and turn them into Result object
         csvStrings=[]
-
+        oneYear = self.yearMatch(tableStrings)
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
             tableStringValues=tableString.split(",")
             name1=self.getName(tableStringValues[1].strip())
             name2 = self.getName(tableStringValues[4].strip())
-            csvString=[name1,tableStringValues[1].strip(),tableStringValues[2],name2,tableStringValues[4].strip(),tableStringValues[5],tableStringValues[6],tableStringValues[0]]
-            csvStrings.append(csvString)
+            fileName1=tableStringValues[1].strip()
+            fileName2=tableStringValues[4].strip()
+
+            if oneYear:
+                csvString=[name1,fileName1,tableStringValues[2],name2,fileName2,tableStringValues[5],tableStringValues[6],tableStringValues[0]];
+                csvStrings.append(csvString)
+            else:
+                if fileName1[0:4] != fileName2[0:4]:
+                    csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
+                    csvStrings.append(csvString)
         return csvStrings
+
+    def yearMatch(self,tableList):
+
+        for item in tableList:
+            item = self.formatTableString(item)
+            tableListValues = item.split(",")
+            fileName1 = tableListValues[1].strip()
+            fileName2 = tableListValues[4].strip()
+
+            if fileName1[0:4] == fileName2[0:4]:
+                allOneYear = True #assignment are all one year
+            else:
+                allOneYear = False #assignments are different years
+                return allOneYear
+
+        return allOneYear
+
+
+
+
     def formatTableString(self,tableString):
         tableString.lstrip()
         tableString = tableString.replace("td a href", '')
@@ -112,6 +140,8 @@ class MossParser ():
         tableString=tableString.replace(")","")
         tableString=tableString.replace("%","")
         return tableString
+
+
 class myHtmlParser (HTMLParser):
     tableString=""
     seenTable=False
