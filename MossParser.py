@@ -111,6 +111,7 @@ class MossParser ():
     def yearMatch(self,tableList):
 
         for item in tableList:
+            print(item)
             item = self.formatTableString(item)
             tableListValues = item.split(",")
             fileName1 = tableListValues[1].strip()

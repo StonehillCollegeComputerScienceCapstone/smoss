@@ -18,9 +18,17 @@ class MossParserUnitTest(unittest.TestCase):
             string = "msmith_HomeValue.java (21%)"
             self.assertEqual(mp.getName(string), "msmith")
     #7. Test for same year assignment
-        def testYearMatch(self):
+        def testSameYears(self):
             mp = MossParser("csv.txt")
-            FileList={ "2018_msmith_HomeValue.java","2018_msmith_HomeValue.java"}
+            FileList=( """ td a href http://moss.stanford.edu/results/558206563/match0.html 2018_lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html 2018_ssmith_HomeValue.java (30%) a  td align right 67 """,
+""" td a href http://moss.stanford.edu/results/558206563/match1.html 2018_eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html 2018_jcary_HomeValue.java (16%) a  td align right 18 """)
+            self.assertTrue(mp.yearMatch(FileList))
+
+    #8. Test for different year assignment
+        def testDifferentYears(self):
+            mp = MossParser("csv.txt")
+            FileList=( """ td a href http://moss.stanford.edu/results/558206563/match0.html 2017_lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html 2018_ssmith_HomeValue.java (30%) a  td align right 67 """,
+""" td a href http://moss.stanford.edu/results/558206563/match1.html 2018_eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html 2018_jcary_HomeValue.java (16%) a  td align right 18 """)
             self.assertFalse(mp.yearMatch(FileList))
 
     #1. Test for valid URL
