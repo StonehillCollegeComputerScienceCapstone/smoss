@@ -74,5 +74,61 @@
         </tbody>
     </table>
         </table>
+
+    <h3> MOSS Results Graph </h3>
+
+  <style type="text/css">
+    html, body {
+      font: 10pt arial;
+    }
+    #mynetwork {
+      width: 600px;
+      height: 600px;
+      border: 1px solid lightgray;
+    }
+  </style>
+
+  <script type="text/javascript" src="../static/vis.js"></script>
+  <link href="../static/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <script type="text/javascript">
+    var nodes = null;
+    var edges = null;
+    var network = null;
+
+    function draw() {
+      // create people
+      nodes = '{{nodes}}'
+      nodes = nodes.replace(/&#39;/g, "\"")
+      console.log(nodes)
+      nodes = JSON.parse(nodes);
+
+      //create edges
+      edges = '{{edges}}'
+      edges = edges.replace(/&#39;/g, "\"")
+      edges = JSON.parse(edges);
+
+      // value corresponds with the age of the person
+      // Instantiate our network object.
+      var container = document.getElementById('mynetwork');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {
+        nodes: {
+          shape: 'dot',
+        }
+      };
+      network = new vis.Network(container, data, options);
+    }
+  </script>
+
+</head>
+<body onload="draw()">
+<p>
+  Graph of Student Nodes and Percentage Matched Edges
+</p>
+<div id="mynetwork"></div>
     </body>
 </html>
