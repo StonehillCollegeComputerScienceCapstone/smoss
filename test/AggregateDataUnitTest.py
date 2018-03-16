@@ -3,6 +3,18 @@ from Result import Result
 from Aggregation import Aggregation
 from AggregateData import AggregateData
 
+#------METHODS BEING TESTED--------
+#validResults()
+#validArray()
+#validPercents()
+#averagePercent()
+#total()
+#populateNames()
+#parseLines()
+#sort()
+
+
+
 
 class MyTestCase(unittest.TestCase):
 
