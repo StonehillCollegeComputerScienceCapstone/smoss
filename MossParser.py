@@ -13,8 +13,10 @@ class MossParser ():
     def parse(self,urlInput):
         # get the html text from the URL
         html = self.getHtml(urlInput)
+
         # Process the html into table strings
         tableStrings = self.processHtml(html)
+
         # Process the table strings into csv strings
         csvStrings = self.processTableStrings(tableStrings)
         self.writeToCsv(csvStrings)
@@ -70,11 +72,13 @@ class MossParser ():
         #parse until table
         htmlParser=myHtmlParser()
         htmlParser.feed(html)
+
         #here we have all of the rows in one long string
         #now we parse through the string and split them up into individual strings
         stripped=htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
         splitStrings=stripped.split("tr")
+
         #have list of strings split up
         #first two indexes are a blank space and the header, so remove them
         del(splitStrings[0])
@@ -87,10 +91,12 @@ class MossParser ():
         mystr = mybytes.decode("utf8")
         html.close()
         return mystr
+
     def processTableStrings(self,tableStrings):
         #go through list and turn them into Result object
         csvStrings=[]
         oneYear = self.yearMatch(tableStrings)
+
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
             tableStringValues=tableString.split(",")
@@ -109,7 +115,6 @@ class MossParser ():
         return csvStrings
 
     def yearMatch(self,tableList):
-
         for item in tableList:
             print(item)
             item = self.formatTableString(item)
@@ -124,9 +129,6 @@ class MossParser ():
                 return allOneYear
 
         return allOneYear
-
-
-
 
     def formatTableString(self,tableString):
         tableString.lstrip()
@@ -147,6 +149,7 @@ class myHtmlParser (HTMLParser):
     tableString=""
     seenTable=False
     seenEndOfTable=False
+
     def handle_starttag(self, tag, attrs):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString=self.tableString+tag+" "
@@ -163,6 +166,7 @@ class myHtmlParser (HTMLParser):
                 self.seenEndOfTable=True
             else:
                self.tableString=self.tableString+tag+" "
+
     def handle_data(self, data):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
