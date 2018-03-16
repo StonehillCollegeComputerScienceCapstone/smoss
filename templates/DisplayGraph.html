@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>Network | Sizing</title>
+  <title> MOSS Results Graph </title>
 
   <style type="text/css">
     html, body {
@@ -23,29 +23,18 @@
     var network = null;
 
     function draw() {
-      // create people.
+      // create people
+      nodes = '{{nodes}}'
+      nodes = nodes.replace(/&#39;/g, "\"")
+      console.log(nodes)
+      nodes = JSON.parse(nodes);
+
+      //create edges
+      edges = '{{edges}}'
+      edges = edges.replace(/&#39;/g, "\"")
+      edges = JSON.parse(edges);
+
       // value corresponds with the age of the person
-      nodes = [
-        {id: 1,  value: 5,  label: 'Matt' },
-        {id: 2,  value: 5, label: 'Armen'},
-        {id: 3,  value: 5, label: 'Stephen'},
-        {id: 4,  value: 5, label: 'Sam' },
-        {id: 5,  value: 5, label: 'Tori' },
-        {id: 6,  value: 5, label: 'Will'}
-      ];
-
-      // create connections between people
-      // value corresponds with the amount of contact between two people
-      edges = [
-        {from: 1, to: 2, value: .9,   title: '90% matched'},
-        {from: 3, to: 4, value: .8,   title: '80% matched'},
-        {from: 1, to: 5,value:  .7,   title: '70% matched'},
-        {from: 2, to: 5, value: .5,   title: '50% matched'},
-        {from: 1, to: 3, value: .79,  title: '79% matched'},
-        {from: 1, to: 6, value: .9,   title: '90% matched'},
-        {from: 2, to: 4,value:  .1,   title: '10% matched'}
-      ];
-
       // Instantiate our network object.
       var container = document.getElementById('mynetwork');
       var data = {

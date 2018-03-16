@@ -127,19 +127,20 @@ class MyTestCase(unittest.TestCase):
     def testNodeFormat(self):
         nodes = self.JSON['nodes']
         for node in nodes:
-            self.assertTrue('name' in node)
-            self.assertTrue(isinstance(node['name'], str))
+            self.assertTrue('id' in node)
+            self.assertTrue('value' in node)
+            self.assertTrue('label' in node)
+            self.assertTrue(isinstance(node['label'], str))
 
     #Test that the edges are in valid format
     def testEdgeFormat(self):
         edges = self.JSON['edges']
         for edge in edges:
-            self.assertTrue('name1' in edge)
-            self.assertTrue('name2' in edge)
-            self.assertTrue('weight' in edge)
-            self.assertTrue(isinstance(edge['name1'], str))
-            self.assertTrue(isinstance(edge['name2'], str))
-            self.assertTrue(isinstance(edge['name1'], str))
+            self.assertTrue('from' in edge)
+            self.assertTrue('to' in edge)
+            self.assertTrue('value' in edge)
+            self.assertTrue('title' in edge)
+            self.assertTrue(isinstance(edge['title'], str))
 
 if __name__ == '__main__':
     unittest.main()

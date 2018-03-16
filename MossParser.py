@@ -54,9 +54,8 @@ class MossParser ():
         f.close()
 
     def getName(self,s):
-        s=s.replace("_",",")
-        values=s.split(",")
-        return values[1]
+        values=s.split("_")
+        return values[0]
 
     def testUrl(self,urlArg):
         request = urllib.request.Request(urlArg)
