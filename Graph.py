@@ -6,7 +6,10 @@ from AggregateData import AggregateData
 class Graph:
 
     def __init__(self, results):
-        self.graph = self.getJsonObject(results)
+        if isinstance(results, list):
+            self.graph = self.getJsonObject(results)
+        else:
+            pass
 
     def validResults(self, results):
         if results and isinstance(results, list):
@@ -24,15 +27,34 @@ class Graph:
         ag = AggregateData(results)
         nameList = ag.populateNames(results)
 
+        count = 1
         for n in nameList:
-            names.append({'name': n})
+            names.append({"id": count, "value": 5, "label": n})
+            count = count + 1
         return names
+
+    def getNodeIndex(self, name, results):
+        ag = AggregateData(results)
+        nameList = ag.populateNames(results)
+        id = 1
+        for n in nameList:
+            if n == name:
+                return id
+            id = id + 1
+        return -1
 
     # Return an array of dictionary objects
     def getEdges(self, results):
         edges = []
+        edgeFrom = -1
+        edgeTo = -1
+        nodes = self.getNodes(results)
         for result in results:
-            edges.append({'name1': result.file_one, 'name2': result.file_two, 'weight': self.chooseGreaterPercent(result)})
+            edgeFrom = self.getNodeIndex(result.file_one, results)
+            edgeTo = self.getNodeIndex(result.file_two, results)
+            value = self.chooseGreaterPercent(result)
+            valueString = str(value) + "% matched"
+            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString})
         return edges
 
     def chooseGreaterPercent(self, result):
@@ -73,6 +95,6 @@ def example():
 
 def main():
     graph = Graph(example())
-    graph.print()
+    #graph.print()
 
 if __name__ == '__main__': main()
