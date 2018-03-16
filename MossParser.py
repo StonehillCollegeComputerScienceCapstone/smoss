@@ -108,7 +108,7 @@ class MossParser ():
                 csvString=[name1,fileName1,tableStringValues[2],name2,fileName2,tableStringValues[5],tableStringValues[6],tableStringValues[0]];
                 csvStrings.append(csvString)
             else:
-                if fileName1[0:4] != fileName2[0:4]:
+                if fileName1[0:7] != fileName2[0:7]:
                     csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
                     csvStrings.append(csvString)
         return csvStrings
@@ -121,7 +121,7 @@ class MossParser ():
             fileName1 = tableListValues[1].strip()
             fileName2 = tableListValues[4].strip()
 
-            if fileName1[0:4] == fileName2[0:4]:
+            if fileName1[0:7] == fileName2[0:7]:
                 allOneYear = True #assignment are all one year
             else:
                 allOneYear = False #assignments are different years
