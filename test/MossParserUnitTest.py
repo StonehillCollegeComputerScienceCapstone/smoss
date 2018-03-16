@@ -470,24 +470,30 @@ class MossParserUnitTest(unittest.TestCase):
 #
     # 6. Test getName()
     def test_getName(self):
-        string = "2018_msmith_HomeValue.java (21%)"
+        string = "previous_msmith_HomeValue.java (21%)"
         self.assertEqual(self.mp.getName(string), "msmith")
 
 #
 # yearMatch()
 #
     # 7. Test for same year assignment
-    def test_sameYears(self):
+    def test_currentYears(self):
         FileList = (
-            """ td a href http://moss.stanford.edu/results/558206563/match0.html 2018_lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html 2018_ssmith_HomeValue.java (30%) a  td align right 67 """,
-            """ td a href http://moss.stanford.edu/results/558206563/match1.html 2018_eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html 2018_jcary_HomeValue.java (16%) a  td align right 18 """)
+            """ td a href http://moss.stanford.edu/results/558206563/match0.html lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html ssmith_HomeValue.java (30%) a  td align right 67 """,
+            """ td a href http://moss.stanford.edu/results/558206563/match1.html eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html jcary_HomeValue.java (16%) a  td align right 18 """)
         self.assertTrue(self.mp.yearMatch(FileList))
 
     # 8. Test for different year assignment
     def test_differentYears(self):
         FileList = (
-            """ td a href http://moss.stanford.edu/results/558206563/match0.html 2017_lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html 2018_ssmith_HomeValue.java (30%) a  td align right 67 """,
-            """ td a href http://moss.stanford.edu/results/558206563/match1.html 2018_eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html 2018_jcary_HomeValue.java (16%) a  td align right 18 """)
+            """ td a href http://moss.stanford.edu/results/558206563/match0.html previous_lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html ssmith_HomeValue.java (30%) a  td align right 67 """,
+            """ td a href http://moss.stanford.edu/results/558206563/match1.html eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html jcary_HomeValue.java (16%) a  td align right 18 """)
+        self.assertTrue(self.mp.yearMatch(FileList))
+
+    def test_previousYears(self):
+        FileList = (
+            """ td a href http://moss.stanford.edu/results/558206563/match0.html previous_lhbox_HomeValue.java (21%) a      td a href http://moss.stanford.edu/results/558206563/match0.html previous_ssmith_HomeValue.java (30%) a  td align right 67 """,
+            """ td a href http://moss.stanford.edu/results/558206563/match1.html previous_eyo_HomeValue.java (15%) a      td a href http://moss.stanford.edu/results/558206563/match1.html previous_jcary_HomeValue.java (16%) a  td align right 18 """)
         self.assertFalse(self.mp.yearMatch(FileList))
 
 if __name__ == '__main__':

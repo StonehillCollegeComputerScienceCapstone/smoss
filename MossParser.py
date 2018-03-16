@@ -108,7 +108,7 @@ class MossParser ():
                 csvString=[name1,fileName1,tableStringValues[2],name2,fileName2,tableStringValues[5],tableStringValues[6],tableStringValues[0]];
                 csvStrings.append(csvString)
             else:
-                if fileName1[0:7] != fileName2[0:7]:
+                if fileName1[0:8] != fileName2[0:8]:
                     csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
                     csvStrings.append(csvString)
         return csvStrings
@@ -120,14 +120,17 @@ class MossParser ():
             tableListValues = item.split(",")
             fileName1 = tableListValues[1].strip()
             fileName2 = tableListValues[4].strip()
+            values1 = fileName2.split("_")
+            values2 = fileName1.split("_")
 
-            if fileName1[0:7] == fileName2[0:7]:
-                allOneYear = True #assignment are all one year
+            if values1[0] == values2[0]:
+                previousYear = False #assignment are all previous years
+                return previousYear
             else:
-                allOneYear = False #assignments are different years
-                return allOneYear
+                previousYear = True #assignments are current years
 
-        return allOneYear
+
+        return previousYear
 
     def formatTableString(self,tableString):
         tableString.lstrip()
