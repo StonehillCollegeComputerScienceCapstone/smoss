@@ -96,15 +96,17 @@ def _MOSSurlvalidation():
 
 @app.route('/graph')
 def displayGraph():
-    results = []
-    validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
-    results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
-    results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
-    results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))
-    results.append(Result(1, "Armen", "Tori", validURL, 50, 34, 5))
-    results.append(Result(1, "Matt", "Stephen", validURL, 76, 79, 20))
-    results.append(Result(1, "Matt", "Will", validURL, 90, 88, 100))
-    results.append(Result(1, "Armen", "Sam", validURL, 10, 6, 2))
+    # results = []
+    # validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
+    # results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
+    # results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
+    # results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))
+    # results.append(Result(1, "Armen", "Tori", validURL, 50, 34, 5))
+    # results.append(Result(1, "Matt", "Stephen", validURL, 76, 79, 20))
+    # results.append(Result(1, "Matt", "Will", validURL, 90, 88, 100))
+    # results.append(Result(1, "Armen", "Sam", validURL, 10, 6, 2))
+    #
+    results = mossURLSretrieval.results;
 
     graph = Graph(results)
     graphJson = graph.getJsonObject(results)
