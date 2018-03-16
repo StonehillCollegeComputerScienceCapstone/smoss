@@ -131,7 +131,7 @@ class AggregateData:
     # Displays the passed in array
     def displayArray(self, array):
         for object in array:
-            print(object.to_string())
+            print(object.toString())
 
     # Sorts the Aggregation objects based on the data field
     def sort(self, array):
