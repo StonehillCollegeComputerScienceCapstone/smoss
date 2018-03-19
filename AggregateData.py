@@ -2,7 +2,7 @@ import sys
 from operator import attrgetter
 from Result import Result
 from Aggregation import Aggregation
-
+from config import config
 class AggregateData:
 
     # Constructor for AggregateData
@@ -10,6 +10,7 @@ class AggregateData:
         self.results = results
         self.top_percents = []
         self.top_lines = []
+        self.Config = config()
         if (not (results is None)):  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
@@ -183,7 +184,7 @@ class AggregateData:
 
     # Example data
     def example(self):  # Put this in the class to have the example
-        validURL = "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
+        validURL = Config.getGolbach() # URL for 'Golbach' assignment
         results = []
         results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
         results.append(Result(1, "Matt", "Sam", validURL, 80, 43, 77))
