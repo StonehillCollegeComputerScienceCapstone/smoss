@@ -1,6 +1,7 @@
 # SMOSS  
-[![Build Status](https://travis-ci.org/CSC400-S18/smoss.svg?branch=master)](https://travis-ci.org/CSC400-S18/smoss)
+[![CI Environment Status](https://travis-ci.org/CSC400-S18/smoss.svg?branch=master)](https://travis-ci.org/CSC400-S18/smoss)
 [![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=TVNBczNUYWRQOUtYNnZnSVBwS2l0WTkxRld5SElvSkdEOHo5SGd4Zm8vWT0tLTR4ZEtSL2NvTlY4bmx3VlQwQ2dpR0E9PQ==--c30026ac62d88ab98a3672cdc0c887d235f386aa)](https://www.browserstack.com/automate/public-build/TVNBczNUYWRQOUtYNnZnSVBwS2l0WTkxRld5SElvSkdEOHo5SGd4Zm8vWT0tLTR4ZEtSL2NvTlY4bmx3VlQwQ2dpR0E9PQ==--c30026ac62d88ab98a3672cdc0c887d235f386aa)
+[![Code Climate Status](https://api.codeclimate.com/v1/badges/a6434fb84ea2060afde0/maintainability)](https://codeclimate.com/github/CSC400-S18/smoss/maintainability)  
   
 SMOSS, or *Stonehill MOSS*, is a shell for the plagiarism detection system offered by Stanford University. This repository comprises the efforts of the Spring 2018 Computer Science Capstone class.
 
