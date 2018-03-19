@@ -55,7 +55,10 @@ class MossParser ():
 
     def getName(self,s):
         values=s.split("_")
-        return values[1]
+        if values[0] == "previous":
+            return values[1]
+        else:
+            return values[0]
 
     def testUrl(self,urlArg):
         request = urllib.request.Request(urlArg)
@@ -94,7 +97,7 @@ class MossParser ():
     def processTableStrings(self,tableStrings):
         #go through list and turn them into Result object
         csvStrings=[]
-        oneYear = self.yearMatch(tableStrings)
+
 
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
@@ -103,31 +106,32 @@ class MossParser ():
             name2 = self.getName(tableStringValues[4].strip())
             fileName1=tableStringValues[1].strip()
             fileName2=tableStringValues[4].strip()
-
+            previousMatch = self.previousYearMatch(fileName1, fileName2)
+            if not previousMatch:
+                csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
+                csvStrings.append(csvString)
+        '''
             if oneYear:
                 csvString=[name1,fileName1,tableStringValues[2],name2,fileName2,tableStringValues[5],tableStringValues[6],tableStringValues[0]];
                 csvStrings.append(csvString)
             else:
-                if fileName1[0:7] != fileName2[0:7]:
+                if fileName1[0:8] != fileName2[0:8]:
                     csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
                     csvStrings.append(csvString)
+        '''
         return csvStrings
 
-    def yearMatch(self,tableList):
-        for item in tableList:
-            #print(item)
-            item = self.formatTableString(item)
-            tableListValues = item.split(",")
-            fileName1 = tableListValues[1].strip()
-            fileName2 = tableListValues[4].strip()
+    def previousYearMatch(self,fileName1, fileName2):
+        values1 = fileName2.split("_")
+        values2 = fileName1.split("_")
 
-            if fileName1[0:7] == fileName2[0:7]:
-                allOneYear = True #assignment are all one year
-            else:
-                allOneYear = False #assignments are different years
-                return allOneYear
+        if values1[0] == values2[0]:
+            previousMatch = True  # assignment are all previous years
+            return previousMatch
+        else:
+            previousMatch = False  # assignments are current years
+            return previousMatch
 
-        return allOneYear
 
     def formatTableString(self,tableString):
         tableString.lstrip()
