@@ -1,7 +1,7 @@
 import unittest
 from Result import Result
 from Aggregation import Aggregation
-from AggregateData import AggregateData
+from DataAggregator import DataAggregator
 
 #------METHODS BEING TESTED--------
 #validResults()
@@ -32,7 +32,7 @@ class MyTestCase(unittest.TestCase):
         self.results.append(Result(3, "Matt", "Sam", self.validURL, 90, 88, 100))
         self.results.append(Result(3, "Armen", "Sam", self.validURL, 10, 6, 2))
 
-        self.ag = AggregateData(self.results)
+        self.ag = DataAggregator(self.results)
         self.names = self.ag.populateNames(self.results)
 
 #

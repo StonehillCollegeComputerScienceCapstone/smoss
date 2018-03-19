@@ -3,9 +3,9 @@ from operator import attrgetter
 from Result import Result
 from Aggregation import Aggregation
 from config import config
-class AggregateData:
+class DataAggregator:
 
-    # Constructor for AggregateData
+    # Constructor for DataAggregator
     def __init__(self, results):
         self.results = results
         self.top_percents = []
@@ -203,7 +203,7 @@ def main():
 #    results = example()  # Obtained from Sam and Nikolay
 #   ag = AggregateData(results)
 
-    ag = AggregateData(None)  #adjusted to get this main's example to work with example() being part of the class
+    ag = DataAggregator(None)  #adjusted to get this main's example to work with example() being part of the class
     ag.results = ag.example()
     ag.aggregateData()
 

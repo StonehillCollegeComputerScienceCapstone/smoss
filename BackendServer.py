@@ -11,7 +11,7 @@
 
 from flask import *
 from SortResults import SortResults
-from AggregateData import AggregateData
+from DataAggregator import DataAggregator
 from MossURLsRetrieval import MossURLsRetrieval
 from Graph import Graph
 from Result import Result
@@ -25,7 +25,7 @@ import re
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
 mossURLSretrieval = MossURLsRetrieval()
-aggregate = AggregateData(None)
+aggregate = DataAggregator(None)
 urlRetrieval = MossURLsRetrieval()
 graph = Graph(None)
 

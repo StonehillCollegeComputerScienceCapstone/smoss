@@ -1,7 +1,7 @@
 import json
 from flask import *
 from Result import Result
-from AggregateData import AggregateData
+from DataAggregator import DataAggregator
 
 class Graph:
 
@@ -24,7 +24,7 @@ class Graph:
     # Return an array of dictionary objects containing the names of every student
     def getNodes(self, results):
         names = []
-        ag = AggregateData(results)
+        ag = DataAggregator(results)
         nameList = ag.populateNames(results)
 
         count = 1
@@ -34,7 +34,7 @@ class Graph:
         return names
 
     def getNodeIndex(self, name, results):
-        ag = AggregateData(results)
+        ag = DataAggregator(results)
         nameList = ag.populateNames(results)
         id = 1
         for n in nameList:
