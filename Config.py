@@ -1,7 +1,6 @@
 import urllib
 import urllib.request
-class config:
-
+class Config:
 
     #These should be valid URL's for each assignment in the 'current_year_data' folder
     homevalue = "http://moss.stanford.edu/results/558206563"
@@ -9,7 +8,6 @@ class config:
     palindrome = "http://moss.stanford.edu/results/674631558"
     carnivalgame = "http://moss.stanford.edu/results/411107744"
     warmup = "http://moss.stanford.edu/results/628475676"
-
 
     def _init_(self):
         self.homevalue = homevalue

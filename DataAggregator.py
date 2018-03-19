@@ -2,7 +2,7 @@ import sys
 from operator import attrgetter
 from Result import Result
 from Aggregation import Aggregation
-from config import config
+from Config import Config
 class DataAggregator:
 
     # Constructor for DataAggregator
@@ -10,7 +10,7 @@ class DataAggregator:
         self.results = results
         self.top_percents = []
         self.top_lines = []
-        self.Config = config()
+        self.Config = Config()
         if (not (results is None)):  # This adjustment made for using the example outside of this class
             self.aggregateData()
 

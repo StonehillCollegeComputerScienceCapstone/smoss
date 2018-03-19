@@ -1,4 +1,5 @@
 import unittest
+from Config import Config
 from Graph import Graph
 from Result import Result
 
@@ -6,8 +7,10 @@ from Result import Result
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
+        self.config = Config()
+        self.validURL = self.config.getHomevalue()
+
         self.results = []
-        self.validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
         self.results.append(Result(1, "Stephen", "Sam", self.validURL, 80, 43, 77))
         self.results.append(Result(1, "Matt", "Tori", self.validURL, 33, 70, 45))

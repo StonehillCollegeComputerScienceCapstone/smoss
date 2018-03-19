@@ -1,7 +1,8 @@
 import unittest
 import urllib
-import ssl
+from Config import Config
 from MossParser import MossParser
+
 class MossParserUnitTest(unittest.TestCase):
 
     # 1. Test testValidURL() on an valid url
@@ -15,6 +16,7 @@ class MossParserUnitTest(unittest.TestCase):
 
     def setUp(self):
         self.mp = MossParser("csv.csv")
+        self.config = Config()
 
 #
 # testUrl()
@@ -463,7 +465,7 @@ class MossParserUnitTest(unittest.TestCase):
                              """<tr><td><a href="http://moss.stanford.edu/results/11690537/match41.html">cchase_Palindrome.java (11%)</a>
                                  </td><td><a href="http://moss.stanford.edu/results/11690537/match41.html">jcary_Palindrome.java (22%)</a>
                              </td><td align="right">7
-                             </td></tr>"""], self.mp.processHtml(self.mp.getHtml("http://moss.stanford.edu/results/558206563")))
+                             </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getPalindrome())))
 
 #
 # getName()

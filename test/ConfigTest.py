@@ -1,7 +1,7 @@
 import unittest
 import urllib
 import urllib.request
-from config import config
+from Config import Config
 
 #-----Methods being tested
 #1. config.getHomeValue()
@@ -14,7 +14,7 @@ class MyTestCase(unittest.TestCase):
 
     #1. config.getHomeValue()
     def test_homevalueURLValidity(self):
-        c = config()
+        c = Config()
         url = c.getHomevalue()
         request = urllib.request.Request(url)
         try:
@@ -25,7 +25,7 @@ class MyTestCase(unittest.TestCase):
 
     #2. config.getPalindrome()
     def test_palindromeURLValidity(self):
-        c = config()
+        c = Config()
         url = c.getPalindrome()
         request = urllib.request.Request(url)
         try:
@@ -36,7 +36,7 @@ class MyTestCase(unittest.TestCase):
 
     #3. config.getWarmup()
     def test_warmupURLValidity(self):
-        c = config()
+        c = Config()
         url = c.getWarmup()
         request = urllib.request.Request(url)
         try:
@@ -47,7 +47,7 @@ class MyTestCase(unittest.TestCase):
 
     #4. config.getCarnivalgame()
     def test_carnivalgameURLValidity(self):
-        c = config()
+        c = Config()
         url = c.getCarnivalgame()
         request = urllib.request.Request(url)
         try:
@@ -58,7 +58,7 @@ class MyTestCase(unittest.TestCase):
 
     #5. config.getHomevalue()
     def test_golbachURLValidity(self):
-        c = config()
+        c = Config()
         url = c.getGolbach()
         request = urllib.request.Request(url)
         try:

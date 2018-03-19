@@ -1,4 +1,5 @@
 import unittest
+from Config import Config
 from Result import Result
 from Aggregation import Aggregation
 from DataAggregator import DataAggregator
@@ -19,8 +20,9 @@ from DataAggregator import DataAggregator
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
+        self.config = Config()
+        self.validURL = self.config.getHomevalue()
         self.results = []
-        self.validURL = "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
 
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
         self.results.append(Result(1, "Matt", "Sam", self.validURL, 80, 43, 77))

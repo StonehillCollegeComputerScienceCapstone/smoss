@@ -1,5 +1,6 @@
 import json
 from flask import *
+from Config import Config
 from Result import Result
 from DataAggregator import DataAggregator
 
@@ -81,7 +82,8 @@ class Graph:
 # Example data
 def example():
     results = []
-    validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
+    config = Config()
+    validURL = config.getHomevalue()
     results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
     results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
     results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))
