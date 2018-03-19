@@ -3,6 +3,7 @@ from flask import *
 from Result import Result
 from AggregateData import AggregateData
 
+
 class Graph:
 
     def __init__(self, results):
@@ -13,9 +14,8 @@ class Graph:
 
     def validResults(self, results):
         if results and isinstance(results, list):
-            assignmentNumber = results[0].assignment_number
             for result in results:
-                if not (result.assignment_number == assignmentNumber):
+                if not (result.assignment_number == results[0].assignment_number):
                     return False
         else:
             return False
@@ -24,26 +24,29 @@ class Graph:
     # Return an array of dictionary objects containing the names of every student
     def getNodes(self, results):
         names = []
-        ag = AggregateData(results)
-        nameList = ag.populateNames(results)
-
+        aggregateData = AggregateData(results)
+        nameList = aggregateData.populateNames(results)
         count = 1
         for n in nameList:
             names.append({"id": count, "value": 5, "label": n})
             count = count + 1
         return names
 
+    #
+    # return index of name in list of AggregateData
+    #
     def getNodeIndex(self, name, results):
-        ag = AggregateData(results)
-        nameList = ag.populateNames(results)
-        id = 1
+        aggregateData = AggregateData(results)
+        nameList = aggregateData.populateNames(results)
+        index = 1
         for n in nameList:
             if n == name:
-                return id
-            id = id + 1
+                return index
+            index = index + 1
         return -1
-
+    #
     # Return an array of dictionary objects
+    #
     def getEdges(self, results):
         edges = []
         edgeFrom = -1
