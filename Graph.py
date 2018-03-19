@@ -5,7 +5,7 @@ from DataAggregator import DataAggregator
 
 class Graph:
 
-    def __init__(self, results):
+    def __init__(self, results=None):
         if isinstance(results, list):
             self.graph = self.getJsonObject(results)
         else:

@@ -29,7 +29,7 @@ logger.setLevel(logging.DEBUG)
 sorter = SortResults()
 aggregator = DataAggregator()
 retriever = MOSSResultsRetriever()
-graph = Graph(None)
+graph = Graph()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
@@ -83,7 +83,7 @@ def _MOSSOutput ():
     template, value = getValidorInvalidMossTemplate()
     percentsValues = getValidorInvalidAggregateLinesTemplate()
     linesValues = getValidorInvalidAggregatePercentTemplate()
-    results = retriever.results;
+    results = retriever.results
 
     graph = Graph(results)
     graphJson = graph.getJsonObject(results)

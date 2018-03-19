@@ -200,19 +200,9 @@ class DataAggregator:
 
 def main():
 
-#    results = example()  # Obtained from Sam and Nikolay
-#   ag = AggregateData(results)
-
-    ag = DataAggregator(None)  #adjusted to get this main's example to work with example() being part of the class
+    ag = DataAggregator()  #adjusted to get this main's example to work with example() being part of the class
     ag.results = ag.example()
     ag.aggregateData()
-
-    # Display data
-    #print("Highest Average Percent")
-    #ag.display(ag.top_percents)
-    #print()
-    #print("Highest Lines Matched")
-    #ag.display(ag.top_lines)
 
 
 
