@@ -15,22 +15,28 @@ from DataAggregator import DataAggregator
 from MOSSResultsRetriever import MOSSResultsRetriever
 from Graph import Graph
 import os
+import logging
+
 
 
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
-sorter = SortResults ()
+FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
+logging.basicConfig(filename='output.log',format=FORMAT)
+logger = logging.getLogger('root')
+logger.setLevel(logging.DEBUG)
+
+sorter = SortResults()
 aggregator = DataAggregator()
 retriever = MOSSResultsRetriever()
 graph = Graph(None)
-
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
 #
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
-    print('[BackendServer]\tIndex page displayed!')
+    logger.info('[BackendServer]\tIndex page displayed!')
     if request.method == "POST":
         inputURLs = request.form['text'] #input from the user
         retriever.urls = inputURLs.split("\n")
@@ -48,7 +54,7 @@ def _Index ():
 
 @app.route('/selectionpage',  methods = ['GET', 'POST'])
 def _MOSSselectpage():
-    print('[BackendServer]\tMOSS Selection page displayed!')
+    logger.info('[BackendServer]\tMOSS Selection page displayed!')
     template = "templates/SelectionPage.html"
 
     if request.method == "POST":
@@ -73,7 +79,7 @@ def _MOSSselectpage():
 #
 @app.route ('/moss')
 def _MOSSOutput ():
-    print('[BackendServer]\tMOSS Output page displayed!')
+    logger.info('[BackendServer]\tMOSS Output page displayed!')
     template, value = getValidorInvalidMossTemplate()
     percentsValues = getValidorInvalidAggregateLinesTemplate()
     linesValues = getValidorInvalidAggregatePercentTemplate()
@@ -88,7 +94,7 @@ def _MOSSOutput ():
 
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
-    print('[BackendServer]\tMOSS URL validation page displayed!')
+    logger.info('[BackendServer]\tMOSS URL validation page displayed!')
     template, value = getValidorInvalidURL()
     return render_template(template, value=value)
 
