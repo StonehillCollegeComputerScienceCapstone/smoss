@@ -1,13 +1,13 @@
 import unittest
 from Graph import Graph
 from Result import Result
-import json
+
 
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.results = []
-        self.validURL = "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
+        self.validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
         self.results.append(Result(1, "Stephen", "Sam", self.validURL, 80, 43, 77))
         self.results.append(Result(1, "Matt", "Tori", self.validURL, 33, 70, 45))
@@ -22,14 +22,20 @@ class MyTestCase(unittest.TestCase):
 #
 # validResults()
 #
+    #
     # Results should be an array of Result
+    #
     def test_ValidResults(self):
         self.assertTrue(self.g.validResults(self.results))
-
+    #
     # Results should not be empty
+    #
     def test_EmptyResults(self):
         results = []
         self.assertFalse(self.g.validResults(results))
+    #
+    # All assignment numbers should match
+    #
 
     def test_AssignmentNumber(self):
         self.results.append(Result(2, "Tori", "Will", self.validURL, 25, 33, 95))
@@ -120,7 +126,7 @@ class MyTestCase(unittest.TestCase):
     def test_JSONForEdges(self):
         self.assertTrue('edges' in self.JSON)
     #
-    #Test that graph has at least two nodes and at least one edge
+    # Test that graph has at least two nodes and at least one edge
     #
     def test_GraphMinimumSize(self):
         self.assertTrue(len(self.JSON['nodes']) >= 2)
@@ -170,7 +176,7 @@ class MyTestCase(unittest.TestCase):
             self.assertTrue('title' in edge)
             self.assertTrue(isinstance(edge['title'], str))
 
+
 if __name__ == '__main__':
     unittest.main()
-
 
