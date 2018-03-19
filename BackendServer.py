@@ -12,20 +12,16 @@
 from flask import *
 from SortResults import SortResults
 from DataAggregator import DataAggregator
-from MossURLsRetrieval import MossURLsRetrieval
+from MOSSResultsRetriever import MOSSResultsRetriever
 from Graph import Graph
-from Result import Result
-from MossParser import MossParser
 import os
-import re
-
 
 
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
 aggregator = DataAggregator()
-retriever = MossURLsRetrieval()
+retriever = MOSSResultsRetriever()
 graph = Graph(None)
 
 

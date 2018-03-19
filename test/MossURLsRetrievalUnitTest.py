@@ -1,10 +1,10 @@
 import unittest
-from MossURLsRetrieval import MossURLsRetrieval
+from MOSSResultsRetriever import MOSSResultsRetriever
 
 
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
-        self.MossURLsData = MossURLsRetrieval()
+        self.MossURLsData = MOSSResultsRetriever()
         self.validUrl =  "http://moss.stanford.edu/results/558206563" # Change this when URL expires
 
     def test_Valid_URL(self):
