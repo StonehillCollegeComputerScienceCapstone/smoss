@@ -10,7 +10,7 @@ class DataAggregator:
         self.results = results
         self.top_percents = []
         self.top_lines = []
-        self.Config = Config()
+        self.config = Config()
         if (not (results is None)):  # This adjustment made for using the example outside of this class
             self.aggregateData()
 

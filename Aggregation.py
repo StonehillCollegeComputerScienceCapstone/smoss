@@ -4,7 +4,7 @@ class Aggregation:
     def __init__(self, name, data):
         self.name = name
         self.data = data
-        self.Config = Config()
+        self.config = Config()
 
     def getName(self):
         return self.name
