@@ -25,7 +25,7 @@ import re
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
 mossURLSretrieval = MossURLsRetrieval()
-aggregate = DataAggregator(None)
+aggregator = DataAggregator()
 urlRetrieval = MossURLsRetrieval()
 graph = Graph(None)
 
@@ -70,7 +70,7 @@ def _MOSSselectpage():
         else:
             mossURLSretrieval.urls.append(selection)
         mossURLSretrieval.get_results()
-        aggregate.reInit(mossURLSretrieval.results)
+        aggregator.reInit(mossURLSretrieval.results)
         return redirect('moss')
     duplicateValues, urlList = checkForDuplicates(urlRetrieval.urls)
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
@@ -133,12 +133,12 @@ def getValidorInvalidMossTemplate():
 
 
 def getValidorInvalidAggregatePercentTemplate():
-    percentsValues = aggregate.top_percents
+    percentsValues = aggregator.top_percents
     return percentsValues
 
 
 def getValidorInvalidAggregateLinesTemplate():
-    linesValues = aggregate.top_lines
+    linesValues = aggregator.top_lines
     return linesValues
 
 #

@@ -6,7 +6,7 @@ from config import config
 class DataAggregator:
 
     # Constructor for DataAggregator
-    def __init__(self, results):
+    def __init__(self, results=None):
         self.results = results
         self.top_percents = []
         self.top_lines = []
