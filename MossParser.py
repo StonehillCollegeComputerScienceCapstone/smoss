@@ -97,7 +97,8 @@ class MossParser ():
     def processTableStrings(self,tableStrings):
         #go through list and turn them into Result object
         csvStrings=[]
-
+        csvPreviousStrings=[]
+        previousSet=set()
 
         for tableString in tableStrings:
             tableString=self.formatTableString(tableString)
@@ -107,26 +108,25 @@ class MossParser ():
             fileName1=tableStringValues[1].strip()
             fileName2=tableStringValues[4].strip()
             previousMatch = self.previousYearMatch(fileName1, fileName2)
-            if not previousMatch:
+
+            if previousMatch:
+                previousSet.add(fileName1)
+                csvPreviousString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
+                csvPreviousStrings.append(csvPreviousString)
+            else:
                 csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
                 csvStrings.append(csvString)
-        '''
-            if oneYear:
-                csvString=[name1,fileName1,tableStringValues[2],name2,fileName2,tableStringValues[5],tableStringValues[6],tableStringValues[0]];
-                csvStrings.append(csvString)
-            else:
-                if fileName1[0:8] != fileName2[0:8]:
-                    csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                    csvStrings.append(csvString)
-        '''
-        return csvStrings
+        if(len(csvStrings)>0):
+            return csvStrings
+        else:
+            return csvPreviousStrings
 
     def previousYearMatch(self,fileName1, fileName2):
         values1 = fileName2.split("_")
         values2 = fileName1.split("_")
 
         if values1[0] == values2[0]:
-            previousMatch = True  # assignment are all previous years
+            previousMatch = True  # assignment are previous years
             return previousMatch
         else:
             previousMatch = False  # assignments are current years
