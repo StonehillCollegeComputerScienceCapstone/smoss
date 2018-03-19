@@ -108,13 +108,11 @@ class MossParser ():
             fileName1=tableStringValues[1].strip()
             fileName2=tableStringValues[4].strip()
             previousMatch = self.previousYearMatch(fileName1, fileName2)
-
+            csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
             if previousMatch:
                 previousSet.add(fileName1)
-                csvPreviousString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                csvPreviousStrings.append(csvPreviousString)
+                csvPreviousStrings.append(csvString)
             else:
-                csvString = [name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
                 csvStrings.append(csvString)
         if(len(csvStrings)>0):
             return csvStrings
