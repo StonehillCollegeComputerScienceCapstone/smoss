@@ -24,9 +24,8 @@ import re
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 sorter = SortResults ()
-mossURLSretrieval = MossURLsRetrieval()
 aggregator = DataAggregator()
-urlRetrieval = MossURLsRetrieval()
+retriever = MossURLsRetrieval()
 graph = Graph(None)
 
 
@@ -36,18 +35,16 @@ graph = Graph(None)
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
     print('[BackendServer]\tIndex page displayed!')
-    urlRetrieval.urls = []
     if request.method == "POST":
         inputURLs = request.form['text'] #input from the user
-        urlList = inputURLs.split("\n")
+        retriever.urls = inputURLs.split("\n")
 
-        valid, url = getValidorInvalidURL(urlList)
+        valid, url = getValidorInvalidURL(retriever.urls)
         if not valid:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
             return render_template(template, value=error)
         else:
-            urlRetrieval.urls=urlList
             return redirect('selectionpage')
 
     template = "templates/index.html"
@@ -60,19 +57,18 @@ def _MOSSselectpage():
 
     if request.method == "POST":
         selection = request.form['selection']
-        mossURLSretrieval.reInit()
-        #mossURLSretrieval.urls = []
+        retriever.reInit()
 
         if (selection == "allURLs"):
-            for url in urlRetrieval.urls:
+            for url in retriever.urls:
                 updated_url = url.rstrip()
-                mossURLSretrieval.urls.append(updated_url)
+                retriever.urls.append(updated_url)
         else:
-            mossURLSretrieval.urls.append(selection)
-        mossURLSretrieval.get_results()
-        aggregator.reInit(mossURLSretrieval.results)
+            retriever.urls.append(selection)
+            retriever.get_results()
+        aggregator.reInit(retriever.results)
         return redirect('moss')
-    duplicateValues, urlList = checkForDuplicates(urlRetrieval.urls)
+    duplicateValues, urlList = checkForDuplicates(retriever.urls)
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
 
 #
@@ -85,7 +81,7 @@ def _MOSSOutput ():
     template, value = getValidorInvalidMossTemplate()
     percentsValues = getValidorInvalidAggregateLinesTemplate()
     linesValues = getValidorInvalidAggregatePercentTemplate()
-    results = mossURLSretrieval.results;
+    results = retriever.results;
 
     graph = Graph(results)
     graphJson = graph.getJsonObject(results)
@@ -115,7 +111,7 @@ def checkForDuplicates(urlList):
 
 def getValidorInvalidURL(urlList):
 
-    valid, url = urlRetrieval.getValidity(urlList)
+    valid, url = retriever.getValidity(urlList)
     if not valid:
         return False, url
     else:
