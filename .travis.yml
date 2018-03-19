@@ -22,7 +22,7 @@ script:
   - python -m unittest -v test/frontend/*Test.py
 
 after_script:
-  - ./coverage-app --exit-code $TRAVIS_TEST_RESULT
+  - ./coverage-app after-build --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
