@@ -4,12 +4,14 @@ import urllib.error
 from FileRetrieval import FileRetrieval
 from Result import Result
 from MossParser import MossParser
+from Config import Config
 
 class MossResultsRetriever:
     def __init__(self):
         self.urls = []
         self.file = FileRetrieval()
         self.results = []
+        self.config = Config()
         # potentially a data variable?
 
     def reInit(self):
