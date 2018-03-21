@@ -1,10 +1,10 @@
 import unittest
-from SortResults import SortResults
+from ResultsSorter import ResultsSorter
 
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.sr = SortResults()
+        self.sr = ResultsSorter()
         self.sr.inputFileName = "csv.csv"
 
     def testValidInputFileLower(self):

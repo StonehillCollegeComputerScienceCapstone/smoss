@@ -10,7 +10,7 @@
 #
 
 from flask import *
-from SortResults import SortResults
+from ResultsSorter import ResultsSorter
 from DataAggregator import DataAggregator
 from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
@@ -26,7 +26,7 @@ logging.basicConfig(filename='output.log',format=FORMAT)
 logger = logging.getLogger('root')
 logger.setLevel(logging.DEBUG)
 
-sorter = SortResults()
+sorter = ResultsSorter()
 aggregator = DataAggregator()
 retriever = MossResultsRetriever()
 
@@ -73,7 +73,7 @@ def _MOSSselectpage():
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
 
 #
-#   _MOSSOutput (): Formerly held within SortResults.py
+#   _MOSSOutput (): Formerly held within ResultsSorter.py
 # , this displays the MOSSoutput template at localhost:5000/moss
 #
 @app.route ('/moss')

@@ -4,7 +4,7 @@ import os
 import json
 
 
-class SortResults:
+class ResultsSorter:
 
     def __init__(self):
         # CSV input file name
