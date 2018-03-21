@@ -22,7 +22,7 @@ import logging
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
-logging.basicConfig(filename='output.log',format=FORMAT)
+logging.basicConfig(filename='output.log', format=FORMAT)
 logger = logging.getLogger('root')
 logger.setLevel(logging.DEBUG)
 
@@ -53,6 +53,7 @@ def _Index ():
 
 @app.route('/selectionpage',  methods = ['GET', 'POST'])
 def _MOSSselectpage():
+
     logger.info('[BackendServer]\tMOSS Selection page displayed!')
     template = "templates/SelectionPage.html"
 
@@ -111,7 +112,6 @@ def checkForDuplicates(urlList):
 
 
 def getValidorInvalidURL(urlList):
-
     valid, url = retriever.getValidity(urlList)
     if not valid:
         return False, url

@@ -38,7 +38,8 @@ class MossResultsRetriever:
         except urllib.error.URLError as e:  # case connection refused
             #print(url, ": ", e)
             return False
-        self.urls.append(url)
+        if url not in self.urls:
+            self.urls.append(url)
         return True
 
     def get_file_urls(self, file):
@@ -52,7 +53,7 @@ class MossResultsRetriever:
         for item in urlList:
             if not(self.getUrl(item)):# checks the validity of the URLs given from file
                 return False, item #returns the url that is invalid
-        success="success"
+        success = "success"
         return True, success
 
     def get_results(self):
