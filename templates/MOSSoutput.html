@@ -1,140 +1,151 @@
 <html lang="en">
-    <head>
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  		<script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+<head>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    </head>
+</head>
 
-    <body>
-        <h1>Moss Results</h1>
-        <HR>
-            [ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
-        </HR>
+<body>
+<h1>Moss Results</h1>
+<HR>
+[ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
+</HR>
 
 
-        <script>
-            $(document).ready(function() {
-                $('#example').dataTable();
-            })
-        </script>
+<script>
+    $(document).ready(function() {
+        $('#example').dataTable();
+    })
+</script>
 
-        <table id="example" class ="display" border=1 cellpadding=7>
-            <thead>
-            <tr>
-                <th>User One</th>
-                <th>Percent Matched for User One</th>
-                <th>User Two</th>
-                <th>Percent Matched for User Two</th>
-                <th>User One's Filename</th>
-                <th>User Two's Filename</th>
-                <th>Lines Matched</th>
-                <th>URL</th>
-            </tr>
-            </thead>
+<table id="example" class ="display" border=1 cellpadding=7>
+    <thead>
+    <tr>
+        <th>User One</th>
+        <th>Percent Matched for User One</th>
+        <th>User Two</th>
+        <th>Percent Matched for User Two</th>
+        <th>User One's Filename</th>
+        <th>User Two's Filename</th>
+        <th>Lines Matched</th>
+        <th>URL</th>
+    </tr>
+    </thead>
 
-            <tbody>
-                <tr>{% for obj in value %}
-                    <td>{{ obj.User1 }}</td>
-                    <td>{{ obj.Match1 }}</td>
-                    <td>{{ obj.User2 }}</td>
-                    <td>{{ obj.Match2 }}</td>
-                    <td>{{ obj.FileName1 }}</td>
-                    <td>{{ obj.FileName2 }}</td>
-                    <td>{{ obj.Lines_Matched }}</td>
-                    <td>{{ obj.URL }}</td>
-                </tr>{% endfor %}
-            </tbody>
-            <table id="example1" class ="display" border=1 cellpadding=7>
-            <thead>
-            <tr>
-                <th>User</th>
-                <th>Total Number of Lines Matched</th>
-            </tr>
-            </thead>
 
-            <tbody>
-                <tr>{% for obj in percentsValues %}
-                    <td>{{ obj.getName() }}</td>
-                    <td>{{ obj.getData() }}</td>
-                </tr>{% endfor %}
-            </tbody>
-        </table>
-        <table id="example2" class ="display" border=1 cellpadding=7>
-            <thead>
-            <tr>
-                <th>User</th>
-                <th>Average Highest Percent Matched</th>
-            </tr>
-            </thead>
-        <tbody>
-                <tr>{% for obj in linesValues %}
-                    <td>{{ obj.getName() }}</td>
-                    <td>{{ obj.getData() }}</td>
-                </tr>{% endfor %}
-        </tbody>
-    </table>
-        </table>
+    <br> </br>
 
-    <h3> MOSS Results Graph </h3>
+    <tbody>
+    <tr>{% for obj in value %}
+        <td>{{ obj.User1 }}</td>
+        <td>{{ obj.Match1 }}</td>
+        <td>{{ obj.User2 }}</td>
+        <td>{{ obj.Match2 }}</td>
+        <td>{{ obj.FileName1 }}</td>
+        <td>{{ obj.FileName2 }}</td>
+        <td>{{ obj.Lines_Matched }}</td>
+        <td>{{ obj.URL }}</td>
+    </tr>{% endfor %}
+    </tbody>
+</table>
 
-  <style type="text/css">
+<br> </br>
+
+<table id="example1" class ="display" border=1 cellpadding=7>
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Total Number of Lines Matched</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>{% for obj in percentsValues %}
+        <td>{{ obj.getName() }}</td>
+        <td>{{ obj.getData() }}</td>
+    </tr>{% endfor %}
+    </tbody>
+</table>
+
+<br> </br>
+
+<table id="example2" class ="display" border=1 cellpadding=7>
+    <thead>
+    <tr>
+        <th>User</th>
+        <th>Average Highest Percent Matched</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>{% for obj in linesValues %}
+        <td>{{ obj.getName() }}</td>
+        <td>{{ obj.getData() }}</td>
+    </tr>{% endfor %}
+    </tbody>
+</table>
+
+<br> </br>
+
+<h3> MOSS Results Graph </h3>
+
+<style type="text/css">
     html, body {
-      font: 10pt arial;
+        font: 10pt arial;
     }
     #mynetwork {
-      width: 600px;
-      height: 600px;
-      border: 1px solid lightgray;
+        width: 600px;
+        height: 600px;
+        border: 1px solid lightgray;
     }
 
-      .slidecontainer {
-    width: 100%; /* Width of the outside container */
-}
+    .slidecontainer {
+        width: 100%; /* Width of the outside container */
+    }
 
-/* The slider itself */
-.slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-}
+    /* The slider itself */
+    .slider {
+        -webkit-appearance: none;  /* Override default CSS styles */
+        appearance: none;
+        width: 600px; /* Slider as wide as graph */
+        height: 25px; /* Specified height */
+        background: #d3d3d3; /* Grey background */
+        outline: none; /* Remove outline */
+        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+    }
 
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
-}
+    /* Mouse-over effects */
+    .slider:hover {
+        opacity: 1; /* Fully shown on mouse-over */
+    }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none; /* Override default look */
+        appearance: none;
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #4CAF50; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
 
-.slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #4CAF50; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
+    .slider::-moz-range-thumb {
+        width: 25px; /* Set a specific slider handle width */
+        height: 25px; /* Slider handle height */
+        background: #4CAF50; /* Green background */
+        cursor: pointer; /* Cursor on hover */
+    }
 
-  </style>
+</style>
 
-  <script type="text/javascript" src="../static/vis.js"></script>
-  <link href="../static/vis-network.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../static/vis.js"></script>
+<link href="../static/vis-network.min.css" rel="stylesheet" type="text/css" />
 
-  <script type="text/javascript">
+<script type="text/javascript">
     var nodes = null;
     var edges = null;
     var network = null;
@@ -144,82 +155,86 @@
     var oldEdges = null;
 
     function draw() {
-      // create people
-      nodes = '{{nodes}}'
-      nodes = nodes.replace(/&#39;/g, "\"")
-      nodes = JSON.parse(nodes);
+        //Create graph nodes and edges
+        //...When the data is sent from flask to html the quotation marks are
+        //...changed from " to their ascii value &#39;
+        //...must do string replace in the json objects for nodes and edges to
+        //...replace back to quotation marks
+        nodes = '{{nodes}}'
+        nodes = nodes.replace(/&#39;/g, "\"")
+        nodes = JSON.parse(nodes);
+        edges = '{{edges}}'
+        edges = edges.replace(/&#39;/g, "\"")
+        oldEdges = JSON.parse(edges);
 
-      //create edges
-      edges = '{{edges}}'
-      edges = edges.replace(/&#39;/g, "\"")
-      oldEdges = JSON.parse(edges);
+        console.log(nodes);
+        console.log(edges);
 
-      for (var i = 0; i < oldEdges.length; i++)
-      {
-          oldEdges[i].color = {color: '#0099ff', highlight: '#ff3300'}
-      }
-
-      edges = new vis.DataSet(oldEdges);
-
-      // value corresponds with the age of the person
-      // Instantiate our network object.
-      container = document.getElementById('mynetwork');
-      data = {
-        nodes: nodes,
-        edges: edges
-      };
-      options = {
-        nodes: {
-          shape: 'dot'
-        },
-        interaction: {
-            navigationButtons: true,
-            keyboard: true
+        //Set edge color and highlight color
+        for (var i = 0; i < oldEdges.length; i++)
+        {
+            oldEdges[i].color = {color: '#0099ff', highlight: '#ff3300'}
         }
-      };
-      network = new vis.Network(container, data, options);
+
+        edges = new vis.DataSet(oldEdges);
+
+        // value corresponds with the age of the person
+        // Instantiate our network object.
+        container = document.getElementById('mynetwork');
+        data = {
+            nodes: nodes,
+            edges: edges
+        };
+        options = {
+            nodes: {
+                shape: 'dot'
+            },
+            interaction: {
+                navigationButtons: true,
+                keyboard: true
+            }
+        };
+        network = new vis.Network(container, data, options);
     }
 
     function reDraw() {
-
         for (var i = 0; i < oldEdges.length; i++)
         {
-          if (parseInt(oldEdges[i].value) < slider.value) {
-              oldEdges[i].hidden = true
-              edges.update(oldEdges[i])
-          }
-          else {
-              oldEdges[i].hidden = false
-              edges.update(oldEdges[i])
-          }
-      }
+            if (parseInt(oldEdges[i].value) < slider.value) {
+                oldEdges[i].hidden = true
+                edges.update(oldEdges[i])
+            }
+            else {
+                oldEdges[i].hidden = false
+                edges.update(oldEdges[i])
+            }
+        }
     }
 
-  </script>
+</script>
 
 </body>
 <body onload="draw()">
 <p>
-  Graph of Student Nodes and Percentage Matched Edges
+    Graph of Student Nodes and Percentage Matched Edges
 </p>
 <div id="mynetwork"></div>
 
 <div class="slidecontainer">
-  <input type="range" min="0" max="100" value="1" class="slider" id="chosenRange">
-
-  <p>Minimum Percent: <span id="selected"></span> %</p>
+    <input type="range" min="0" max="100" value="1" class="slider" id="chosenRange">
+    <p>Minimum Percent: <span id="selected"></span> %</p>
 </div>
 
 <script>
-var slider = document.getElementById("chosenRange");
-var output = document.getElementById("selected");
-output.innerHTML = slider.value;
+    var slider = document.getElementById("chosenRange");
+    var output = document.getElementById("selected");
+    output.innerHTML = slider.value;
 
-slider.oninput = function() {
-  output.innerHTML = this.value;
-  reDraw()
-}
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        reDraw()
+    }
 </script>
 
-    </body>
+</body>
 </html>
