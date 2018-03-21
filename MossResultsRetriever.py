@@ -17,7 +17,7 @@ class MossResultsRetriever:
         self.file = FileRetrieval()
         self.results = []
 
-    def get_url(self, url):
+    def getUrl(self, url):
         # check to see if it has "moss.stanford.edu"
         # check that it exists (http response of 200?)
 
@@ -45,12 +45,12 @@ class MossResultsRetriever:
         if not self.file.open_and_read_file(file):  # FileRetrieval returns if the file is valid
             return False
         for url in self.file.url_list:
-            self.get_url(url)# checks the validity of the URLs given from file
+            self.getUrl(url)# checks the validity of the URLs given from file
         return True
 
     def getValidity(self, urlList):
         for item in urlList:
-            if not(self.get_url(item)):# checks the validity of the URLs given from file
+            if not(self.getUrl(item)):# checks the validity of the URLs given from file
                 return False, item #returns the url that is invalid
         success="success"
         return True, success
@@ -82,12 +82,12 @@ def main():
     murl.get_results()
     #for r in murl.results:
         #print("------------------- assignment number: ")
-        #print(r.assignment_number)
-        #print(r.file_one )
-        #print(r.file_two )
+        #print(r.assignmentNumber)
+        #print(r.fileOne )
+        #print(r.fileTwo )
         #print(r.url )
-        #print(r.file_one_percent)
-        #print(r.file_two_percent )
-        #print(r.lines_matched)
+        #print(r.fileOnePercent)
+        #print(r.fileTwoPercent )
+        #print(r.linesMatched)
 
 if __name__ == '__main__': main()
