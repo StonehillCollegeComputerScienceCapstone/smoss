@@ -29,7 +29,6 @@ logger.setLevel(logging.DEBUG)
 sorter = SortResults()
 aggregator = DataAggregator()
 retriever = MOSSResultsRetriever()
-graph = Graph()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.

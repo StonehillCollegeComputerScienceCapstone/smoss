@@ -1,7 +1,7 @@
 import json
 from flask import *
 from Result import Result
-from AggregateData import AggregateData
+from DataAggregator import DataAggregator
 
 
 class Graph:
@@ -11,8 +11,10 @@ class Graph:
             self.graph = self.getJsonObject(results)
         else:
             pass
-
-    def validResults(self, results):
+    #
+    # method will return false if list contains results with different assignment numbers
+    #
+    def getValidResults(self, results):
         if results and isinstance(results, list):
             for result in results:
                 if not (result.assignment_number == results[0].assignment_number):
@@ -20,24 +22,23 @@ class Graph:
         else:
             return False
         return True
-
+    #
     # Return an array of dictionary objects containing the names of every student
+    #
     def getNodes(self, results):
         names = []
-        aggregateData = AggregateData(results)
-        nameList = aggregateData.populateNames(results)
-        count = 1
-        for n in nameList:
-            names.append({"id": count, "value": 5, "label": n})
-            count = count + 1
+        nameList = DataAggregator().populateNames(results)
+        index = 1
+        for name in nameList:
+            names.append({"id": index, "value": 5, "label": name})
+            index = index + 1
         return names
 
     #
-    # return index of name in list of AggregateData
+    # return index of passed variable name in list of DataAggregator
     #
     def getNodeIndex(self, name, results):
-        aggregateData = AggregateData(results)
-        nameList = aggregateData.populateNames(results)
+        nameList = DataAggregator().populateNames(results)
         index = 1
         for n in nameList:
             if n == name:
@@ -45,34 +46,31 @@ class Graph:
             index = index + 1
         return -1
     #
-    # Return an array of dictionary objects
+    # Return an array of dictionary objects representing edges in the graph
     #
     def getEdges(self, results):
         edges = []
-        edgeFrom = -1
-        edgeTo = -1
-        nodes = self.getNodes(results)
         for result in results:
             edgeFrom = self.getNodeIndex(result.file_one, results)
             edgeTo = self.getNodeIndex(result.file_two, results)
-            value = self.chooseGreaterPercent(result)
+            value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
             edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString})
         return edges
-
-    def chooseGreaterPercent(self, result):
-        if result.file_one_percent > result.file_two_percent:
-            return result.file_one_percent
-        return result.file_two_percent
-
+    #
+    # Return the greater value between two percentages
+    #
+    def getGreaterPercentage(self, result):
+        return max(result.file_one_percent, result.file_two_percent)
+    #
+    # return a JsonObject based off of list of moss results
+    #
     def getJsonObject(self, results):
-        graph = {}
-        graph['nodes'] = self.getNodes(results)
-        graph['edges'] = self.getEdges(results)
-
-        jsonString = json.dumps(graph)
-        return json.loads(jsonString)
-
+        graph = ({"nodes": self.getNodes(results), "edges": self.getEdges(results) })
+        return json.loads(json.dumps(graph))
+    #
+    #method to print out text that make up graph
+    #
     def print(self):
         print('Nodes:')
         for node in self.graph['nodes']:
@@ -80,8 +78,9 @@ class Graph:
         print('\nEdges:')
         for edge in self.graph['edges']:
             print(edge)
-
-# Example data
+#
+# method to produce test data for debugging
+#
 def example():
     results = []
     validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
@@ -95,9 +94,11 @@ def example():
 
     return results
 
-
+#
+#method to use for running locally and debugging
+#
 def main():
     graph = Graph(example())
-    #graph.print()
+    graph.print()
 
 if __name__ == '__main__': main()

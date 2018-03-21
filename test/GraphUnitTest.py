@@ -23,26 +23,26 @@ class MyTestCase(unittest.TestCase):
 
         self.JSON = self.graph.getJsonObject(self.results)
 #
-# validResults()
+# getValidResults()
 #
     #
     # Results should be an array of Result
     #
     def test_ValidResults(self):
-        self.assertTrue(self.graph.validResults(self.results))
+        self.assertTrue(self.graph.getValidResults(self.results))
     #
     # Results should not be empty
     #
     def test_EmptyResults(self):
         results = []
-        self.assertFalse(self.graph.validResults(results))
+        self.assertFalse(self.graph.getValidResults(results))
     #
     # All assignment numbers should match
     #
 
     def test_AssignmentNumber(self):
         self.results.append(Result(2, "Tori", "Will", self.validURL, 25, 33, 95))
-        self.assertFalse(self.graph.validResults(self.results))
+        self.assertFalse(self.graph.getValidResults(self.results))
         self.results.pop()
 #
 # getNodes()
@@ -55,56 +55,56 @@ class MyTestCase(unittest.TestCase):
         names = self.graph.getNodes(self.results)
         self.assertGreater(len(names), 1)
 #
-# chooseGreaterPercent()
+# getGreaterPercentage()
 #
 
     #
-    # chooseGreaterPercent() with integers
+    # getGreaterPercentage() with integers
     #
     def test_ChooseGreaterPercent(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertEqual(self.graph.chooseGreaterPercent(result), 90)
-        self.assertNotEqual(self.graph.chooseGreaterPercent(result), 70)
-        self.assertNotEqual(self.graph.chooseGreaterPercent(result), 20)
-        self.assertNotEqual(self.graph.chooseGreaterPercent(result), 55)
+        self.assertEqual(self.graph.getGreaterPercentage(result), 90)
+        self.assertNotEqual(self.graph.getGreaterPercentage(result), 70)
+        self.assertNotEqual(self.graph.getGreaterPercentage(result), 20)
+        self.assertNotEqual(self.graph.getGreaterPercentage(result), 55)
     #
-    # chooseGreaterPercent() returning an integer not a string
+    # getGreaterPercentage() returning an integer not a string
     #
     def test_ChooseGreaterPercentNotString(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertFalse(isinstance(self.graph.chooseGreaterPercent(result), str))
-        self.assertNotEqual(self.graph.chooseGreaterPercent(result), '90')
+        self.assertFalse(isinstance(self.graph.getGreaterPercentage(result), str))
+        self.assertNotEqual(self.graph.getGreaterPercentage(result), '90')
 
     #
-    # chooseGreaterPercent() not returning a float
+    # getGreaterPercentage() not returning a float
     #
     def test_ChooseGreaterPercentNotFloat(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertFalse(isinstance(self.graph.chooseGreaterPercent(result), float))
+        self.assertFalse(isinstance(self.graph.getGreaterPercentage(result), float))
     #
-    #chooseGreaterPercent() returning a value
+    #getGreaterPercentage() returning a value
     #
     def test_ChooseGreaterPercentNotNone(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertTrue(self.graph.chooseGreaterPercent(result))
+        self.assertTrue(self.graph.getGreaterPercentage(result))
     #
-    #chooseGreaterPercent() returning a value which is not a list
+    #getGreaterPercentage() returning a value which is not a list
     #
     def test_ChooseGreaterPercentNotList(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertFalse(isinstance(self.graph.chooseGreaterPercent(result), list))
+        self.assertFalse(isinstance(self.graph.getGreaterPercentage(result), list))
     #
-    #chooseGreaterPercent() returning a value which is not a dictionary object
+    #getGreaterPercentage() returning a value which is not a dictionary object
     #
     def test_ChooseGreaterPercentNotDict(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertFalse(isinstance(self.graph.chooseGreaterPercent(result), dict))
+        self.assertFalse(isinstance(self.graph.getGreaterPercentage(result), dict))
     #
-    #chooseGreaterPercent() returning an Integer for a value
+    #getGreaterPercentage() returning an Integer for a value
     #
     def test_ChooseGreaterPercentInteger(self):
         result = Result(1, "Matt", "Armen", self.validURL, 90, 70, 20)
-        self.assertTrue(isinstance(self.graph.chooseGreaterPercent(result), int))
+        self.assertTrue(isinstance(self.graph.getGreaterPercentage(result), int))
 #
 #Test JSON format
 #
