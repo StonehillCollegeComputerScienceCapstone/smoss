@@ -10,9 +10,11 @@ class MossParserUnitTest(unittest.TestCase):
     # 3. Test getHtml() on a valid url
     # 4. Test processHtml() on valid output
     # 5. Test processHtml() on invalid output
-    # 6. Test getName()
-    # 7. Test for same year assignment
-    # 8. Test for different year assignment
+    # 6. Test getName() with previous file 
+    # 7. Test getName() with current file
+    # 8. Test for same year assignment
+    # 9. Test for different year assignment
+    # 10. Test for previous assignments
 
     def setUp(self):
         self.mp = MossParser("csv.csv")
@@ -470,30 +472,42 @@ class MossParserUnitTest(unittest.TestCase):
 #
 # getName()
 #
-    # 6. Test getName()
-    def test_getName(self):
+    # 6. Test getName with previous file
+    def test_getName_previuos(self):
         string = "previous_msmith_HomeValue.java (21%)"
         self.assertEqual(self.mp.getName(string), "msmith")
 
+    #7.  Test get name with current file
+    def test_getName_current (self):
+        string = "msmith_HomeValue.java (21%)"
+        self.assertEqual(self.mp.getName(string), "msmith")
+
+
 #
-# yearMatch()
+# previousyearMatch()
 #
-    # 7. Test for same year assignment
+    # 8. Test for same year assignment
     def test_currentYears(self):
         file1="lhbox_HomeValue.java"
         file2="eyo_HomeValue.java"
         self.assertFalse(self.mp.previousYearMatch(file1,file2))
 
-    # 8. Test for different year assignment
+    # 9. Test for different year assignment
     def test_differentYears(self):
         file1 = "previous_lhbox_HomeValue.java"
         file2 = "eyo_HomeValue.java"
         self.assertFalse(self.mp.previousYearMatch(file1, file2))
 
+
+    # 10. Test for past assignments
     def test_previousYears(self):
         file1 = "previous_lhbox_HomeValue.java"
         file2 = "previous_eyo_HomeValue.java"
         self.assertTrue(self.mp.previousYearMatch(file1,file2))
+
+#
+# processTableStrings()
+#
 
 if __name__ == '__main__':
     unittest.main()
