@@ -12,6 +12,7 @@ class DataAggregator:
         self.top_lines = []
         self.config = Config()
         if (not (results is None)):  # This adjustment made for using the example outside of this class
+            results.pop(0)  # this removes the header line from array of csv data
             self.aggregateData()
 
     def reInit(self, results):
@@ -61,11 +62,10 @@ class DataAggregator:
         # For every row from MOSS
 
         for result in results:
-            if (result.fileOne != "User1"):
-                if result.fileOne not in names:
-                    names.append(result.fileOne)
-                if result.fileTwo not in names:
-                    names.append(result.fileTwo)
+            if result.fileOne not in names:
+                names.append(result.fileOne)
+            if result.fileTwo not in names:
+                names.append(result.fileTwo)
 
         return names
 
@@ -74,44 +74,30 @@ class DataAggregator:
         numbers = []
 
         for result in results:
-            if (result.fileOne != "User1"):
-                if (result.assignmentNumber not in numbers):
-                    numbers.append(result.assignmentNumber)
+            if (result.assignmentNumber not in numbers):
+                numbers.append(result.assignmentNumber)
         return numbers
-
-    # Returns an array of highest percents based on a given name
-    def parsePercents(self, results, name):
-        maxPercents = []
+    #
+    # Returns an array of data based off of chosen data type
+    #
+    def parseData(self, results, name, dataType):
+        parsedData = []
         assignmentNumbers = self.getAssignmentNumbers(results)
-
         for number in assignmentNumbers:
-            percents = []
-
+            data = []
             for result in results:
-                if (result.fileOne != "User1"):
-                    if (result.assignmentNumber == number) and (result.fileOne == name):
-                        percents.append(int(result.fileOnePercent))
-                    elif (result.assignmentNumber == number) and (result.fileTwo == name):
-                        percents.append(int(result.fileTwoPercent))
-            if (percents != []):
-                maxPercents.append(max(percents))
-        return maxPercents
-
-    # Returns an array of lines matched based on a given name
-    def parseLines(self, results, name):
-        maxLines = []
-        assignmentNumbers = self.getAssignmentNumbers(results)
-
-        for number in assignmentNumbers:
-            lines = []
-
-            for result in results:
-                if (result.fileOne != "User1"):
-                    if (result.assignmentNumber == number) and ((result.fileOne == name) or (result.fileTwo == name)):
-                        lines.append(int(result.linesMatched))
-            if (lines != []):
-                maxLines.append(max(lines))
-        return maxLines
+                if (result.assignmentNumber == number):
+                    if (dataType is "lines"):
+                        if ((result.fileOne == name) or (result.fileTwo == name)):
+                            data.append(int(result.linesMatched))
+                    elif (dataType is "percents"):
+                        if (result.fileOne == name):
+                            data.append(int(result.fileOnePercent))
+                        elif (result.fileTwo == name):
+                            data.append(int(result.fileTwoPercent))
+            if (data != []):
+                parsedData.append(max(data))
+        return parsedData
 
     # Calculates the average of a given array
     def calculateAverage(self, array):
@@ -149,13 +135,13 @@ class DataAggregator:
 
         for name in names:
             # Parse the highest percents for a given name
-            percents = self.parsePercents(self.results, name)
+            percents = self.parseData(self.results, name,"percents")
             if ((not self.validateArray(percents)) or (not self.validatePercents(percents))):
                 print("Percents array not valid!")
                 sys.exit()
 
             # Parse the highest lines matched for a given name
-            lines = self.parseLines(self.results, name)
+            lines = self.parseData(self.results, name, "lines")
             if (not self.validateArray(percents)):
                 print("Lines array not valid!")
                 sys.exit()

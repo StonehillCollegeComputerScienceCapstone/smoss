@@ -11,7 +11,7 @@ from DataAggregator import DataAggregator
 #averagePercent()
 #total()
 #populateNames()
-#parseLines()
+#parseData()
 #sort()
 
 
@@ -174,29 +174,29 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue("Sam" in self.names)
 
 #
-# parsePercents()
+# parseData() for percents
 #
     # Should return an array
     def test_returnsListPercents(self):
-        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "Matt"), list))
-        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "Armen"), list))
-        self.assertTrue(isinstance(self.ag.parsePercents(self.results, "Sam"), list))
+        self.assertTrue(isinstance(self.ag.parseData(self.results, "Matt", "percents"), list))
+        self.assertTrue(isinstance(self.ag.parseData(self.results, "Armen", "percents"), list))
+        self.assertTrue(isinstance(self.ag.parseData(self.results, "Sam", "percents"), list))
 
     # Should return these values
     def test_returnsMaxPercents(self):
         # Matt
-        percents = self.ag.parsePercents(self.results, "Matt")
+        percents = self.ag.parseData(self.results, "Matt", "percents" )
         self.assertTrue(90 in percents)
         self.assertTrue(33 in percents)
 
         # Armen
-        percents = self.ag.parsePercents(self.results, "Armen")
+        percents = self.ag.parseData(self.results, "Armen", "percents")
         self.assertTrue(70 in percents)
         self.assertTrue(70 in percents)
         self.assertTrue(79 in percents)
 
         # Sam
-        percents = self.ag.parsePercents(self.results, "Sam")
+        percents = self.ag.parseData(self.results, "Sam", "percents" )
         self.assertTrue(43 in percents)
         self.assertTrue(34 in percents)
         self.assertTrue(88 in percents)
@@ -204,42 +204,42 @@ class MyTestCase(unittest.TestCase):
     # Should return these values
     def test_lengthPercents(self):
         # Matt
-        percents = self.ag.parsePercents(self.results, "Matt")
+        percents = self.ag.parseData(self.results, "Matt", "percents" )
         self.assertEqual(len(percents), 3)
 
         # Armen
-        percents = self.ag.parsePercents(self.results, "Armen")
+        percents = self.ag.parseData(self.results, "Armen", "percents")
         self.assertEqual(len(percents), 3)
 
         # Sam
-        percents = self.ag.parsePercents(self.results, "Sam")
+        percents = self.ag.parseData(self.results, "Sam", "percents" )
         self.assertEqual(len(percents), 3)
 
 #
-# parseLines()
+# parseData() for lines
 #
     # Should return an array
     def test_returnsListLines(self):
-        self.assertTrue(isinstance(self.ag.parseLines(self.results, "Matt"), list))
-        self.assertTrue(isinstance(self.ag.parseLines(self.results, "Armen"), list))
-        self.assertTrue(isinstance(self.ag.parseLines(self.results, "Sam"), list))
+        self.assertTrue(isinstance(self.ag.parseData(self.results, "Matt", "lines"), list))
+        self.assertTrue(isinstance(self.ag.parseData(self.results, "Armen", "lines"), list))
+        self.assertTrue(isinstance(self.ag.parseData(self.results, "Sam", "lines"), list))
 
     # Should return these values
     def test_returnsMaxLines(self):
         # Matt
-        lines = self.ag.parseLines(self.results, "Matt")
+        lines = self.ag.parseData(self.results, "Matt", "lines")
         self.assertTrue(77 in lines)
         self.assertTrue(45 in lines)
         self.assertTrue(100 in lines)
 
         # Armen
-        lines = self.ag.parseLines(self.results, "Armen")
+        lines = self.ag.parseData(self.results, "Armen", "lines")
         self.assertTrue(20 in lines)
         self.assertTrue(45 in lines)
         self.assertTrue(20 in lines)
 
         # Sam
-        lines = self.ag.parseLines(self.results, "Sam")
+        lines = self.ag.parseData(self.results, "Sam", "lines")
         self.assertTrue(77 in lines)
         self.assertTrue(15 in lines)
         self.assertTrue(100 in lines)
@@ -247,15 +247,15 @@ class MyTestCase(unittest.TestCase):
     # Should return these lengths
     def test_lengthLines(self):
         # Matt
-        lines = self.ag.parseLines(self.results, "Matt")
+        lines = self.ag.parseData(self.results, "Matt", "lines")
         self.assertEqual(len(lines), 3)
 
         # Armen
-        lines = self.ag.parseLines(self.results, "Armen")
+        lines = self.ag.parseData(self.results, "Armen", "lines")
         self.assertEqual(len(lines), 3)
 
         # Sam
-        lines = self.ag.parseLines(self.results, "Sam")
+        lines = self.ag.parseData(self.results, "Sam", "lines")
         self.assertEqual(len(lines), 3)
 
 #
