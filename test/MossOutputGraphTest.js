@@ -1,4 +1,4 @@
-QUnit.module("Example", {
+QUnit.module("Graph Example", {
 
     //QUnit's version of "setup"
     //Create a dummy graph to use during testing
@@ -39,14 +39,24 @@ QUnit.module("Example", {
 });
 
 //Test the number of nodes in the graph created in "begin"
-QUnit.test("Number of Nodes", function (assert){
+QUnit.test("Number of Nodes in Node Dataset", function (assert){
 
     if (this.expectedVisible === undefined){
         this.expectedVisible = this.NumInitialNodes;
     }
     console.log("Nodes in graph: ", this.network.body.data.nodes);
-    assert.equal(this.network.body.data.nodes.length, this.NumInitialNodes, "Number of nodes should be 8");
-    assert.equal(this.network.body.nodeIndices.length, this.expectedVisible, "Number of nodes should be 8");
+    assert.equal(this.network.body.nodeIndices.length, this.expectedVisible, "Expecting 8 nodes");
+
+});
+
+//Test the number of node indices in the graph created in "begin"
+QUnit.test("Number of Node Indices in NodeIndex Dataset", function (assert){
+
+    if (this.expectedVisible === undefined){
+        this.expectedVisible = this.NumInitialNodes;
+    }
+    console.log("NodeIndexes in graph: ", this.network.body.data.nodes);
+    assert.equal(this.network.body.nodeIndices.length, this.expectedVisible, "Expecting 8 node indices");
 
 });
 
@@ -56,8 +66,18 @@ QUnit.test("Number of Edges", function (assert){
     if (this.expectedVisible === undefined){
         this.expectedVisible = this.NumInitialEdges;
     }
-    console.log("Edges in graph: ", Object.keys(this.network.body.edges));
-    assert.equal(Object.keys(this.network.body.data.edges).length, this.NumInitialEdges, "Number of edges should be 6");
-    assert.equal(this.network.body.edgeIndices.length, this.NumInitialEdges, "Number of edges should be 6");
+    console.log("Edges in Graph: ", Object.keys(this.network.body.edges));
+    assert.equal(Object.keys(this.network.body.data.edges).length, this.NumInitialEdges, "Expecting 6 edges");
+
+});
+
+//Test the number of edge indices in the graph created in "begin"
+QUnit.test("Number of Edge Indices in EdgeIndex Dataset", function (assert){
+
+    if (this.expectedVisible === undefined){
+        this.expectedVisible = this.NumInitialEdges;
+    }
+    console.log("Edge Indices in Graph: ", Object.keys(this.network.body.edges));
+    assert.equal(this.network.body.edgeIndices.length, this.NumInitialEdges, "Expecting 8 edge indices");
 
 });
