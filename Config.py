@@ -1,5 +1,6 @@
 import urllib
 import urllib.request
+import logging
 class Config:
 
     #These should be valid URL's for each assignment in the 'current_year_data' folder
@@ -15,6 +16,14 @@ class Config:
         self.palindrome = palindrome
         self.carnivalgame = carnivalgame
         self.warmup = warmup
+
+        #Logger Setup
+        FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
+        logging.basicConfig(filename='output.log', format=FORMAT)
+        logger = logging.getLogger('root')
+        logger.setLevel(logging.DEBUG)
+        self.logger = logger
+
 
     def getHomevalue(self):
         return self.homevalue
