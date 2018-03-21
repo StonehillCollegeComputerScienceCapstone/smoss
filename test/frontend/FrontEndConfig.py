@@ -11,6 +11,7 @@
 #
 
 import unittest
+import getpass
 import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -23,8 +24,13 @@ class FrontEndTestSuite (unittest.TestCase):
     #   setUp ():   Selenium/BrowserStack - Required to make initial connection with the BS server.
     #
     def setUp (self):
-        self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
-
+        username=getpass.getuser()
+        if (username=='bdugan'):
+            self.url = "http://bobdugan2:kx9PNA1tGJzvb2rHreNE@hub.browserstack.com:80/wd/hub"
+        elif (username=='mmiddleton'):
+            self.url = "http://michaelmiddleton2:KzeJ27iophC6F8Lonvhi@hub.browserstack.com:80/wd/hub"
+        else:
+            self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
 
 
     #
