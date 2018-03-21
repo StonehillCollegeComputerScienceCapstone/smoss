@@ -85,7 +85,7 @@ class Graph:
 #
 def getExampleData():
     results = []
-    validURL = Config.getHomevalue()  # Change this when URL expires
+    validURL = Config.getWarmup()  # Change this when URL expires
     results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
     results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
     results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))

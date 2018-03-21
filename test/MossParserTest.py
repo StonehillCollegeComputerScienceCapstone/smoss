@@ -255,7 +255,7 @@ class MossParserUnitTest(unittest.TestCase):
                          """<tr><td><a href="http://moss.stanford.edu/results/11690537/match41.html">cchase_Palindrome.java (11%)</a>
                              </td><td><a href="http://moss.stanford.edu/results/11690537/match41.html">jcary_Palindrome.java (22%)</a>
                          </td><td align="right">7
-                         </td></tr>"""], self.mp.processHtml(self.mp.getHtml("http://moss.stanford.edu/results/558206563")))
+                         </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getWarmup())))
 
     # 5. Test the processing of an invalid html file into a list of table elements strings
     def test_invalidHtmlProcessing(self):
@@ -467,7 +467,7 @@ class MossParserUnitTest(unittest.TestCase):
                              """<tr><td><a href="http://moss.stanford.edu/results/11690537/match41.html">cchase_Palindrome.java (11%)</a>
                                  </td><td><a href="http://moss.stanford.edu/results/11690537/match41.html">jcary_Palindrome.java (22%)</a>
                              </td><td align="right">7
-                             </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getPalindrome())))
+                             </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getWarmup())))
 
 #
 # getName()

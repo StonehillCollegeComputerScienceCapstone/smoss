@@ -5,7 +5,7 @@ from MossResultsRetriever import MossResultsRetriever
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
         self.config = Config()
-        self.validUrl = self.config.getHomevalue()
+        self.validUrl = self.config.getWarmup()
         self.MossURLsData = MossResultsRetriever()
 
     def test_validUrl(self):

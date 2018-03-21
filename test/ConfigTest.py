@@ -12,7 +12,7 @@ from Config import Config
 
 class MyTestCase(unittest.TestCase):
 
-    #1. config.getHomeValue()
+    #1. config.getWarmup()
     def test_warmupURLValidity(self):
         c = Config()
         url = c.getWarmup()

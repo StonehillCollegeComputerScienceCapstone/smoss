@@ -55,6 +55,7 @@ class MossParser ():
         f.write('\n')
         for item in csvStrings:
             for value in item[:-1]:
+                print(value)
                 f.write(value+",")
             f.write(item[-1])
             f.write('\n')
