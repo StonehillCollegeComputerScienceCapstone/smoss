@@ -12,6 +12,7 @@ install:
   - npm install -g node-qunit-phantomjs vis
 
 before_script:
+  - curl -u "michaelmiddleton2:KzeJ27iophC6F8Lonvhi" -X DELETE https://api.browserstack.com/automate/builds/00f742937e5ad9c7458c380056bc07248971e981/sessions/1ae06ed7790f42769c61250a727fa7712971e896.json
   - python BackendServer.py &
   - ./BrowserStack -k KzeJ27iophC6F8Lonvhi &
   - ./code-coverage.sh
