@@ -4,11 +4,13 @@
 import urllib
 import urllib.request
 from html.parser import HTMLParser
+from Config import Config
 
 
 class MossParser ():
     def __init__(self, csvFileName):
         self.csvFileName = csvFileName
+        self.config = Config()
 
     # Parse a single URL
     def parse(self, url):
