@@ -24,6 +24,11 @@ class FrontEndTestSuite (unittest.TestCase):
     #   setUp ():   Selenium/BrowserStack - Required to make initial connection with the BS server.
     #
     def setUp (self):
+        #
+        # If you want to run BrowserStack on your local machine, add an entry here.  You will need your:
+        # - BrowserStack userid
+        # - BrowserStack key
+        # - OS level username
         username=getpass.getuser()
         if (username=='bdugan'):
             self.url = "http://bobdugan2:kx9PNA1tGJzvb2rHreNE@hub.browserstack.com:80/wd/hub"
