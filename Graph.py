@@ -83,7 +83,7 @@ class Graph:
 #
 # method to produce test data for debugging
 #
-def example():
+def getExampleData():
     results = []
     validURL = Config.getHomevalue()  # Change this when URL expires
     results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
@@ -100,7 +100,7 @@ def example():
 #method to use for running locally and debugging
 #
 def main():
-    graph = Graph(example())
+    graph = Graph(getExampleData())
     graph.print()
 
 if __name__ == '__main__': main()
