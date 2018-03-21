@@ -21,8 +21,11 @@ class MossParser ():
         tableStrings = self.processHtml(html)
 
         # Process the table strings into csv strings
-        csvStrings = self.processTableStrings(tableStrings)
-        self.writeToCsv(csvStrings)
+        csvStrings, validFileName = self.processTableStrings(tableStrings)
+        if(validFileName):
+            self.writeToCsv(csvStrings)
+        return validFileName
+
 
     # Parse multiple URLs
     def parseMultiple(self, urls):
@@ -91,6 +94,7 @@ class MossParser ():
 
         # Have list of strings split up
         # first two indexes are a blank space and the header, so remove them
+        print (splitStrings[0])
         del(splitStrings[0])
         del(splitStrings[0])
         return splitStrings
@@ -102,34 +106,56 @@ class MossParser ():
         html.close()
         return mystr
 
+    def getTableStringValues(self, tableString):
+        tableString=self.formatTableString(tableString)
+        tableStringValues = tableString.split(",")
+        return tableStringValues
+
+    def getValues(self, fileName1, fileName2):
+        values1 = fileName2.split("_")
+        values2 = fileName1.split("_")
+        return values1, values2
+
+
     def processTableStrings(self, tableStrings):
         # Go through list and turn them into Result object
         csvStrings=[]
         csvPreviousStrings=[]
         previousSet=set()
-
+        #print(tableStrings)
         for tableString in tableStrings:
-            tableString=self.formatTableString(tableString)
-            tableStringValues=tableString.split(",")
-            name1=self.getName(tableStringValues[1].strip())
-            name2 = self.getName(tableStringValues[4].strip())
-            fileName1=tableStringValues[1].strip()
-            fileName2=tableStringValues[4].strip()
-            previousMatch = self.previousYearMatch(fileName1, fileName2)
-            csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-            if previousMatch:
-                previousSet.add(fileName1)
-                csvPreviousStrings.append(csvString)
-            else:
-                csvStrings.append(csvString)
-        if(len(csvStrings)>0):
-            return csvStrings
-        else:
-            return csvPreviousStrings
 
-    def previousYearMatch(self, fileName1, fileName2):
-        values1 = fileName2.split("_")
-        values2 = fileName1.split("_")
+            tableStringValues=self.getTableStringValues(tableString)
+            #print(tableStringValues)
+            fileName1=tableStringValues[1].strip()
+            #print(tableString)
+            fileName2=tableStringValues[4].strip()
+
+            if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
+                name1 = self.getName(tableStringValues[1].strip())
+                name2 = self.getName(tableStringValues[4].strip())
+                values1, values2 = self.getValues(fileName1, fileName2)
+                previousMatch = self.previousYearMatch(values1, values2)
+                csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
+                if previousMatch:
+                    previousSet.add(fileName1)
+                    csvPreviousStrings.append(csvString)
+
+                else:
+                    csvStrings.append(csvString)
+            else:
+                return None, False
+        if len(csvStrings)>0:
+            return csvStrings, True
+        else:
+            return csvPreviousStrings, True
+
+    def testFileNaming(self, fileName):
+        if fileName[0].isdigit():
+            return False
+        return True
+
+    def previousYearMatch(self, values1, values2):
 
         if values1[0] == values2[0]:
             previousMatch = True  # Assignment are previous years

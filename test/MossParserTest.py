@@ -505,6 +505,7 @@ class MossParserUnitTest(unittest.TestCase):
         file2 = "previous_eyo_HomeValue.java"
         self.assertTrue(self.mp.previousYearMatch(file1,file2))
 
+   
 #
 # processTableStrings()
 #
