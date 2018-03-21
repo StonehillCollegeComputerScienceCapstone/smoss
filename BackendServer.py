@@ -12,7 +12,7 @@
 from flask import *
 from SortResults import SortResults
 from DataAggregator import DataAggregator
-from MOSSResultsRetriever import MOSSResultsRetriever
+from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
 import os
 import logging
@@ -28,7 +28,7 @@ logger.setLevel(logging.DEBUG)
 
 sorter = SortResults()
 aggregator = DataAggregator()
-retriever = MOSSResultsRetriever()
+retriever = MossResultsRetriever()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.

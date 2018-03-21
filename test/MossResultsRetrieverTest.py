@@ -1,12 +1,12 @@
 import unittest
 from Config import Config
-from MOSSResultsRetriever import MOSSResultsRetriever
+from MossResultsRetriever import MossResultsRetriever
 
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
         self.config = Config()
         self.validUrl = self.config.getHomevalue()
-        self.MossURLsData = MOSSResultsRetriever()
+        self.MossURLsData = MossResultsRetriever()
 
     def test_Valid_URL(self):
         self.assertTrue(self.MossURLsData.get_url(self.validUrl))  # valid URL
@@ -36,7 +36,6 @@ class MossURLsTests(unittest.TestCase):
         self.MossURLsData.get_file_urls("FileInput.txt")  # URLs file to parse
         self.assertTrue(self.MossURLsData.get_results())  # checking for errors in the parsing
         self.assertTrue(self.MossURLsData.results)  # checks that it is not null
-
 
     def tearDown(self):
         self.MossURLsData = None
