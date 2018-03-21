@@ -1,4 +1,4 @@
-import urllibmp
+import urllib
 import urllib.request
 import urllib.error
 from FileRetrieval import FileRetrieval
