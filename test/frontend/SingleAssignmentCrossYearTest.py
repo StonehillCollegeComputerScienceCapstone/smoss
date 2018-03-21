@@ -46,7 +46,7 @@ class SingleAssignmentCrossYearTest (FrontEndConfig.FrontEndTestSuite):
     #
     def getUrl (self):
         temp = Config.Config ()
-        return temp.homevalue
+        return temp.rodentia
 
 '''
 TODO:   These are the remaining UAT's for this file:
