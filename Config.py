@@ -9,10 +9,10 @@ class Config:
     warmup = "http://moss.stanford.edu/results/934408726"
 
     #2. TwentyOne.java
-    twentyone = "http://moss.stanford.edu/results/752446360"
+    twentyone = "http://moss.stanford.edu/results/7017206"
 
     #3. SquareRoot.java
-    squareroot = "http://moss.stanford.edu/results/686270206"
+    squareroot = "http://moss.stanford.edu/results/557715747"
 
     #4. Insipid.java
     insipid = "http://moss.stanford.edu/results/348481084"
