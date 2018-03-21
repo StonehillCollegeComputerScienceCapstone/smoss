@@ -17,7 +17,7 @@ class Graph:
     def getValidResults(self, results):
         if results and isinstance(results, list):
             for result in results:
-                if not (result.assignment_number == results[0].assignment_number):
+                if not (result.assignmentNumber == results[0].assignmentNumber):
                     return False
         else:
             return False
@@ -51,8 +51,8 @@ class Graph:
     def getEdges(self, results):
         edges = []
         for result in results:
-            edgeFrom = self.getNodeIndex(result.file_one, results)
-            edgeTo = self.getNodeIndex(result.file_two, results)
+            edgeFrom = self.getNodeIndex(result.fileOne, results)
+            edgeTo = self.getNodeIndex(result.fileTwo, results)
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
             edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString})
@@ -61,7 +61,7 @@ class Graph:
     # Return the greater value between two percentages
     #
     def getGreaterPercentage(self, result):
-        return max(result.file_one_percent, result.file_two_percent)
+        return max(result.fileOnePercent, result.fileTwoPercent)
     #
     # return a JsonObject based off of list of moss results
     #

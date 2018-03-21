@@ -1,30 +1,30 @@
 class Result:
     def __init__(self, assignmentNum, f1, f2, url, f1Percent, f2Percent, linesMatched):
-        self.assignment_number = assignmentNum
-        self.file_one = f1
-        self.file_two = f2
+        self.assignmentNumber = assignmentNum
+        self.fileOne = f1
+        self.fileTwo = f2
         self.url = url
-        self.file_one_percent = f1Percent
-        self.file_two_percent = f2Percent
-        self.lines_matched = linesMatched
+        self.fileOnePercent = f1Percent
+        self.fileTwoPercent = f2Percent
+        self.linesMatched = linesMatched
 
-    def get_assignment_number(self):
-        return self.assignment_number()
+    def getAssignmentNumber(self):
+        return self.assignmentNumber()
 
-    def get_file_one(self):
-        return self.file_one
+    def getFileOne(self):
+        return self.fileOne
 
-    def get_file_two(self):
-        return self.file_two
+    def getFileTwo(self):
+        return self.fileTwo
 
-    def get_url(self):
+    def getUrl(self):
         return self.url
 
-    def get_percent_one(self):
-        return self.file_one_percent
+    def getPercentOne(self):
+        return self.fileOnePercent
 
-    def get_percent_two(self):
-        return self.file_two_percent
+    def getPercentTwo(self):
+        return self.fileTwoPercent
 
-    def get_lines_matched(self):
-        return self.lines_matched
+    def getLinesMatched(self):
+        return self.linesMatched

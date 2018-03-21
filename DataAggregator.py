@@ -61,11 +61,11 @@ class DataAggregator:
         # For every row from MOSS
 
         for result in results:
-            if (result.file_one != "User1"):
-                if result.file_one not in names:
-                    names.append(result.file_one)
-                if result.file_two not in names:
-                    names.append(result.file_two)
+            if (result.fileOne != "User1"):
+                if result.fileOne not in names:
+                    names.append(result.fileOne)
+                if result.fileTwo not in names:
+                    names.append(result.fileTwo)
 
         return names
 
@@ -74,9 +74,9 @@ class DataAggregator:
         numbers = []
 
         for result in results:
-            if (result.file_one != "User1"):
-                if (result.assignment_number not in numbers):
-                    numbers.append(result.assignment_number)
+            if (result.fileOne != "User1"):
+                if (result.assignmentNumber not in numbers):
+                    numbers.append(result.assignmentNumber)
         return numbers
 
     # Returns an array of highest percents based on a given name
@@ -88,11 +88,11 @@ class DataAggregator:
             percents = []
 
             for result in results:
-                if (result.file_one != "User1"):
-                    if (result.assignment_number == number) and (result.file_one == name):
-                        percents.append(int(result.file_one_percent))
-                    elif (result.assignment_number == number) and (result.file_two == name):
-                        percents.append(int(result.file_two_percent))
+                if (result.fileOne != "User1"):
+                    if (result.assignmentNumber == number) and (result.fileOne == name):
+                        percents.append(int(result.fileOnePercent))
+                    elif (result.assignmentNumber == number) and (result.fileTwo == name):
+                        percents.append(int(result.fileTwoPercent))
             if (percents != []):
                 maxPercents.append(max(percents))
         return maxPercents
@@ -106,11 +106,11 @@ class DataAggregator:
             lines = []
 
             for result in results:
-                if (result.file_one != "User1"):
-                    if (result.assignment_number == number) and (result.file_one == name):
-                        lines.append(int(result.lines_matched))
-                    elif (result.assignment_number == number) and (result.file_two == name):
-                        lines.append(int(result.lines_matched))
+                if (result.fileOne != "User1"):
+                    if (result.assignmentNumber == number) and (result.fileOne == name):
+                        lines.append(int(result.linesMatched))
+                    elif (result.assignmentNumber == number) and (result.fileTwo == name):
+                        lines.append(int(result.linesMatched))
             if (lines != []):
                 maxLines.append(max(lines))
         return maxLines
