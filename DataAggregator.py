@@ -107,9 +107,7 @@ class DataAggregator:
 
             for result in results:
                 if (result.fileOne != "User1"):
-                    if (result.assignmentNumber == number) and (result.fileOne == name):
-                        lines.append(int(result.linesMatched))
-                    elif (result.assignmentNumber == number) and (result.fileTwo == name):
+                    if (result.assignmentNumber == number) and ((result.fileOne == name) or (result.fileTwo == name)):
                         lines.append(int(result.linesMatched))
             if (lines != []):
                 maxLines.append(max(lines))
