@@ -7,12 +7,13 @@ from html.parser import HTMLParser
 
 
 class MossParser ():
-    def __init__(self,csvFileName):
+    def __init__(self, csvFileName):
         self.csvFileName = csvFileName
 
-    def parse(self,urlInput):
-        # get the html text from the URL
-        html = self.getHtml(urlInput)
+    # Parse a single URL
+    def parse(self, url):
+        # Get the html text from the URL
+        html = self.getHtml(url)
 
         # Process the html into table strings
         tableStrings = self.processHtml(html)
@@ -21,9 +22,10 @@ class MossParser ():
         csvStrings = self.processTableStrings(tableStrings)
         self.writeToCsv(csvStrings)
 
-    def parseMultiple(self, urlInputs): #multiple urls
+    # Parse multiple URLs
+    def parseMultiple(self, urls):
         counter = 0
-        for url in urlInputs:
+        for url in urls:
             html = self.getHtml(url)
             tableStrings = self.processHtml(html)
             csvStrings = self.processTableStrings(tableStrings)
@@ -42,7 +44,7 @@ class MossParser ():
             f.write('\n')
         f.close()
 
-    def writeToCsv(self,csvStrings):
+    def writeToCsv(self, csvStrings):
         f = open(self.csvFileName, 'w')
         f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
         f.write('\n')
@@ -53,49 +55,53 @@ class MossParser ():
             f.write('\n')
         f.close()
 
-    def getName(self,s):
-        values=s.split("_")
+    # Gets the name of the student for a given file name
+    def getName(self, fileName):
+        values=fileName.split("_")
         if values[0] == "previous":
             return values[1]
         else:
             return values[0]
 
-    def testUrl(self,urlArg):
-        request = urllib.request.Request(urlArg)
+    # Returns True if the URL is valid, else returns False
+    def testUrl(self, url):
+        request = urllib.request.Request(url)
+
+        # Attempt to access the URL
         try:
-            response = urllib.request.urlopen(request)
-            # response is now a string you can search through containing the page's html
+            response = urllib.request.urlopen(request) # response now contains the HTML
             return True
+
+        # Create an exception and return False if the URL is not valid
         except:
-            #The url wasn't valid
             return False
 
-    def processHtml(self,html):
-        #parse until table
+    def processHtml(self, html):
+        # Parse until table
         htmlParser=myHtmlParser()
         htmlParser.feed(html)
 
-        #here we have all of the rows in one long string
-        #now we parse through the string and split them up into individual strings
+        # Here we have all of the rows in one long string
+        # now we parse through the string and split them up into individual strings
         stripped=htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
         splitStrings=stripped.split("tr")
 
-        #have list of strings split up
-        #first two indexes are a blank space and the header, so remove them
+        # Have list of strings split up
+        # first two indexes are a blank space and the header, so remove them
         del(splitStrings[0])
         del(splitStrings[0])
         return splitStrings
 
-    def getHtml(self, urlArg):
-        html = urllib.request.urlopen(urlArg)
+    def getHtml(self, url):
+        html = urllib.request.urlopen(url)
         mybytes = html.read()
         mystr = mybytes.decode("utf8")
         html.close()
         return mystr
 
-    def processTableStrings(self,tableStrings):
-        #go through list and turn them into Result object
+    def processTableStrings(self, tableStrings):
+        # Go through list and turn them into Result object
         csvStrings=[]
         csvPreviousStrings=[]
         previousSet=set()
@@ -119,15 +125,15 @@ class MossParser ():
         else:
             return csvPreviousStrings
 
-    def previousYearMatch(self,fileName1, fileName2):
+    def previousYearMatch(self, fileName1, fileName2):
         values1 = fileName2.split("_")
         values2 = fileName1.split("_")
 
         if values1[0] == values2[0]:
-            previousMatch = True  # assignment are previous years
+            previousMatch = True  # Assignment are previous years
             return previousMatch
         else:
-            previousMatch = False  # assignments are current years
+            previousMatch = False  # Assignments are current years
             return previousMatch
 
 
@@ -145,7 +151,9 @@ class MossParser ():
         tableString=tableString.replace("%","")
         return tableString
 
-
+#
+# Inner class myHtmlParser extends HTMLParser
+#
 class myHtmlParser (HTMLParser):
     tableString=""
     seenTable=False
@@ -171,7 +179,3 @@ class myHtmlParser (HTMLParser):
     def handle_data(self, data):
         if(self.seenTable and (not self.seenEndOfTable)):
             self.tableString = self.tableString + data + " "
-
-#use these for testing/running locally
-#mp=MossParser("csv.csv")
-#mp.parse("http://moss.stanford.edu/results/979036301")
