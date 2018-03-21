@@ -1,3 +1,13 @@
-current_and_previous_year_data/* linguist-vendored
-current_year_data/* linguist-vendored
-previous_year_data/* linguist-vendored
+#
+#   FILE:       .gitattributes
+#   AUTHOR:     mmiddleton
+#   DATE:       19 MAR. 2018
+#
+#   DESCRIPTION:
+#   This file is for configuring how GitHub interprets the contents of the repository in its
+#   online analytics
+#
+
+data/* linguist-vendored            # Remove the Java files that we use for test data
+static/vis.js linguist-vendored     # Remove the VIS.JS file as its not ours
+static/skeleton.css                 # Remove the SKELETON.CSS file as its not ours
