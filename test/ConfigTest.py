@@ -4,37 +4,15 @@ import urllib.request
 from Config import Config
 
 #-----Methods being tested
-#1. config.getHomeValue()
-#2. config.getPalindrome()
-#3. config.getWarmup()
-#4. config.getCarnivalgame()
-#5. config.getHomevalue()
+#1. config.getWarmup()
+#2. config.getTwentyone()
+#3. config.getSquareroot()
+#4. config.getInsipid()
+#5. config.getRodentia()
 
 class MyTestCase(unittest.TestCase):
 
     #1. config.getHomeValue()
-    def test_homevalueURLValidity(self):
-        c = Config()
-        url = c.getHomevalue()
-        request = urllib.request.Request(url)
-        try:
-            response = urllib.request.urlopen(request)
-            return True
-        except:
-            return False
-
-    #2. config.getPalindrome()
-    def test_palindromeURLValidity(self):
-        c = Config()
-        url = c.getPalindrome()
-        request = urllib.request.Request(url)
-        try:
-            response = urllib.request.urlopen(request)
-            return True
-        except:
-            return False
-
-    #3. config.getWarmup()
     def test_warmupURLValidity(self):
         c = Config()
         url = c.getWarmup()
@@ -45,10 +23,10 @@ class MyTestCase(unittest.TestCase):
         except:
             return False
 
-    #4. config.getCarnivalgame()
-    def test_carnivalgameURLValidity(self):
+    #2. config.getTwentyone()
+    def test_twentyoneRLValidity(self):
         c = Config()
-        url = c.getCarnivalgame()
+        url = c.getTwentyone()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
@@ -56,10 +34,32 @@ class MyTestCase(unittest.TestCase):
         except:
             return False
 
-    #5. config.getHomevalue()
-    def test_golbachURLValidity(self):
+    #3. config.getWarmup()
+    def test_squarerootURLValidity(self):
         c = Config()
-        url = c.getGolbach()
+        url = c.getSquareroot()
+        request = urllib.request.Request(url)
+        try:
+            response = urllib.request.urlopen(request)
+            return True
+        except:
+            return False
+
+    #4. config.getInsipid()
+    def test_inspidURLValidity(self):
+        c = Config()
+        url = c.getInsipid()
+        request = urllib.request.Request(url)
+        try:
+            response = urllib.request.urlopen(request)
+            return True
+        except:
+            return False
+
+    #5. config.getRodentia()
+    def test_rodentiaURLValidity(self):
+        c = Config()
+        url = c.getRodentia()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
