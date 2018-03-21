@@ -2,11 +2,13 @@ import json
 from flask import *
 from Result import Result
 from DataAggregator import DataAggregator
+from Config import Config
 
 
 class Graph:
 
     def __init__(self, results):
+        self.config = Config()
         if isinstance(results, list):
             self.graph = self.getJsonObject(results)
         else:
@@ -83,7 +85,7 @@ class Graph:
 #
 def example():
     results = []
-    validURL = "http://moss.stanford.edu/results/11690537/"  # Change this when URL expires
+    validURL = Config.getHomevalue()  # Change this when URL expires
     results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
     results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
     results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))
