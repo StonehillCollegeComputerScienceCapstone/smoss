@@ -5,7 +5,7 @@ from FileRetrieval import FileRetrieval
 from Result import Result
 from MossParser import MossParser
 
-class MossURLsRetrieval:
+class MOSSResultsRetriever:
     def __init__(self):
         self.urls = []
         self.file = FileRetrieval()
@@ -77,7 +77,7 @@ class MossURLsRetrieval:
         return True
 
 def main():
-    murl = MossURLsRetrieval()
+    murl = MOSSResultsRetriever()
     #murl.get_file_urls("FileInput.txt")
     murl.get_results()
     #for r in murl.results:

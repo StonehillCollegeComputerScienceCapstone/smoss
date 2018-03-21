@@ -2,15 +2,15 @@ import sys
 from operator import attrgetter
 from Result import Result
 from Aggregation import Aggregation
-from config import config
-class AggregateData:
+from Config import Config
+class DataAggregator:
 
-    # Constructor for AggregateData
-    def __init__(self, results):
+    # Constructor for DataAggregator
+    def __init__(self, results=None):
         self.results = results
         self.top_percents = []
         self.top_lines = []
-        self.Config = config()
+        self.config = Config()
         if (not (results is None)):  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
@@ -200,19 +200,9 @@ class AggregateData:
 
 def main():
 
-#    results = example()  # Obtained from Sam and Nikolay
-#   ag = AggregateData(results)
-
-    ag = AggregateData(None)  #adjusted to get this main's example to work with example() being part of the class
+    ag = DataAggregator()  #adjusted to get this main's example to work with example() being part of the class
     ag.results = ag.example()
     ag.aggregateData()
-
-    # Display data
-    #print("Highest Average Percent")
-    #ag.display(ag.top_percents)
-    #print()
-    #print("Highest Lines Matched")
-    #ag.display(ag.top_lines)
 
 
 

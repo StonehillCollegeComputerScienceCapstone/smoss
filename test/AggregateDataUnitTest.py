@@ -1,7 +1,8 @@
 import unittest
+from Config import Config
 from Result import Result
 from Aggregation import Aggregation
-from AggregateData import AggregateData
+from DataAggregator import DataAggregator
 
 #------METHODS BEING TESTED--------
 #validResults()
@@ -19,8 +20,9 @@ from AggregateData import AggregateData
 class MyTestCase(unittest.TestCase):
 
     def setUp(self):
+        self.config = Config()
+        self.validURL = self.config.getHomevalue()
         self.results = []
-        self.validURL = "http://moss.stanford.edu/results/11690537/" # Change this when URL expires
 
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
         self.results.append(Result(1, "Matt", "Sam", self.validURL, 80, 43, 77))
@@ -32,7 +34,7 @@ class MyTestCase(unittest.TestCase):
         self.results.append(Result(3, "Matt", "Sam", self.validURL, 90, 88, 100))
         self.results.append(Result(3, "Armen", "Sam", self.validURL, 10, 6, 2))
 
-        self.ag = AggregateData(self.results)
+        self.ag = DataAggregator(self.results)
         self.names = self.ag.populateNames(self.results)
 
 #

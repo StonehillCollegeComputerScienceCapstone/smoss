@@ -11,43 +11,42 @@
 
 from flask import *
 from SortResults import SortResults
-from AggregateData import AggregateData
-from MossURLsRetrieval import MossURLsRetrieval
+from DataAggregator import DataAggregator
+from MOSSResultsRetriever import MOSSResultsRetriever
 from Graph import Graph
-from Result import Result
-from MossParser import MossParser
 import os
-import re
+import logging
 
 
 
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
-sorter = SortResults ()
-mossURLSretrieval = MossURLsRetrieval()
-aggregate = AggregateData(None)
-urlRetrieval = MossURLsRetrieval()
-graph = Graph(None)
+FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
+logging.basicConfig(filename='output.log',format=FORMAT)
+logger = logging.getLogger('root')
+logger.setLevel(logging.DEBUG)
 
+sorter = SortResults()
+aggregator = DataAggregator()
+retriever = MOSSResultsRetriever()
+graph = Graph()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
 #
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
-    print('[BackendServer]\tIndex page displayed!')
-    urlRetrieval.urls = []
+    logger.info('[BackendServer]\tIndex page displayed!')
     if request.method == "POST":
         inputURLs = request.form['text'] #input from the user
-        urlList = inputURLs.split("\n")
+        retriever.urls = inputURLs.split("\n")
 
-        valid, url = getValidorInvalidURL(urlList)
+        valid, url = getValidorInvalidURL(retriever.urls)
         if not valid:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
             return render_template(template, value=error)
         else:
-            urlRetrieval.urls=urlList
             return redirect('selectionpage')
 
     template = "templates/index.html"
@@ -55,24 +54,23 @@ def _Index ():
 
 @app.route('/selectionpage',  methods = ['GET', 'POST'])
 def _MOSSselectpage():
-    print('[BackendServer]\tMOSS Selection page displayed!')
+    logger.info('[BackendServer]\tMOSS Selection page displayed!')
     template = "templates/SelectionPage.html"
 
     if request.method == "POST":
         selection = request.form['selection']
-        mossURLSretrieval.reInit()
-        #mossURLSretrieval.urls = []
+        retriever.reInit()
 
         if (selection == "allURLs"):
-            for url in urlRetrieval.urls:
+            for url in retriever.urls:
                 updated_url = url.rstrip()
-                mossURLSretrieval.urls.append(updated_url)
+                retriever.urls.append(updated_url)
         else:
-            mossURLSretrieval.urls.append(selection)
-        mossURLSretrieval.get_results()
-        aggregate.reInit(mossURLSretrieval.results)
+            retriever.urls.append(selection)
+            retriever.get_results()
+        aggregator.reInit(retriever.results)
         return redirect('moss')
-    duplicateValues, urlList = checkForDuplicates(urlRetrieval.urls)
+    duplicateValues, urlList = checkForDuplicates(retriever.urls)
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
 
 #
@@ -81,11 +79,11 @@ def _MOSSselectpage():
 #
 @app.route ('/moss')
 def _MOSSOutput ():
-    print('[BackendServer]\tMOSS Output page displayed!')
+    logger.info('[BackendServer]\tMOSS Output page displayed!')
     template, value = getValidorInvalidMossTemplate()
     percentsValues = getValidorInvalidAggregateLinesTemplate()
     linesValues = getValidorInvalidAggregatePercentTemplate()
-    results = mossURLSretrieval.results;
+    results = retriever.results
 
     graph = Graph(results)
     graphJson = graph.getJsonObject(results)
@@ -96,7 +94,7 @@ def _MOSSOutput ():
 
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
-    print('[BackendServer]\tMOSS URL validation page displayed!')
+    logger.info('[BackendServer]\tMOSS URL validation page displayed!')
     template, value = getValidorInvalidURL()
     return render_template(template, value=value)
 
@@ -115,7 +113,7 @@ def checkForDuplicates(urlList):
 
 def getValidorInvalidURL(urlList):
 
-    valid, url = urlRetrieval.getValidity(urlList)
+    valid, url = retriever.getValidity(urlList)
     if not valid:
         return False, url
     else:
@@ -133,12 +131,12 @@ def getValidorInvalidMossTemplate():
 
 
 def getValidorInvalidAggregatePercentTemplate():
-    percentsValues = aggregate.top_percents
+    percentsValues = aggregator.top_percents
     return percentsValues
 
 
 def getValidorInvalidAggregateLinesTemplate():
-    linesValues = aggregate.top_lines
+    linesValues = aggregator.top_lines
     return linesValues
 
 #
