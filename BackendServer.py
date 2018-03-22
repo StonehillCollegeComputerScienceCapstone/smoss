@@ -68,10 +68,11 @@ def _MOSSselectpage():
                 retriever.urls.append(updated_url)
         else:
             retriever.urls.append(selection)
-            if not retriever.get_results():
-                template = "templates/errorpage.html"
-                value = "Invalid File Name"
-                return render_template(template, value=value)
+
+            #if not retriever.get_results():
+            #    template = "templates/errorpage.html"
+            #    value = "Invalid File Name"
+            #    return render_template(template, value=value)
 
         aggregator.reInit(retriever.results)
         return redirect('moss')
