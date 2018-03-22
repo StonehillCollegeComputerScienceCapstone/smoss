@@ -33,7 +33,7 @@ class MossParser ():
         for url in urls:
             html = self.getHtml(url)
             tableStrings = self.processHtml(html)
-            csvStrings = self.processTableStrings(tableStrings)
+            csvStrings, validFilename = self.processTableStrings(tableStrings)
             if (counter != 0):
                 self.appendToCsv(csvStrings)
             else:
@@ -90,7 +90,7 @@ class MossParser ():
         # now we parse through the string and split them up into individual strings
         stripped=htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
-        splitStrings=stripped.split("tr")
+        splitStrings=stripped.split("<tr>")
 
         # Have list of strings split up
         # first two indexes are a blank space and the header, so remove them
@@ -167,8 +167,8 @@ class MossParser ():
 
     def formatTableString(self,tableString):
         tableString.lstrip()
-        tableString = tableString.replace("td a href", '')
-        tableString = tableString.replace("a  td align right", '')
+        tableString = tableString.replace("<td> a href", '')
+        tableString = tableString.replace("a  <td> align right", '')
         tableString = tableString.replace("a       ", '')
         tableString=tableString.replace("  http://",'http://')
         tableString=tableString.replace("  ",",")
@@ -189,7 +189,10 @@ class myHtmlParser (HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if(self.seenTable and (not self.seenEndOfTable)):
-            self.tableString=self.tableString+tag+" "
+            if(tag=="tr" or tag=="td"):
+                self.tableString = self.tableString + "<"+tag+">" + " "
+            else:
+                self.tableString=self.tableString+tag+" "
             for attr in attrs:
                 tupleList=list(attr)
                 for item in tupleList:
