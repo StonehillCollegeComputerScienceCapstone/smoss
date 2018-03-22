@@ -40,7 +40,6 @@ def _Index ():
     if request.method == "POST":
         inputURLs = request.form['text'] #input from the user
         retriever.urls = inputURLs.split("\n")
-
         valid, url = getValidorInvalidURL(retriever.urls)
         if not valid:
             template = "templates/errorpage.html"
@@ -61,20 +60,23 @@ def _MOSSselectpage():
     if request.method == "POST":
         selection = request.form['selection']
         retriever.reInit()
-
+        #print(retriever.urls)
         if (selection == "allURLs"):
             for url in retriever.urls:
                 updated_url = url.rstrip()
                 retriever.urls.append(updated_url)
+                #aggregator.reInit(retriever.results)
         else:
             retriever.urls.append(selection)
-
-            #if not retriever.get_results():
-            #    template = "templates/errorpage.html"
-            #    value = "Invalid File Name"
-            #    return render_template(template, value=value)
-
         aggregator.reInit(retriever.results)
+
+        if not retriever.get_results():
+            template = "templates/errorpage.html"
+            value = "Invalid File Name"
+            return render_template(template, value=value)
+
+        #retriever.get_results()
+
         return redirect('moss')
     duplicateValues, urlList = checkForDuplicates(retriever.urls)
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
