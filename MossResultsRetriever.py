@@ -67,6 +67,7 @@ class MossResultsRetriever:
             validFileName = m.parse(url)
             file_data = open(file_data_name)
             lines = file_data.readlines()
+            lines.pop(0) # Remove header from csv
             for line in lines:
                 data = line.split(',')
                 r = Result(assignment_num, data[0], data[3], data[7].strip(), data[2], data[5], data[6])

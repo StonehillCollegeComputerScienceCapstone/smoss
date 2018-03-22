@@ -60,12 +60,10 @@ def _MOSSselectpage():
 
     if request.method == "POST":
         selection = request.form['selection']
-        retriever.reInit()
 
         if (selection == "allURLs"):
-            for url in retriever.urls:
-                updated_url = url.rstrip()
-                retriever.urls.append(updated_url)
+            for i in (0, len(retriever.urls)-1):
+                retriever.urls[i] = retriever.urls[i].rstrip()
         else:
             retriever.urls.append(selection)
 
@@ -74,6 +72,7 @@ def _MOSSselectpage():
             #    value = "Invalid File Name"
             #    return render_template(template, value=value)
 
+        retriever.get_results()
         aggregator.reInit(retriever.results)
         return redirect('moss')
     duplicateValues, urlList = checkForDuplicates(retriever.urls)

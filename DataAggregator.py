@@ -11,7 +11,7 @@ class DataAggregator:
         self.top_percents = []
         self.top_lines = []
         self.config = Config()
-        if (not (results is None)):  # This adjustment made for using the example outside of this class
+        if results is not None:  # This adjustment made for using the example outside of this class
             results.pop(0)  # this removes the header line from array of csv data
             self.aggregateData()
 
@@ -19,12 +19,12 @@ class DataAggregator:
         self.results = results
         self.top_percents = []
         self.top_lines = []
-        if (not (results is None)):
+        if results is not None:
             self.aggregateData()
 
     def setResults(self, results):
         self.results = results
-        if (not (results is None)):
+        if results is not None:
             self.aggregateData()
 
     # Validates data has been received to aggregate
@@ -77,6 +77,7 @@ class DataAggregator:
             if (result.assignmentNumber not in numbers):
                 numbers.append(result.assignmentNumber)
         return numbers
+
     #
     # Returns an array of data based off of chosen data type
     #
