@@ -62,7 +62,7 @@ class MossResultsRetriever:
         file_data_name = "csv.csv"
         m = MossParser(file_data_name)
         assignment_num = 0
-
+        validFileName = True
         for url in self.urls:
             validFileName = m.parse(url)
             file_data = open(file_data_name)
