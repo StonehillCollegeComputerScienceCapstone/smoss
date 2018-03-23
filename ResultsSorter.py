@@ -94,6 +94,7 @@ class ResultsSorter:
         csv_file = open(csv_path, 'r')
         csv_obj = csv.DictReader(csv_file)
         csv_list = list(csv_obj)
+        csv_file.close()
         return csv_list
 
     def validateData(self):

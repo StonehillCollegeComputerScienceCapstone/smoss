@@ -67,12 +67,13 @@ def _MOSSselectpage():
         else:
             retriever.urls.append(selection)
 
-            #if not retriever.get_results():
-            #    template = "templates/errorpage.html"
-            #    value = "Invalid File Name"
-            #    return render_template(template, value=value)
-
         retriever.get_results()
+        # If the results are empty
+        if not retriever.results:
+            template = "templates/errorpage.html"
+            value = "Invalid File Name"
+            return render_template(template, value=value)
+
         aggregator.reInit(retriever.results)
         return redirect('moss')
     duplicateValues, urlList = checkForDuplicates(retriever.urls)
