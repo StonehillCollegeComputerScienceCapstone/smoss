@@ -12,7 +12,6 @@ class DataAggregator:
         self.top_lines = []
         self.config = Config()
         if results is not None:  # This adjustment made for using the example outside of this class
-            results.pop(0)  # this removes the header line from array of csv data
             self.aggregateData()
 
     def reInit(self, results):

@@ -65,6 +65,7 @@ def _MOSSselectpage():
             for i in (0, len(retriever.urls)-1):
                 retriever.urls[i] = retriever.urls[i].rstrip()
         else:
+            retriever.reInit()  # Clear the retriever
             retriever.urls.append(selection)
 
         retriever.get_results()
