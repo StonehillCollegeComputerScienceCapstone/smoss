@@ -6,19 +6,19 @@ class Config:
     #Assignments-------------------------------------->
 
     #1. Warmup.java
-    warmup = "http://moss.stanford.edu/results/934408726"
+    warmup = "http://moss.stanford.edu/results/860369009"
 
     #2. TwentyOne.java
-    twentyone = "http://moss.stanford.edu/results/7017206"
+    twentyone = "http://moss.stanford.edu/results/28359173"
 
     #3. SquareRoot.java
-    squareroot = "http://moss.stanford.edu/results/557715747"
+    squareroot = "http://moss.stanford.edu/results/957841265"
 
     #4. Insipid.java
-    insipid = "http://moss.stanford.edu/results/348481084"
+    insipid = "http://moss.stanford.edu/results/467757133"
 
     #5. Rodentia.java
-    rodentia = "http://moss.stanford.edu/results/80427955"
+    rodentia = "http://moss.stanford.edu/results/212658218"
 
     #Logger Setup------------------------------------->
 

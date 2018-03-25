@@ -19,13 +19,14 @@ class MossParserUnitTest(unittest.TestCase):
     def setUp(self):
         self.mp = MossParser("csv.csv")
         self.config = Config()
+        self.validUrl = self.config.getWarmup()
 
 #
 # testUrl()
 #
     # 1. Test for valid URL
     def test_validURL(self):
-        self.assertTrue(self.mp.testUrl("http://moss.stanford.edu/results/558206563"))
+        self.assertTrue(self.mp.testUrl(self.validUrl))
 
     # 2. Test for inValid URL
     def test_invalidURL(self):
