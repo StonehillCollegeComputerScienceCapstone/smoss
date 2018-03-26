@@ -13,6 +13,7 @@
 import unittest
 import getpass
 import os
+import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -48,6 +49,7 @@ class FrontEndTestSuite (unittest.TestCase):
             'project' : 'SMOSS',
             'browserstack.local' : 'true',
             'name' : testName,
+            'build' : int (time.time ())
         }
         
         self.driver = webdriver.Remote (command_executor = self.url, desired_capabilities = desiredCapabilities)
