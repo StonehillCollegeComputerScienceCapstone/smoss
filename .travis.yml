@@ -24,7 +24,8 @@ script:
 
 after_script:
   - coverage combine
-  - ./coverage-app after-build --exit-code $TRAVIS_TEST_RESULT
+  - coverage xml --omit *.py
+  - ./coverage-app after-build -t coverage.py -r 2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
