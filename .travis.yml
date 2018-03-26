@@ -20,11 +20,10 @@ before_script:
 script:
   - coverage run --omit **/python3.6/**/* -m unittest -v test/*Test.py
   - node-qunit-phantomjs test/junittestharness.html
-  - coverage run --omit **/python3.6/**/* -m unittest -v test/frontend/*Test.py
+  - coverage run -a --omit **/python3.6/**/* -m unittest -v test/frontend/*Test.py
   - coverage report --omit *Test.py
 
 after_script:
-  - coverage combine
   - coverage xml --omit *Test.py
   - ./coverage-app after-build -t coverage.py -r 2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
 
