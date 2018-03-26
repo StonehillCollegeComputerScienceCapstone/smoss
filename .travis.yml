@@ -24,7 +24,7 @@ script:
 
 after_script:
   - coverage combine
-  - coverage xml --omit *.py
+  - coverage xml --omit *Test.py
   - ./coverage-app after-build -t coverage.py -r 2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
 
 notifications:
