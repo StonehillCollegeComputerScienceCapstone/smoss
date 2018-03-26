@@ -5,7 +5,7 @@ python:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+    - CC_TEST_REPORTER_ID=2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
 
 install:
   - pip install -r requirements.txt
@@ -18,11 +18,12 @@ before_script:
   - ./code-coverage.sh
 
 script:
-  - python -m unittest -v test/*Test.py
+  - coverage run --omit **/python3.6/**/* -m unittest -v test/*Test.py
   - node-qunit-phantomjs test/junittestharness.html
-  - python -m unittest -v test/frontend/*Test.py
+  - coverage run --omit **/python3.6/**/* -m unittest -v test/frontend/*Test.py
 
 after_script:
+  - coverage combine
   - ./coverage-app after-build --exit-code $TRAVIS_TEST_RESULT
 
 notifications:
