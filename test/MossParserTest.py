@@ -583,5 +583,21 @@ class MossParserUnitTest(unittest.TestCase):
 # processTableStrings()
 #
 
+
+#
+# testFileNaming()
+#
+    #-.Test that filename is string
+    def test_fileIsString(self):
+        file1 = "eyo_HomeValue.java"
+        self.assertTrue(self.mp.testFileNaming(file1))
+
+ # -.Test that filename is a digit
+    def test_fileIsDigit(self):
+        file1 = "558924359787"
+        self.assertFalse(self.mp.testFileNaming(file1))
+
+
+
 if __name__ == '__main__':
     unittest.main()
