@@ -53,7 +53,7 @@ class ResultsSorter:
             self.fileName2.append(dict['FileName2'].rstrip())
             self.match1.append(dict['Match1'].rstrip())
             self.match2.append(dict['Match2'].rstrip())
-            self.linesMatched.append(dict['linesMatched'].rstrip())
+            self.linesMatched.append(dict['Lines_Matched'].rstrip())
             self.URL.append(dict['URL'].rstrip())
 
     def isValidStringList(self, listName):
