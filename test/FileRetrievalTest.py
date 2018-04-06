@@ -4,30 +4,21 @@ from FileRetrieval import FileRetrieval
 
 class FileRetrievalTest(unittest.TestCase):
     def setUp(self):
-        self.input_file = FileRetrieval()
+        self.inputFile = FileRetrieval()
 
-    def test_Valid_String_File(self):
-        self.assertTrue(self.input_file.open_and_read_file("FileInput.txt"))
+    def test_validStringFile(self):
+        self.assertTrue(self.inputFile.readFile("FileInput.txt"))
 
-    def test_Invalid_String_File(self):
-        self.assertFalse(self.input_file.open_and_read_file("Invalid"))
-        self.assertFalse(self.input_file.open_and_read_file(1))
+    def test_invalidStringFile(self):
+        self.assertFalse(self.inputFile.readFile("Invalid"))
+        self.assertFalse(self.inputFile.readFile(1))
 
-    def test_Correct_Number_of_Lines_Read(self):
-        self.input_file.open_and_read_file("FileInput.txt")
-        self.assertEqual(len(self.input_file.url_list), 3)
-
-#    def test_File_Open_With_Popup(self): #this is a pop up to open a file if we need it for the future
-#        self.assertTrue(self.input_file.pop_up_open_file()) #actually a file here
-#        self.assertFalse(self.input_file.pop_up_open_file()) #cancel opening a file
+    def test_correctNumberOfLinesRead(self):
+        self.inputFile.readFile("FileInput.txt")
+        self.assertEqual(len(self.inputFile.urlList), 3)
 
     def tearDown(self):
-        self.input_file = None
-
-
-def main():
-    print("Start")
-
+        self.inputFile = None
 
 if __name__ == '__main__':
     unittest.main()

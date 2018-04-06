@@ -36,9 +36,9 @@ class MossResultsRetriever:
 
     # Retrieves the URLs from a specified file
     def getFileUrls(self, file):
-        if not self.file.open_and_read_file(file):  # FileRetrieval returns if the file is valid
+        if not self.file.readFile(file):  # FileRetrieval returns if the file is valid
             return False
-        for url in self.file.url_list:
+        for url in self.file.urlList:
             self.getUrl(url)# checks the validity of the URLs given from file
         return True
 
