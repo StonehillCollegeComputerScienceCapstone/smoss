@@ -89,21 +89,9 @@ class ResultsSorter:
         return csv_list
 
     def validateData(self):
-        if not(self.isValidLength()):
-            return False
-        if not(self.isValidStringList(self.fileName1)):
-            return False
-        if not(self.isValidStringList(self.fileName2)):
-            return False
-        if not(self.isValidStringList(self.URL)):
-            return False
-        if not(self.isValidMatchedList(self.match1)):
-            return False
-        if not(self.isValidMatchedList(self.match2)):
-            return False
-        if not(self.isValidMatchedList(self.linesMatched)):
-            return False
-        if not(self.isValidFilename()):
+        if not(self.isValidLength() or self.isValidStringList(self.fileName1) or self.isValidStringList(self.fileName2) or \
+               self.isValidStringList(self.URL)or self.isValidMatchedList(self.match1) or self.isValidMatchedList(self.match2) or \
+               self.isValidMatchedList(self.linesMatched) or self.isValidFilename()):
             return False
         return True
     def testingDict(self):
