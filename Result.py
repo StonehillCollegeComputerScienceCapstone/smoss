@@ -9,7 +9,7 @@ class Result:
         self.linesMatched = linesMatched
 
     def getAssignmentNumber(self):
-        return self.assignmentNumber()
+        return self.assignmentNumber
 
     def getFileOne(self):
         return self.fileOne
