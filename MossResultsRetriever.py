@@ -52,15 +52,15 @@ class MossResultsRetriever:
 
     # Populate the results object with the lines from the csv
     def getResults(self):
-        fileDataName = "csv.csv"
-        m = MossParser(fileDataName)
+        csv = "csv.csv"
+        m = MossParser(csv)
         assignmentNum = 0
         validFileName = True
 
         for url in self.urls:
             validFileName = m.parse(url)
-            fileData = open(fileDataName)
-            lines = fileData.readlines()
+            file = open(csv)
+            lines = file.readlines()
             lines.pop(0) # Remove header from csv
 
             for line in lines:
@@ -68,7 +68,7 @@ class MossResultsRetriever:
                 r = Result(assignmentNum, data[0], data[3], data[7].strip(), data[2], data[5], data[6])
                 self.results.append(r)
 
-            fileData.close()
+            file.close()
             assignmentNum = assignmentNum + 1
 
         if (len(self.urls) > 1):
