@@ -68,7 +68,7 @@ def _MOSSselectpage():
             retriever.reInit()  # Clear the retriever
             retriever.urls.append(selection)
 
-        retriever.get_results()
+        retriever.getResults()
         # If the results are empty
         if not retriever.results:
             template = "templates/errorpage.html"

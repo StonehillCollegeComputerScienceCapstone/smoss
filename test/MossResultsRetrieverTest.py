@@ -22,19 +22,19 @@ class MossURLsTests(unittest.TestCase):
 #        self.assertFalse(self.MossURLsData.getUrl(self.validUrl))
 
     def test_readUrlsValidFile(self):
-        self.assertTrue(self.MossURLsData.get_file_urls("FileInput.txt"))
+        self.assertTrue(self.MossURLsData.getFileUrls("FileInput.txt"))
 
     def test_readUrlsInvalidFile(self):
-        self.assertFalse(self.MossURLsData.get_file_urls("Invalid"))
-        self.assertFalse(self.MossURLsData.get_file_urls(1))
+        self.assertFalse(self.MossURLsData.getFileUrls("Invalid"))
+        self.assertFalse(self.MossURLsData.getFileUrls(1))
 
     def test_numberOfValidUrlsRead(self):
-        self.MossURLsData.get_file_urls("FileInput.txt")
+        self.MossURLsData.getFileUrls("FileInput.txt")
         self.assertEqual(len(self.MossURLsData.urls), 2)
 
     def test_resultObjects(self):
-        self.MossURLsData.get_file_urls("FileInput.txt")  # URLs file to parse
-        self.assertTrue(self.MossURLsData.get_results())  # checking for errors in the parsing
+        self.MossURLsData.getFileUrls("FileInput.txt")  # URLs file to parse
+        self.assertTrue(self.MossURLsData.getResults())  # checking for errors in the parsing
         self.assertTrue(self.MossURLsData.results)  # checks that it is not null
 
     def tearDown(self):

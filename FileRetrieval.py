@@ -1,7 +1,5 @@
 import os.path
 from Config import Config
-# from tkinter.filedialog import askopenfile
-
 
 class FileRetrieval:
     def __init__(self):
@@ -24,8 +22,3 @@ class FileRetrieval:
         self.file_name = file
         return True
 
-#    def pop_up_open_file(self):  # built-in pop up for python that we can consider using in the future of this project
-#        name = askopenfile()
-#        if name is None:
-#            return False
-#        return True
