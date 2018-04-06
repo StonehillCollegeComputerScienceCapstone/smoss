@@ -47,23 +47,14 @@ class ResultsSorter:
     # Parses the main list into individual category lists
     def createCategoryLists(self):
         for dict in self.MOSSresults:
-            for key, value in dict.items():
-                if key == "User1":
-                    self.user1.append(value.rstrip())
-                if key == "User2":
-                    self.user2.append(value.rstrip())
-                if key == "FileName1":
-                    self.fileName1.append(value.rstrip())
-                if key == "FileName2":
-                    self.fileName2.append(value.rstrip())
-                if key == "Match1":
-                    self.match1.append(value.rstrip())
-                if key == "Match2":
-                    self.match2.append(value.rstrip())
-                if key == "Lines Matched":
-                    self.linesMatched.append(value.rstrip())
-                if key == "URL":
-                    self.URL.append(value)
+            self.user1.append(dict['User1'].rstrip())
+            self.user2.append(dict['User2'].rstrip())
+            self.fileName1.append(dict['FileName1'].rstrip())
+            self.fileName2.append(dict['FileName2'].rstrip())
+            self.match1.append(dict['Match1'].rstrip())
+            self.match2.append(dict['Match2'].rstrip())
+            self.linesMatched.append(dict['linesMatched'].rstrip())
+            self.URL.append(dict['URL'].rstrip())
 
     def isValidStringList(self, listName):
         for key in listName:
@@ -115,3 +106,11 @@ class ResultsSorter:
         if not(self.isValidFilename()):
             return False
         return True
+    def testingDict(self):
+        self.createMainList()
+        self.createCategoryLists()
+        
+      
+r = ResultsSorter()
+r.testingDict()
+        
