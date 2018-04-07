@@ -32,3 +32,9 @@ class Result:
     def toString(self):
         return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
                + "\t" + str(self.fileOnePercent) + "\t" + str(self.fileTwoPercent) + "\t" + str(self.linesMatched)
+
+    def equals(self, result):
+        return (self.assignmentNumber == result.assignmentNumber) and (self.fileOne == result.fileOne) and \
+               (self.fileTwo == result.fileTwo) and (self.url == result.url) and \
+               (self.fileOnePercent == result.fileOnePercent) and (self.fileTwoPercent == result.fileTwoPercent) and \
+               (self.linesMatched == result.linesMatched)

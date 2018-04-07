@@ -28,6 +28,16 @@ class MyTestCase(unittest.TestCase):
     def test_getLinesMatched(self):
         self.assertEqual(60, self.result.getLinesMatched())
 
+    def test_toString(self):
+        self.assertEqual(self.result.toString(), "1" + "\t" + "f1" + "\t" + "f2" +
+                         "\t" + "url" + "\t" + "40" + "\t" + "50" + "\t" + "60")
+
+    def test_equalsTrue(self):
+        self.assertTrue(self.result.equals(Result(1, "f1", "f2", "url", 40, 50, 60)))
+
+    def test_equalsFalse(self):
+        self.assertFalse(self.result.equals(Result(0, "", "", "", 0, 0, 0)))
+
 
 if __name__ == '__main__':
     unittest.main()

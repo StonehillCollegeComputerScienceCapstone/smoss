@@ -32,6 +32,7 @@ class MossResultsRetriever:
 
         if url not in self.urls:
             self.urls.append(url)
+
         return True
 
     # Retrieves the URLs from a specified file
@@ -75,6 +76,16 @@ class MossResultsRetriever:
             m.parseMultiple(self.urls)  #added this to get a csv file for all the assignments so the sortResults method can add all assignments to one table in html /moss
                                         #will need to be adjusted because of time consumption
         return validFileName
+
+    # Checks the results object for any duplicate data
+    def areDuplicateResults(self):
+        seen = []
+        for result in self.results:
+            for seenResult in seen:
+                if result.equals(seenResult):
+                    return True
+            seen.append(result)
+        return False
 
 def main():
     murl = MossResultsRetriever()
