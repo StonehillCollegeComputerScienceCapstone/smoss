@@ -168,7 +168,7 @@ class DataAggregator:
 
     # Example data
     def example(self):  # Put this in the class to have the example
-        validURL = Config.getGolbach() # URL for 'Golbach' assignment
+        validURL = self.config.getWarmup() # URL for 'Golbach' assignment
         results = []
         results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
         results.append(Result(1, "Matt", "Sam", validURL, 80, 43, 77))
@@ -187,6 +187,7 @@ def main():
     ag = DataAggregator()  #adjusted to get this main's example to work with example() being part of the class
     ag.results = ag.example()
     ag.aggregateData()
+    ag.displayArray(ag.results)
 
 
 

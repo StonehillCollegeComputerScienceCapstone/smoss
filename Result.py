@@ -28,3 +28,7 @@ class Result:
 
     def getLinesMatched(self):
         return self.linesMatched
+
+    def toString(self):
+        return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
+               + "\t" + str(self.fileOnePercent) + "\t" + str(self.fileTwoPercent) + "\t" + str(self.linesMatched)
