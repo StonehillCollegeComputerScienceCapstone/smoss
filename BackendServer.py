@@ -137,12 +137,12 @@ def getMossTemplate():
 
 
 def getAggregatePercentTemplate():
-    percentsValues = aggregator.top_percents
+    percentsValues = aggregator.topPercents
     return percentsValues
 
 
 def getAggregateLinesTemplate():
-    linesValues = aggregator.top_lines
+    linesValues = aggregator.topLines
     return linesValues
 
 #

@@ -105,39 +105,39 @@ class MyTestCase(unittest.TestCase):
     # Average should return the correct value
     def test_averagePercentCorrect(self):
         percents = [1, 2, 3]
-        self.assertEqual(self.ag.calculateAverage(percents), 2)
+        self.assertEqual(self.ag.average(percents), 2)
         percents = [2, 2, 2]
-        self.assertEqual(self.ag.calculateAverage(percents), 2)
+        self.assertEqual(self.ag.average(percents), 2)
 
     # Average should be an int
     def test_averagePercentReturnInt(self):
         percents = [1, 2, 3]
-        self.assertTrue(isinstance(self.ag.calculateAverage(percents), int))
+        self.assertTrue(isinstance(self.ag.average(percents), int))
 
     # Average should round up when > .5
     def test_averagePercentRoundUp(self):
         percents = [55, 28, 90, 70]
-        self.assertEqual(self.ag.calculateAverage(percents), 61)
+        self.assertEqual(self.ag.average(percents), 61)
 
     # Average should round up when = .5
     def test_averagePercentRoundHalf(self):
         percents = [3.5, 3.5, 3.5]
-        self.assertEqual(self.ag.calculateAverage(percents), 4)
+        self.assertEqual(self.ag.average(percents), 4)
 
     # Average should round down when < .5
     def test_averagePercentRoundDown(self):
         percents = [55, 28, 90, 70, 73]
-        self.assertEqual(self.ag.calculateAverage(percents), 63)
+        self.assertEqual(self.ag.average(percents), 63)
 
     # Average should not be more than 100
     def test_averagePercentUpper(self):
         percents = [55, 28, 90, 70, 73]
-        self.assertLessEqual(self.ag.calculateAverage(percents), 100)
+        self.assertLessEqual(self.ag.average(percents), 100)
 
     # Average should not be negative
     def test_averagePercentLower(self):
         percents = [55, 28, 90, 70, 73]
-        self.assertGreaterEqual(self.ag.calculateAverage(percents), 0)
+        self.assertGreaterEqual(self.ag.average(percents), 0)
 
 #
 # total()
@@ -145,12 +145,12 @@ class MyTestCase(unittest.TestCase):
     # Total lines should be the correct value
     def test_totalLinesCorrect(self):
         lines = [1, 2, 3]
-        self.assertEqual(self.ag.calculateSum(lines), 6)
+        self.assertEqual(self.ag.sum(lines), 6)
 
     # Total lines should be greater than or equal to 0
     def test_totalLinesLower(self):
         lines = [1, 2, 3]
-        self.assertGreaterEqual(self.ag.calculateSum(lines), 0)
+        self.assertGreaterEqual(self.ag.sum(lines), 0)
 
 #
 # populateNames()

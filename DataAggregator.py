@@ -8,16 +8,16 @@ class DataAggregator:
     # Constructor for DataAggregator
     def __init__(self, results=None):
         self.results = results
-        self.top_percents = []
-        self.top_lines = []
+        self.topPercents = []
+        self.topLines = []
         self.config = Config()
         if results is not None:  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
     def reInit(self, results):
         self.results = results
-        self.top_percents = []
-        self.top_lines = []
+        self.topPercents = []
+        self.topLines = []
         if results is not None:
             self.aggregateData()
 
@@ -100,17 +100,11 @@ class DataAggregator:
         return parsedData
 
     # Calculates the average of a given array
-    def calculateAverage(self, array):
-        sum = 0
-        count = 0
-        for value in array:
-            sum = sum + value
-            count = count + 1
-        average = sum / count
-        return round(average)
+    def average(self, array):
+        return round(sum(array) / len(array))
 
     # Calculates the total sum of a given array
-    def calculateSum(self, array):
+    def sum(self, array):
         return sum(array)
 
     # Displays the passed in array
@@ -147,8 +141,8 @@ class DataAggregator:
                 sys.exit()
 
             # Calculate average percent and total lines
-            avgPercent = self.calculateAverage(percents)
-            totalLines = self.calculateSum(lines)
+            avgPercent = self.average(lines)
+            totalLines = self.sum(lines)
 
             # Create an Aggregation object with the data
             aggPercents = Aggregation(name, avgPercent)
@@ -163,8 +157,8 @@ class DataAggregator:
         aggregateLines = self.sort(aggregateLines)
 
         # We only want the top ten results
-        self.top_percents = aggregatePercents[:10]
-        self.top_lines = aggregateLines[:10]
+        self.topPercents = aggregatePercents[:10]
+        self.topLines = aggregateLines[:10]
 
     # Example data
     def example(self):  # Put this in the class to have the example
