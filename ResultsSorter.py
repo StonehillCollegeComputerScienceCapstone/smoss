@@ -89,8 +89,9 @@ class ResultsSorter:
         return csv_list
 
     def validateData(self):
-        if not(self.isValidLength() or self.isValidStringList(self.fileName1) or self.isValidStringList(self.fileName2) or
-               self.isValidStringList(self.URL)or self.isValidMatchedList(self.match1) or self.isValidMatchedList(self.match2) or
-               self.isValidMatchedList(self.linesMatched) or self.isValidFilename()):
+        if not(self.isValidLength() and self.isValidStringList(self.fileName1) and self.isValidStringList(self.fileName2)
+               and self.isValidStringList(self.URL) and self.isValidMatchedList(self.match1) and
+               self.isValidMatchedList(self.match2) and self.isValidMatchedList(self.linesMatched)
+               and self.isValidFilename()):
             return False
         return True
