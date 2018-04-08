@@ -86,15 +86,13 @@ class DataAggregator:
         for number in assignmentNumbers:
             data = []
             for result in results:
-                if (result.assignmentNumber == number):
-                    if (dataType is "lines"):
-                        if ((result.fileOne == name) or (result.fileTwo == name)):
-                            data.append(int(result.linesMatched))
-                    elif (dataType is "percents"):
-                        if (result.fileOne == name):
-                            data.append(int(result.fileOnePercent))
-                        elif (result.fileTwo == name):
-                            data.append(int(result.fileTwoPercent))
+                if (result.assignmentNumber == number and dataType is "lines" and ((result.fileOne == name) or (result.fileTwo == name))):
+                    data.append(int(result.linesMatched))
+                elif (result.assignmentNumber == number and dataType is "percents"):
+                    if (result.fileOne == name):
+                        data.append(int(result.fileOnePercent))
+                    elif (result.fileTwo == name):
+                        data.append(int(result.fileTwoPercent))
             if (data != []):
                 parsedData.append(max(data))
         return parsedData
