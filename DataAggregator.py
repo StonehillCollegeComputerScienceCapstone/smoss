@@ -40,9 +40,7 @@ class DataAggregator:
 
         # Must only contain positive integers
         for value in array:
-            if (not isinstance(value, int)):
-                return False
-            if (value < 0):
+            if (not isinstance(value, int) or value <0):
                 return False
         return True
 
@@ -88,11 +86,10 @@ class DataAggregator:
             for result in results:
                 if (result.assignmentNumber == number and dataType is "lines" and ((result.fileOne == name) or (result.fileTwo == name))):
                     data.append(int(result.linesMatched))
-                elif (result.assignmentNumber == number and dataType is "percents"):
-                    if (result.fileOne == name):
-                        data.append(int(result.fileOnePercent))
-                    elif (result.fileTwo == name):
-                        data.append(int(result.fileTwoPercent))
+                elif (result.assignmentNumber == number and dataType is "percents" and result.fileOne == name):
+                    data.append(int(result.fileOnePercent))
+                elif (result.assignmentNumber == number and dataType is "percents" and result.fileTwo == name):
+                    data.append(int(result.fileTwoPercent))
             if (data != []):
                 parsedData.append(max(data))
         return parsedData
