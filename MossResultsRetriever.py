@@ -12,45 +12,38 @@ class MossResultsRetriever:
         self.file = FileRetrieval()
         self.results = []
         self.config = Config()
-        # potentially a data variable?
 
+    # Clear the urls and results of the current MossResultsRetriever
     def reInit(self):
         self.urls = []
         self.file = FileRetrieval()
         self.results = []
 
+    # If url is valid, append to list of urls. Else, returns false
     def getUrl(self, url):
-        # check to see if it has "moss.stanford.edu"
-        # check that it exists (http response of 200?)
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+            return False
 
-        if not isinstance(url, str):
-            #print(url, "is invalid")
-            return False
-        if "moss.stanford.edu/results" not in url:  # this can be changed by Stanford at any time
-            #print(url, "is invalid")
-            return False
-        #if url in self.urls:  # URL already exists in list
-         #   print(url, "is duplicate")
-          #  return False
+        # Catch 404 Not Found or connection not accepted
         try:
             urllib.request.urlopen(url)
-        except urllib.error.HTTPError as e:  # case of 404 Not Found
-            #print(url, e)
+        except (urllib.error.HTTPError, urllib.error.URLError) as e:
             return False
-        except urllib.error.URLError as e:  # case connection refused
-            #print(url, ": ", e)
-            return False
+
         if url not in self.urls:
             self.urls.append(url)
+
         return True
 
-    def get_file_urls(self, file):
-        if not self.file.open_and_read_file(file):  # FileRetrieval returns if the file is valid
+    # Retrieves the URLs from a specified file
+    def getFileUrls(self, file):
+        if not self.file.readFile(file):  # FileRetrieval returns if the file is valid
             return False
-        for url in self.file.url_list:
+        for url in self.file.urlList:
             self.getUrl(url)# checks the validity of the URLs given from file
         return True
 
+    # Returns true if every URL in the list is valid, else returns false
     def getValidity(self, urlList):
         for item in urlList:
             if not(self.getUrl(item)):# checks the validity of the URLs given from file
@@ -58,41 +51,44 @@ class MossResultsRetriever:
         success = "success"
         return True, success
 
-    def get_results(self):
-        file_data_name = "csv.csv"
-        m = MossParser(file_data_name)
-        assignment_num = 0
+    # Populate the results object with the lines from the csv
+    def getResults(self):
+        csv = "csv.csv"
+        m = MossParser(csv)
+        assignmentNum = 0
         validFileName = True
 
         for url in self.urls:
             validFileName = m.parse(url)
-            file_data = open(file_data_name)
-            lines = file_data.readlines()
+            file = open(csv)
+            lines = file.readlines()
             lines.pop(0) # Remove header from csv
+
             for line in lines:
                 data = line.split(',')
-                r = Result(assignment_num, data[0], data[3], data[7].strip(), data[2], data[5], data[6])
+                r = Result(assignmentNum, data[0], data[3], data[7].strip(), data[2], data[5], data[6])
                 self.results.append(r)
 
-            file_data.close()
-            assignment_num = assignment_num + 1
+            file.close()
+            assignmentNum = assignmentNum + 1
+
         if (len(self.urls) > 1):
             m.parseMultiple(self.urls)  #added this to get a csv file for all the assignments so the sortResults method can add all assignments to one table in html /moss
                                         #will need to be adjusted because of time consumption
         return validFileName
 
+    # Checks the results object for any duplicate data
+    def areDuplicateResults(self):
+        seen = []
+        for result in self.results:
+            for seenResult in seen:
+                if result.equals(seenResult):
+                    return True
+            seen.append(result)
+        return False
+
 def main():
     murl = MossResultsRetriever()
-    #murl.get_file_urls("FileInput.txt")
-    murl.get_results()
-    #for r in murl.results:
-        #print("------------------- assignment number: ")
-        #print(r.assignmentNumber)
-        #print(r.fileOne )
-        #print(r.fileTwo )
-        #print(r.url )
-        #print(r.fileOnePercent)
-        #print(r.fileTwoPercent )
-        #print(r.linesMatched)
+    murl.getResults()
 
 if __name__ == '__main__': main()
