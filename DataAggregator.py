@@ -114,7 +114,6 @@ class DataAggregator:
     # Aggregates the data and populates the two fields
     def aggregateData(self):
         if (not self.validateResults):
-            print("Results not valid!")
             sys.exit()
 
         names = self.populateNames(self.results)
@@ -126,26 +125,13 @@ class DataAggregator:
             # Parse the highest percents for a given name
             percents = self.parseData(self.results, name,"percents")
             if ((not self.validateArray(percents)) or (not self.validatePercents(percents))):
-                print("Percents array not valid!")
                 sys.exit()
 
             # Parse the highest lines matched for a given name
             lines = self.parseData(self.results, name, "lines")
-            if (not self.validateArray(percents)):
-                print("Lines array not valid!")
-                sys.exit()
-
-            # Calculate average percent and total lines
-            avgPercent = self.average(lines)
-            totalLines = self.sum(lines)
-
-            # Create an Aggregation object with the data
-            aggPercents = Aggregation(name, avgPercent)
-            aggLines = Aggregation(name, totalLines)
-
             # Append Aggregation object array
-            aggregatePercents.append(aggPercents)
-            aggregateLines.append(aggLines)
+            aggregatePercents.append(Aggregation(name, self.average(lines)))
+            aggregateLines.append(Aggregation(name, self.sum(lines)))
 
         # Sort data
         aggregatePercents = self.sort(aggregatePercents)
