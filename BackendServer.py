@@ -28,7 +28,7 @@ logger = logging.getLogger('root')
 logger.setLevel(logging.DEBUG)
 
 #
-#   _Index ():     Generates the landing page for SMOSS.
+#   _Index (): Generates the landing page for SMOSS.
 #
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
@@ -52,6 +52,9 @@ def _Index ():
     template = "templates/index.html"
     return render_template (template)
 
+#
+#   _MOSSselectpage(): Generates the page to select which MOSS URL to analyze
+#
 @app.route('/selectionpage',  methods = ['GET', 'POST'])
 def _MOSSselectpage():
 
@@ -100,8 +103,8 @@ def _MOSSOutput ():
     aggregator = decode(session['aggregator'])
 
     template, value = getMossTemplate()
-    percentsValues = getAggregateLinesTemplate(aggregator)
-    linesValues = getAggregatePercentTemplate(aggregator)
+    percentsValues = aggregator.topPercents
+    linesValues = aggregator.topLines
     results = retriever.results
 
     graph = Graph(results)
@@ -110,14 +113,18 @@ def _MOSSOutput ():
     edges = graphJson["edges"]
     return render_template(template, value=value, percentsValues=percentsValues, linesValues=linesValues, nodes=nodes, edges=edges)
 
-
+#
+#   _MOSSurlvalidation(): Validates the URLs
+#
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
     logger.info('[BackendServer]\tMOSS URL validation page displayed!')
     template, value = getMossTemplate()
     return render_template(template, value=value)
 
-
+#
+#  getDuplicateUrls(urlList): Returns the duplicate and nonduplicate URLs
+#
 def getDuplicateUrls(urlList):
     nonDuplicates = set()
     duplicates=set()
@@ -129,7 +136,9 @@ def getDuplicateUrls(urlList):
 
     return duplicates, nonDuplicates
 
-
+#
+#  isValidUrlList(retriever): Returns true if the URLs are valid, else false
+#
 def isValidUrlList(retriever):
     valid, url = retriever.getValidity(retriever.urls)
     if not valid:
@@ -137,7 +146,9 @@ def isValidUrlList(retriever):
     else:
         return True, url
 
-
+#
+#  getMossTemplate(): Returns the MOSS template if valid
+#
 def getMossTemplate():
     sorter = ResultsSorter()
     if not(sorter.validateData()):
@@ -148,28 +159,18 @@ def getMossTemplate():
         value = sorter.get_csv()
     return template, value
 
-
-def getAggregatePercentTemplate(aggregator):
-    percentsValues = aggregator.topPercents
-    return percentsValues
-
-
-def getAggregateLinesTemplate(aggregator):
-    linesValues = aggregator.topLines
-    return linesValues
-
 #
 #   _ErrorHandler ():   Displays the generic error page with output on the error type
 #
-
-
 @app.errorhandler (403)
 @app.errorhandler (404)
 def _ErrorHandler (errorCode):
     template = "templates/errorpage.html"
     return render_template (template, value = errorCode)
 
-
+#
+#   Main
+#
 if __name__ == '__main__':
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
     app.config['SESSION_TYPE'] = 'filesystem'
