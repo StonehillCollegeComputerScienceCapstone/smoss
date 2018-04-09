@@ -122,8 +122,9 @@ class DataAggregator:
 
             # Parse the highest lines matched for a given name
             lines = self.parseData(self.results, name, "lines")
+
             # Append Aggregation object array
-            aggregatePercents.append(Aggregation(name, self.average(lines)))
+            aggregatePercents.append(Aggregation(name, self.average(percents)))
             aggregateLines.append(Aggregation(name, self.sum(lines)))
 
         # Sort data

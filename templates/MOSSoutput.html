@@ -17,7 +17,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').dataTable();
+        $('#example').dataTable({"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]});
     })
 </script>
 
@@ -58,7 +58,7 @@
     <thead>
     <tr>
         <th>User</th>
-        <th>Total Number of Lines Matched</th>
+        <th>Average Highest Percent Matched</th>
     </tr>
     </thead>
 
@@ -76,7 +76,7 @@
     <thead>
     <tr>
         <th>User</th>
-        <th>Average Highest Percent Matched</th>
+        <th>Total Number of Lines Matched</th>
     </tr>
     </thead>
     <tbody>

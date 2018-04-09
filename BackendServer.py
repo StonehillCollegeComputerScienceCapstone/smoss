@@ -17,15 +17,13 @@ from DataAggregator import DataAggregator
 from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
 import os
-import logging
 from Config import Config
 
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
-logging.basicConfig(filename='output.log', format=FORMAT)
-logger = logging.getLogger('root')
-logger.setLevel(logging.DEBUG)
+config = Config()
+logger = config.logger
 
 #
 #   _Index (): Generates the landing page for SMOSS.
