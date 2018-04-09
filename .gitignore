@@ -5,3 +5,4 @@
 # Extensions:
 *pyc
 **/*.log
+*csv

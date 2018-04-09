@@ -28,7 +28,6 @@ logger = logging.getLogger('root')
 logger.setLevel(logging.DEBUG)
 
 sorter = ResultsSorter()
-aggregator = DataAggregator()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
@@ -80,8 +79,9 @@ def _MOSSselectpage():
             value = "Invalid File Name"
             return render_template(template, value=value)
 
-        aggregator.reInit(retriever.results)
+        aggregator = DataAggregator(retriever.results)
         session['retriever'] = encode(retriever)
+        session['aggregator'] = encode(aggregator)
 
         return redirect('moss')
 
@@ -99,9 +99,11 @@ def _MOSSOutput ():
     logger.info('[BackendServer]\tMOSS Output page displayed!')
 
     retriever = decode(session['retriever'])
+    aggregator = decode(session['aggregator'])
+
     template, value = getMossTemplate()
-    percentsValues = getAggregateLinesTemplate()
-    linesValues = getAggregatePercentTemplate()
+    percentsValues = getAggregateLinesTemplate(aggregator)
+    linesValues = getAggregatePercentTemplate(aggregator)
     results = retriever.results
 
     graph = Graph(results)
@@ -148,12 +150,12 @@ def getMossTemplate():
     return template, value
 
 
-def getAggregatePercentTemplate():
+def getAggregatePercentTemplate(aggregator):
     percentsValues = aggregator.topPercents
     return percentsValues
 
 
-def getAggregateLinesTemplate():
+def getAggregateLinesTemplate(aggregator):
     linesValues = aggregator.topLines
     return linesValues
 

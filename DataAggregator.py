@@ -14,13 +14,6 @@ class DataAggregator:
         if results is not None:  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
-    def reInit(self, results):
-        self.results = results
-        self.topPercents = []
-        self.topLines = []
-        if results is not None:
-            self.aggregateData()
-
     def setResults(self, results):
         self.results = results
         if results is not None:

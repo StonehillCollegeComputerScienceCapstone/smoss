@@ -47,7 +47,7 @@
         <td>{{ obj.FileName1 }}</td>
         <td>{{ obj.FileName2 }}</td>
         <td>{{ obj.Lines_Matched }}</td>
-        <td>{{ obj.URL }}</td>
+        <td><a href = {{ obj.URL }}>{{ obj.URL }}</a></td>
     </tr>{% endfor %}
     </tbody>
 </table>
