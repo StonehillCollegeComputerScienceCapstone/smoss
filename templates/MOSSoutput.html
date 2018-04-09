@@ -162,10 +162,6 @@
         console.log(nodes);
         console.log(edges);
         //Set edge color and highlight color
-        for (var i = 0; i < oldEdges.length; i++)
-        {
-            oldEdges[i].color = {color: '#0099ff', highlight: '#ff3300'}
-        }
         edges = new vis.DataSet(oldEdges);
         // value corresponds with the age of the person
         // Instantiate our network object.
@@ -177,35 +173,43 @@
         options = {
             nodes: {
                 shape: 'dot',
-                scaling: {
-                    label: {
-                        maxVisible: 50
-                    }
+                color: {
+                    color: '#0099ff',
+                    highlight: '#ff3300',
+                },
+                font: {
+                    color: '#000000',
                 }
             },
             interaction: {
                 navigationButtons: true,
-                keyboard: true
+                keyboard: true,
+                hover: true,
+                hoverConnectedEdges: true
             },
             edges: {
+                color: {
+                    color: '#0099ff',
+                    highlight: '#ff3300',
+                    hover: '#800000'
+                },
                 smooth: {
                     type: 'continuous'
-                }
+                },
             },
             physics: {
-                forceAtlas2Based: {
-                    gravitationalConstant: -26,
-                    centralGravity: 0.005,
-                    springLength: 230,
-                    springConstant: 0.18
+                barnesHut: {
+                gravitationalConstant: -10000,
+                springConstant: 0.002,
+                springLength: 50,
+                centralGravity: 1,
                 },
-                maxVelocity: 146,
-                solver: 'forceAtlas2Based',
-                timestep: 0.35,
-                stabilization: {iterations: 150}
             }
         };
         network = new vis.Network(container, data, options);
+        network.on("stabilizationIterationsDone", function() {
+            network.setOptions({physics: {timestep: 0}});
+        });
     }
     function reDraw() {
         for (var i = 0; i < oldEdges.length; i++)
