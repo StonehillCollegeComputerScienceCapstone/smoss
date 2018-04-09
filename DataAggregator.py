@@ -93,7 +93,7 @@ class DataAggregator:
             if (data != []):
                 parsedData.append(max(data))
         return parsedData
-
+    
     # Calculates the average of a given array
     def average(self, array):
         return round(sum(array) / len(array))
