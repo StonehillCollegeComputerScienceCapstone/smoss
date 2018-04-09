@@ -10,6 +10,7 @@
 #
 
 from flask import *
+from jsonpickle import encode, decode
 from ResultsSorter import ResultsSorter
 from DataAggregator import DataAggregator
 from MossResultsRetriever import MossResultsRetriever
@@ -29,7 +30,6 @@ logger.setLevel(logging.DEBUG)
 
 sorter = ResultsSorter()
 aggregator = DataAggregator()
-retriever = MossResultsRetriever()
 
 #
 #   _Index ():     Generates the landing page for SMOSS.
@@ -37,9 +37,13 @@ retriever = MossResultsRetriever()
 @app.route ('/', methods = ['GET', 'POST'])
 def _Index ():
     logger.info('[BackendServer]\tIndex page displayed!')
+
+    retriever = MossResultsRetriever()
+
     if request.method == "POST":
         inputURLs = request.form['text'] #input from the user
         retriever.urls = inputURLs.split("\n")
+        session['retriever'] = encode(retriever)
 
         valid, url = isValidUrlList(retriever.urls)
         if not valid:
@@ -58,6 +62,8 @@ def _MOSSselectpage():
     logger.info('[BackendServer]\tMOSS Selection page displayed!')
     template = "templates/SelectionPage.html"
 
+    retriever = decode(session['retriever'])
+
     if request.method == "POST":
         selection = request.form['selection']
 
@@ -65,7 +71,7 @@ def _MOSSselectpage():
             for i in (0, len(retriever.urls)-1):
                 retriever.urls[i] = retriever.urls[i].rstrip()
         else:
-            retriever.reInit()  # Clear the retriever
+            retriever = MossResultsRetriever() # Clear the retriever
             retriever.urls.append(selection)
 
         retriever.getResults()
@@ -76,8 +82,13 @@ def _MOSSselectpage():
             return render_template(template, value=value)
 
         aggregator.reInit(retriever.results)
+        session['retriever'] = encode(retriever)
+
         return redirect('moss')
+
     duplicateValues, urlList = getDuplicateUrls(retriever.urls)
+    session['retriever'] = encode(retriever)
+
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
 
 #
@@ -87,6 +98,8 @@ def _MOSSselectpage():
 @app.route ('/moss')
 def _MOSSOutput ():
     logger.info('[BackendServer]\tMOSS Output page displayed!')
+
+    retriever = decode(session['retriever'])
     template, value = getMossTemplate()
     percentsValues = getAggregateLinesTemplate()
     linesValues = getAggregatePercentTemplate()
@@ -118,7 +131,7 @@ def getDuplicateUrls(urlList):
     return duplicates, nonDuplicates
 
 
-def isValidUrlList(urlList):
+def isValidUrlList(urlList, retriever):
     valid, url = retriever.getValidity(urlList)
     if not valid:
         return False, url
