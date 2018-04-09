@@ -23,7 +23,7 @@ class MossParser ():
         # Process the table strings into csv strings
         csvStrings, validFileName = self.processTableStrings(tableStrings)
         if(validFileName):
-            self.writeToCsv(csvStrings)
+            self.toCSV(csvStrings)
         return validFileName
 
 
@@ -35,24 +35,19 @@ class MossParser ():
             tableStrings = self.processHtml(html)
             csvStrings, validFilename = self.processTableStrings(tableStrings)
             if (counter != 0):
-                self.appendToCsv(csvStrings)
+                self.toCsv(csvStrings, 'a')
             else:
-                self.writeToCsv(csvStrings)
+                self.toCSV(csvStrings, 'w')
                 counter = 1
 
-    def appendToCsv(self, csvStrings):
-        f = open(self.csvFileName, 'a')
-        for item in csvStrings:
-            for value in item[:-1]:
-                f.write(value + ",")
-            f.write(item[-1])
-            f.write('\n')
-        f.close()
 
-    def writeToCsv(self, csvStrings):
-        f = open(self.csvFileName, 'w')
-        f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
-        f.write('\n')
+    def toCsv(self, csvStrings, type):
+        if(type == 'w'):
+            f = open(self.csvFileName, 'w')
+            f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
+            f.write('\n')
+        else:
+            f = open(self.csvFileName, 'w')
         for item in csvStrings:
             for value in item[:-1]:
                 f.write(value+",")
