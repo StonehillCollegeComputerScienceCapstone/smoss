@@ -19,8 +19,6 @@ import os
 import logging
 from Config import Config
 
-
-
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
@@ -45,7 +43,7 @@ def _Index ():
         retriever.urls = inputURLs.split("\n")
         session['retriever'] = encode(retriever)
 
-        valid, url = isValidUrlList(retriever.urls)
+        valid, url = isValidUrlList(retriever)
         if not valid:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
@@ -131,8 +129,8 @@ def getDuplicateUrls(urlList):
     return duplicates, nonDuplicates
 
 
-def isValidUrlList(urlList, retriever):
-    valid, url = retriever.getValidity(urlList)
+def isValidUrlList(retriever):
+    valid, url = retriever.getValidity(retriever.urls)
     if not valid:
         return False, url
     else:
@@ -171,4 +169,5 @@ def _ErrorHandler (errorCode):
 
 
 if __name__ == '__main__':
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
     app.run(debug = True, use_reloader=True)
