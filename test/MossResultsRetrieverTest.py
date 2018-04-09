@@ -1,6 +1,7 @@
 import unittest
 from Config import Config
 from MossResultsRetriever import MossResultsRetriever
+from Result import Result
 
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
@@ -8,18 +9,34 @@ class MossURLsTests(unittest.TestCase):
         self.validUrl = self.config.getWarmup()
         self.retriever = MossResultsRetriever()
 
+#
+# getUrl()
+#
     def test_validUrl(self):
-        self.assertTrue(self.retriever.getUrl(self.validUrl))  # valid URL
+        self.assertTrue(self.retriever.getUrl(self.validUrl))
 
-    def test_invalidUrl(self):
-        self.assertFalse(self.retriever.getUrl("notURL"))  # this is not a valid URL
-        self.assertFalse(self.retriever.getUrl(1))  # in case file reading goes wrong to this
-        self.assertFalse(self.retriever.getUrl("http://moss.stanford.edu/results/12121212121212/"))  # 404 not found
+    def test_invalidUrlString(self):
+        self.assertFalse(self.retriever.getUrl("notURL"))
+
+    def test_invalidUrlInt(self):
+        self.assertFalse(self.retriever.getUrl(1))
+
+    def test_invalidUrlDouble(self):
+        self.assertFalse(self.retriever.getUrl(0.5))
+
+    def test_invalidUrlLikeMoss(self):
+        self.assertFalse(self.retriever.getUrl("http://moss.stanford.edu/results/12121212121212/"))
+
+    def test_invalidUrlDouble(self):
+        self.assertFalse(self.retriever.getUrl(self.validUrl + self.validUrl))
 
     def test_validSameUrl(self):
         self.assertTrue(self.retriever.getUrl(self.validUrl))
         self.assertTrue(self.retriever.getUrl(self.validUrl))
 
+#
+# getFileUrls()
+#
     def test_readUrlsValidFile(self):
         self.assertTrue(self.retriever.getFileUrls("FileInput.txt"))
 
@@ -35,6 +52,22 @@ class MossURLsTests(unittest.TestCase):
         self.retriever.getFileUrls("FileInput.txt")  # URLs file to parse
         self.assertTrue(self.retriever.getResults())  # checking for errors in the parsing
         self.assertTrue(self.retriever.results)  # checks that it is not null
+
+#
+# areDuplicateResults()
+#
+    def test_noDuplicateResults(self):
+        r = Result(1, "f1", "f2", "url", 50, 50, 50)
+        self.retriever.results.append(r)
+        self.assertFalse(self.retriever.areDuplicateResults())
+        self.retriever = MossResultsRetriever()
+
+    def test_oneDuplicateResult(self):
+        r = Result(1, "f1", "f2", "url", 50, 50, 50)
+        self.retriever.results.append(r)
+        self.retriever.results.append(r)
+        self.assertTrue(self.retriever.areDuplicateResults())
+        self.retriever = MossResultsRetriever()
         
 
     def tearDown(self):

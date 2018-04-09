@@ -10,6 +10,7 @@
 #
 
 from flask import *
+from flask_session import Session
 from jsonpickle import encode, decode
 from ResultsSorter import ResultsSorter
 from DataAggregator import DataAggregator
@@ -170,4 +171,6 @@ def _ErrorHandler (errorCode):
 
 if __name__ == '__main__':
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    app.config['SESSION_TYPE'] = 'filesystem'
+    Session(app)
     app.run(debug = True, use_reloader=True)
