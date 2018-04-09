@@ -20,15 +20,17 @@ from selenium.webdriver.common.keys import Keys
 class FrontEndTestSuite (unittest.TestCase):
     driver = None
     url = None
-
+    buildName = None
+    
     #
     #   setUp ():   Selenium/BrowserStack - Required to make initial connection with the BS server.
     #
     def setUp (self):
-        username=getpass.getuser()
-        if (username=='bdugan'):
+        username = getpass.getuser ()
+
+        if (username == 'bdugan'):
             self.url = "http://bobdugan2:kx9PNA1tGJzvb2rHreNE@hub.browserstack.com:80/wd/hub"
-        elif (username=='mmiddleton'):
+        elif (username == 'mmiddleton'):
             self.url = "http://michaelmiddleton2:sjFs7kUux7jvjxbk6Vss@hub.browserstack.com:80/wd/hub"
         else:
             self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
@@ -49,7 +51,7 @@ class FrontEndTestSuite (unittest.TestCase):
             'project' : 'SMOSS',
             'browserstack.local' : 'true',
             'name' : testName,
-            'build' : str (int (time.time ()))
+            'build' : self.buildName
         }
         
         self.driver = webdriver.Remote (command_executor = self.url, desired_capabilities = desiredCapabilities)
