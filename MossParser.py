@@ -70,6 +70,8 @@ class MossParser ():
 
     # Returns True if the URL is valid, else returns False
     def testUrl(self, url):
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+            return False
         request = urllib.request.Request(url)
 
         # Attempt to access the URL
@@ -122,18 +124,14 @@ class MossParser ():
         csvStrings=[]
         csvPreviousStrings=[]
         previousSet=set()
-        #print(tableStrings)
         for tableString in tableStrings:
-
             tableStringValues=self.getTableStringValues(tableString)
-            #print(tableStringValues)
             fileName1=tableStringValues[1].strip()
-            #print(tableString)
             fileName2=tableStringValues[4].strip()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
-                name1 = self.getName(tableStringValues[1].strip())
-                name2 = self.getName(tableStringValues[4].strip())
+                name1 = self.getName(fileName1)
+                name2 = self.getName(fileName2)
                 values1, values2 = self.getValues(fileName1, fileName2)
                 previousMatch = self.previousYearMatch(values1, values2)
                 csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
