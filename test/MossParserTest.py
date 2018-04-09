@@ -5,49 +5,120 @@ from MossParser import MossParser
 
 class MossParserUnitTest(unittest.TestCase):
 
-    # 1. Test testValidURL() on an valid url
-    # 2. Test testValidURL() on an invalid url
-    # 3. Test getHtml() on a valid url
-    # 4. Test processHtml() on valid output
-    # 5. Test processHtml() on invalid output
-    # 6. Test getName() with previous file 
-    # 7. Test getName() with current file
-    # 8. Test for same year assignment
-    # 9. Test for different year assignment
-    # 10. Test for previous assignments
+    # - Test testValidURL() on an valid url
+    # - Test testValidURL() on an invalid url
+    # - Test getHtml() on a valid url
+    # - Test processHtml() on valid output
+    # - Test processHtml() on invalid output
+    # - Test getName() with previous file
+    # - Test getName() with current file
+    # - Test for previousYearMatch() for current years (current, current)
+    # - Test for previousYearMatch() for different years (current, previous)
+    # - Test for previousYearMatch() for previous years (previous, previous)
+    # New tests March 26th
+    # - Test for parseMultiple()
+    # - Test for processTableStrings()
+    # - Test for parse()
+    # - Test for formatTableString()
+    # - Test for testFileNaming()
+    # Tests for inner class "myHTMLParser"
+    # - Test for handle_starttag()
+    # - Test for handle_endtag()
+    # - Test for handle_data()
+
 
     def setUp(self):
         self.mp = MossParser("csv.csv")
         self.config = Config()
+        self.validUrl = self.config.getWarmup()
 
 #
 # testUrl()
 #
-    # 1. Test for valid URL
+    # Test for valid URL
     def test_validURL(self):
-        self.assertTrue(self.mp.testUrl("http://moss.stanford.edu/results/558206563"))
+        self.assertTrue(self.mp.testUrl(self.validUrl))
 
-    # 2. Test for inValid URL
+    # Test for inValid URL
     def test_invalidURL(self):
         self.assertFalse(self.mp.testUrl("http://mosdf23s.stanford.edu/resdawesults/3224570wdsd13"))
+
+    # Test for invalid URL that will return a 200 ok response
+    def test_invalidURLOnResponseCode200OK(self):
+        self.assertFalse(self.mp.testUrl("http://google.com"))
+
+    # Test testUrl on empty string
+    def test_invalidURLOnEmptyString(self):
+        self.assertFalse(self.mp.testUrl(""))
+
+    # Test testUrl on string "moss"
+    def test_invalidURLOnMOSSString(self):
+        self.assertFalse(self.mp.testUrl("http://moss.stanford.edu"))
+
+    # Test testUrl on valid URL + extra chars
+    def test_invalidURLOnValidPlusExtra(self):
+        appendChars = ['a', '?', ':', '#', '+', 'z', ' ', '\n']
+        for char in appendChars:
+            self.assertFalse(self.mp.testUrl(self.validUrl + char))
+
+    # Test testURL on carriage return
+    def test_invalidURLOnCarriageReturn(self):
+        self.assertFalse(self.mp.testUrl("\n"))
+
+    # Test testUrl on numeric value
+    def test_invalidURLOnNumericValue(self):
+        self.assertFalse(self.mp.testUrl(12345))
+
+    # Test testUrl on list
+    def test_invalidURLOnList(self):
+        l = ['a', 1, '$']
+        self.assertFalse(self.mp.testUrl(l))
+
+    # Test testUrl on a list of MOSS URL's
+    def test_invalidURLOnListOfMOSSURLs(self):
+        l = [self.config.getWarmup(), self.config.getInsipid(), self.config.getRodentia()]
+        self.assertFalse(self.mp.testUrl(l))
+
+    # Test testUrl on None
+    def test_invalidURLOnNone(self):
+        self.assertFalse(self.mp.testUrl(None))
+
+    # Test testUrl on Valid IP
+    def test_invalidURLOnIP(self):
+        IP = self.validUrl.replace("moss.stanford.edu", "171.64.78.49")
+        self.assertTrue(self.mp.testUrl(IP))
+
 
 #
 # getHtml()
 #
-    # 3. Test method which takes a url string and returns an html file
-    def test_validHtml(self):
-        html = urllib.request.urlopen("https://www.python.org")
+    # Test method on a non utf8 webpage
+    def test_validHtmlOnNonUTF8Webpage(self):
+        html = urllib.request.urlopen("https://www.google.com")
+        mybytes = html.read()
+        mystr = mybytes.decode("utf16")
+        html.close()
+        self.assertFalse(self.mp.getHtml("https://www.google.com") == mystr)
+
+    # Test method on invalid MOSS URL
+    def test_validHTMLOnInvalidURL(self):
+        self.assertIsNone(self.mp.getHtml(self.validUrl + "a"))
+
+    # Test method on valid MOSS URL
+    def test_validHTMLOnValidMOSSURL(self):
+        html = urllib.request.urlopen(self.validUrl)
         mybytes = html.read()
         mystr = mybytes.decode("utf8")
         html.close()
-        self.assertTrue(self.mp.getHtml("https://www.python.org") == mystr)
+        self.assertTrue(self.mp.getHtml(self.validUrl) == mystr)
+
 
 #
 # processHtml()
 #
     # 4. Test the processing of a valid html file into a list of table element strings
     def test_validHtmlProcessing(self):
-        self.assertTrue(["""<td><td><a href="http://moss.stanford.edu/results/11690537/match0.html">delrick_Palindrome.java (59%)</a>
+        self.assertEqual(["""<td><td><a href="http://moss.stanford.edu/results/11690537/match0.html">delrick_Palindrome.java (59%)</a>
                              </td><td><a href="http://moss.stanford.edu/results/11690537/match0.html">jcary_Palindrome.java (69%)</a>
                          </td><td align="right">28
                          </td></tr>""",
@@ -505,10 +576,28 @@ class MossParserUnitTest(unittest.TestCase):
         file2 = "previous_eyo_HomeValue.java"
         self.assertTrue(self.mp.previousYearMatch(file1,file2))
 
+
+
    
 #
 # processTableStrings()
 #
+
+
+#
+# testFileNaming()
+#
+    #-.Test that filename is string
+    def test_fileIsString(self):
+        file1 = "eyo_HomeValue.java"
+        self.assertTrue(self.mp.testFileNaming(file1))
+
+ # -.Test that filename is a digit
+    def test_fileIsDigit(self):
+        file1 = "558924359787"
+        self.assertFalse(self.mp.testFileNaming(file1))
+
+
 
 if __name__ == '__main__':
     unittest.main()

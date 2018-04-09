@@ -47,23 +47,14 @@ class ResultsSorter:
     # Parses the main list into individual category lists
     def createCategoryLists(self):
         for dict in self.MOSSresults:
-            for key, value in dict.items():
-                if key == "User1":
-                    self.user1.append(value.rstrip())
-                if key == "User2":
-                    self.user2.append(value.rstrip())
-                if key == "FileName1":
-                    self.fileName1.append(value.rstrip())
-                if key == "FileName2":
-                    self.fileName2.append(value.rstrip())
-                if key == "Match1":
-                    self.match1.append(value.rstrip())
-                if key == "Match2":
-                    self.match2.append(value.rstrip())
-                if key == "Lines Matched":
-                    self.linesMatched.append(value.rstrip())
-                if key == "URL":
-                    self.URL.append(value)
+            self.user1.append(dict['User1'].rstrip())
+            self.user2.append(dict['User2'].rstrip())
+            self.fileName1.append(dict['FileName1'].rstrip())
+            self.fileName2.append(dict['FileName2'].rstrip())
+            self.match1.append(dict['Match1'].rstrip())
+            self.match2.append(dict['Match2'].rstrip())
+            self.linesMatched.append(dict['Lines_Matched'].rstrip())
+            self.URL.append(dict['URL'].rstrip())
 
     def isValidStringList(self, listName):
         for key in listName:
@@ -94,23 +85,13 @@ class ResultsSorter:
         csv_file = open(csv_path, 'r')
         csv_obj = csv.DictReader(csv_file)
         csv_list = list(csv_obj)
+        csv_file.close()
         return csv_list
 
     def validateData(self):
-        if not(self.isValidLength()):
-            return False
-        if not(self.isValidStringList(self.fileName1)):
-            return False
-        if not(self.isValidStringList(self.fileName2)):
-            return False
-        if not(self.isValidStringList(self.URL)):
-            return False
-        if not(self.isValidMatchedList(self.match1)):
-            return False
-        if not(self.isValidMatchedList(self.match2)):
-            return False
-        if not(self.isValidMatchedList(self.linesMatched)):
-            return False
-        if not(self.isValidFilename()):
+        if not(self.isValidLength() and self.isValidStringList(self.fileName1) and self.isValidStringList(self.fileName2)
+               and self.isValidStringList(self.URL) and self.isValidMatchedList(self.match1) and
+               self.isValidMatchedList(self.match2) and self.isValidMatchedList(self.linesMatched)
+               and self.isValidFilename()):
             return False
         return True

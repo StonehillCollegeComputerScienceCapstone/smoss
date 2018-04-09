@@ -13,6 +13,7 @@
 import unittest
 import getpass
 import os
+import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -33,7 +34,7 @@ class FrontEndTestSuite (unittest.TestCase):
         if (username=='bdugan'):
             self.url = "http://bobdugan2:kx9PNA1tGJzvb2rHreNE@hub.browserstack.com:80/wd/hub"
         elif (username=='mmiddleton'):
-            self.url = "http://michaelmiddleton2:KzeJ27iophC6F8Lonvhi@hub.browserstack.com:80/wd/hub"
+            self.url = "http://michaelmiddleton2:sjFs7kUux7jvjxbk6Vss@hub.browserstack.com:80/wd/hub"
         else:
             self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
 
@@ -53,6 +54,7 @@ class FrontEndTestSuite (unittest.TestCase):
             'project' : 'SMOSS',
             'browserstack.local' : 'true',
             'name' : testName,
+            'build' : str (int (time.time ()))
         }
         
         self.driver = webdriver.Remote (command_executor = self.url, desired_capabilities = desiredCapabilities)

@@ -1,3 +1,5 @@
 networkx==2.1
 Flask
 selenium
+requests
+coverage

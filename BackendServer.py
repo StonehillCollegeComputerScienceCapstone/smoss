@@ -41,7 +41,7 @@ def _Index ():
         inputURLs = request.form['text'] #input from the user
         retriever.urls = inputURLs.split("\n")
 
-        valid, url = getValidorInvalidURL(retriever.urls)
+        valid, url = isValidUrlList(retriever.urls)
         if not valid:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
@@ -60,22 +60,24 @@ def _MOSSselectpage():
 
     if request.method == "POST":
         selection = request.form['selection']
-        retriever.reInit()
 
         if (selection == "allURLs"):
-            for url in retriever.urls:
-                updated_url = url.rstrip()
-                retriever.urls.append(updated_url)
+            for i in (0, len(retriever.urls)-1):
+                retriever.urls[i] = retriever.urls[i].rstrip()
         else:
+            retriever.reInit()  # Clear the retriever
             retriever.urls.append(selection)
-            if not retriever.get_results():
-                template = "templates/errorpage.html"
-                value = "Invalid File Name"
-                return render_template(template, value=value)
+
+        retriever.getResults()
+        # If the results are empty
+        if not retriever.results:
+            template = "templates/errorpage.html"
+            value = "Invalid File Name"
+            return render_template(template, value=value)
 
         aggregator.reInit(retriever.results)
         return redirect('moss')
-    duplicateValues, urlList = checkForDuplicates(retriever.urls)
+    duplicateValues, urlList = getDuplicateUrls(retriever.urls)
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
 
 #
@@ -85,9 +87,9 @@ def _MOSSselectpage():
 @app.route ('/moss')
 def _MOSSOutput ():
     logger.info('[BackendServer]\tMOSS Output page displayed!')
-    template, value = getValidorInvalidMossTemplate()
-    percentsValues = getValidorInvalidAggregateLinesTemplate()
-    linesValues = getValidorInvalidAggregatePercentTemplate()
+    template, value = getMossTemplate()
+    percentsValues = getAggregateLinesTemplate()
+    linesValues = getAggregatePercentTemplate()
     results = retriever.results
 
     graph = Graph(results)
@@ -100,11 +102,11 @@ def _MOSSOutput ():
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
     logger.info('[BackendServer]\tMOSS URL validation page displayed!')
-    template, value = getValidorInvalidURL()
+    template, value = getMossTemplate()
     return render_template(template, value=value)
 
 
-def checkForDuplicates(urlList):
+def getDuplicateUrls(urlList):
     nonDuplicates = set()
     duplicates=set()
     for url in urlList:
@@ -116,7 +118,7 @@ def checkForDuplicates(urlList):
     return duplicates, nonDuplicates
 
 
-def getValidorInvalidURL(urlList):
+def isValidUrlList(urlList):
     valid, url = retriever.getValidity(urlList)
     if not valid:
         return False, url
@@ -124,7 +126,7 @@ def getValidorInvalidURL(urlList):
         return True, url
 
 
-def getValidorInvalidMossTemplate():
+def getMossTemplate():
     if not(sorter.validateData()):
         template = "templates/errorpage.html"
         value = "Invalid File Data"
@@ -134,13 +136,13 @@ def getValidorInvalidMossTemplate():
     return template, value
 
 
-def getValidorInvalidAggregatePercentTemplate():
-    percentsValues = aggregator.top_percents
+def getAggregatePercentTemplate():
+    percentsValues = aggregator.topPercents
     return percentsValues
 
 
-def getValidorInvalidAggregateLinesTemplate():
-    linesValues = aggregator.top_lines
+def getAggregateLinesTemplate():
+    linesValues = aggregator.topLines
     return linesValues
 
 #

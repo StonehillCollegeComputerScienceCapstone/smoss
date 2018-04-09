@@ -23,7 +23,7 @@ class MossParser ():
         # Process the table strings into csv strings
         csvStrings, validFileName = self.processTableStrings(tableStrings)
         if(validFileName):
-            self.writeToCsv(csvStrings)
+            self.toCsv(csvStrings, 'w')
         return validFileName
 
 
@@ -33,29 +33,23 @@ class MossParser ():
         for url in urls:
             html = self.getHtml(url)
             tableStrings = self.processHtml(html)
-            csvStrings = self.processTableStrings(tableStrings)
+            csvStrings, validFilename = self.processTableStrings(tableStrings)
             if (counter != 0):
-                self.appendToCsv(csvStrings)
+                self.toCsv(csvStrings, 'a')
             else:
-                self.writeToCsv(csvStrings)
+                self.toCsv(csvStrings, 'w')
                 counter = 1
 
-    def appendToCsv(self, csvStrings):
-        f = open(self.csvFileName, 'a')
-        for item in csvStrings:
-            for value in item[:-1]:
-                f.write(value + ",")
-            f.write(item[-1])
-            f.write('\n')
-        f.close()
 
-    def writeToCsv(self, csvStrings):
-        f = open(self.csvFileName, 'w')
-        f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
-        f.write('\n')
+    def toCsv(self, csvStrings, type):
+        if(type == 'w'):
+            f = open(self.csvFileName, 'w')
+            f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
+            f.write('\n')
+        else:
+            f = open(self.csvFileName, 'w')
         for item in csvStrings:
             for value in item[:-1]:
-                print(value)
                 f.write(value+",")
             f.write(item[-1])
             f.write('\n')
@@ -71,6 +65,8 @@ class MossParser ():
 
     # Returns True if the URL is valid, else returns False
     def testUrl(self, url):
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+            return False
         request = urllib.request.Request(url)
 
         # Attempt to access the URL
@@ -91,7 +87,7 @@ class MossParser ():
         # now we parse through the string and split them up into individual strings
         stripped=htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
-        splitStrings=stripped.split("tr")
+        splitStrings=stripped.split("<tr>")
 
         # Have list of strings split up
         # first two indexes are a blank space and the header, so remove them
@@ -123,18 +119,14 @@ class MossParser ():
         csvStrings=[]
         csvPreviousStrings=[]
         previousSet=set()
-        #print(tableStrings)
         for tableString in tableStrings:
-
             tableStringValues=self.getTableStringValues(tableString)
-            #print(tableStringValues)
             fileName1=tableStringValues[1].strip()
-            #print(tableString)
             fileName2=tableStringValues[4].strip()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
-                name1 = self.getName(tableStringValues[1].strip())
-                name2 = self.getName(tableStringValues[4].strip())
+                name1 = self.getName(fileName1)
+                name2 = self.getName(fileName2)
                 values1, values2 = self.getValues(fileName1, fileName2)
                 previousMatch = self.previousYearMatch(values1, values2)
                 csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
@@ -168,8 +160,8 @@ class MossParser ():
 
     def formatTableString(self,tableString):
         tableString.lstrip()
-        tableString = tableString.replace("td a href", '')
-        tableString = tableString.replace("a  td align right", '')
+        tableString = tableString.replace("<td> a href", '')
+        tableString = tableString.replace("a  <td> align right", '')
         tableString = tableString.replace("a       ", '')
         tableString=tableString.replace("  http://",'http://')
         tableString=tableString.replace("  ",",")
@@ -190,7 +182,10 @@ class myHtmlParser (HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         if(self.seenTable and (not self.seenEndOfTable)):
-            self.tableString=self.tableString+tag+" "
+            if(tag=="tr" or tag=="td"):
+                self.tableString = self.tableString + "<"+tag+">" + " "
+            else:
+                self.tableString=self.tableString+tag+" "
             for attr in attrs:
                 tupleList=list(attr)
                 for item in tupleList:

@@ -100,11 +100,9 @@
         height: 600px;
         border: 1px solid lightgray;
     }
-
     .slidecontainer {
         width: 100%; /* Width of the outside container */
     }
-
     /* The slider itself */
     .slider {
         -webkit-appearance: none;  /* Override default CSS styles */
@@ -117,12 +115,10 @@
         -webkit-transition: .2s; /* 0.2 seconds transition on hover */
         transition: opacity .2s;
     }
-
     /* Mouse-over effects */
     .slider:hover {
         opacity: 1; /* Fully shown on mouse-over */
     }
-
     /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
     .slider::-webkit-slider-thumb {
         -webkit-appearance: none; /* Override default look */
@@ -132,14 +128,12 @@
         background: #4CAF50; /* Green background */
         cursor: pointer; /* Cursor on hover */
     }
-
     .slider::-moz-range-thumb {
         width: 25px; /* Set a specific slider handle width */
         height: 25px; /* Slider handle height */
         background: #4CAF50; /* Green background */
         cursor: pointer; /* Cursor on hover */
     }
-
 </style>
 
 <script type="text/javascript" src="../static/vis.js"></script>
@@ -153,7 +147,6 @@
     var data = null;
     var options = null;
     var oldEdges = null;
-
     function draw() {
         //Create graph nodes and edges
         //...When the data is sent from flask to html the quotation marks are
@@ -166,18 +159,10 @@
         edges = '{{edges}}'
         edges = edges.replace(/&#39;/g, "\"")
         oldEdges = JSON.parse(edges);
-
         console.log(nodes);
         console.log(edges);
-
         //Set edge color and highlight color
-        for (var i = 0; i < oldEdges.length; i++)
-        {
-            oldEdges[i].color = {color: '#0099ff', highlight: '#ff3300'}
-        }
-
         edges = new vis.DataSet(oldEdges);
-
         // value corresponds with the age of the person
         // Instantiate our network object.
         container = document.getElementById('mynetwork');
@@ -187,30 +172,57 @@
         };
         options = {
             nodes: {
-                shape: 'dot'
+                shape: 'dot',
+                color: {
+                    color: '#0099ff',
+                    highlight: '#ff3300',
+                },
+                font: {
+                    color: '#000000',
+                }
             },
             interaction: {
                 navigationButtons: true,
-                keyboard: true
+                keyboard: true,
+                hover: true,
+                hoverConnectedEdges: true
+            },
+            edges: {
+                color: {
+                    color: '#0099ff',
+                    highlight: '#ff3300',
+                    hover: '#800000'
+                },
+                smooth: {
+                    type: 'continuous'
+                },
+            },
+            physics: {
+                barnesHut: {
+                gravitationalConstant: -10000,
+                springConstant: 0.002,
+                springLength: 50,
+                centralGravity: 1,
+                },
             }
         };
         network = new vis.Network(container, data, options);
+        network.on("stabilizationIterationsDone", function() {
+            network.setOptions({physics: {timestep: 0}});
+        });
     }
-
     function reDraw() {
         for (var i = 0; i < oldEdges.length; i++)
         {
             if (parseInt(oldEdges[i].value) < slider.value) {
                 oldEdges[i].hidden = true
-                edges.update(oldEdges[i])
             }
             else {
                 oldEdges[i].hidden = false
-                edges.update(oldEdges[i])
             }
         }
+        edges.update(oldEdges)
     }
-
 </script>
 
 </body>
@@ -229,7 +241,6 @@
     var slider = document.getElementById("chosenRange");
     var output = document.getElementById("selected");
     output.innerHTML = slider.value;
-
     slider.oninput = function() {
         output.innerHTML = this.value;
         reDraw()

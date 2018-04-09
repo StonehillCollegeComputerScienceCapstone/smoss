@@ -12,57 +12,66 @@ from Config import Config
 
 class MyTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.c = Config()
+        self.valid = False
+
     #1. config.getWarmup()
     def test_warmupURLValidity(self):
-        c = Config()
-        url = c.getWarmup()
+        self.valid = False
+        url = self.c.getWarmup()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
-            return True
+            self.valid = True
         except:
-            return False
+            self.valid = False
+        self.assertTrue(self.valid)
 
     #2. config.getTwentyone()
-    def test_twentyoneRLValidity(self):
-        c = Config()
-        url = c.getTwentyone()
+    def test_twentyoneURLValidity(self):
+        self.valid = False
+        url = self.c.getTwentyone()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
-            return True
+            self.valid = True
         except:
-            return False
+            self.valid = False
+        self.assertTrue(self.valid)
 
     #3. config.getWarmup()
     def test_squarerootURLValidity(self):
-        c = Config()
-        url = c.getSquareroot()
+        self.valid = False
+        url = self.c.getSquareroot()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
-            return True
+            self.valid = True
         except:
-            return False
+            self.valid = False
+        self.assertTrue(self.valid)
 
     #4. config.getInsipid()
     def test_inspidURLValidity(self):
-        c = Config()
-        url = c.getInsipid()
+        self.valid = False
+        url = self.c.getInsipid()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
-            return True
+            self.valid = True
         except:
-            return False
+            self.valid = False
+        self.assertTrue(self.valid)
 
     #5. config.getRodentia()
     def test_rodentiaURLValidity(self):
-        c = Config()
-        url = c.getRodentia()
+        self.valid = False
+        url = self.c.getRodentia()
         request = urllib.request.Request(url)
         try:
             response = urllib.request.urlopen(request)
-            return True
+            self.valid = True
         except:
-            return False
+            self.valid = False
+        self.assertTrue(self.valid)

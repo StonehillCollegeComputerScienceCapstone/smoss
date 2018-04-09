@@ -12,4 +12,4 @@
 curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./coverage-app
 chmod +x ./coverage-app
 ./coverage-app before-build
-echo "\n\nINFO:\tcode-coverage script DONE!s"
+echo "INFO:   code-coverage script DONE!"

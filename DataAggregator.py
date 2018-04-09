@@ -8,23 +8,22 @@ class DataAggregator:
     # Constructor for DataAggregator
     def __init__(self, results=None):
         self.results = results
-        self.top_percents = []
-        self.top_lines = []
+        self.topPercents = []
+        self.topLines = []
         self.config = Config()
-        if (not (results is None)):  # This adjustment made for using the example outside of this class
-            results.pop(0)  # this removes the header line from array of csv data
+        if results is not None:  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
     def reInit(self, results):
         self.results = results
-        self.top_percents = []
-        self.top_lines = []
-        if (not (results is None)):
+        self.topPercents = []
+        self.topLines = []
+        if results is not None:
             self.aggregateData()
 
     def setResults(self, results):
         self.results = results
-        if (not (results is None)):
+        if results is not None:
             self.aggregateData()
 
     # Validates data has been received to aggregate
@@ -41,9 +40,7 @@ class DataAggregator:
 
         # Must only contain positive integers
         for value in array:
-            if (not isinstance(value, int)):
-                return False
-            if (value < 0):
+            if (not isinstance(value, int) or value <0):
                 return False
         return True
 
@@ -77,6 +74,7 @@ class DataAggregator:
             if (result.assignmentNumber not in numbers):
                 numbers.append(result.assignmentNumber)
         return numbers
+
     #
     # Returns an array of data based off of chosen data type
     #
@@ -86,31 +84,22 @@ class DataAggregator:
         for number in assignmentNumbers:
             data = []
             for result in results:
-                if (result.assignmentNumber == number):
-                    if (dataType is "lines"):
-                        if ((result.fileOne == name) or (result.fileTwo == name)):
-                            data.append(int(result.linesMatched))
-                    elif (dataType is "percents"):
-                        if (result.fileOne == name):
-                            data.append(int(result.fileOnePercent))
-                        elif (result.fileTwo == name):
-                            data.append(int(result.fileTwoPercent))
+                if (result.assignmentNumber == number and dataType is "lines" and ((result.fileOne == name) or (result.fileTwo == name))):
+                    data.append(int(result.linesMatched))
+                elif (result.assignmentNumber == number and dataType is "percents" and result.fileOne == name):
+                    data.append(int(result.fileOnePercent))
+                elif (result.assignmentNumber == number and dataType is "percents" and result.fileTwo == name):
+                    data.append(int(result.fileTwoPercent))
             if (data != []):
                 parsedData.append(max(data))
         return parsedData
-
+    
     # Calculates the average of a given array
-    def calculateAverage(self, array):
-        sum = 0
-        count = 0
-        for value in array:
-            sum = sum + value
-            count = count + 1
-        average = sum / count
-        return round(average)
+    def average(self, array):
+        return round(sum(array) / len(array))
 
     # Calculates the total sum of a given array
-    def calculateSum(self, array):
+    def sum(self, array):
         return sum(array)
 
     # Displays the passed in array
@@ -125,7 +114,6 @@ class DataAggregator:
     # Aggregates the data and populates the two fields
     def aggregateData(self):
         if (not self.validateResults):
-            print("Results not valid!")
             sys.exit()
 
         names = self.populateNames(self.results)
@@ -137,38 +125,25 @@ class DataAggregator:
             # Parse the highest percents for a given name
             percents = self.parseData(self.results, name,"percents")
             if ((not self.validateArray(percents)) or (not self.validatePercents(percents))):
-                print("Percents array not valid!")
                 sys.exit()
 
             # Parse the highest lines matched for a given name
             lines = self.parseData(self.results, name, "lines")
-            if (not self.validateArray(percents)):
-                print("Lines array not valid!")
-                sys.exit()
-
-            # Calculate average percent and total lines
-            avgPercent = self.calculateAverage(percents)
-            totalLines = self.calculateSum(lines)
-
-            # Create an Aggregation object with the data
-            aggPercents = Aggregation(name, avgPercent)
-            aggLines = Aggregation(name, totalLines)
-
             # Append Aggregation object array
-            aggregatePercents.append(aggPercents)
-            aggregateLines.append(aggLines)
+            aggregatePercents.append(Aggregation(name, self.average(lines)))
+            aggregateLines.append(Aggregation(name, self.sum(lines)))
 
         # Sort data
         aggregatePercents = self.sort(aggregatePercents)
         aggregateLines = self.sort(aggregateLines)
 
         # We only want the top ten results
-        self.top_percents = aggregatePercents[:10]
-        self.top_lines = aggregateLines[:10]
+        self.topPercents = aggregatePercents[:10]
+        self.topLines = aggregateLines[:10]
 
     # Example data
     def example(self):  # Put this in the class to have the example
-        validURL = Config.getGolbach() # URL for 'Golbach' assignment
+        validURL = self.config.getWarmup() # URL for 'Golbach' assignment
         results = []
         results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
         results.append(Result(1, "Matt", "Sam", validURL, 80, 43, 77))
@@ -187,6 +162,7 @@ def main():
     ag = DataAggregator()  #adjusted to get this main's example to work with example() being part of the class
     ag.results = ag.example()
     ag.aggregateData()
+    ag.displayArray(ag.results)
 
 
 

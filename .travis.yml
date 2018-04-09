@@ -5,31 +5,33 @@ python:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=787a2f89b15c637323c7340d65ec17e898ac44480706b4b4122ea040c2a88f1d
+    - CC_TEST_REPORTER_ID=2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
 
 install:
   - pip install -r requirements.txt
   - npm install -g node-qunit-phantomjs vis
 
 before_script:
-  - curl -u "michaelmiddleton2:KzeJ27iophC6F8Lonvhi" -X DELETE https://api.browserstack.com/automate/builds/00f742937e5ad9c7458c380056bc07248971e981/sessions/1ae06ed7790f42769c61250a727fa7712971e896.json
+  - python BuildMachineSetup.py
   - python BackendServer.py &
-  - ./BrowserStack -k KzeJ27iophC6F8Lonvhi &
+  - ./BrowserStackLinux --key GRsnMzVEkcDGYmH8cmpE &
   - ./code-coverage.sh
 
 script:
-  - python -m unittest -v test/*Test.py
+  - coverage run --omit **/python3.6/**/* -m unittest -v test/*Test.py
   - node-qunit-phantomjs test/junittestharness.html
-  - python -m unittest -v test/frontend/*Test.py
+  - coverage run -a --omit **/python3.6/**/* -m unittest -v test/frontend/*Test.py
+  - coverage report --omit *Test.py
 
 after_script:
-  - ./coverage-app after-build --exit-code $TRAVIS_TEST_RESULT
+  - coverage xml --omit *Test.py
+  - ./coverage-app after-build -t coverage.py -r 2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
 
 addons:
   browserstack:
-    username: "michaelmiddleton2"
+    username: "traviscibuildmac1"
     access_key:
-      secure: "qyvj++2lLwP2EgmRPf1NunAQho1f5qf2y83YT/Tt3qBSlY0dpxaxWsu2062DiHtk1Uvt7w2owIimovReS7i2bOa2ClXMPATTxy/R9R25UER74M3KypE+r5SjOHJoPrTK5sLjgZUK3WYjzY+oCZXadO+tvuuJ7cY65JRaMI3Au7iyGPvCfKiPBrqJw7hVpX77332l5O54NfAnQl/bGneB+cFvkj2vBnuwvTNbD945nDXBSFXCxt5rYl4Quk1ysi8K88mjJx97Le9SxJM5+WjGtN4VWMLupwfbnus9pBo0gu8yWwif6eosBsEGisYi7HoopCQbAIBm9a6a1/B5BL45KiJbRBlwUhuAIbX4uMzas2N1j54OaSQzh76Wk+h9ld8Tq1f4HNBSqLgCEq5N/1zkiaC5Uttrp5UY0m4Vvg6JtlWgYKhgwHkl40HGscgRmxLC+NukXOOqMn7MYH1NbRcEMbXZ0Z86rViHy+OXgKGfUnZiP0MFw6AyDdLQxKCxgYkGfsd+dcxRBCr9o0YYcsVgDJy0kBHTgajVXZ1CI4h7q5DnjpmIWABwGmBxxSL2QmYerJZUF7gRGtLTRa95mMo96bFdWhCkBJma4ee9lqkE+TBwa46IqhXoqsBYtdtJNLn+WBQ4jUyWVKHG73tPj9DeIzS8kH76vbpE0JuJ/1oIw8U="
+      secure: "RhEaOPZqya9vq5ZfhlY7KbwMv3BW+u3Jp560U8QDN/Ngk3cTf2I0OA5Bkdmb2epKbe2AnWiNyjs4RL5yTfHFhkcWUHuOTB+cO+R6mBQjLyop3AbHesh54V+1s9OVk9dmu1BE4pBYoAtjeURAnI0EdKdfuY7O4o+9osKegpaVrPDf0rYc5RTD6H0GHYUPzdx9mHB9OC7ZMEabtnZ9NuQr3BVUnhKJ7d1NkUvSC+OV9juRGiJEqys9eVwEgPYuEz4lg0TaNjq18Ht/eLlwlVCVSKOAKGT7D5g8DIMQiPM7AJtWgPxZuPQ+v1o3BiIwDtEnybLC+9ZJQzr2Pl3gre87xco+hdlDmh15uZdnHWWaqmDrU6O/Rtb9r6d8E3ubSWnMcJ2DyLWRk08pUYRbQag8NzqLXvGdzDdnvI2FWtU3qMmq8yaUF1B24l/tvt2++kz2hUArWyHnMXKJja8iKzukyYoKdIe6V9zyNwnDmB4uhq6u6991OqGnaV7PNjJfg3R6Sq7MXHRCRDMJjYN+gVw6z4IYQKRMsQ6Gud/P63bwhlsGm4EDHMgg3A4YWMz4GVRkwHmmMPVsBZ0HYnNWcDR0Sgy9McLCHoOpC9BbpR/dX1E6vId+wSFB7gEH+Qf2awwCbgQzVx00lynM2NXFOY1N+dy/SlD3f/YjfYDVymbIkjo="

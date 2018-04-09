@@ -1,0 +1,10 @@
+[paths]
+source = 
+    ./
+    tests/
+    tests/FrontEnd/
+
+[run]
+omit = 
+    **/python3.6/**/*
+
