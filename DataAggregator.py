@@ -84,16 +84,22 @@ class DataAggregator:
         for number in assignmentNumbers:
             data = []
             for result in results:
-                if (result.assignmentNumber == number and dataType is "lines" and ((result.fileOne == name) or (result.fileTwo == name))):
-                    data.append(int(result.linesMatched))
-                elif (result.assignmentNumber == number and dataType is "percents" and result.fileOne == name):
-                    data.append(int(result.fileOnePercent))
-                elif (result.assignmentNumber == number and dataType is "percents" and result.fileTwo == name):
-                    data.append(int(result.fileTwoPercent))
+                line=(self.parseDataCheck(result,dataType,number,name))
+                if line is not None:
+                    data.append(line)
             if (data != []):
                 parsedData.append(max(data))
         return parsedData
 
+    def parseDataCheck(self,result,dataType,number,name):
+        if (result.assignmentNumber == number and dataType is "lines" and ( (result.fileOne == name) or (result.fileTwo == name))):
+            return int(result.linesMatched)
+        elif (result.assignmentNumber == number and dataType is "percents" and result.fileOne == name):
+           return int(result.fileOnePercent)
+        elif (result.assignmentNumber == number and dataType is "percents" and result.fileTwo == name):
+            return int(result.fileTwoPercent)
+        else:
+            return None
     # Calculates the average of a given array
     def average(self, array):
         return round(sum(array) / len(array))
