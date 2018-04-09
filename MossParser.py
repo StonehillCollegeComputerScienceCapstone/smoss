@@ -23,7 +23,7 @@ class MossParser ():
         # Process the table strings into csv strings
         csvStrings, validFileName = self.processTableStrings(tableStrings)
         if(validFileName):
-            self.toCSV(csvStrings)
+            self.toCsv(csvStrings, 'w')
         return validFileName
 
 
@@ -37,7 +37,7 @@ class MossParser ():
             if (counter != 0):
                 self.toCsv(csvStrings, 'a')
             else:
-                self.toCSV(csvStrings, 'w')
+                self.toCsv(csvStrings, 'w')
                 counter = 1
 
 
