@@ -32,6 +32,8 @@ class FrontEndTestSuite (unittest.TestCase):
             self.url = "http://bobdugan2:kx9PNA1tGJzvb2rHreNE@hub.browserstack.com:80/wd/hub"
         elif (username == 'mmiddleton'):
             self.url = "http://michaelmiddleton2:sjFs7kUux7jvjxbk6Vss@hub.browserstack.com:80/wd/hub"
+        elif (username == 'wgreelish'):
+            self.url = "http://williamgreelish2:qMySyksgPkEdPubwqwdE@hub.browserstack.com:80/wd/hub"
         else:
             self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
 
