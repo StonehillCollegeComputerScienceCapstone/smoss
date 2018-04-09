@@ -27,8 +27,6 @@ logging.basicConfig(filename='output.log', format=FORMAT)
 logger = logging.getLogger('root')
 logger.setLevel(logging.DEBUG)
 
-sorter = ResultsSorter()
-
 #
 #   _Index ():     Generates the landing page for SMOSS.
 #
@@ -141,6 +139,7 @@ def isValidUrlList(retriever):
 
 
 def getMossTemplate():
+    sorter = ResultsSorter()
     if not(sorter.validateData()):
         template = "templates/errorpage.html"
         value = "Invalid File Data"
