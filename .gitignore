@@ -5,4 +5,7 @@
 # Extensions:
 *pyc
 **/*.log
-*csv
+
+# Files
+csv.csv
+/test/csv.csv
