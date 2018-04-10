@@ -33,7 +33,6 @@ class Graph:
         values = sorter.get_csv()
         cpNames = []
         for value in values:
-            print(value)
             if "previous" in value["FileName1"]:
                 if ([value["User1"], 'p']) not in cpNames:
                     cpNames.append([value["User1"], 'p'])
