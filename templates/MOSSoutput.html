@@ -17,7 +17,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').dataTable();
+        $('#example').dataTable({"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]});
     })
 </script>
 
@@ -47,7 +47,7 @@
         <td>{{ obj.FileName1 }}</td>
         <td>{{ obj.FileName2 }}</td>
         <td>{{ obj.Lines_Matched }}</td>
-        <td>{{ obj.URL }}</td>
+        <td><a href = {{ obj.URL }}>{{ obj.URL }}</a></td>
     </tr>{% endfor %}
     </tbody>
 </table>
@@ -58,7 +58,7 @@
     <thead>
     <tr>
         <th>User</th>
-        <th>Total Number of Lines Matched</th>
+        <th>Average Highest Percent Matched</th>
     </tr>
     </thead>
 
@@ -76,7 +76,7 @@
     <thead>
     <tr>
         <th>User</th>
-        <th>Average Highest Percent Matched</th>
+        <th>Total Number of Lines Matched</th>
     </tr>
     </thead>
     <tbody>

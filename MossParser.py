@@ -48,7 +48,7 @@ class MossParser ():
             f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
             f.write('\n')
         else:
-            f = open(self.csvFileName, 'w')
+            f = open(self.csvFileName, 'a')
         for item in csvStrings:
             for value in item[:-1]:
                 f.write(value+",")
@@ -119,8 +119,7 @@ class MossParser ():
 
     def processTableStrings(self, tableStrings):
         # Go through list and turn them into Result object
-        csvStrings=[]
-        csvPreviousStrings=[]
+        csvStrings=csvPreviousStrings = []
         previousSet=set()
         for tableString in tableStrings:
             tableStringValues=self.getTableStringValues(tableString)

@@ -1,6 +1,7 @@
-networkx==2.1
 Flask
+Flask-Session
 selenium
 requests
 coverage
 lxml
+jsonpickle

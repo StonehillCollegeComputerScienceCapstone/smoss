@@ -1,6 +1,11 @@
 # Directories:
 .idea/
+/flask_session
 
 # Extensions:
 *pyc
 **/*.log
+
+# Files
+csv.csv
+/test/csv.csv
