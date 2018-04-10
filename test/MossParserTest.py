@@ -118,7 +118,6 @@ class MossParserUnitTest(unittest.TestCase):
 #
     # 4. Test the processing of a valid html file into a list of table element strings
     def test_validHtmlProcessing(self):
-        print (self.mp.processHtml(self.mp.getHtml(self.config.getWarmup())))
         testList=[""" <td> a href http://moss.stanford.edu/results/860369009/match0.html clannister_Warmup.java (82%) a      <td> a href http://moss.stanford.edu/results/860369009/match0.html jbaxter5_Warmup.java (72%) a  <td> align right 17 """,
 """ <td> a href http://moss.stanford.edu/results/860369009/match1.html jbaxter5_Warmup.java (65%) a      <td> a href http://moss.stanford.edu/results/860369009/match1.html stentacles_Warmup.java (86%) a  <td> align right 16 """,
 """ <td> a href http://moss.stanford.edu/results/860369009/match2.html clannister_Warmup.java (74%) a      <td> a href http://moss.stanford.edu/results/860369009/match2.html stentacles_Warmup.java (86%) a  <td> align right 16 """,
