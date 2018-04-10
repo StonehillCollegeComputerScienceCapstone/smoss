@@ -3,6 +3,7 @@ from flask import *
 from Result import Result
 from DataAggregator import DataAggregator
 from Config import Config
+from ResultsSorter import ResultsSorter
 
 
 class Graph:
@@ -28,11 +29,30 @@ class Graph:
     # Return an array of dictionary objects containing the names of every student
     #
     def getNodes(self, results):
+        sorter = ResultsSorter()
+        values = sorter.get_csv()
+        cpNames = []
+        for value in values:
+            print(value)
+            if "previous" in value["FileName1"]:
+                if ([value["User1"], 'p']) not in cpNames:
+                    cpNames.append([value["User1"], 'p'])
+            else:
+                if ([value["User1"], 'c']) not in cpNames:
+                    cpNames.append([value["User1"], 'c'])
+            if "previous" in value["FileName2"]:
+                if ([value["User2"], 'p']) not in cpNames:
+                    cpNames.append([value["User2"], 'p'])
+            else:
+                if ([value["User2"], 'c']) not in cpNames:
+                    cpNames.append([value["User2"], 'c'])
         names = []
-        nameList = DataAggregator().populateNames(results)
         index = 1
-        for name in nameList:
-            names.append({"id": index, "value": 5, "label": name})
+        for name in cpNames:
+            if name[1] is 'c':
+                names.append({"id": index, "value": 5, "label": name[0], "color": "#0099ff"})
+            elif name[1] is 'p':
+                names.append({"id": index, "value": 5, "label": name[0], "color": "#32CD32"})
             index = index + 1
         return names
 

@@ -17,11 +17,11 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').dataTable({"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]});
+        $('#MOSSResults').dataTable({"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]});
     })
 </script>
 
-<table id="example" class ="display" border=1 cellpadding=7>
+<table id="MOSSResults" class ="display" border=1 cellpadding=7>
     <thead>
     <tr>
         <th>User One</th>
@@ -54,7 +54,7 @@
 
 <br> </br>
 
-<table id="example1" class ="display" border=1 cellpadding=7>
+<table id="HighestPercentMatched" class ="display" border=1 cellpadding=7>
     <thead>
     <tr>
         <th>User</th>
@@ -72,7 +72,7 @@
 
 <br> </br>
 
-<table id="example2" class ="display" border=1 cellpadding=7>
+<table id="HighestLinesMatched" class ="display" border=1 cellpadding=7>
     <thead>
     <tr>
         <th>User</th>
@@ -156,6 +156,14 @@
         nodes = '{{nodes}}'
         nodes = nodes.replace(/&#39;/g, "\"")
         nodes = JSON.parse(nodes);
+
+        var mynetwork = document.getElementById('mynetwork');
+        var x = mynetwork.offsetWidth + mynetwork.offsetWidth;
+        var y = -mynetwork.offsetHeight - mynetwork.offsetHeight;
+        var step = 100;
+        nodes.push({'id': 1000, x: x, y: y, 'label': "Previous Year", 'color': "#32CD32", 'value': 15, 'fixed': true, 'physics': false});
+        nodes.push({'id': 1001, x: x, y: y+step, 'label': "Current Year", 'color': "#0099ff", 'value': 15, 'fixed': true, 'physics': false});
+
         edges = '{{edges}}'
         edges = edges.replace(/&#39;/g, "\"")
         oldEdges = JSON.parse(edges);
@@ -174,7 +182,6 @@
             nodes: {
                 shape: 'dot',
                 color: {
-                    color: '#0099ff',
                     highlight: '#ff3300',
                 },
                 font: {
@@ -191,11 +198,12 @@
                 color: {
                     color: '#0099ff',
                     highlight: '#ff3300',
-                    hover: '#800000'
+                    hover: '#B22222'
                 },
                 smooth: {
                     type: 'continuous'
                 },
+
             },
             physics: {
                 barnesHut: {
