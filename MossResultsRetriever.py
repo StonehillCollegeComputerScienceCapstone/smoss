@@ -15,7 +15,7 @@ class MossResultsRetriever:
 
     # If url is valid, append to list of urls. Else, returns false
     def getUrl(self, url):
-        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results/" not in url):
             return False
 
         # Catch 404 Not Found or connection not accepted
