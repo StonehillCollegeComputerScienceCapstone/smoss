@@ -13,15 +13,9 @@ class MossResultsRetriever:
         self.results = []
         self.config = Config()
 
-    # Clear the urls and results of the current MossResultsRetriever
-    def reInit(self):
-        self.urls = []
-        self.file = FileRetrieval()
-        self.results = []
-
     # If url is valid, append to list of urls. Else, returns false
     def getUrl(self, url):
-        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results/" not in url):
             return False
 
         # Catch 404 Not Found or connection not accepted

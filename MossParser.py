@@ -3,6 +3,7 @@
 # as this program
 import urllib
 import urllib.request
+import lxml.html
 from html.parser import HTMLParser
 from Config import Config
 
@@ -47,7 +48,7 @@ class MossParser ():
             f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
             f.write('\n')
         else:
-            f = open(self.csvFileName, 'w')
+            f = open(self.csvFileName, 'a')
         for item in csvStrings:
             for value in item[:-1]:
                 f.write(value+",")
@@ -65,15 +66,15 @@ class MossParser ():
 
     # Returns True if the URL is valid, else returns False
     def testUrl(self, url):
-        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+        if ((not isinstance(url, str)) or (("moss.stanford.edu/results" not in url) and ("171.64.78.49" not in url))):
             return False
-        request = urllib.request.Request(url)
-
-        # Attempt to access the URL
         try:
-            response = urllib.request.urlopen(request) # response now contains the HTML
-            return True
-
+            text=lxml.html.parse(url)
+            html=text.find(".//title").text
+            if(html != "Moss Results"):
+                return False
+            else:
+                return True
         # Create an exception and return False if the URL is not valid
         except:
             return False
@@ -91,17 +92,19 @@ class MossParser ():
 
         # Have list of strings split up
         # first two indexes are a blank space and the header, so remove them
-        print (splitStrings[0])
         del(splitStrings[0])
         del(splitStrings[0])
         return splitStrings
 
     def getHtml(self, url):
-        html = urllib.request.urlopen(url)
-        mybytes = html.read()
-        mystr = mybytes.decode("utf8")
-        html.close()
-        return mystr
+        if(self.testUrl(url)):
+            html = urllib.request.urlopen(url)
+            mybytes = html.read()
+            mystr = mybytes.decode("utf8")
+            html.close()
+            return mystr
+        else:
+            return None
 
     def getTableStringValues(self, tableString):
         tableString=self.formatTableString(tableString)
@@ -198,4 +201,4 @@ class myHtmlParser (HTMLParser):
 
     def handle_data(self, data):
         if(self.seenTable and (not self.seenEndOfTable)):
-            self.tableString = self.tableString + data + " "
+             self.tableString = self.tableString + data + " "

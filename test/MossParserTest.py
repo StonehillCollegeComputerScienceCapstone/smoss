@@ -57,7 +57,7 @@ class MossParserUnitTest(unittest.TestCase):
 
     # Test testUrl on valid URL + extra chars
     def test_invalidURLOnValidPlusExtra(self):
-        appendChars = ['a', '?', ':', '#', '+', 'z', ' ', '\n']
+        appendChars = ['a', '\?', ':', '+', 'z', ' ', '\n']
         for char in appendChars:
             self.assertFalse(self.mp.testUrl(self.validUrl + char))
 
@@ -84,21 +84,21 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertFalse(self.mp.testUrl(None))
 
     # Test testUrl on Valid IP
-    def test_invalidURLOnIP(self):
+    def test_validURLOnIP(self):
         IP = self.validUrl.replace("moss.stanford.edu", "171.64.78.49")
-        self.assertTrue(self.mp.testUrl(IP))
+        self.assertTrue(self.mp.testUrl(str(IP)))
 
 
 #
 # getHtml()
 #
     # Test method on a non utf8 webpage
-    def test_validHtmlOnNonUTF8Webpage(self):
-        html = urllib.request.urlopen("https://www.google.com")
-        mybytes = html.read()
-        mystr = mybytes.decode("utf16")
-        html.close()
-        self.assertFalse(self.mp.getHtml("https://www.google.com") == mystr)
+    # def test_validHtmlOnNonUTF8Webpage(self):
+    #     html = urllib.request.urlopen("https://www.google.com")
+    #     mybytes = html.read()
+    #     mystr = mybytes.decode("utf16")
+    #     html.close()
+    #     self.assertFalse(self.mp.getHtml("https://www.google.com") == mystr)
 
     # Test method on invalid MOSS URL
     def test_validHTMLOnInvalidURL(self):
@@ -118,215 +118,93 @@ class MossParserUnitTest(unittest.TestCase):
 #
     # 4. Test the processing of a valid html file into a list of table element strings
     def test_validHtmlProcessing(self):
-        self.assertEqual(["""<td><td><a href="http://moss.stanford.edu/results/11690537/match0.html">delrick_Palindrome.java (59%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match0.html">jcary_Palindrome.java (69%)</a>
-                         </td><td align="right">28
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match1.html">jcary_Palindrome.java (55%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match1.html">lhbox_Palindrome.java (39%)</a>
-                         </td><td align="right">18
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match2.html">relliot_Palindrome.java (42%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match2.html">tbassett_Palindrome.java (52%)</a>
-                         </td><td align="right">16
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match3.html">delrick_Palindrome.java (40%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match3.html">lhbox_Palindrome.java (33%)</a>
-                         </td><td align="right">15
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match4.html">mmarquez2_Palindrome.java (31%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match4.html">relliot_Palindrome.java (34%)</a>
-                         </td><td align="right">14
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match5.html">cchase_Palindrome.java (16%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match5.html">ssmith_Palindrome.java (21%)</a>
-                         </td><td align="right">12
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match6.html">ssmith_Palindrome.java (21%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match6.html">tbassett_Palindrome.java (33%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match7.html">lhbox_Palindrome.java (22%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match7.html">tbassett_Palindrome.java (33%)</a>
-                         </td><td align="right">10
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match8.html">jcary_Palindrome.java (31%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match8.html">tbassett_Palindrome.java (33%)</a>
-                         </td><td align="right">9
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match9.html">qbinkin4_Palindrome.java (33%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match9.html">sfath1_Palindrome.java (21%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match10.html">qbinkin4_Palindrome.java (33%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match10.html">relliot_Palindrome.java (25%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match11.html">mmarquez2_Palindrome.java (22%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match11.html">qbinkin4_Palindrome.java (33%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match12.html">delrick_Palindrome.java (25%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match12.html">whark_Palindrome.java (27%)</a>
-                         </td><td align="right">9
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match13.html">cchase_Palindrome.java (12%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match13.html">delrick_Palindrome.java (21%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match14.html">lhbox_Palindrome.java (17%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match14.html">whark_Palindrome.java (22%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match15.html">jcary_Palindrome.java (24%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match15.html">whark_Palindrome.java (22%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match16.html">dmell_Palindrome.java (30%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match16.html">zhillier_Palindrome.java (20%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match17.html">delrick_Palindrome.java (20%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match17.html">zhillier_Palindrome.java (20%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match18.html">delrick_Palindrome.java (20%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match18.html">dmell_Palindrome.java (30%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match19.html">tbassett_Palindrome.java (24%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match19.html">zhillier_Palindrome.java (20%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match20.html">lhbox_Palindrome.java (16%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match20.html">zhillier_Palindrome.java (20%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match21.html">jcary_Palindrome.java (23%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match21.html">zhillier_Palindrome.java (20%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match22.html">dmell_Palindrome.java (28%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match22.html">tbassett_Palindrome.java (24%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match23.html">dmell_Palindrome.java (28%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match23.html">relliot_Palindrome.java (19%)</a>
-                         </td><td align="right">10
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match24.html">dmell_Palindrome.java (28%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match24.html">lhbox_Palindrome.java (16%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match25.html">dmell_Palindrome.java (28%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match25.html">jcary_Palindrome.java (23%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match26.html">delrick_Palindrome.java (19%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match26.html">tbassett_Palindrome.java (24%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match27.html">cchase_Palindrome.java (11%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match27.html">zhillier_Palindrome.java (20%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match28.html">cchase_Palindrome.java (11%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match28.html">dmell_Palindrome.java (28%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match29.html">sfath1_Palindrome.java (16%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match29.html">tbassett_Palindrome.java (23%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match30.html">relliot_Palindrome.java (18%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match30.html">ssmith_Palindrome.java (15%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match31.html">qbinkin4_Palindrome.java (25%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match31.html">tbassett_Palindrome.java (23%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match32.html">mmarquez2_Palindrome.java (17%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match32.html">tbassett_Palindrome.java (23%)</a>
-                         </td><td align="right">4
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match33.html">mmarquez2_Palindrome.java (17%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match33.html">ssmith_Palindrome.java (15%)</a>
-                         </td><td align="right">4
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match34.html">lhbox_Palindrome.java (15%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match34.html">sfath1_Palindrome.java (16%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match35.html">lhbox_Palindrome.java (15%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match35.html">qbinkin4_Palindrome.java (25%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match36.html">jcary_Palindrome.java (22%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match36.html">sfath1_Palindrome.java (16%)</a>
-                         </td><td align="right">6
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match37.html">jcary_Palindrome.java (22%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match37.html">qbinkin4_Palindrome.java (25%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match38.html">eyo_Palindrome.java (19%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match38.html">ssmith_Palindrome.java (15%)</a>
-                         </td><td align="right">8
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match39.html">cchase_Palindrome.java (11%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match39.html">tbassett_Palindrome.java (23%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match40.html">cchase_Palindrome.java (11%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match40.html">lhbox_Palindrome.java (15%)</a>
-                         </td><td align="right">7
-                         </td></tr>""",
-
-                         """<tr><td><a href="http://moss.stanford.edu/results/11690537/match41.html">cchase_Palindrome.java (11%)</a>
-                             </td><td><a href="http://moss.stanford.edu/results/11690537/match41.html">jcary_Palindrome.java (22%)</a>
-                         </td><td align="right">7
-                         </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getWarmup())))
+        mossUrlNumber = self.config.getWarmup()[33:]
+        testList=[""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match0.html clannister_Warmup.java (82%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match0.html jbaxter5_Warmup.java (72%) a  <td> align right 17 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match1.html jbaxter5_Warmup.java (65%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match1.html stentacles_Warmup.java (86%) a  <td> align right 16 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match2.html clannister_Warmup.java (74%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match2.html stentacles_Warmup.java (86%) a  <td> align right 16 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match3.html hlloyd_Warmup.java (70%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match3.html hpataki_Warmup.java (70%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match4.html fbordeau_Warmup.java (94%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match4.html rlupin_Warmup.java (68%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match5.html previous_asillz_Warmup.java (86%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match5.html previous_scarter_Warmup.java (86%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match6.html kbarela_Warmup.java (86%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match6.html previous_scarter_Warmup.java (86%) a  <td> align right 14 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match7.html kbarela_Warmup.java (86%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match7.html previous_asillz_Warmup.java (86%) a  <td> align right 14 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match8.html ssnape_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match8.html tfoley1_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match9.html previous_wwheaton_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match9.html tfoley1_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match10.html previous_wwheaton_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match10.html ssnape_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match11.html previous_jtaylor_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match11.html tfoley1_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match12.html previous_jtaylor_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match12.html ssnape_Warmup.java (88%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match13.html previous_jtaylor_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match13.html previous_wwheaton_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match14.html previous_cdarwin_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match14.html tfoley1_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match15.html previous_cdarwin_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match15.html ssnape_Warmup.java (88%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match16.html previous_cdarwin_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match16.html previous_wwheaton_Warmup.java (88%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match17.html previous_cdarwin_Warmup.java (88%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match17.html previous_jtaylor_Warmup.java (88%) a  <td> align right 8 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match18.html previous_ajoyce_Warmup.java (62%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match18.html previous_kwheels_Warmup.java (82%) a  <td> align right 12 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match19.html sblack_Warmup.java (70%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match19.html schott_Warmup.java (67%) a  <td> align right 12 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match20.html scantwell_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match20.html vsoriano_Warmup.java (78%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match21.html previous_zcorbitt_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match21.html vsoriano_Warmup.java (78%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match22.html previous_zcorbitt_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match22.html scantwell_Warmup.java (78%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match23.html previous_mduckett_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match23.html vsoriano_Warmup.java (78%) a  <td> align right 12 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match24.html previous_mduckett_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match24.html scantwell_Warmup.java (78%) a  <td> align right 12 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match25.html previous_mduckett_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match25.html previous_zcorbitt_Warmup.java (78%) a  <td> align right 12 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match26.html previous_iwitt_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match26.html vsoriano_Warmup.java (78%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match27.html previous_iwitt_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match27.html scantwell_Warmup.java (78%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match28.html previous_iwitt_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match28.html previous_zcorbitt_Warmup.java (78%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match29.html previous_iwitt_Warmup.java (78%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match29.html previous_mduckett_Warmup.java (78%) a  <td> align right 12 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match30.html hpotter_Warmup.java (65%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match30.html pbaelish_Warmup.java (65%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match31.html previous_llinville_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match31.html previous_tshell_Warmup.java (77%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match32.html previous_efulton_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match32.html previous_tshell_Warmup.java (77%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match33.html previous_efulton_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match33.html previous_llinville_Warmup.java (77%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match34.html previous_croden_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match34.html previous_tshell_Warmup.java (77%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match35.html previous_croden_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match35.html previous_llinville_Warmup.java (77%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match36.html previous_croden_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match36.html previous_efulton_Warmup.java (77%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match37.html previous_cnolan_Warmup.java (58%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match37.html previous_nyost_Warmup.java (68%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match38.html previous_cnolan_Warmup.java (58%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match38.html previous_jsnow_Warmup.java (63%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match39.html previous_cbone_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match39.html previous_tshell_Warmup.java (77%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match40.html previous_cbone_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match40.html previous_llinville_Warmup.java (77%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match41.html previous_cbone_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match41.html previous_efulton_Warmup.java (77%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match42.html previous_cbone_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match42.html previous_croden_Warmup.java (77%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match43.html jwakeman_Warmup.java (54%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match43.html triddle_Warmup.java (63%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match44.html amcintosh_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match44.html previous_tshell_Warmup.java (77%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match45.html amcintosh_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match45.html previous_llinville_Warmup.java (77%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match46.html amcintosh_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match46.html previous_efulton_Warmup.java (77%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match47.html amcintosh_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match47.html previous_croden_Warmup.java (77%) a  <td> align right 13 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match48.html amcintosh_Warmup.java (77%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match48.html previous_cbone_Warmup.java (77%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match49.html hpataki_Warmup.java (52%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match49.html pbaelish_Warmup.java (61%) a  <td> align right 8 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match50.html hpataki_Warmup.java (52%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match50.html mthunder_Warmup.java (51%) a  <td> align right 8 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match51.html hpataki_Warmup.java (52%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match51.html hpotter_Warmup.java (61%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match52.html hlloyd_Warmup.java (52%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match52.html pbaelish_Warmup.java (61%) a  <td> align right 8 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match53.html hlloyd_Warmup.java (52%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match53.html mthunder_Warmup.java (51%) a  <td> align right 8 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match54.html hlloyd_Warmup.java (52%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match54.html hpotter_Warmup.java (61%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match55.html previous_cjackson_Warmup.java (42%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match55.html previous_dfenton_Warmup.java (52%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match56.html previous_bsports_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match56.html zcordani_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match57.html odurr_Warmup.java (59%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match57.html vmcneal_Warmup.java (58%) a  <td> align right 10 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match58.html nstark_Warmup.java (62%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match58.html sfish_Warmup.java (64%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match59.html mthunder_Warmup.java (48%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match59.html tfoley1_Warmup.java (69%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match60.html mthunder_Warmup.java (48%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match60.html ssnape_Warmup.java (69%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match61.html mthunder_Warmup.java (48%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match61.html previous_wwheaton_Warmup.java (69%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match62.html mthunder_Warmup.java (48%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match62.html previous_jtaylor_Warmup.java (69%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match63.html mthunder_Warmup.java (48%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match63.html previous_cdarwin_Warmup.java (69%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match64.html knanney_Warmup.java (59%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match64.html stentacles_Warmup.java (56%) a  <td> align right 11 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match65.html jpotter_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match65.html zcordani_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match66.html jpotter_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match66.html previous_bsports_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match67.html jnolan_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match67.html zcordani_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match68.html jnolan_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match68.html previous_bsports_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match69.html jnolan_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match69.html jpotter_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match70.html jlacey_Warmup.java (60%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match70.html previous_dwick_Warmup.java (60%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match71.html jbaxter5_Warmup.java (43%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match71.html knanney_Warmup.java (59%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match72.html gjohanssen_Warmup.java (54%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match72.html previous_kwheels_Warmup.java (64%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match73.html ctrain_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match73.html zcordani_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match74.html ctrain_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match74.html previous_bsports_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match75.html ctrain_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match75.html jpotter_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match76.html ctrain_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match76.html jnolan_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match77.html clannister_Warmup.java (49%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match77.html knanney_Warmup.java (59%) a  <td> align right 9 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match78.html alazzara_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match78.html zcordani_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match79.html alazzara_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match79.html previous_bsports_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match80.html alazzara_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match80.html jpotter_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match81.html alazzara_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match81.html jnolan_Warmup.java (67%) a  <td> align right 7 """,
+""" <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match82.html alazzara_Warmup.java (67%) a      <td> a href http://moss.stanford.edu/results/""" + mossUrlNumber + """/match82.html ctrain_Warmup.java (67%) a  <td> align right 7 """,
+]
+        testList2=self.mp.processHtml(self.mp.getHtml(self.config.getWarmup()))
+        self.assertTrue(len(testList) == len(testList2) and sorted(testList) == sorted(testList2))
 
     # 5. Test the processing of an invalid html file into a list of table elements strings
     def test_invalidHtmlProcessing(self):

@@ -14,13 +14,6 @@ class DataAggregator:
         if results is not None:  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
-    def reInit(self, results):
-        self.results = results
-        self.topPercents = []
-        self.topLines = []
-        if results is not None:
-            self.aggregateData()
-
     def setResults(self, results):
         self.results = results
         if results is not None:
@@ -93,7 +86,7 @@ class DataAggregator:
             if (data != []):
                 parsedData.append(max(data))
         return parsedData
-    
+
     # Calculates the average of a given array
     def average(self, array):
         return round(sum(array) / len(array))
@@ -129,8 +122,9 @@ class DataAggregator:
 
             # Parse the highest lines matched for a given name
             lines = self.parseData(self.results, name, "lines")
+
             # Append Aggregation object array
-            aggregatePercents.append(Aggregation(name, self.average(lines)))
+            aggregatePercents.append(Aggregation(name, self.average(percents)))
             aggregateLines.append(Aggregation(name, self.sum(lines)))
 
         # Sort data
