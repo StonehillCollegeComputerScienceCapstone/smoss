@@ -124,23 +124,20 @@ class MossParser ():
             fileName2=tableStringValues[4].strip()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
-                name1 = self.getName(fileName1)
-                name2 = self.getName(fileName2)
-                values1, values2 = self.getValues(fileName1, fileName2)
-                previousMatch = self.previousYearMatch(values1, values2)
-                csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                if previousMatch:
+                csvString=[self.getName(fileName1), fileName1, tableStringValues[2], self.getName(fileName2), fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
+                if self.previousYearMatch(self.getValues(fileName1, fileName2)):
                     previousSet.add(fileName1)
                     csvPreviousStrings.append(csvString)
-
                 else:
                     csvStrings.append(csvString)
-            else:
-                return None, False
+
+        #Returns
         if len(csvStrings)>0:
             return csvStrings, True
-        else:
+        elif len(csvPreviousStrings)>0:
             return csvPreviousStrings, True
+        else:
+            return None, True
 
     def testFileNaming(self, fileName):
         if fileName[0].isdigit():
