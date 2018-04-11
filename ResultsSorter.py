@@ -44,18 +44,6 @@ class ResultsSorter:
         else:
             return False
 
-    # Parses the main list into individual category lists
-    def createCategoryLists(self):
-        for dict in self.MOSSresults:
-            self.user1.append(dict['User1'].rstrip())
-            self.user2.append(dict['User2'].rstrip())
-            self.fileName1.append(dict['FileName1'].rstrip())
-            self.fileName2.append(dict['FileName2'].rstrip())
-            self.match1.append(dict['Match1'].rstrip())
-            self.match2.append(dict['Match2'].rstrip())
-            self.linesMatched.append(dict['Lines_Matched'].rstrip())
-            self.URL.append(dict['URL'].rstrip())
-
     def isValidStringList(self, listName):
         for key in listName:
             if key.isdigit():
@@ -95,3 +83,4 @@ class ResultsSorter:
                and self.isValidFilename()):
             return False
         return True
+rs=ResultsSorter()

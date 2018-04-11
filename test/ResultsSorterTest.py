@@ -323,6 +323,7 @@ class MyTestCase(unittest.TestCase):
         self.sr.inputFileName = "csv.csv"
         self.assertTrue(self.sr.validateData())
 
+
     def tearDown(self):
         self.sr = None
 
