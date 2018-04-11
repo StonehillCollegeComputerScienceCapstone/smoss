@@ -15,30 +15,26 @@ import json
 # Make the request to the BrowserStack API to get our builds
 browserStackBuilds = requests.get ('https://api.browserstack.com/automate/builds.json', auth = ('michaelmiddleton2', 'sjFs7kUux7jvjxbk6Vss'))
 
-# if browserStackBuilds.status_code is 200:
+if browserStackBuilds.status_code is 200:
     # If the request returns data:
-    # if browserStackBuilds.json ():
-        # print (browserStackBuilds.text[1:-1])
+    if browserStackBuilds.json ():
+        for build in browserStackBuilds.json ():
+            # Grab the build hash
+            buildHash = build['automation_build']['hashed_id']
 
-        # Convert the JSON into a Python Dict-type    
-#        jsonBrowserStackBuilds = json.loads (browserStackBuilds.text[1:-1])
+            # Form DELETE URL based on the build hash we just received
+            url = 'https://api.browserstack.com/automate/builds/' + buildHash + '.json'
 
-        # Grab the build hash
- #       buildHash = jsonBrowserStackBuilds['automation_build']['hashed_id']
+            # Make the request
+            deletePreviousData = requests.delete (url, auth = ('michaelmiddleton2', 'sjFs7kUux7jvjxbk6Vss'))
 
-        # Form DELETE URL based on the build hash we just received
-        # url = 'https://api.browserstack.com/automate/builds/' + buildHash + '.json'
-
-        # Make the request
-        # deletePreviousData = requests.delete (url, auth = ('michaelmiddleton2', 'sjFs7kUux7jvjxbk6Vss'))
-
-        # Print the output for logging purposes
-        # print (deletePreviousData.text)
+            # Print the output for logging purposes
+            print (deletePreviousData.text)
 
     # We only get here if there is nothing in the returned request data:
-    # else:
-        # print ('INFO:\tThere are no builds currently listed online')
+    else:
+        print ('INFO:\tThere are no builds currently listed online')
 
-# else:
-    # print ('ERROR:\tThere was a problem with the request to the BrowserStack API. Response code is NOT 200!!!')
+else:
+    print ('ERROR:\tThere was a problem with the request to the BrowserStack API. Response code is NOT 200!!!')
 

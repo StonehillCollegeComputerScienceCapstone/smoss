@@ -3,6 +3,7 @@
 # as this program
 import urllib
 import urllib.request
+import lxml.html
 from html.parser import HTMLParser
 from Config import Config
 
@@ -26,28 +27,13 @@ class MossParser ():
             self.toCsv(csvStrings, 'w')
         return validFileName
 
-
-    # Parse multiple URLs
-    def parseMultiple(self, urls):
-        counter = 0
-        for url in urls:
-            html = self.getHtml(url)
-            tableStrings = self.processHtml(html)
-            csvStrings, validFilename = self.processTableStrings(tableStrings)
-            if (counter != 0):
-                self.toCsv(csvStrings, 'a')
-            else:
-                self.toCsv(csvStrings, 'w')
-                counter = 1
-
-
     def toCsv(self, csvStrings, type):
         if(type == 'w'):
             f = open(self.csvFileName, 'w')
             f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
             f.write('\n')
         else:
-            f = open(self.csvFileName, 'w')
+            f = open(self.csvFileName, 'a')
         for item in csvStrings:
             for value in item[:-1]:
                 f.write(value+",")
@@ -65,15 +51,15 @@ class MossParser ():
 
     # Returns True if the URL is valid, else returns False
     def testUrl(self, url):
-        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+        if ((not isinstance(url, str)) or (("moss.stanford.edu/results" not in url) and ("171.64.78.49" not in url))):
             return False
-        request = urllib.request.Request(url)
-
-        # Attempt to access the URL
         try:
-            response = urllib.request.urlopen(request) # response now contains the HTML
-            return True
-
+            text=lxml.html.parse(url)
+            html=text.find(".//title").text
+            if(html != "Moss Results"):
+                return False
+            else:
+                return True
         # Create an exception and return False if the URL is not valid
         except:
             return False
@@ -91,17 +77,19 @@ class MossParser ():
 
         # Have list of strings split up
         # first two indexes are a blank space and the header, so remove them
-        print (splitStrings[0])
         del(splitStrings[0])
         del(splitStrings[0])
         return splitStrings
 
     def getHtml(self, url):
-        html = urllib.request.urlopen(url)
-        mybytes = html.read()
-        mystr = mybytes.decode("utf8")
-        html.close()
-        return mystr
+        if(self.testUrl(url)):
+            html = urllib.request.urlopen(url)
+            mybytes = html.read()
+            mystr = mybytes.decode("utf8")
+            html.close()
+            return mystr
+        else:
+            return None
 
     def getTableStringValues(self, tableString):
         tableString=self.formatTableString(tableString)
@@ -111,6 +99,7 @@ class MossParser ():
     def getValues(self, fileName1, fileName2):
         values1 = fileName2.split("_")
         values2 = fileName1.split("_")
+        print("values = "+values1[0]+", "+values2[0])
         return values1, values2
 
 
@@ -124,37 +113,33 @@ class MossParser ():
             fileName2=tableStringValues[4].strip()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
-                name1 = self.getName(fileName1)
-                name2 = self.getName(fileName2)
-                values1, values2 = self.getValues(fileName1, fileName2)
-                previousMatch = self.previousYearMatch(values1, values2)
-                csvString=[name1, fileName1, tableStringValues[2], name2, fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                if previousMatch:
+                csvString=[self.getName(fileName1), fileName1, tableStringValues[2], self.getName(fileName2), fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
+                print("File names : "+fileName1 + ", "+fileName2)
+                names = self.getValues(fileName1,fileName2)
+                if self.previousYearMatch(names[0],names[1]):#self.getValues(fileName1, fileName2)):
                     previousSet.add(fileName1)
                     csvPreviousStrings.append(csvString)
-
                 else:
                     csvStrings.append(csvString)
-            else:
-                return None, False
+
+        #Returns
         if len(csvStrings)>0:
             return csvStrings, True
-        else:
+        elif len(csvPreviousStrings)>0:
             return csvPreviousStrings, True
+        else:
+            return None, True
 
     def testFileNaming(self, fileName):
         if fileName[0].isdigit():
             return False
         return True
 
-    def previousYearMatch(self, values1, values2):
 
+    def previousYearMatch(self, values1, values2):
         if values1[0] == values2[0]:
-            previousMatch = True  # Assignment are previous years
-            return previousMatch
-        else:
-            previousMatch = False  # Assignments are current years
-            return previousMatch
+            return True
+        return False
 
 
     def formatTableString(self,tableString):
@@ -201,4 +186,4 @@ class myHtmlParser (HTMLParser):
 
     def handle_data(self, data):
         if(self.seenTable and (not self.seenEndOfTable)):
-            self.tableString = self.tableString + data + " "
+             self.tableString = self.tableString + data + " "

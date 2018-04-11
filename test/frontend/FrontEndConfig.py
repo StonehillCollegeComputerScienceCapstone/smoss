@@ -16,6 +16,8 @@ import os
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import *
+
 
 class FrontEndTestSuite (unittest.TestCase):
     driver = None
@@ -32,6 +34,8 @@ class FrontEndTestSuite (unittest.TestCase):
             self.url = "http://bobdugan2:kx9PNA1tGJzvb2rHreNE@hub.browserstack.com:80/wd/hub"
         elif (username == 'mmiddleton'):
             self.url = "http://michaelmiddleton2:sjFs7kUux7jvjxbk6Vss@hub.browserstack.com:80/wd/hub"
+        elif (username == 'WGreelish'):
+            self.url = "http://williamgreelish1:qMySyksgPkEdPubwqwdE@hub.browserstack.com:80/wd/hub"
         else:
             self.url = "http://" + os.environ['BROWSERSTACK_USER'] + ":" + os.environ['BROWSERSTACK_ACCESS_KEY'] + "@hub.browserstack.com:80/wd/hub"
 
