@@ -180,6 +180,28 @@ class MyTestCase(unittest.TestCase):
             self.assertTrue(isinstance(edge['title'], str))
 
 
+
+#
+# getNodeIndex(self, name, results)
+#
+    #Test that fails
+    def test_getNodeIndexFail(self):
+        name = "Fail"
+        self.assertEqual(-1, self.graph.getNodeIndex(name, self.results))
+
+    #test that it passes
+    def test_getNodeIndexPass(self):
+        name = "Matt"
+        index = 1
+        self.assertEqual(index, self.graph.getNodeIndex(name, self.results))
+
+    #tests that it skips the second instance of Matt
+    def test_getNodeIndexNoRepitition(self):
+        name = "Tori"
+        index = 5
+        self.assertEqual(index, self.graph.getNodeIndex(name, self.results))
+
+
 if __name__ == '__main__':
     unittest.main()
 
