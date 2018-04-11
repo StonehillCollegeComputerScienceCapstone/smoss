@@ -147,14 +147,11 @@ class MossParser ():
             return False
         return True
 
-    def previousYearMatch(self, values1, values2):
 
+    def previousYearMatch(self, values1, values2):
         if values1[0] == values2[0]:
-            previousMatch = True  # Assignment are previous years
-            return previousMatch
-        else:
-            previousMatch = False  # Assignments are current years
-            return previousMatch
+            return True
+        return False
 
 
     def formatTableString(self,tableString):

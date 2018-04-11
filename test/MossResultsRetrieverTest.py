@@ -91,18 +91,18 @@ class MossURLsTests(unittest.TestCase):
 # getFileUrls()
 #
     def test_readUrlsValidFile(self):
-        self.assertTrue(self.retriever.getFileUrls("FileInput.txt"))
+        self.assertTrue(self.retriever.getFileUrls("mossUrls.txt"))
 
     def test_readUrlsInvalidFile(self):
         self.assertFalse(self.retriever.getFileUrls("Invalid"))
         self.assertFalse(self.retriever.getFileUrls(1))
 
     def test_numberOfValidUrlsRead(self):
-        self.retriever.getFileUrls("FileInput.txt")
-        self.assertEqual(len(self.retriever.urls), 2)
+        self.retriever.getFileUrls("mossUrls.txt")
+        self.assertEqual(len(self.retriever.urls), 5)
 
     def test_resultObjects(self):
-        self.retriever.getFileUrls("FileInput.txt")  # URLs file to parse
+        self.retriever.getFileUrls("mossUrls.txt")  # URLs file to parse
         self.assertTrue(self.retriever.getResults())  # checking for errors in the parsing
         self.assertTrue(self.retriever.results)  # checks that it is not null
 
