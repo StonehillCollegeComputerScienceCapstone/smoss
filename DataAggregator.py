@@ -14,11 +14,6 @@ class DataAggregator:
         if results is not None:  # This adjustment made for using the example outside of this class
             self.aggregateData()
 
-    def setResults(self, results):
-        self.results = results
-        if results is not None:
-            self.aggregateData()
-
     # Validates data has been received to aggregate
     def validateResults(self, results):
         if results and isinstance(results, list):
@@ -95,11 +90,6 @@ class DataAggregator:
     def sum(self, array):
         return sum(array)
 
-    # Displays the passed in array
-    def displayArray(self, array):
-        for object in array:
-            print(object.toString())
-
     # Sorts the Aggregation objects based on the data field
     def sort(self, array):
         return sorted(array, key=attrgetter('data'), reverse=True)
@@ -134,30 +124,3 @@ class DataAggregator:
         # We only want the top ten results
         self.topPercents = aggregatePercents[:10]
         self.topLines = aggregateLines[:10]
-
-    # Example data
-    def example(self):  # Put this in the class to have the example
-        validURL = self.config.getWarmup() # URL for 'Golbach' assignment
-        results = []
-        results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
-        results.append(Result(1, "Matt", "Sam", validURL, 80, 43, 77))
-        results.append(Result(1, "Armen", "Sam", validURL, 12, 10, 8))
-        results.append(Result(2, "Matt", "Armen", validURL, 33, 70, 45))
-        results.append(Result(2, "Matt", "Sam", validURL, 16, 17, 15))
-        results.append(Result(2, "Armen", "Sam", validURL, 50, 34, 5))
-        results.append(Result(3, "Matt", "Armen", validURL, 76, 79, 20))
-        results.append(Result(3, "Matt", "Sam", validURL, 90, 88, 100))
-        results.append(Result(3, "Armen", "Sam", validURL, 10, 6, 2))
-
-        return results
-
-def main():
-
-    ag = DataAggregator()  #adjusted to get this main's example to work with example() being part of the class
-    ag.results = ag.example()
-    ag.aggregateData()
-    ag.displayArray(ag.results)
-
-
-
-if __name__ == '__main__': main()
