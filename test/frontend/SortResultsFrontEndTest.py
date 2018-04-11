@@ -27,29 +27,36 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_PercentSortedLowToHigh (self):
         driver = self.InitializeBrowserStackConnection ("Percent Low to High")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
-        
-        # Click on the second column header to sort by percent-match
-        driver.find_element_by_xpath("//table[@id='example']/thead/tr/th[2]").click()
-        
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[2]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[2]").text
-        isSorted = (variable1 <= variable2)
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
+            
+            # Click on the second column header to sort by percent-match
+            driver.find_element_by_xpath("//table[@id='example']/thead/tr/th[2]").click()
+            
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[2]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[2]").text
+            isSorted = (variable1 <= variable2)
+
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
@@ -78,30 +85,37 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_PercentSortedHighToLow (self):
         driver = self.InitializeBrowserStackConnection ("Percent High to Low")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
-        
-        # Click TWICE on the second column header to sort by percent-match
-        driver.find_element_by_xpath("//table[@id='example']/thead/tr/th[2]").click()
-        driver.find_element_by_xpath("//table[@id='example']/thead/tr/th[2]").click()
-        
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[2]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[2]").text
-        isSorted = (variable1 >= variable2)
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
+            
+            # Click TWICE on the second column header to sort by percent-match
+            driver.find_element_by_xpath("//table[@id='example']/thead/tr/th[2]").click()
+            driver.find_element_by_xpath("//table[@id='example']/thead/tr/th[2]").click()
+            
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[2]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[2]").text
+            isSorted = (variable1 >= variable2)
+
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
@@ -130,30 +144,35 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_LinesSortedLowToHigh (self):
         driver = self.InitializeBrowserStackConnection ("Lines Low to High")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Click on the seventh column header to sort by lines-match
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[7]").click()
+            # Click on the seventh column header to sort by lines-match
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[7]").click()
 
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[7]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[7]").text
-        isSorted = (variable1 <= variable2)
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[7]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[7]").text
+            isSorted = (variable1 <= variable2)
 
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
 
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
@@ -183,30 +202,37 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_LinesSortedHighToLow (self):
         driver = self.InitializeBrowserStackConnection ("Lines High to Low")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Click TWICE on the seventh column header to sort by lines-match
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[7]").click()
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[7]").click()
+            # Click TWICE on the seventh column header to sort by lines-match
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[7]").click()
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[7]").click()
 
-        # Verify that the list is sorted properly by ensuring variable1 is GE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[7]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[7]").text
-        isSorted = (variable1 >= variable2)
+            # Verify that the list is sorted properly by ensuring variable1 is GE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[7]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[7]").text
+            isSorted = (variable1 >= variable2)
+
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
@@ -235,29 +261,36 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_UserOneFilenameAToZ (self):
         driver = self.InitializeBrowserStackConnection ("UserOne Filename A to Z")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Click on the sixth column header to sort alphabetically
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[5]").click()
+            # Click on the sixth column header to sort alphabetically
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[5]").click()
 
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[5]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[5]").text
-        isSorted = (variable1 <= variable2)
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[5]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[5]").text
+            isSorted = (variable1 <= variable2)
+
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
@@ -286,30 +319,37 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_UserOneFilenameZToA (self):
         driver = self.InitializeBrowserStackConnection ("UserOne Filename Z to A")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Click TWICE on the seventh column header to sort by reverse-alphabetically
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[5]").click()
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[5]").click()
+            # Click TWICE on the seventh column header to sort by reverse-alphabetically
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[5]").click()
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[5]").click()
 
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[5]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[5]").text
-        isSorted = (variable1 >= variable2)
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[5]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[5]").text
+            isSorted = (variable1 >= variable2)
+
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
@@ -338,29 +378,37 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_UserTwoFilenameAToZ (self):
         driver = self.InitializeBrowserStackConnection ("UserOne Filename A to Z")
+        isSorted = False
+        
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Click on the sixth column header to sort alphabetically
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[6]").click()
 
-        # Click on the sixth column header to sort alphabetically
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[6]").click()
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[6]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[6]").text
+            isSorted = (variable1 <= variable2)
 
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[6]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[6]").text
-        isSorted = (variable1 <= variable2)
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
@@ -389,30 +437,37 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
     #
     def test_UserTwoFilenameZToA (self):
         driver = self.InitializeBrowserStackConnection ("UserOne Filename Z to A")
+        isSorted = False
 
-        # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        try:
+            # Navigate to page
+            driver.get ("http://127.0.0.1:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name("text").clear()
-        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
+            # Find textarea and input expired URL
+            driver.find_element_by_name ("text").click ()
+            driver.find_element_by_name("text").clear()
+            driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/860369009")
 
-        # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Submit form data
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select proper radio button
-        driver.find_element_by_name("selection").click()
-        driver.find_element_by_xpath("//input[@value='Submit']").click()
+            # Select proper radio button
+            driver.find_element_by_name("selection").click()
+            driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Click TWICE on the seventh column header to sort by reverse-alphabetically
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[6]").click()
-        driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[6]").click()
+            # Click TWICE on the seventh column header to sort by reverse-alphabetically
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[6]").click()
+            driver.find_element_by_xpath("//table[@id='MOSSResults']/thead/tr/th[6]").click()
 
-        # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
-        variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[6]").text
-        variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[6]").text
-        isSorted = (variable1 >= variable2)
+            # Verify that the list is sorted properly by ensuring variable1 is LE than variable2         
+            variable1 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr/td[6]").text
+            variable2 = driver.find_element_by_xpath("//table[@id='example']/tbody/tr[2]/td[6]").text
+            isSorted = (variable1 >= variable2)
+
+        # If there is some sort of Selenium error, catch it here
+        except Exception as error:
+            print ("\n\n" + str (error) + "\n")
+
 
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
