@@ -21,9 +21,9 @@ from Config import Config
 
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
-FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
 config = Config()
 logger = config.logger
+FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
 
 #
 #   _Index (): Generates the landing page for SMOSS.
@@ -43,6 +43,7 @@ def _Index ():
         if not valid:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
+
             return render_template(template, value=error)
         else:
             return redirect('selectionpage')
@@ -69,8 +70,9 @@ def _MOSSselectpage():
         selection = request.form['selection']
 
         if (selection == "allURLs"):
-            for i in (0, len(retriever.urls)-1):
+            for i in range(len(retriever.urls)):
                 retriever.urls[i] = retriever.urls[i].rstrip()
+
         else:
             retriever = MossResultsRetriever() # Clear the retriever
             retriever.urls.append(selection)
