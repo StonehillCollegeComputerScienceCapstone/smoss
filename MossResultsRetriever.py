@@ -15,7 +15,7 @@ class MossResultsRetriever:
 
     # If url is valid, append to list of urls. Else, returns false
     def getUrl(self, url):
-        if (not isinstance(url, str)) or ("moss.stanford.edu/results" not in url):
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results/" not in url):
             return False
 
         # Catch 404 Not Found or connection not accepted
@@ -66,9 +66,6 @@ class MossResultsRetriever:
             file.close()
             assignmentNum = assignmentNum + 1
 
-        if (len(self.urls) > 1):
-            m.parseMultiple(self.urls)  #added this to get a csv file for all the assignments so the sortResults method can add all assignments to one table in html /moss
-                                        #will need to be adjusted because of time consumption
         return validFileName
 
     # Checks the results object for any duplicate data

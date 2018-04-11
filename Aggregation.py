@@ -1,10 +1,7 @@
-from Config import Config
-
 class Aggregation:
     def __init__(self, name, data):
         self.name = name
         self.data = data
-        self.config = Config()
 
     def getName(self):
         return self.name

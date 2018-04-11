@@ -59,7 +59,11 @@ def _MOSSselectpage():
     logger.info('[BackendServer]\tMOSS Selection page displayed!')
     template = "templates/SelectionPage.html"
 
-    retriever = decode(session['retriever'])
+    try:
+        retriever = decode(session['retriever'])
+    except:
+        logger.info('Session variable does not exist!')
+        retriever = MossResultsRetriever()
 
     if request.method == "POST":
         selection = request.form['selection']
@@ -97,8 +101,13 @@ def _MOSSselectpage():
 def _MOSSOutput ():
     logger.info('[BackendServer]\tMOSS Output page displayed!')
 
-    retriever = decode(session['retriever'])
-    aggregator = decode(session['aggregator'])
+    try:
+        retriever = decode(session['retriever'])
+        aggregator = decode(session['aggregator'])
+    except:
+        logger.info('Session variable does not exist!')
+        retriever = MossResultsRetriever()
+        aggregator = DataAggregator()
 
     template, value = getMossTemplate()
     percentsValues = aggregator.topPercents

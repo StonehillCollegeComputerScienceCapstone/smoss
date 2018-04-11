@@ -1,12 +1,15 @@
 import logging
 class Config:
 
+    file = open('mossUrls.txt', 'r').read()
+    lines = file.split('\n')
+
     #Assignments-------------------------------------->
-    warmup = "http://moss.stanford.edu/results/860369009"
-    twentyone = "http://moss.stanford.edu/results/28359173"
-    squareroot = "http://moss.stanford.edu/results/957841265"
-    insipid = "http://moss.stanford.edu/results/467757133"
-    rodentia = "http://moss.stanford.edu/results/212658218"
+    warmup = lines[0]
+    twentyone = lines[1]
+    squareroot = lines[2]
+    insipid = lines[3]
+    rodentia = lines[4]
 
     #Logger Setup------------------------------------->
     FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
