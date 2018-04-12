@@ -149,14 +149,14 @@
     var oldEdges = null;
     var edgeColors = [];
 
-    var reds = ['#ff7d79', '#9e0000', '#FF9999', '#663333'];
-    var pinks = ['#FF0099', '#FF0066', '#FF00FF', '#FF99CC'];
-    var purples = ['#9900FF', '#49008d', '#CC99FF', '#996699'];
-    var yellows = ['#c8c800', '#FFC100', '#AC8B1F', '#919131'];
+    var reds = ['#FF9999', '#ff5d56', '#9e0000', '#663333'];
+    var pinks = ['#FF99CC', '#FF00FF', '#FF0099', '#FF0066'];
+    var purples = ['#CC99FF', '#996699', '#9900FF', '#49008d'];
+    var yellows = ['#FFCC00', '#CCCC00', '#FFC100', '#AC8B1F'];
     var oranges = ['#FF9900', '#FEB495', '#FF4D00', '#FF6666'];
-    var blues = ['#7c99ff', '#000999', '#99CCFF', '#33CCFF'];
-    var greens = ['#336633', '#99CC99', '#00CC99', '#006666'];
-    var possibleColors = [reds, blues, oranges, purples, yellows, pinks, greens];
+    var blues = ['#99CCFF', '#33CCFF', '#7c99ff', '#000999'];
+    var greens = ['#99CC99', '#00CC99', '#006666', '#336633'];
+    var possibleColors = [reds, blues, oranges, purples, greens, pinks, yellows];
 
 
     function draw() {
@@ -210,7 +210,6 @@
         var label;
         var colorStr;
         var json;
-        console.log(edgeColors);
         for(var i=0; i<edgeColors.length; i++){
             label = "Assignment " + i;
             colorStr = edgeColors[i];
@@ -235,7 +234,7 @@
         }
 
         console.log(edges);
-        console.log(JSON.stringify(nodes));
+        console.log(nodes);
 
         // value corresponds with the age of the person
         // Instantiate our network object.
@@ -300,10 +299,11 @@
             },
             physics: {
                 barnesHut: {
-                gravitationalConstant: -5000,
-                springConstant: 0.002,
-                springLength: 50,
-                centralGravity: 1,
+                    gravitationalConstant: -5000,
+                    springConstant: 0.001,
+                    springLength: 50,
+                    centralGravity: 1,
+                    avoidOverlap: 1
                 },
             }
         };
@@ -316,6 +316,7 @@
     function setEdgeColors(){
         edgeColors = [];
         var colorIndex = 0;
+        var shadeIndex = 0;
         //Set edge color
         var assignments = [];
         var tempEdgeColors = [];
@@ -326,20 +327,20 @@
         }
 
         for(var i=0; i<assignments.length; i++){
-            if(tempEdgeColors.length == 35){
+            if(tempEdgeColors.length == 28){
                 for(var i=0; i<tempEdgeColors.length; i++){
                     edgeColors.push(tempEdgeColors[i]);
                 }
                 tempEdgeColors = [];
             }
-            var random = Math.floor(Math.random() * possibleColors[colorIndex].length);
-            while(tempEdgeColors.includes(possibleColors[random])) {
-                random = Math.floor(Math.random() * possibleColors[colorIndex].length);
-            }
-            tempEdgeColors.push(possibleColors[colorIndex][random]);
+            tempEdgeColors.push(possibleColors[colorIndex][shadeIndex]);
             colorIndex++;
-            if(colorIndex == possibleColors[colorIndex].length-1){
+            if(colorIndex == possibleColors.length-1){
                 colorIndex = 0;
+                shadeIndex++;
+                if(shadeIndex == 4){
+                    shadeIndex = 0;
+                }
             }
         }
         for(var i=0; i<tempEdgeColors.length; i++){
