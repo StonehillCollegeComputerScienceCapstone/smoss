@@ -4,6 +4,8 @@ import urllib.error
 from Result import Result
 from MossParser import MossParser
 from Config import Config
+import os
+import csv
 
 class MossResultsRetriever:
     def __init__(self):
@@ -79,6 +81,12 @@ class MossResultsRetriever:
                 duplicates.append(url)
                 nonDuplicates.remove(url)
         return duplicates, nonDuplicates
+
+    def validateData(self):
+        for result in self.results:
+            if not result.isValid():
+                return False
+        return True
 
 def main():
     retriever = MossResultsRetriever()

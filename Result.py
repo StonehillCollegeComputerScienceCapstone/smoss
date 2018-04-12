@@ -38,3 +38,12 @@ class Result:
                (self.fileTwo == result.fileTwo) and (self.url == result.url) and \
                (self.fileOnePercent == result.fileOnePercent) and (self.fileTwoPercent == result.fileTwoPercent) and \
                (self.linesMatched == result.linesMatched)
+
+    def isValid(self):
+        if self.getFileOne().isdigit() or self.getFileTwo().isdigit() or self.getUrl().isdigit() or \
+                (not self.getPercentOne().isdigit()) or (self.getPercentOne() <= 0) or \
+                (not self.getPercentTwo().isdigit()) or (self.getPercentTwo() <= 0):
+            return False
+        return True
+
+
