@@ -8,14 +8,15 @@ from Config import Config
 
 class MossResultsRetriever:
     def __init__(self):
-        self.urls = []
-        self.file = FileRetrieval()
-        self.results = []
         self.config = Config()
+        self.file = FileRetrieval()
+        self.urls = []
+        self.results = []
 
-    # If url is valid, append to list of urls. Else, returns false
-    def getUrl(self, url):
-        if (not isinstance(url, str)) or ("moss.stanford.edu/results/" not in url):
+    # If url is valid, return true. Else, return false
+    def isValidUrl(self, url):
+        # If the url is not a string, does not contain moss url, ot contains new line or space, return false
+        if (not isinstance(url, str)) or ("moss.stanford.edu/results/" not in url) or ('\n' in url) or (' ' in url):
             return False
 
         # Catch 404 Not Found or connection not accepted
@@ -24,29 +25,25 @@ class MossResultsRetriever:
         except (urllib.error.HTTPError, urllib.error.URLError) as e:
             return False
 
-        if url not in self.urls:
-            self.urls.append(url)
-
-        return True
-
-    # Retrieves the URLs from a specified file
-    def getFileUrls(self, file):
-        if not self.file.readFile(file):  # FileRetrieval returns if the file is valid
-            return False
-        for url in self.file.urlList:
-            self.getUrl(url)# checks the validity of the URLs given from file
         return True
 
     # Returns true if every URL in the list is valid, else returns false
-    def getValidity(self, urlList):
-        for item in urlList:
-            if not(self.getUrl(item)):# checks the validity of the URLs given from file
-                return False, item #returns the url that is invalid
+    def isValidUrlList(self, urls):
+        if not isinstance(urls, list) or (len(urls) == 0):
+            return False, "argument " + str(urls) + " is not a valid list"
+        for url in urls:
+            if not self.isValidUrl(url):  # If the url is invalid
+                return False, url  # Return the url that is invalid
         success = "success"
         return True, success
 
+    # If url is valid, append to list of urls
+    def appendUrl(self, url):
+        if (url not in self.urls) and (self.isValidUrl(url)):
+            self.urls.append(url)
+
     # Populate the results object with the lines from the csv
-    def getResults(self):
+    def populateResults(self):
         csv = "csv.csv"
         m = MossParser(csv)
         assignmentNum = 0
@@ -71,18 +68,25 @@ class MossResultsRetriever:
 
         return validFileName
 
-    # Checks the results object for any duplicate data
-    def areDuplicateResults(self):
-        seen = []
-        for result in self.results:
-            for seenResult in seen:
-                if result.equals(seenResult):
-                    return True
-            seen.append(result)
-        return False
+    # Returns a set of duplicate urls and a set of urls to be processed
+    def getDuplicateUrls(self, urls):
+        duplicates = []
+        nonDuplicates = []
+        isValidUrlList, message = self.isValidUrlList(urls)
+
+        if not isValidUrlList:
+            return [], []
+        else:
+            for url in urls:
+                if url not in nonDuplicates:
+                    nonDuplicates.append(url)
+                else:
+                    duplicates.append(url)
+                    nonDuplicates.remove(url)
+        return duplicates, nonDuplicates
 
 def main():
-    murl = MossResultsRetriever()
-    murl.getResults()
+    retriever = MossResultsRetriever()
+    retriever.populateResults()
 
 if __name__ == '__main__': main()
