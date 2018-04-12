@@ -17,7 +17,6 @@ class MossParser ():
     def parse(self, url):
         # Get the html text from the URL
         html = self.getHtml(url)
-
         # Process the html into table strings
         tableStrings = self.processHtml(html)
 
@@ -99,7 +98,6 @@ class MossParser ():
     def getValues(self, fileName1, fileName2):
         values1 = fileName2.split("_")
         values2 = fileName1.split("_")
-        print("values = "+values1[0]+", "+values2[0])
         return values1, values2
 
 
@@ -114,7 +112,6 @@ class MossParser ():
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
                 csvString=[self.getName(fileName1), fileName1, tableStringValues[2], self.getName(fileName2), fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                print("File names : "+fileName1 + ", "+fileName2)
                 names = self.getValues(fileName1,fileName2)
                 if self.previousYearMatch(names[0],names[1]):#self.getValues(fileName1, fileName2)):
                     previousSet.add(fileName1)

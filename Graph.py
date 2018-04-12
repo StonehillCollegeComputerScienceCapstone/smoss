@@ -1,4 +1,5 @@
 import json
+import random
 from flask import *
 from Result import Result
 from DataAggregator import DataAggregator
@@ -49,9 +50,9 @@ class Graph:
         index = 1
         for name in cpNames:
             if name[1] is 'c':
-                names.append({"id": index, "value": 5, "label": name[0], "color": "#0099ff"})
+                names.append({"id": index, "value": 5, "label": name[0], "group": 'currentYear'})
             elif name[1] is 'p':
-                names.append({"id": index, "value": 5, "label": name[0], "color": "#32CD32"})
+                names.append({"id": index, "value": 5, "label": name[0], "group": 'previousYear'})
             index = index + 1
         return names
 
@@ -71,12 +72,15 @@ class Graph:
     #
     def getEdges(self, results):
         edges = []
+        assignments = []
         for result in results:
+            if result.assignmentNumber not in assignments:
+                assignments.append(result.assignmentNumber)
             edgeFrom = self.getNodeIndex(result.fileOne, results)
             edgeTo = self.getNodeIndex(result.fileTwo, results)
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
-            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString})
+            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.assignmentNumber, "color": 0})
         return edges
     #
     # Return the greater value between two percentages

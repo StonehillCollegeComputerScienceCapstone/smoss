@@ -1,32 +1,38 @@
 <html lang="en">
-    <head>
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  		<script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
-    </head>
+<head>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+</head>
 
-    <body>
-        <h1>Moss Results</h1>
-        <HR>
-            [ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
-        </HR>
-        <br>
-        <h1>Pick a URL to analyze:</h1>
-        <form method = "POST">
-        {% for obj in urlList %}
-            <input type="radio" name="selection" value={{ obj }}> {{ obj }}<br>
-                    <br>
-        {% endfor %}
-                <input type="radio" name="selection" value="allURLs"> All URLs <br>
-                    <br>
-            <input type="submit" value="Submit">
-        </form>
-        <h6>Duplicate Urls entered:</h6>
-        <font size="2">
-        {% for x in duplicateValues %}
-        {{x}}
-            <br>
-        {% endfor %}
-        </font>
+<body>
+<h1>Moss Results</h1>
+<HR>
+[ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
+</HR>
+<br>
+<h1>Choose a URL to analyze:</h1>
+<form method = "POST">
+    {% for obj in urlList %}
+    <input type="radio" name="selection" value={{ obj }}> {{ obj }}<br>
+    <br>
+    {% endfor %}
+    <input type="radio" name="selection" value="allURLs"> All URLs <br>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+<h6>Duplicate Urls entered:</h6>
+<font size="2">
+    {% for x in duplicateValues %}
+    {{x}}
+    <br>
+    {% endfor %}
+</font>
+
+<style type="text/css">
+    html, body {
+        font: 10pt arial;
+    }
+</style>
 </body>
 </html>
