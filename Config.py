@@ -1,7 +1,8 @@
 import logging
 class Config:
 
-    file = open('mossUrls.txt', 'r').read()
+    mossUrlsFile = 'mossUrls.txt'
+    file = open(mossUrlsFile, 'r').read()
     lines = file.split('\n')
 
     #Assignments-------------------------------------->
@@ -23,6 +24,10 @@ class Config:
 
 
     #Methods-------------------------------------------->
+
+    def getMossUrlsFile(self):
+        return self.mossUrlsFile
+
     def getWarmup(self):
         return self.warmup
 

@@ -39,14 +39,16 @@ def _Index ():
         retriever.urls = inputURLs.split("\n")
         session['retriever'] = encode(retriever)
 
-        valid, url = isValidUrlList(retriever)
-        if not valid:
+        valid, url = retriever.getValidity(retriever.urls)
+        if valid:
+
+            return redirect('selectionpage')
+
+        else:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
 
             return render_template(template, value=error)
-        else:
-            return redirect('selectionpage')
 
     template = "templates/index.html"
     return render_template (template)
@@ -144,16 +146,6 @@ def getDuplicateUrls(urlList):
             duplicates.add(url.rstrip())
 
     return duplicates, nonDuplicates
-
-#
-#  isValidUrlList(retriever): Returns true if the URLs are valid, else false
-#
-def isValidUrlList(retriever):
-    valid, url = retriever.getValidity(retriever.urls)
-    if not valid:
-        return False, url
-    else:
-        return True, url
 
 #
 #  getMossTemplate(): Returns the MOSS template if valid
