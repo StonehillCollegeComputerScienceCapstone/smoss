@@ -66,6 +66,9 @@ class MossResultsRetriever:
             file.close()
             assignmentNum = assignmentNum + 1
 
+         if len(self.urls) > 1:
+             m.parseMultiple(self.urls)
+
         return validFileName
 
     # Checks the results object for any duplicate data
