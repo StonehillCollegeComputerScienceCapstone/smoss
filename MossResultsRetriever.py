@@ -1,7 +1,6 @@
 import urllib
 import urllib.request
 import urllib.error
-from FileRetrieval import FileRetrieval
 from Result import Result
 from MossParser import MossParser
 from Config import Config
@@ -9,7 +8,6 @@ from Config import Config
 class MossResultsRetriever:
     def __init__(self):
         self.config = Config()
-        self.file = FileRetrieval()
         self.urls = []
         self.results = []
 
@@ -47,10 +45,9 @@ class MossResultsRetriever:
         csv = "csv.csv"
         m = MossParser(csv)
         assignmentNum = 0
-        validFileName = True
 
         for url in self.urls:
-            validFileName = m.parse(url)
+            m.parse(url)
             file = open(csv)
             lines = file.readlines()
             lines.pop(0) # Remove header from csv
@@ -66,8 +63,6 @@ class MossResultsRetriever:
         if len(self.urls) > 1:
             m.parseMultiple(self.urls)
 
-        return validFileName
-
     # Returns a set of duplicate urls and a set of urls to be processed
     def getDuplicateUrls(self, urls):
         duplicates = []
@@ -76,13 +71,13 @@ class MossResultsRetriever:
 
         if not isValidUrlList:
             return [], []
-        else:
-            for url in urls:
-                if url not in nonDuplicates:
-                    nonDuplicates.append(url)
-                else:
-                    duplicates.append(url)
-                    nonDuplicates.remove(url)
+
+        for url in urls:
+            if url not in nonDuplicates:
+                nonDuplicates.append(url)
+            else:
+                duplicates.append(url)
+                nonDuplicates.remove(url)
         return duplicates, nonDuplicates
 
 def main():

@@ -17,14 +17,15 @@ class MossParser ():
     def parse(self, url):
         # Get the html text from the URL
         html = self.getHtml(url)
+
         # Process the html into table strings
         tableStrings = self.processHtml(html)
 
         # Process the table strings into csv strings
         csvStrings, validFileName = self.processTableStrings(tableStrings)
+
         if(validFileName):
             self.toCsv(csvStrings, 'w')
-        return validFileName
 
     def parseMultiple(self, urls):
         counter = 0
