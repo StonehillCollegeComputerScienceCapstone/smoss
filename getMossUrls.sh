@@ -17,8 +17,25 @@ function main
 		echo "$url"
 		urls+=($url)
 	done
-	
-	# cd back to smoss directory
+
+
+	#URLs for testing
+
+	#echo "Retrieving url for test_processTableStrings1"
+	#test1 = $(perl ../moss.pl -l java jbaxter5_Warmup.java)
+	#url=$(echo $test1 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
+	#echo "$url"
+	#urls += url
+
+	#echo "Retrieving url for test_processTableStrings2"
+	#test2 = $(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Insipid.java stentacles_Warmup.java stentacles_Insipid.java)
+	#url=$(echo $test2 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
+	#echo "$url"
+	#urls += url
+
+
+
+	#cd back to smoss directory
 	cd ..
 	
 	# Write all URLs to mossUrls.txt
