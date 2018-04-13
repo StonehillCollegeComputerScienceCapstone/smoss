@@ -38,6 +38,48 @@ class MyTestCase(unittest.TestCase):
     def test_equalsFalse(self):
         self.assertFalse(self.result.equals(Result(0, "", "", "", 0, 0, 0)))
 
+#
+# isValid()
+#
+    # Test for invalid type of fileOne
+    def test_invalidTypeOfFileOne(self):
+        self.result.fileOne = 1
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid type of fileTwo
+    def test_invalidFileTwo(self):
+        self.result.fileTwo = 2
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid type of URL
+    def test_invalidTypeOfURL(self):
+        self.result.url = 3
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid type of fileOnePercent
+    def test_invalidTypeOfFileOnePercent(self):
+        self.result.fileOnePercent = "56"
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid type of fileTwoPercent
+    def test_invalidTypeOfFileTwoPercent(self):
+        self.result.fileTwoPercent = "22"
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid negative for fileOnePercent
+    def test_invalidNegativeOnFileOnePercent(self):
+        self.result.fileOnePercent = -50
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid negative for fileTwoPercent
+    def test_invalidNegativeOnFileTwoPercent(self):
+        self.result.fileTwoPercent = -60
+        self.assertFalse(self.result.isValid())
+
+    # Test for all is valid
+    def test_validTrue(self):
+        self.assertTrue(self.result.isValid())
+
 
 if __name__ == '__main__':
     unittest.main()

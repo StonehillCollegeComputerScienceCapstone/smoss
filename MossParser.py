@@ -44,8 +44,10 @@ class MossParser ():
             f = open(self.csvFileName, 'w')
             f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
             f.write('\n')
-        else:
+        elif (type == 'a'):
             f = open(self.csvFileName, 'a')
+        else:
+            return
         for item in csvStrings:
             for value in item[:-1]:
                 f.write(value+",")
