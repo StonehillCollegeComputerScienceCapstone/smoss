@@ -40,14 +40,14 @@
 
     <tbody>
     <tr>{% for obj in value %}
-        <td>{{ obj.User1 }}</td>
-        <td>{{ obj.Match1 }}</td>
-        <td>{{ obj.User2 }}</td>
-        <td>{{ obj.Match2 }}</td>
-        <td>{{ obj.FileName1 }}</td>
-        <td>{{ obj.FileName2 }}</td>
-        <td>{{ obj.Lines_Matched }}</td>
-        <td><a href = {{ obj.URL }}>{{ obj.URL }}</a></td>
+        <td>{{ obj.getNameOne() }}</td>
+        <td>{{ obj.getPercentOne() }}</td>
+        <td>{{ obj.getNameTwo() }}</td>
+        <td>{{ obj.getPercentTwo() }}</td>
+        <td>{{ obj.getFileOne() }}</td>
+        <td>{{ obj.getFileTwo() }}</td>
+        <td>{{ obj.getLinesMatched() }}</td>
+        <td><a href = {{ obj.getUrl() }}>{{ obj.getUrl() }}</a></td>
     </tr>{% endfor %}
     </tbody>
 </table>

@@ -27,18 +27,6 @@ class MossParser ():
         if(validFileName):
             self.toCsv(csvStrings, 'w')
 
-    def parseMultiple(self, urls):
-        counter = 0
-        for url in urls:
-            html = self.getHtml(url)
-            tableStrings = self.processHtml(html)
-            csvStrings, validFilename = self.processTableStrings(tableStrings)
-            if (counter != 0):
-                self.toCsv(csvStrings, 'a')
-            else:
-                self.toCsv(csvStrings, 'w')
-                counter = 1
-
     def toCsv(self, csvStrings, type):
         if(type == 'w'):
             f = open(self.csvFileName, 'w')

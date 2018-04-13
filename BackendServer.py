@@ -12,7 +12,6 @@
 from flask import *
 from flask_session import Session
 from jsonpickle import encode, decode
-from ResultsSorter import ResultsSorter
 from DataAggregator import DataAggregator
 from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
@@ -109,7 +108,7 @@ def _MOSSOutput ():
         logger.info('Session variable does not exist!')
         retriever = MossResultsRetriever()
 
-    template, value = getMossTemplate()
+    template, value = getMossTemplate(retriever)
     results = retriever.results
     aggregator = DataAggregator(results)
     percentsValues = aggregator.topPercents
@@ -126,21 +125,26 @@ def _MOSSOutput ():
 #
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
+    try:
+        retriever = decode(session['retriever'])
+    except:
+        logger.info('Session variable does not exist!')
+        retriever = MossResultsRetriever()
+
     logger.info('[BackendServer]\tMOSS URL validation page displayed!')
-    template, value = getMossTemplate()
+    template, value = getMossTemplate(retriever)
     return render_template(template, value=value)
 
 #
 #  getMossTemplate(): Returns the MOSS template if valid
 #
-def getMossTemplate():
-    sorter = ResultsSorter()
-    if not(sorter.validateData()):
+def getMossTemplate(retriever):
+    if retriever.validateData():
+        template = "templates/MOSSoutput.html"
+        value = retriever.results
+    else:
         template = "templates/errorpage.html"
         value = "Invalid File Data"
-    else:
-        template = "templates/MOSSoutput.html"
-        value = sorter.get_csv()
     return template, value
 
 #

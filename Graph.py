@@ -1,11 +1,7 @@
 import json
-import random
 from flask import *
-from Result import Result
 from DataAggregator import DataAggregator
 from Config import Config
-from ResultsSorter import ResultsSorter
-
 
 class Graph:
 
@@ -30,22 +26,17 @@ class Graph:
     # Return an array of dictionary objects containing the names of every student
     #
     def getNodes(self, results):
-        sorter = ResultsSorter()
-        values = sorter.get_csv()
         cpNames = []
-        for value in values:
-            if "previous" in value["FileName1"]:
-                if ([value["User1"], 'p']) not in cpNames:
-                    cpNames.append([value["User1"], 'p'])
-            else:
-                if ([value["User1"], 'c']) not in cpNames:
-                    cpNames.append([value["User1"], 'c'])
-            if "previous" in value["FileName2"]:
-                if ([value["User2"], 'p']) not in cpNames:
-                    cpNames.append([value["User2"], 'p'])
-            else:
-                if ([value["User2"], 'c']) not in cpNames:
-                    cpNames.append([value["User2"], 'c'])
+        for result in results:
+            if result.nameOneIsPrevious() and [result.getNameOne(), 'p'] not in cpNames:
+                cpNames.append([result.getNameOne(), 'p'])
+            elif [result.getNameOne(), 'c'] not in cpNames:
+                cpNames.append([result.getNameOne(), 'c'])
+            if result.nameTwoIsPrevious() and [result.getNameTwo(), 'p'] not in cpNames:
+                cpNames.append([result.getNameTwo(), 'p'])
+            elif [result.getNameTwo(), 'c'] not in cpNames:
+                cpNames.append([result.getNameTwo(), 'c'])
+
         names = []
         index = 1
         for name in cpNames:

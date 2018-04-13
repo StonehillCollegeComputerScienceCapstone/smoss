@@ -56,14 +56,11 @@ class MossResultsRetriever:
 
             for line in lines:
                 data = line.split(',')
-                r = Result(assignmentNum, data[0], data[3], data[7].strip(), int(data[2]), int(data[5]), int(data[6]))
+                r = Result(assignmentNum, data[1], data[4], data[7].strip(), int(data[2]), int(data[5]), int(data[6]))
                 self.results.append(r)
 
             file.close()
             assignmentNum = assignmentNum + 1
-
-        if len(self.urls) > 1:
-            m.parseMultiple(self.urls)
 
     # Returns a set of duplicate urls and a set of urls to be processed
     def getDuplicateUrls(self, urls):
