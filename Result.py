@@ -29,6 +29,30 @@ class Result:
     def getLinesMatched(self):
         return self.linesMatched
 
+    def getNameOne(self):
+        list = self.fileOne.split('_')
+        if list[0] == "previous":
+            return list[1]
+        return list[0]
+
+    def getNameTwo(self):
+        list = self.fileTwo.split('_')
+        if list[0] == "previous":
+            return list[1]
+        return list[0]
+
+    def nameOneIsPrevious(self):
+        list = self.fileOne.split('_')
+        if list[0] == "previous":
+            return True
+        return False
+
+    def nameTwoIsPrevious(self):
+        list = self.fileTwo.split('_')
+        if list[0] == "previous":
+            return True
+        return False
+
     def toString(self):
         return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
                + "\t" + str(self.fileOnePercent) + "\t" + str(self.fileTwoPercent) + "\t" + str(self.linesMatched)
@@ -38,3 +62,13 @@ class Result:
                (self.fileTwo == result.fileTwo) and (self.url == result.url) and \
                (self.fileOnePercent == result.fileOnePercent) and (self.fileTwoPercent == result.fileTwoPercent) and \
                (self.linesMatched == result.linesMatched)
+
+    def isValid(self):
+        if isinstance(self.getFileOne(), str) and isinstance(self.getFileTwo(), str) and \
+                isinstance(self.getPercentOne(), int) and isinstance(self.getPercentTwo(), int) and \
+                isinstance(self.getUrl(), str) and isinstance(self.getLinesMatched(), int) and \
+                (self.getPercentOne() > 0) and (self.getPercentTwo() > 0) and (self.getLinesMatched() > 0):
+            return True
+        return False
+
+

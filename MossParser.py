@@ -23,17 +23,19 @@ class MossParser ():
 
         # Process the table strings into csv strings
         csvStrings, validFileName = self.processTableStrings(tableStrings)
+
         if(validFileName):
             self.toCsv(csvStrings, 'w')
-        return validFileName
 
     def toCsv(self, csvStrings, type):
         if(type == 'w'):
             f = open(self.csvFileName, 'w')
             f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
             f.write('\n')
-        else:
+        elif (type == 'a'):
             f = open(self.csvFileName, 'a')
+        else:
+            return
         for item in csvStrings:
             for value in item[:-1]:
                 f.write(value+",")
@@ -93,13 +95,17 @@ class MossParser ():
 
     def getTableStringValues(self, tableString):
         tableString=self.formatTableString(tableString)
+
+        # if we didn't get a csv format string, that's an error
+        if(not ("," in tableString)):
+            return False
+
         tableStringValues = tableString.split(",")
         return tableStringValues
 
     def getValues(self, fileName1, fileName2):
         values1 = fileName2.split("_")
         values2 = fileName1.split("_")
-        print("values = "+values1[0]+", "+values2[0])
         return values1, values2
 
 
@@ -114,7 +120,6 @@ class MossParser ():
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
                 csvString=[self.getName(fileName1), fileName1, tableStringValues[2], self.getName(fileName2), fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                print("File names : "+fileName1 + ", "+fileName2)
                 names = self.getValues(fileName1,fileName2)
                 if self.previousYearMatch(names[0],names[1]):#self.getValues(fileName1, fileName2)):
                     previousSet.add(fileName1)
@@ -154,6 +159,7 @@ class MossParser ():
         tableString=tableString.replace("(","")
         tableString=tableString.replace(")","")
         tableString=tableString.replace("%","")
+        tableString = tableString.replace(" ","")
         return tableString
 
 #

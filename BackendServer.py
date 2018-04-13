@@ -12,7 +12,6 @@
 from flask import *
 from flask_session import Session
 from jsonpickle import encode, decode
-from ResultsSorter import ResultsSorter
 from DataAggregator import DataAggregator
 from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
@@ -35,18 +34,19 @@ def _Index ():
     retriever = MossResultsRetriever()
 
     if request.method == "POST":
-        inputURLs = request.form['text'] #input from the user
-        retriever.urls = inputURLs.split("\n")
-        session['retriever'] = encode(retriever)
+        inputURLs = request.form['text'] # Get input from the user
+        urls = inputURLs.split("\n")
+        for i in range(len(urls)):
+            urls[i] = urls[i].rstrip()
+        session['urls'] = encode(urls)
 
-        valid, url = isValidUrlList(retriever)
-        if not valid:
+        valid, url = retriever.isValidUrlList(urls)
+        if valid:
+            return redirect('selectionpage')
+        else:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
-
             return render_template(template, value=error)
-        else:
-            return redirect('selectionpage')
 
     template = "templates/index.html"
     return render_template (template)
@@ -60,37 +60,36 @@ def _MOSSselectpage():
     logger.info('[BackendServer]\tMOSS Selection page displayed!')
     template = "templates/SelectionPage.html"
 
+    retriever = MossResultsRetriever()
+    urls = []
+
+    # Try to retrieve the session variables
     try:
-        retriever = decode(session['retriever'])
+        urls = decode(session['urls'])
     except:
         logger.info('Session variable does not exist!')
-        retriever = MossResultsRetriever()
 
     if request.method == "POST":
         selection = request.form['selection']
 
         if (selection == "allURLs"):
-            for i in range(len(retriever.urls)):
-                retriever.urls[i] = retriever.urls[i].rstrip()
-
+            for url in urls:
+                retriever.appendUrl(url)
         else:
-            retriever = MossResultsRetriever() # Clear the retriever
-            retriever.urls.append(selection)
+            retriever.appendUrl(selection)
 
-        retriever.getResults()
+        retriever.populateResults()
+
         # If the results are empty
         if not retriever.results:
             template = "templates/errorpage.html"
             value = "Invalid File Name"
             return render_template(template, value=value)
 
-        aggregator = DataAggregator(retriever.results)
         session['retriever'] = encode(retriever)
-        session['aggregator'] = encode(aggregator)
-
         return redirect('moss')
 
-    duplicateValues, urlList = getDuplicateUrls(retriever.urls)
+    duplicateValues, urlList = retriever.getDuplicateUrls(urls)
     session['retriever'] = encode(retriever)
 
     return render_template(template, urlList=urlList, duplicateValues=duplicateValues)
@@ -105,16 +104,15 @@ def _MOSSOutput ():
 
     try:
         retriever = decode(session['retriever'])
-        aggregator = decode(session['aggregator'])
     except:
         logger.info('Session variable does not exist!')
         retriever = MossResultsRetriever()
-        aggregator = DataAggregator()
 
-    template, value = getMossTemplate()
+    template, value = getMossTemplate(retriever)
+    results = retriever.results
+    aggregator = DataAggregator(results)
     percentsValues = aggregator.topPercents
     linesValues = aggregator.topLines
-    results = retriever.results
 
     graph = Graph(results)
     graphJson = graph.getJsonObject(results)
@@ -127,45 +125,26 @@ def _MOSSOutput ():
 #
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
+    try:
+        retriever = decode(session['retriever'])
+    except:
+        logger.info('Session variable does not exist!')
+        retriever = MossResultsRetriever()
+
     logger.info('[BackendServer]\tMOSS URL validation page displayed!')
-    template, value = getMossTemplate()
+    template, value = getMossTemplate(retriever)
     return render_template(template, value=value)
-
-#
-#  getDuplicateUrls(urlList): Returns the duplicate and nonduplicate URLs
-#
-def getDuplicateUrls(urlList):
-    nonDuplicates = set()
-    duplicates=set()
-    for url in urlList:
-        if url.rstrip() not in nonDuplicates:
-            nonDuplicates.add(url.rstrip())
-        else:
-            duplicates.add(url.rstrip())
-
-    return duplicates, nonDuplicates
-
-#
-#  isValidUrlList(retriever): Returns true if the URLs are valid, else false
-#
-def isValidUrlList(retriever):
-    valid, url = retriever.getValidity(retriever.urls)
-    if not valid:
-        return False, url
-    else:
-        return True, url
 
 #
 #  getMossTemplate(): Returns the MOSS template if valid
 #
-def getMossTemplate():
-    sorter = ResultsSorter()
-    if not(sorter.validateData()):
+def getMossTemplate(retriever):
+    if retriever.validateData():
+        template = "templates/MOSSoutput.html"
+        value = retriever.results
+    else:
         template = "templates/errorpage.html"
         value = "Invalid File Data"
-    else:
-        template = "templates/MOSSoutput.html"
-        value = sorter.get_csv()
     return template, value
 
 #

@@ -1,10 +1,7 @@
 import json
 from flask import *
-from Result import Result
 from DataAggregator import DataAggregator
 from Config import Config
-from ResultsSorter import ResultsSorter
-
 
 class Graph:
 
@@ -29,29 +26,24 @@ class Graph:
     # Return an array of dictionary objects containing the names of every student
     #
     def getNodes(self, results):
-        sorter = ResultsSorter()
-        values = sorter.get_csv()
         cpNames = []
-        for value in values:
-            if "previous" in value["FileName1"]:
-                if ([value["User1"], 'p']) not in cpNames:
-                    cpNames.append([value["User1"], 'p'])
-            else:
-                if ([value["User1"], 'c']) not in cpNames:
-                    cpNames.append([value["User1"], 'c'])
-            if "previous" in value["FileName2"]:
-                if ([value["User2"], 'p']) not in cpNames:
-                    cpNames.append([value["User2"], 'p'])
-            else:
-                if ([value["User2"], 'c']) not in cpNames:
-                    cpNames.append([value["User2"], 'c'])
+        for result in results:
+            if result.nameOneIsPrevious() and [result.getNameOne(), 'p'] not in cpNames:
+                cpNames.append([result.getNameOne(), 'p'])
+            elif [result.getNameOne(), 'c'] not in cpNames:
+                cpNames.append([result.getNameOne(), 'c'])
+            if result.nameTwoIsPrevious() and [result.getNameTwo(), 'p'] not in cpNames:
+                cpNames.append([result.getNameTwo(), 'p'])
+            elif [result.getNameTwo(), 'c'] not in cpNames:
+                cpNames.append([result.getNameTwo(), 'c'])
+
         names = []
         index = 1
         for name in cpNames:
             if name[1] is 'c':
-                names.append({"id": index, "value": 5, "label": name[0], "color": "#0099ff"})
+                names.append({"id": index, "value": 5, "label": name[0], "group": 'currentYear'})
             elif name[1] is 'p':
-                names.append({"id": index, "value": 5, "label": name[0], "color": "#32CD32"})
+                names.append({"id": index, "value": 5, "label": name[0], "group": 'previousYear'})
             index = index + 1
         return names
 
@@ -71,12 +63,15 @@ class Graph:
     #
     def getEdges(self, results):
         edges = []
+        assignments = []
         for result in results:
+            if result.assignmentNumber not in assignments:
+                assignments.append(result.assignmentNumber)
             edgeFrom = self.getNodeIndex(result.fileOne, results)
             edgeTo = self.getNodeIndex(result.fileTwo, results)
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
-            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString})
+            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.assignmentNumber, "color": 0})
         return edges
     #
     # Return the greater value between two percentages
@@ -89,38 +84,5 @@ class Graph:
     def getJsonObject(self, results):
         graph = ({"nodes": self.getNodes(results), "edges": self.getEdges(results) })
         return json.loads(json.dumps(graph))
-    #
-    #method to print out text that make up graph
-    #
-    def print(self):
-        print('Nodes:')
-        for node in self.graph['nodes']:
-            print(node)
-        print('\nEdges:')
-        for edge in self.graph['edges']:
-            print(edge)
-#
-# method to produce test data for debugging
-#
-def getExampleData():
-    results = []
-    config = Config()
-    validURL = config.getWarmup()  # Change this when URL expires
-    results.append(Result(1, "Matt", "Armen", validURL, 90, 70, 20))
-    results.append(Result(1, "Stephen", "Sam", validURL, 80, 43, 77))
-    results.append(Result(1, "Matt", "Tori", validURL, 33, 70, 45))
-    results.append(Result(1, "Armen", "Tori", validURL, 50, 34, 5))
-    results.append(Result(1, "Matt", "Stephen", validURL, 76, 79, 20))
-    results.append(Result(1, "Matt", "Will", validURL, 90, 88, 100))
-    results.append(Result(1, "Armen", "Sam", validURL, 10, 6, 2))
 
-    return results
 
-#
-#method to use for running locally and debugging
-#
-def main():
-    graph = Graph(getExampleData())
-    graph.print()
-
-if __name__ == '__main__': main()
