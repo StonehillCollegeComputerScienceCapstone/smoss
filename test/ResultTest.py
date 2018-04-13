@@ -66,6 +66,28 @@ class MyTestCase(unittest.TestCase):
         self.assertNotEqual(self.result.getNameTwo(), "hpotter")
 
 #
+# nameOneIsPrevious()
+#
+    def test_nameOneIsPreviousTrue(self):
+        self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertTrue(self.result.nameOneIsPrevious())
+
+    def test_nameOneIsPreviousFalse(self):
+        self.result = Result(1, "hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertFalse(self.result.nameOneIsPrevious())
+
+#
+# nameTwoIsPrevious()
+#
+    def test_nameTwoIsPreviousTrue(self):
+        self.result = Result(1, "hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertTrue(self.result.nameTwoIsPrevious())
+
+    def test_nameTwoIsPreviousFalse(self):
+        self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertFalse(self.result.nameTwoIsPrevious())
+
+#
 # toString()
 #
     def test_toString(self):

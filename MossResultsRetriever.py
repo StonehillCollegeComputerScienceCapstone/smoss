@@ -56,7 +56,7 @@ class MossResultsRetriever:
 
             for line in lines:
                 data = line.split(',')
-                r = Result(assignmentNum, data[0], data[3], data[7].strip(), data[2], data[5], data[6])
+                r = Result(assignmentNum, data[0], data[3], data[7].strip(), int(data[2]), int(data[5]), int(data[6]))
                 self.results.append(r)
 
             file.close()

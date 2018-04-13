@@ -41,6 +41,18 @@ class Result:
             return list[1]
         return list[0]
 
+    def nameOneIsPrevious(self):
+        list = self.fileOne.split('_')
+        if list[0] == "previous":
+            return True
+        return False
+
+    def nameTwoIsPrevious(self):
+        list = self.fileTwo.split('_')
+        if list[0] == "previous":
+            return True
+        return False
+
     def toString(self):
         return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
                + "\t" + str(self.fileOnePercent) + "\t" + str(self.fileTwoPercent) + "\t" + str(self.linesMatched)
