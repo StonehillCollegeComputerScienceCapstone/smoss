@@ -95,4 +95,3 @@ class Graph:
         return json.loads(json.dumps(graph))
 
 
-if __name__ == '__main__': main()
