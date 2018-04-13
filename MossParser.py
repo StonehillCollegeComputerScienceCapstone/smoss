@@ -95,6 +95,11 @@ class MossParser ():
 
     def getTableStringValues(self, tableString):
         tableString=self.formatTableString(tableString)
+
+        # if we didn't get a csv format string, that's an error
+        if(not ("," in tableString)):
+            return False
+
         tableStringValues = tableString.split(",")
         return tableStringValues
 
@@ -154,6 +159,7 @@ class MossParser ():
         tableString=tableString.replace("(","")
         tableString=tableString.replace(")","")
         tableString=tableString.replace("%","")
+        tableString = tableString.replace(" ","")
         return tableString
 
 #
