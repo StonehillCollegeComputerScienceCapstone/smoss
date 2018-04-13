@@ -8,6 +8,7 @@ class MossURLsTests(unittest.TestCase):
         self.config = Config()
         self.validUrl = self.config.getWarmup()
         self.retriever = MossResultsRetriever()
+        self.results = Result(1, "f1", "f2", "url", 40, 50, 60)
 
 #
 # isValidUrl()
@@ -373,9 +374,27 @@ class MossURLsTests(unittest.TestCase):
         self.assertListEqual(duplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
         self.assertListEqual(nonDuplicates, [])
 
+#
+# validateData()
+#
+    # Tests all the correct types for Result object
+    def test_validData(self):
+        self.retriever.results =[self.results, self.results]
+        self.assertTrue(self.retriever.validateData())
+
+    # Tests all the incorrect types for Result object
+    def test_invalidData(self):
+        self.results.fileOne = 1
+        self.results.fileTwo = 2
+        self.results.fileOnePercent = "52"
+        self.results.fileTwoPercent = "58"
+        self.results.url = 51
+        self.retriever.results = [self.results, self.results]
+        self.assertFalse(self.retriever.validateData())
 
     def tearDown(self):
         self.retriever = None
+        self.results = None
 
 
 if __name__ == '__main__':
