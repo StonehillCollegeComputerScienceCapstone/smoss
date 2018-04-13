@@ -40,11 +40,11 @@ class Result:
                (self.linesMatched == result.linesMatched)
 
     def isValid(self):
-        if isinstance(self.getFileOne(), int) or isinstance(self.getFileTwo(), int) or \
-                isinstance(self.getPercentOne(), str) or isinstance(self.getPercentTwo(), str) or \
-                isinstance(self.getUrl(), int) or self.getUrl().isdigit() or (self.getPercentOne() <= 0) or \
-                (self.getPercentTwo() <= 0):
-            return False
-        return True
+        if isinstance(self.getFileOne(), str) and isinstance(self.getFileTwo(), str) and \
+                isinstance(self.getPercentOne(), int) and isinstance(self.getPercentTwo(), int) and \
+                isinstance(self.getUrl(), str) and isinstance(self.getLinesMatched(), int) and \
+                (self.getPercentOne() > 0) and (self.getPercentTwo() > 0) and (self.getLinesMatched() > 0):
+            return True
+        return False
 
 

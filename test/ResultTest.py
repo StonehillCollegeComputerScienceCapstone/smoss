@@ -7,6 +7,9 @@ class MyTestCase(unittest.TestCase):
     def setUp(self):
         self.result = Result(1, "f1", "f2", "url", 40, 50, 60)
 
+#
+# getters
+#
     def test_getAssignmentNumber(self):
         self.assertEqual(1, self.result.getAssignmentNumber())
 
@@ -28,9 +31,16 @@ class MyTestCase(unittest.TestCase):
     def test_getLinesMatched(self):
         self.assertEqual(60, self.result.getLinesMatched())
 
+#
+# toString()
+#
     def test_toString(self):
         self.assertEqual(self.result.toString(), "1" + "\t" + "f1" + "\t" + "f2" +
                          "\t" + "url" + "\t" + "40" + "\t" + "50" + "\t" + "60")
+
+#
+# equals()
+#
 
     def test_equalsTrue(self):
         self.assertTrue(self.result.equals(Result(1, "f1", "f2", "url", 40, 50, 60)))
@@ -74,6 +84,16 @@ class MyTestCase(unittest.TestCase):
     # Test for invalid negative for fileTwoPercent
     def test_invalidNegativeOnFileTwoPercent(self):
         self.result.fileTwoPercent = -60
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid lines matched string
+    def test_invalidTypeOfLinesMatched(self):
+        self.result.linesMatched = "17"
+        self.assertFalse(self.result.isValid())
+
+    # Test for invalid lines matched int
+    def test_invalidNegativeOnLinesMatched(self):
+        self.result.linesMatched = -70
         self.assertFalse(self.result.isValid())
 
     # Test for all is valid
