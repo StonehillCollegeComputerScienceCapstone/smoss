@@ -29,6 +29,18 @@ class Result:
     def getLinesMatched(self):
         return self.linesMatched
 
+    def getNameOne(self):
+        list = self.fileOne.split('_')
+        if list[0] == "previous":
+            return list[1]
+        return list[0]
+
+    def getNameTwo(self):
+        list = self.fileTwo.split('_')
+        if list[0] == "previous":
+            return list[1]
+        return list[0]
+
     def toString(self):
         return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
                + "\t" + str(self.fileOnePercent) + "\t" + str(self.fileTwoPercent) + "\t" + str(self.linesMatched)
