@@ -74,9 +74,8 @@ class MossResultsRetriever:
         for url in urls:
             if url not in nonDuplicates:
                 nonDuplicates.append(url)
-            else:
+            elif url not in duplicates:
                 duplicates.append(url)
-                nonDuplicates.remove(url)
         return duplicates, nonDuplicates
 
     def validateData(self):
