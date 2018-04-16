@@ -11,9 +11,23 @@
 
 import requests
 import json
+import getpass
+import os
 
 # Make the request to the BrowserStack API to get our builds
-browserStackBuilds = requests.get ('https://api.browserstack.com/automate/builds.json', auth = ('michaelmiddleton2', 'sjFs7kUux7jvjxbk6Vss'))
+username = ''
+password = ''
+
+if getpass.getuser () == 'mmiddleton'
+    username = 'mmiddleton'
+    password = 'sjFs7kUux7jvjxbk6Vss'
+
+else:
+    username = os.environ['BROWSERSTACK_USER']
+    password = os.environ['BROWSERSTACK_ACCESS_KEY']
+
+
+browserStackBuilds = requests.get ('https://api.browserstack.com/automate/builds.json', auth = (username, password))
 
 if browserStackBuilds.status_code is 200:
     # If the request returns data:
@@ -26,7 +40,8 @@ if browserStackBuilds.status_code is 200:
             url = 'https://api.browserstack.com/automate/builds/' + buildHash + '.json'
 
             # Make the request
-            deletePreviousData = requests.delete (url, auth = ('michaelmiddleton2', 'sjFs7kUux7jvjxbk6Vss'))
+            deletePreviousData = requests.delete (url, auth = (username, password))
+
 
             # Print the output for logging purposes
             print (deletePreviousData.text)
