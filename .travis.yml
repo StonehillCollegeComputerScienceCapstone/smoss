@@ -3,10 +3,6 @@ language: python
 python:
   - 3.6
 
-env:
-  global:
-    - CC_TEST_REPORTER_ID=2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
-
 install:
   - pip install -r requirements.txt
   - npm install -g node-qunit-phantomjs vis
