@@ -85,4 +85,3 @@ class Graph:
         graph = ({"nodes": self.getNodes(results), "edges": self.getEdges(results) })
         return json.loads(json.dumps(graph))
 
-

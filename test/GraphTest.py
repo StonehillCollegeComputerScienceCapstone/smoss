@@ -29,21 +29,23 @@ class MyTestCase(unittest.TestCase):
     # -Test JSON format #Test that the nodes are in valid format
     # -Test JSON format #Test that the edges are in valid format
     # -getNodeIndex()   #Test that fails
-    # -getNodeIndex()   #test that it passes
-    # -getNodeIndex()   #tests that it skips the second instance of Matt
+    # -getNodeIndex()   #Test that it passes
+    # -getNodeIndex()   #Test that it skips the second instance of Matt
+    # -getEdges()       #Test that it returns a list
 
     def setUp(self):
         self.config = Config()
         self.validURL = self.config.getWarmup()
 
         self.results = []
+        self.results.append(Result(1, "Matt", "Armen", "previous_lhbox_HomeValue.java", 90, 70, 20))
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
         self.results.append(Result(1, "Stephen", "Sam", self.validURL, 80, 43, 77))
         self.results.append(Result(1, "Matt", "Tori", self.validURL, 33, 70, 45))
         self.results.append(Result(1, "Armen", "Tori", self.validURL, 50, 34, 5))
         self.results.append(Result(1, "Matt", "Stephen", self.validURL, 76, 79, 20))
         self.results.append(Result(1, "Matt", "Will", self.validURL, 90, 88, 100))
-        self.results.append(Result(1, "Armen", "Sam", self.validURL, 10, 6, 2))
+
 
         self.graph = Graph(self.results)
 
@@ -73,13 +75,18 @@ class MyTestCase(unittest.TestCase):
 #
 # getNodes()
 #
+
+    #Test that it returns a list
     def test_GetNamesReturnsList(self):
         names = self.graph.getNodes(self.results)
         self.assertTrue(isinstance(names, list))
 
+    #Tests that it is greater than 1
     def test_NamesGreaterThan1(self):
         names = self.graph.getNodes(self.results)
         self.assertGreater(len(names), 1)
+
+
 #
 # getGreaterPercentage()
 #
@@ -226,6 +233,17 @@ class MyTestCase(unittest.TestCase):
         name = "Tori"
         index = 5
         self.assertEqual(index, self.graph.getNodeIndex(name, self.results))
+
+#
+# getEdges()
+#
+    #test that it returns a list
+    def test_getEdgesReturnsList(self):
+        names = self.graph.getEdges(self.results)
+        self.assertTrue(isinstance(names, list))
+
+
+
 
 
 if __name__ == '__main__':
