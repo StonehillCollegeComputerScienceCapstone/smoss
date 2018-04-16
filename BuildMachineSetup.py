@@ -18,7 +18,7 @@ import os
 username = ''
 password = ''
 
-if getpass.getuser () == 'mmiddleton'
+if getpass.getuser () == 'mmiddleton':
     username = 'mmiddleton'
     password = 'sjFs7kUux7jvjxbk6Vss'
 
