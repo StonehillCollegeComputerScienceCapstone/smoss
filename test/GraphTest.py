@@ -6,6 +6,32 @@ from Result import Result
 
 class MyTestCase(unittest.TestCase):
 
+    # -getValidResults()  # Results should be an array of Result
+    # -getValidResults()  # Results should not be empty
+    # -getValidResults() # All assignment numbers should match
+    # -getNodes()  #tests that it returns a list
+    # -getNodes() #test that it is greater than 1
+    # -getGreaterPercentage() #with integers
+    # -getGreaterPercentage() #returning an integer not a string
+    # -getGreaterPercentage() #not returning a float
+    # -getGreaterPercentage() #returning a value
+    # -getGreaterPercentage() #returning a value which is not a list
+    # -getGreaterPercentage() #returning a value which is not a dictionary object
+    # -getGreaterPercentage() #returning an Integer for a value
+    # -Test JSON format #Test that JSON is a dictionary
+    # -Test JSON format #Test that JSON only has nodes and edges
+    # -Test JSON format #Test that JSON contains nodes
+    # -Test JSON format #Test that JSON contains edges
+    # -Test JSON format #Test that graph has at least two nodes and at least one edge
+    # -Test JSON format #Test that graph does not contain more than [(nodes)*(nodes-1)]/2 edges
+    # -Test JSON format #Test that graph contains nodes which is a list of dictionaries
+    # -Test JSON format #Test that graph contains edges which is a list of dictionaries
+    # -Test JSON format #Test that the nodes are in valid format
+    # -Test JSON format #Test that the edges are in valid format
+    # -getNodeIndex()   #Test that fails
+    # -getNodeIndex()   #test that it passes
+    # -getNodeIndex()   #tests that it skips the second instance of Matt
+
     def setUp(self):
         self.config = Config()
         self.validURL = self.config.getWarmup()

@@ -27,18 +27,6 @@ class MossParser ():
         if(validFileName):
             self.toCsv(csvStrings, 'w')
 
-    def parseMultiple(self, urls):
-        counter = 0
-        for url in urls:
-            html = self.getHtml(url)
-            tableStrings = self.processHtml(html)
-            csvStrings, validFilename = self.processTableStrings(tableStrings)
-            if (counter != 0):
-                self.toCsv(csvStrings, 'a')
-            else:
-                self.toCsv(csvStrings, 'w')
-                counter = 1
-
     def toCsv(self, csvStrings, type):
         if(type == 'w'):
             f = open(self.csvFileName, 'w')
@@ -107,6 +95,11 @@ class MossParser ():
 
     def getTableStringValues(self, tableString):
         tableString=self.formatTableString(tableString)
+
+        # if we didn't get a csv format string, that's an error
+        if(not ("," in tableString)):
+            return False
+
         tableStringValues = tableString.split(",")
         return tableStringValues
 
@@ -166,6 +159,7 @@ class MossParser ():
         tableString=tableString.replace("(","")
         tableString=tableString.replace(")","")
         tableString=tableString.replace("%","")
+        tableString = tableString.replace(" ","")
         return tableString
 
 #
