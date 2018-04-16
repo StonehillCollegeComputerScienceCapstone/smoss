@@ -1,6 +1,7 @@
 # Directories:
 .idea/
 /flask_session
+/data
 
 # Extensions:
 *pyc
