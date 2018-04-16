@@ -32,6 +32,7 @@ class MossParserUnitTest(unittest.TestCase):
         self.config = Config()
         self.validUrl = self.config.getWarmup()
 
+
 #
 # testUrl()
 #
@@ -463,7 +464,9 @@ class MossParserUnitTest(unittest.TestCase):
 
     #Testing on no output
     def test_processTableStrings1(self):
-        url = "http://moss.stanford.edu/results/315964287"
+        f = open('testurls.txt')
+        testlines = f.readlines()
+        url = testlines[0]
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
@@ -471,7 +474,9 @@ class MossParserUnitTest(unittest.TestCase):
 
     #Testing on expected output
     def test_processTableStrings2(self):
-        url = "http://moss.stanford.edu/results/486773409"
+        f = open('testurls.txt')
+        testlines = f.readlines()
+        url = testlines[1]
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
@@ -481,7 +486,9 @@ class MossParserUnitTest(unittest.TestCase):
 
     #Testing on expected output
     def test_processTableStrings3(self):
-        url = "http://moss.stanford.edu/results/20984829/"
+        f = open('testurls.txt')
+        testlines = f.readlines()
+        url = testlines[2]
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
@@ -489,34 +496,34 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertEqual(result, expected)
 
     #Testing on expected output
-    def test_processTableStrings4(self):
-        url = "http://moss.stanford.edu/results/907948014/"
-        html = self.mp.getHtml(url)
-        tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbaxter5","jbaxter5_TwentyOne.java","5","jbaxter5","jbaxter5_Warmup.java","43","6","http://moss.stanford.edu/results/907948014/match0.html"],
-                    ["jbaxter5","jbaxter5_Insipid.java","11","jbaxter5","jbaxter5_TwentyOne.java","5","5","http://moss.stanford.edu/results/907948014/match1.html"]],True)
-        self.assertEqual(result, expected)
+    #def test_processTableStrings4(self):
+    #    url = "http://moss.stanford.edu/results/907948014/"
+    #    html = self.mp.getHtml(url)
+    #    tableStrings = self.mp.processHtml(html)
+    #    result = self.mp.processTableStrings(tableStrings)
+    #    expected = ([["jbaxter5","jbaxter5_TwentyOne.java","5","jbaxter5","jbaxter5_Warmup.java","43","6","http://moss.stanford.edu/results/907948014/match0.html"],
+    #                ["jbaxter5","jbaxter5_Insipid.java","11","jbaxter5","jbaxter5_TwentyOne.java","5","5","http://moss.stanford.edu/results/907948014/match1.html"]],True)
+    #    self.assertEqual(result, expected)
 
 
     #Testing on unexpected output
-    def test_processTableStrings5(self):
-        url = "http://moss.stanford.edu/results/20984829/"
-        html = self.mp.getHtml(url)
-        tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
-        expected = ([[ "jbxter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
-        self.assertNotEqual(result, expected)
+    #def test_processTableStrings5(self):
+    #    url = "http://moss.stanford.edu/results/20984829/"
+    #    html = self.mp.getHtml(url)
+    #    tableStrings = self.mp.processHtml(html)
+    #    result = self.mp.processTableStrings(tableStrings)
+    #    expected = ([[ "jter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
+    #    self.assertNotEqual(result, expected)
 
 
     #Testing on unexpected output
-    def test_processTableStrings6(self):
-        url = "http://moss.stanford.edu/results/624615253"
-        html = self.mp.getHtml(url)
-        tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbxter_Warmup.java","91","jbaxter_Warmup.java","91","12","http://moss.stanford.edu/results/20984829/match0.html"]],True)
-        self.assertNotEqual(result, expected)
+    #def test_processTableStrings6(self):
+    #    url = "http://moss.stanford.edu/results/624615253"
+    #    html = self.mp.getHtml(url)
+    #    tableStrings = self.mp.processHtml(html)
+    #    result = self.mp.processTableStrings(tableStrings)
+    #    expected = ([["jbxter_Warmup.java","91","jbaxter_Warmup.java","91","12","http://moss.stanford.edu/results/20984829/match0.html"]],True)
+    #    self.assertNotEqual(result, expected)
 #
 # testFileNaming()
 #
