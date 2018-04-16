@@ -27,23 +27,24 @@ class Graph:
     #
     def getNodes(self, results):
         cpNames = []
+        nameList = DataAggregator().populateNames(results)
         for result in results:
             if result.nameOneIsPrevious() and [result.getNameOne(), 'p'] not in cpNames:
                 cpNames.append([result.getNameOne(), 'p'])
-            elif [result.getNameOne(), 'c'] not in cpNames:
+            elif not result.nameOneIsPrevious() and [result.getNameOne(), 'c'] not in cpNames:
                 cpNames.append([result.getNameOne(), 'c'])
             if result.nameTwoIsPrevious() and [result.getNameTwo(), 'p'] not in cpNames:
                 cpNames.append([result.getNameTwo(), 'p'])
-            elif [result.getNameTwo(), 'c'] not in cpNames:
+            elif not result.nameTwoIsPrevious() and [result.getNameTwo(), 'c'] not in cpNames:
                 cpNames.append([result.getNameTwo(), 'c'])
 
         names = []
         index = 1
         for name in cpNames:
             if name[1] is 'c':
-                names.append({"id": index, "value": 5, "label": name[0], "group": 'currentYear'})
+                names.append({"id": nameList.index(name[0]), "value": 5, "label": name[0], "group": 'currentYear'})
             elif name[1] is 'p':
-                names.append({"id": index, "value": 5, "label": name[0], "group": 'previousYear'})
+                names.append({"id": nameList.index(name[0]), "value": 5, "label": name[0], "group": 'previousYear'})
             index = index + 1
         return names
 
@@ -58,13 +59,11 @@ class Graph:
     #
     def getEdges(self, results):
         edges = []
-        assignments = []
+        nameList = DataAggregator().populateNames(results)
 
         for result in results:
-            if result.assignmentNumber not in assignments:
-                assignments.append(result.assignmentNumber)
-            edgeFrom = self.getNodeIndex(result.getNameOne(), results)
-            edgeTo = self.getNodeIndex(result.getNameTwo(), results)
+            edgeFrom = nameList.index(result.getNameOne())
+            edgeTo = nameList.index(result.getNameTwo())
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
             edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.assignmentNumber, "color": 0})

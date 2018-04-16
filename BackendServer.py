@@ -116,9 +116,8 @@ def _MOSSOutput ():
     linesValues = aggregator.topLines
 
     graph = Graph(results)
-    graphJson = graph.getJsonObject(results)
-    nodes = graphJson["nodes"]
-    edges = graphJson["edges"]
+    nodes = graph.graph["nodes"]
+    edges = graph.graph["edges"]
     return render_template(template, value=value, percentsValues=percentsValues, linesValues=linesValues, nodes=nodes, edges=edges)
 
 #
