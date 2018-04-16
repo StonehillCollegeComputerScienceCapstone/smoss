@@ -36,6 +36,7 @@ def _Index ():
     if request.method == "POST":
         inputURLs = request.form['text'] # Get input from the user
         urls = inputURLs.split("\n")
+        urls = list(filter(None, urls))
         for i in range(len(urls)):
             urls[i] = urls[i].rstrip()
         session['urls'] = encode(urls)
