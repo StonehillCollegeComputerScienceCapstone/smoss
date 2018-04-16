@@ -52,23 +52,19 @@ class Graph:
     #
     def getNodeIndex(self, name, results):
         nameList = DataAggregator().populateNames(results)
-        index = 1
-        for n in nameList:
-            if n == name:
-                return index
-            index = index + 1
-        return -1
+        return nameList.index(name)
     #
     # Return an array of dictionary objects representing edges in the graph
     #
     def getEdges(self, results):
         edges = []
         assignments = []
+
         for result in results:
             if result.assignmentNumber not in assignments:
                 assignments.append(result.assignmentNumber)
-            edgeFrom = self.getNodeIndex(result.fileOne, results)
-            edgeTo = self.getNodeIndex(result.fileTwo, results)
+            edgeFrom = self.getNodeIndex(result.getNameOne(), results)
+            edgeTo = self.getNodeIndex(result.getNameTwo(), results)
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
             edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.assignmentNumber, "color": 0})

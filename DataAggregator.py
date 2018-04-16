@@ -45,13 +45,11 @@ class DataAggregator:
         names = []
 
         # For every row from MOSS
-
         for result in results:
-            if result.fileOne not in names:
-                names.append(result.fileOne)
-            if result.fileTwo not in names:
-                names.append(result.fileTwo)
-
+            if result.getNameOne() not in names:
+                names.append(result.getNameOne())
+            if result.getNameTwo() not in names:
+                names.append(result.getNameTwo())
         return names
 
     # Returns an array of assignment numbers in results
@@ -72,11 +70,11 @@ class DataAggregator:
         for number in assignmentNumbers:
             data = []
             for result in results:
-                if (result.assignmentNumber == number and dataType is "lines" and ((result.fileOne == name) or (result.fileTwo == name))):
+                if (result.assignmentNumber == number and dataType is "lines" and ((result.getNameOne() == name) or (result.getNameTwo() == name))):
                     data.append(int(result.linesMatched))
-                elif (result.assignmentNumber == number and dataType is "percents" and result.fileOne == name):
+                elif (result.assignmentNumber == number and dataType is "percents" and result.getNameOne() == name):
                     data.append(int(result.fileOnePercent))
-                elif (result.assignmentNumber == number and dataType is "percents" and result.fileTwo == name):
+                elif (result.assignmentNumber == number and dataType is "percents" and result.getNameTwo() == name):
                     data.append(int(result.fileTwoPercent))
             if (data != []):
                 parsedData.append(max(data))
