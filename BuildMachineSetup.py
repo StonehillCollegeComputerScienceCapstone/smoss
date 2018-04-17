@@ -18,13 +18,8 @@ import os
 username = ''
 password = ''
 
-if getpass.getuser () == 'mmiddleton':
-    username = 'mmiddleton'
-    password = 'sjFs7kUux7jvjxbk6Vss'
-
-else:
-    username = os.environ['BROWSERSTACK_USER']
-    password = os.environ['BROWSERSTACK_ACCESS_KEY']
+username = os.environ['BROWSERSTACK_USER']
+password = os.environ['BROWSERSTACK_ACCESS_KEY']
 
 
 browserStackBuilds = requests.get ('https://api.browserstack.com/automate/builds.json', auth = (username, password))

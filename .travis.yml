@@ -10,7 +10,7 @@ install:
 before_script:
   - python BuildMachineSetup.py
   - python BackendServer.py &
-  - ./BrowserStackLinux --key GRsnMzVEkcDGYmH8cmpE &
+  - ./BrowserStackLinux --key $BROWSERSTACK_ACCESS_KEY &
   - ./code-coverage.sh
 
 script:
