@@ -5,26 +5,36 @@ from MossParser import MossParser
 
 class MossParserUnitTest(unittest.TestCase):
 
-    # - Test testValidURL() on an valid url
-    # - Test testValidURL() on an invalid url
-    # - Test getHtml() on a valid url
-    # - Test processHtml() on valid output
-    # - Test processHtml() on invalid output
-    # - Test getName() with previous file
-    # - Test getName() with current file
-    # - Test for previousYearMatch() for current years (current, current)
-    # - Test for previousYearMatch() for different years (current, previous)
-    # - Test for previousYearMatch() for previous years (previous, previous)
-    # New tests March 26th
-    # - Test for parseMultiple()
-    # - Test for processTableStrings()
-    # - Test for parse()
-    # - Test for formatTableString()
-    # - Test for testFileNaming()
+    # - testValidURL() Test for valid URL
+    # - testValidURL() Test for inValid URL
+    # - testValidURL() Test for invalid URL that will return a 200 ok response
+    # - testValidURL() Test testUrl on empty string
+    # - testValidURL() Test testUrl on string "moss"
+    # - testValidURL() Test testUrl on valid URL + extra chars
+    # - testValidURL() Test testURL on carriage return
+    # - testValidURL() Test testUrl on numeric value
+    # - testValidURL() Test testUrl on list
+    # - testValidURL() Test testUrl on a list of MOSS URL's
+    # - testValidURL() Test testUrl on None
+    # - testValidURL() Test testUrl on Valid IP
+    # - getHtml() Test method on invalid MOSS URL
+    # - getHtml() Test method on valid MOSS URL
+    # - processHtml() Test on valid output
+    # - processHtml() Test on invalid output
+    # - getName() Test with previous file
+    # - getName() Test with current file
+    # - previousYearMatch() Test for current years (current, current)
+    # - previousYearMatch() Test for different years (current, previous)
+    # - previousYearMatch() Test for previous years (previous, previous)
+    # - parseMultiple() Test for
+    # - processTableStrings() Test for
+    # - formatTableString() Test for
+    # - testFileNaming() Test for
     # Tests for inner class "myHTMLParser"
-    # - Test for handle_starttag()
-    # - Test for handle_endtag()
-    # - Test for handle_data()
+    # - handle_starttag() Test for
+    # - handle_endtag() Test for
+    # - handle_data() Test for
+    # - parse() Test for
 
 
     def setUp(self):

@@ -38,7 +38,6 @@ class MyTestCase(unittest.TestCase):
         self.validURL = self.config.getWarmup()
 
         self.results = []
-        self.results.append(Result(1, "Matt", "Armen", "previous_lhbox_HomeValue.java", 90, 70, 20))
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
         self.results.append(Result(1, "Stephen", "Sam", self.validURL, 80, 43, 77))
         self.results.append(Result(1, "Matt", "Tori", self.validURL, 33, 70, 45))
