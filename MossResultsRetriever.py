@@ -84,8 +84,3 @@ class MossResultsRetriever:
                 return False
         return True
 
-def main():
-    retriever = MossResultsRetriever()
-    retriever.populateResults()
-
-if __name__ == '__main__': main()
