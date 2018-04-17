@@ -65,18 +65,18 @@ class MossResultsRetriever:
     # Returns a set of duplicate urls and a set of urls to be processed
     def getDuplicateUrls(self, urls):
         duplicates = []
-        nonDuplicates = []
+        urlList = []
         isValidUrlList, message = self.isValidUrlList(urls)
 
         if not isValidUrlList:
             return [], []
 
         for url in urls:
-            if url not in nonDuplicates:
-                nonDuplicates.append(url)
+            if url not in urlList:
+                urlList.append(url)
             elif url not in duplicates:
                 duplicates.append(url)
-        return duplicates, nonDuplicates
+        return duplicates, urlList
 
     def validateData(self):
         for result in self.results:
