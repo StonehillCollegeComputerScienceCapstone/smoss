@@ -96,9 +96,8 @@ class DataAggregator:
 
     # Aggregates the data and populates the two fields
     def aggregateData(self):
-        if (not self.validateResults):
-            sys.exit()
-
+        if (not self.validateResults(self.results)):
+            return False
         names = self.populateNames(self.results)
 
         aggregatePercents = []
@@ -108,8 +107,7 @@ class DataAggregator:
             # Parse the highest percents for a given name
             percents = self.parseData(self.results, name,"percents")
             if ((not self.validateArray(percents)) or (not self.validatePercents(percents))):
-                sys.exit()
-
+                return False
             # Parse the highest lines matched for a given name
             lines = self.parseData(self.results, name, "lines")
 
@@ -124,3 +122,5 @@ class DataAggregator:
         # We only want the top ten results
         self.topPercents = aggregatePercents[:10]
         self.topLines = aggregateLines[:10]
+
+        return True
