@@ -1,167 +1,153 @@
-import java.util.Random;
-import java.util.Scanner;
+public class TwentyOne {
+  public static final int HIT = 1;
+  public static final int STAY = 2;
+  public static final int QUIT = 3;
 
-public class GameOfTwentyOne {
+  private static final int NUM_PLAYERS = 3;
 
-	static class Die {
+  /* Prepare the Dealer's Deck, set Players' play status, clear the
+   * all hands, deal two cards to each Person, and display the hands.
+   */
+  private static void dealNewRound(Dealer d, Player players[]) {
 
-		private final int NUMBER_OF_SIDES = 6;
-		private int value;
+  }
 
-		/**
-		 * Constructor will call the roll method to set the value of the die
-		 *
-		 */
-		Die() {
-			roll();
-		}
+ /* Perform actions after player chooses to hit
+   * =Returns true if the player has busted,
+   * otherwise returns false
+   *
+   * DO NOT CHANGE THIS CODE.
+   */
+  private static boolean doHit(Dealer d, Player p) {
+    if(p.getHand().isFull()) {
+      System.out.println("Cannot hit! Hand is full");
+      return false;
+    }
 
-		/**
-		 * The roll method sets the value of the die to a random number.
-		 */
+    d.deal(p.getHand());
+    System.out.println(p.getName() +"'s hand: "+ p.getHand());
 
-		public void roll() {
-			Random randomValue = new Random();
+    if(p.getHand().getValue() > 21) {
+      System.out.println(p.getName() + " busted.");
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 
-			value = randomValue.nextInt(NUMBER_OF_SIDES) + 1;
-		}
+  /* Perform actions after player chooses to stay
+   *
+   * DO NOT CHANGE THIS CODE.
+   */
+  private static void doStay(Dealer d, Player players[]) {
+    d.finishHand();
+    int dealerPoints = d.getHand().getValue();
 
-		/**
-		 * Get roll value
-		 *
-		 * @return number that represents roll
-		 */
-		public int getValue() {
-			return value;
-		}
-	}
+    System.out.println("----------------------------------------------");
+    System.out.println("Dealer's hand: "+ d.getHand());
 
-	/**
-	 * Method should return a value that represents the sum of both die
-	 *
-	 * @return int value
-	 */
-	public static int getRollValue() {
+    if(dealerPoints > 21) {
+        System.out.println("Dealer Busted.");
+    }
 
-		Die die = new Die();
+    for(int i=0; i<NUM_PLAYERS; i++){
+      if(players[i] != null) {
+        int playerPoints = players[i].getHand().getValue();
 
-		// roll first die
-		int roll1Value = die.getValue();
+        System.out.println(players[i].getName() +"'s hand: "+ players[i].getHand());
 
-		// roll second die
-		die.roll();
+        if(playerPoints > 21){ // Player busted
+          System.out.println(players[i].getName()+" lost.");
+          players[i].loseHand();
+        }
+        else if(dealerPoints > 21 || dealerPoints < playerPoints){
+          System.out.println(players[i].getName() + " won.");
+          players[i].winHand();
+        }
+        else if(dealerPoints > playerPoints)
+        {
+          System.out.println(players[i].getName()+" lost.");
+          players[i].loseHand();
+        }
+        else{
+          System.out.println(players[i].getName()+" got a draw.");
+        }
+      }
+    }
+    System.out.println("----------------------------------------------");
+  }
 
-		int roll2Value = die.getValue();
+  /* the main entrance to the program
+   *
+   * DO NOT CHANGE THIS CODE
+   */
+  public static void main(String[] args) {
+    System.out.println("Welcome to TwentyOne.");
+    int numPlaying = NUM_PLAYERS;
+    Player players[] = new Player[NUM_PLAYERS];
 
-		// Return the sum of the value of the dice.
-		return roll1Value + roll2Value;
-	}
+    Dealer d = new Dealer();
+    boolean playing = true;
 
-	/**
-	 * Method will determine if the game limit has been met
-	 *
-	 * @param value
-	 * @return false if value gt 21
-	 */
-	public static boolean isUnderGameLimit(int value) {
+    for(int i=0; i < NUM_PLAYERS; i++){
+      System.out.println("What is player #"+(i+1)+"'s name? ");
+      String name = Keyboard.readString();
+      players[i] = new Player(name);
+    }
+    System.out.print("\n");
+    dealNewRound(d, players);
 
-		if (value > 21) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+    int command;
+    String cmd;
+    while(playing) {
+      for(int i=0;i<NUM_PLAYERS;i++){
+        while(players[i]!=null && players[i].isPlaying()){
+          System.out.println("\n"+players[i].getName() + "'s hand: " + players[i].getHand());
+          System.out.println("What would " + players[i].getName() + " like to do? ");
+          System.out.println("(1:HIT  2.STAY  3.QUIT) ");
+          command = Keyboard.readInt();
 
-	/**
-	 * Method will ask user to enter if they would like to play again
-	 *
-	 * @return true if user wants to play again
-	 */
-	public static boolean playAgain() {
+          if(command == HIT) {
+            if(doHit(d,players[i]) == true){
+              players[i].stopPlaying();
+            }
+          }
+          else if(command == STAY){
+            players[i].stopPlaying();
+          }
+          else if(command == QUIT) {
+            numPlaying--;
+            System.out.println(players[i].getName() + " quit.");
+            System.out.println(players[i]);
+            players[i]= null;  //Player i no longer in this multiplayer game
+          }
+          else {
+            System.out.println("INVALID COMMAND");
+          }
+        }//end while
+      }//end for
 
-		Scanner keyboard = new Scanner(System.in);
-
-		// Ask the user to roll the dice.
-		System.out.print("Roll the dice? (y/n) : ");
-		String userResponse = keyboard.nextLine(); // Get a line of input.
-		char letter = userResponse.charAt(0); // Get the first character.
-
-		if (letter == 'Y' || letter == 'y') {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Method is responsible for handling displaying results to user
-	 *
-	 * @param computerScore
-	 * @param userScore
-	 */
-	public static void displayResults(int computerScore, int userScore) {
-
-		// Display the computer and user's points.
-		System.out.println("\nGame Over\n");
-		System.out.println("User's Points: " + userScore);
-		System.out.println("Computer's Points: " + computerScore);
-
-		System.out.println(getWinnerMessage(computerScore, userScore));
-
-	}
-
-	/**
-	 * Method should return a message on who wins the game
-	 *
-	 * @param computer
-	 *            score
-	 * @param user
-	 *            score
-	 * @return String representing winner
-	 */
-	public static String getWinnerMessage(int computerScore, int userScore) {
-
-		if (userScore > computerScore && isUnderGameLimit(userScore)) {
-			return "Congrats, you win!!!";
-		} else if (isUnderGameLimit(userScore)
-				&& !isUnderGameLimit(computerScore)) {
-			return "Congrats, you win!!!";
-		} else if (userScore == 21 && computerScore != 21) {
-			return "Congrats, you win!!!";
-		} else if (userScore == computerScore) {
-			return "Tie game!";
-		} else if (!isUnderGameLimit(userScore)
-				&& !isUnderGameLimit(computerScore)) {
-			return "This game has ended without a winner.";
-		} else {
-			return "The computer wins!";
-		}
-	}
-
-	public static void main(String[] args) {
-
-		int computerPoints = 0;
-		int userPoints = 0;
-
-		while (playAgain()) {
-
-			computerPoints += getRollValue();
-			userPoints += getRollValue();
-
-			// break the game if either user or computer go over the limit
-			if (!isUnderGameLimit(userPoints)
-					|| !isUnderGameLimit(computerPoints)) {
-				break;
-			}
-
-			System.out.println("User Points: " + userPoints);
-		}
-
-		if (userPoints == 0 && computerPoints == 0) {
-			System.out.println("Gotta play to win!!!");
-		} else {
-			displayResults(computerPoints, userPoints);
-		}
-	}
-
+      if(numPlaying == 0) {
+        System.out.println("Everyone has quit the game. GoodBye");
+        playing = false;
+      }
+      else {
+        doStay(d, players);
+        System.out.println("Start another round? ");
+        cmd = Keyboard.readString().toLowerCase();
+        if(!cmd.equals("y") && !cmd.equals("yes")) {
+          playing = false;
+          for(int i=0; i < NUM_PLAYERS; i++){
+            if(players[i] != null)
+              System.out.println(players[i]);
+          }
+          System.out.println("Goodbye");
+        }
+        else {
+          dealNewRound(d, players);
+        }
+      }//end if
+    }//end while
+  }
 }
