@@ -134,8 +134,12 @@ class MossParser ():
     def testFileNaming(self, fileName):
         if fileName[0].isdigit():
             return False
-        return True
 
+        # we need an underscore to seperate username and the assignment name
+        if "_" in fileName and ("_" is not fileName[0]):
+            return True
+
+        return False
 
     def previousYearMatch(self, filename1, filename2):
         #  make sure that potential difference in casing does not cause a problem with the 'previous' tag

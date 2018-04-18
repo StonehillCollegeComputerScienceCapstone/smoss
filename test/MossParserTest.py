@@ -571,6 +571,31 @@ class MossParserUnitTest(unittest.TestCase):
         file1 = "558924359787"
         self.assertFalse(self.mp.testFileNaming(file1))
 
+    # no '_' which would need a username appended to the front
+    def test_testFileNaming(self):
+        file = "invalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
+    # this naming is valid because it
+    def test_testFileNaming2(self):
+        file = "bsmith_validfile.java"
+        self.assertTrue(self.mp.testFileNaming(file))
+
+    # no extension needed
+    def test_testFileNaming3(self):
+        file = "bsmith_validfile"
+        self.assertTrue(self.mp.testFileNaming(file))
+
+    # underscore precedes the filename
+    def test_testFileNaming4(self):
+        file = "_bsmithinvalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
+    # valid filename but underscore precedes the filename, making it invalid
+    def test_testFileNaming5(self):
+        file = "_bsmith_invalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
     #get table string values test, make sure the split functionality works
     def test_getTableStringValues(self):
         response = self.mp.getTableStringValues("jbxter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html")
