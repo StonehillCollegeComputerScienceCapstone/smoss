@@ -17,7 +17,9 @@ class MyTestCase(unittest.TestCase):
     # -getNodes() #Test that each node has a label attribute
     # -getNodes() #Test that each node has an group attribute
     # -getNodes() #Test that you get currentYear nodes
+    # -getNodes() Test there are no current year node in a data set of all previous year results
     # -getNodes() #Test that you get previous nodes
+    # -getNodes() Test there are no previous year node in a data set of all current year results
     # -getNodes() #Test no duplicate named nodes
     # -getGreaterPercentage() #with integers
     # -getGreaterPercentage() #returning an integer not a string
@@ -46,6 +48,7 @@ class MyTestCase(unittest.TestCase):
     # -getEdges() #Test edge 'to' is int
     # -getEdges() #Test that each edge has a value attribute
     # -getEdges() #Test edge 'value' is int
+    # -getEdges() Test edge 'value' is positive
     # -getEdges() #Test that each edge has a title attribute
     # -getEdges() #Test edge 'title' is str
     # -getEdges() #Test that each edge has an assignment attribute
@@ -57,15 +60,26 @@ class MyTestCase(unittest.TestCase):
         self.validURL = self.config.getWarmup()
 
         self.results = []
-        self.results.append(Result(1, "matt_SqaureRoot.java", "armen_SqaureRoot.java", self.validURL, 90, 70, 20))
-        self.results.append(Result(1, "stephen_SqaureRoot.java", "previous_sam_SqaureRoot.java", self.validURL, 80, 43, 77))
-        self.results.append(Result(1, "matt_SqaureRoot.java", "previous_tori_SqaureRoot.java", self.validURL, 33, 70, 45))
-        self.results.append(Result(1, "armen_SqaureRoot.java", "previous_tori_SqaureRoot.java", self.validURL, 50, 34, 5))
-        self.results.append(Result(1, "matt_SqaureRoot.java", "stephen_SqaureRoot.java", self.validURL, 76, 79, 20))
-        self.results.append(Result(1, "matt_SqaureRoot.java", "will_SqaureRoot.java", self.validURL, 90, 88, 100))
-        self.results.append(Result(1, "previous_bob_SqaureRoot.java", "previous_nick_SqaureRoot.java", self.validURL, 55, 42, 81))
-        self.results.append(Result(1, "previous_nick_SqaureRoot.java", "previous_sam_SqaureRoot.java", self.validURL, 34, 21, 44))
+        self.results.append(Result(1, "matt_SquareRoot.java", "armen_SquareRoot.java", self.validURL, 90, 70, 20))
+        self.results.append(Result(1, "stephen_SquareRoot.java", "previous_sam_SquareRoot.java", self.validURL, 80, 43, 77))
+        self.results.append(Result(1, "matt_SquareRoot.java", "previous_tori_SquareRoot.java", self.validURL, 33, 70, 45))
+        self.results.append(Result(1, "armen_SquareRoot.java", "previous_tori_SquareRoot.java", self.validURL, 50, 34, 5))
+        self.results.append(Result(1, "matt_SquareRoot.java", "stephen_SquareRoot.java", self.validURL, 76, 79, 20))
+        self.results.append(Result(1, "matt_SquareRoot.java", "will_SquareRoot.java", self.validURL, 90, 88, 100))
+        self.results.append(Result(1, "previous_bob_SquareRoot.java", "previous_nick_SquareRoot.java", self.validURL, 55, 42, 81))
+        self.results.append(Result(1, "previous_nick_SquareRoot.java", "previous_sam_SquareRoot.java", self.validURL, 34, 21, 44))
 
+        self.allCurrent = []
+        self.allCurrent.append(Result(1, "matt_SquareRoot.java", "armen_SquareRoot.java", self.validURL, 90, 70, 20))
+        self.allCurrent.append(Result(1, "will_SquareRoot.java", "stephen_SquareRoot.java", self.validURL, 50, 40, 10))
+        self.allCurrent.append(Result(1, "tori_SquareRoot.java", "matt_SquareRoot.java", self.validURL, 55, 65, 53))
+        self.allCurrent.append(Result(1, "armen_SquareRoot.java", "will_SquareRoot.java", self.validURL,65, 71, 100))
+
+        self.allPrevious = []
+        self.allPrevious.append(Result(1, "previous_matt_SquareRoot.java", "previous_armen_SquareRoot.java", self.validURL, 90, 70, 20))
+        self.allPrevious.append(Result(1, "previous_will_SquareRoot.java", "previous_stephen_SquareRoot.java", self.validURL, 50, 40, 10))
+        self.allPrevious.append(Result(1, "previous_tori_SquareRoot.java", "previous_matt_SquareRoot.java", self.validURL, 55, 65, 53))
+        self.allPrevious.append(Result(1, "previous_armen_SquareRoot.java", "previous_tori_SquareRoot.java", self.validURL,65, 71, 100))
 
         self.graph = Graph(self.results)
 
@@ -160,6 +174,15 @@ class MyTestCase(unittest.TestCase):
                 curr = True
         self.assertTrue(curr)
 
+    # Test there are no current year node in a data set of all previous year results
+    def test_NoCurrentYearNodes(self):
+        names = self.graph.getNodes(self.allPrevious)
+        curr = False
+        for name in names:
+            if name["group"] == "currentYear":
+                curr = True
+        self.assertFalse(curr)
+
     #Test that you get previous year nodes
     def test_PreviousYearNodes(self):
         names = self.graph.getNodes(self.results)
@@ -168,6 +191,15 @@ class MyTestCase(unittest.TestCase):
             if name["group"] == "previousYear":
                 prev = True
         self.assertTrue(prev)
+
+    #Test there are no previous year node in a data set of all current year results
+    def test_NoPreviousYearNodes(self):
+        names = self.graph.getNodes(self.allCurrent)
+        prev = False
+        for name in names:
+            if name["group"] == "previousYear":
+                prev = True
+        self.assertFalse(prev)
 
 
     #Test no duplicate named nodes
@@ -316,7 +348,7 @@ class MyTestCase(unittest.TestCase):
 #
 
     #Test number of edges is the same as number of results
-    def testNumOfEdges(self):
+    def test_NumOfEdges(self):
         edges = self.graph.getEdges(self.results)
         self.assertTrue(len(edges) == len(self.results))
 
@@ -393,6 +425,16 @@ class MyTestCase(unittest.TestCase):
                 valueInt = False
         self.assertTrue(valueInt)
 
+
+    # Test edge 'value' is positive
+    def test_edgeValueIsPositive(self):
+        edges = self.graph.getEdges(self.results)
+        valueInt = True
+        for edge in edges:
+            if edge["value"] <= -1:
+                valueInt = False
+        self.assertTrue(valueInt)
+
     #Test that each edge has a title attribute
     def test_edgeHasTitle(self):
         edges = self.graph.getEdges(self.results)
@@ -437,6 +479,21 @@ class MyTestCase(unittest.TestCase):
             if 'color' not in edge:
                 hasColor = False
         self.assertTrue(hasColor)
+
+    #Test there are multiple assignments
+    def test_MultipleAssignments(self):
+        results = self.results
+        results.append(Result(2, "matt_Poker.java", "armen_Poker.java", self.validURL, 90, 70, 20))
+        results.append(Result(2, "will_Poker.java", "stephen_Poker.java", self.validURL, 50, 40, 10))
+        results.append(Result(2, "tori_Poker.java", "matt_Poker.java", self.validURL, 55, 65, 53))
+        results.append(Result(2, "tori_Poker.java", "armen_Poker.java", self.validURL,65, 71, 100))
+        nodes = self.graph.getNodes(results)
+        edges = self.graph.getEdges(results)
+        multipleAssignments = False
+        for edge in edges:
+            if edge["assignment"] != edges[0]["assignment"]:
+                multipleAssignments = True
+        self.assertTrue(multipleAssignments)
 
 
 
