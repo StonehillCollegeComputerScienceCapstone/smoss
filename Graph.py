@@ -30,24 +30,20 @@ class Graph:
         previousYear = "previousYear"
         nameOne = ""
         nameTwo = ""
-        nameOnePrevious = False
-        nameTwoPrevious = False
+        nameOnePrevious, nameTwoPrevious = False, False
         for result in results:
             nameOne = result.getNameOne()
             nameTwo = result.getNameTwo()
             nameOnePrevious = result.nameOneIsPrevious()
             nameTwoPrevious = result.nameTwoIsPrevious()
-
             if nameOnePrevious and [nameOne, previousYear] not in cpNames:
                 cpNames.append([nameOne, previousYear])
             elif not nameOnePrevious and [nameOne, currentYear] not in cpNames:
                 cpNames.append([result.getNameOne(), currentYear])
-
             if nameTwoPrevious and [nameTwo, previousYear] not in cpNames:
                 cpNames.append([nameTwo, previousYear])
             elif not nameTwoPrevious and [nameTwo, currentYear] not in cpNames:
                 cpNames.append([nameTwo, currentYear])
-
         nodes = []
         index = 1
         for name in cpNames:
