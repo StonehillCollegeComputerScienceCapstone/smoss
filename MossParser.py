@@ -135,7 +135,8 @@ class MossParser ():
         if fileName[0].isdigit():
             return False
 
-        # we need an underscore to seperate username and the assignment name
+        # we need an underscore to seperate username and the assignment name,
+        #  _ is suppose to seperate, not precede the name
         if "_" in fileName and ("_" is not fileName[0]):
             return True
 
@@ -146,7 +147,7 @@ class MossParser ():
         filename1.lower()
         filename2.lower()
 
-        return ("previous" in filename1) and ("previous" in filename2)
+        return ("previous_" in filename1) and ("previous_" in filename2)
 
     def formatTableString(self,tableString):
         tableString.lstrip()

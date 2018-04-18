@@ -489,6 +489,17 @@ class MossParserUnitTest(unittest.TestCase):
         file2 = "previou$_test2.java"
         self.assertFalse(self.mp.previousYearMatch(file1, file2))
 
+    # missing '_' in name
+    def test_previousYears(self):
+        file1 = "previoustest.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    # dash does not count as underscore
+    def test_previousYears(self):
+        file1 = "previous-test.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
 #
 # processTableStrings()
 #
