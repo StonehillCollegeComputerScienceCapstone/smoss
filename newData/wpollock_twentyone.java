@@ -1,3 +1,4 @@
+/* from: http://www.cs.cornell.edu/courses/cs100m/2005sp/Projects/P6/TwentyOne.java */
 public class TwentyOne {
   public static final int HIT = 1;
   public static final int STAY = 2;
