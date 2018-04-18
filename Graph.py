@@ -26,25 +26,30 @@ class Graph:
     # Return an array of dictionary objects containing the names of every student
     def getNodes(self, results):
         cpNames = []
+        currentYear = "currentYear"
+        previousYear = "previousYear"
+        nameOne = ""
+        nameTwo = ""
+        nameOnePrevious, nameTwoPrevious = False, False
         for result in results:
-            if result.nameOneIsPrevious() and [result.getNameOne(), 'p'] not in cpNames:
-                cpNames.append([result.getNameOne(), 'p'])
-            elif not result.nameOneIsPrevious() and [result.getNameOne(), 'c'] not in cpNames:
-                cpNames.append([result.getNameOne(), 'c'])
-            if result.nameTwoIsPrevious() and [result.getNameTwo(), 'p'] not in cpNames:
-                cpNames.append([result.getNameTwo(), 'p'])
-            elif not result.nameTwoIsPrevious() and [result.getNameTwo(), 'c'] not in cpNames:
-                cpNames.append([result.getNameTwo(), 'c'])
-
-        names = []
+            nameOne = result.getNameOne()
+            nameTwo = result.getNameTwo()
+            nameOnePrevious = result.nameOneIsPrevious()
+            nameTwoPrevious = result.nameTwoIsPrevious()
+            if nameOnePrevious and [nameOne, previousYear] not in cpNames:
+                cpNames.append([nameOne, previousYear])
+            elif not nameOnePrevious and [nameOne, currentYear] not in cpNames:
+                cpNames.append([result.getNameOne(), currentYear])
+            if nameTwoPrevious and [nameTwo, previousYear] not in cpNames:
+                cpNames.append([nameTwo, previousYear])
+            elif not nameTwoPrevious and [nameTwo, currentYear] not in cpNames:
+                cpNames.append([nameTwo, currentYear])
+        nodes = []
         index = 1
         for name in cpNames:
-            if name[1] is 'c':
-                names.append({"id": self.nameList.index(name[0]), "value": 5, "label": name[0], "group": 'currentYear'})
-            elif name[1] is 'p':
-                names.append({"id": self.nameList.index(name[0]), "value": 5, "label": name[0], "group": 'previousYear'})
+            nodes.append({"id": self.nameList.index(name[0]), "value": 5, "label": name[0], "group": name[1]})
             index = index + 1
-        return names
+        return nodes
 
     # Return an array of dictionary objects representing edges in the graph
     def getEdges(self, results):
