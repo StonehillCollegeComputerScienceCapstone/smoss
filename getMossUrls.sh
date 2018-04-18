@@ -57,7 +57,7 @@ function main
 	# Write all URLs to mossUrls.txt
 	for url in "${urls[@]}"
 	do 
-		echo -e "$url"
+		echo "$url"
 	done > mossUrls.txt
 
 	# Write test urls to testurls.txt

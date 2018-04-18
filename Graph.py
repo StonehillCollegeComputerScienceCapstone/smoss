@@ -8,12 +8,12 @@ class Graph:
     def __init__(self, results):
         self.config = Config()
         if isinstance(results, list):
+            self.nameList = DataAggregator().populateNames(results)
             self.graph = self.getJsonObject(results)
         else:
             pass
-    #
-    # method will return false if list contains results with different assignment numbers
-    #
+
+    # Return false if list contains results with different assignment numbers
     def getValidResults(self, results):
         if results and isinstance(results, list):
             for result in results:
@@ -22,65 +22,52 @@ class Graph:
         else:
             return False
         return True
-    #
+
     # Return an array of dictionary objects containing the names of every student
-    #
     def getNodes(self, results):
         cpNames = []
+        currentYear = "currentYear"
+        previousYear = "previousYear"
+        nameOne = ""
+        nameTwo = ""
+        nameOnePrevious, nameTwoPrevious = False, False
         for result in results:
-            if result.nameOneIsPrevious() and [result.getNameOne(), 'p'] not in cpNames:
-                cpNames.append([result.getNameOne(), 'p'])
-            elif [result.getNameOne(), 'c'] not in cpNames:
-                cpNames.append([result.getNameOne(), 'c'])
-            if result.nameTwoIsPrevious() and [result.getNameTwo(), 'p'] not in cpNames:
-                cpNames.append([result.getNameTwo(), 'p'])
-            elif [result.getNameTwo(), 'c'] not in cpNames:
-                cpNames.append([result.getNameTwo(), 'c'])
-
-        names = []
+            nameOne = result.getNameOne()
+            nameTwo = result.getNameTwo()
+            nameOnePrevious = result.nameOneIsPrevious()
+            nameTwoPrevious = result.nameTwoIsPrevious()
+            if nameOnePrevious and [nameOne, previousYear] not in cpNames:
+                cpNames.append([nameOne, previousYear])
+            elif not nameOnePrevious and [nameOne, currentYear] not in cpNames:
+                cpNames.append([result.getNameOne(), currentYear])
+            if nameTwoPrevious and [nameTwo, previousYear] not in cpNames:
+                cpNames.append([nameTwo, previousYear])
+            elif not nameTwoPrevious and [nameTwo, currentYear] not in cpNames:
+                cpNames.append([nameTwo, currentYear])
+        nodes = []
         index = 1
         for name in cpNames:
-            if name[1] is 'c':
-                names.append({"id": index, "value": 5, "label": name[0], "group": 'currentYear'})
-            elif name[1] is 'p':
-                names.append({"id": index, "value": 5, "label": name[0], "group": 'previousYear'})
+            nodes.append({"id": self.nameList.index(name[0]), "value": 5, "label": name[0], "group": name[1]})
             index = index + 1
-        return names
+        return nodes
 
-    #
-    # return index of passed variable name in list of DataAggregator
-    #
-    def getNodeIndex(self, name, results):
-        nameList = DataAggregator().populateNames(results)
-        index = 1
-        for n in nameList:
-            if n == name:
-                return index
-            index = index + 1
-        return -1
-    #
     # Return an array of dictionary objects representing edges in the graph
-    #
     def getEdges(self, results):
         edges = []
-        assignments = []
+
         for result in results:
-            if result.assignmentNumber not in assignments:
-                assignments.append(result.assignmentNumber)
-            edgeFrom = self.getNodeIndex(result.fileOne, results)
-            edgeTo = self.getNodeIndex(result.fileTwo, results)
+            edgeFrom = self.nameList.index(result.getNameOne())
+            edgeTo = self.nameList.index(result.getNameTwo())
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
             edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.assignmentNumber, "color": 0})
         return edges
-    #
+
     # Return the greater value between two percentages
-    #
     def getGreaterPercentage(self, result):
         return max(result.fileOnePercent, result.fileTwoPercent)
-    #
+
     # return a JsonObject based off of list of moss results
-    #
     def getJsonObject(self, results):
         graph = ({"nodes": self.getNodes(results), "edges": self.getEdges(results) })
         return json.loads(json.dumps(graph))
