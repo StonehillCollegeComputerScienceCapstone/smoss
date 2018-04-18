@@ -16,7 +16,8 @@ class MyTestCase(unittest.TestCase):
     # -getNodes() #Test that each node has a value attribute
     # -getNodes() #Test that each node has a label attribute
     # -getNodes() #Test that each node has an group attribute
-    # -getNodes() #Test that you at least get currentYear nodes
+    # -getNodes() #Test that you get currentYear nodes
+    # -getNodes() #Test that you get previous nodes
     # -getNodes() #Test no duplicate named nodes
     # -getGreaterPercentage() #with integers
     # -getGreaterPercentage() #returning an integer not a string
@@ -56,12 +57,14 @@ class MyTestCase(unittest.TestCase):
         self.validURL = self.config.getWarmup()
 
         self.results = []
-        self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))
-        self.results.append(Result(1, "Stephen", "Sam", self.validURL, 80, 43, 77))
-        self.results.append(Result(1, "Matt", "Tori", self.validURL, 33, 70, 45))
-        self.results.append(Result(1, "Armen", "Tori", self.validURL, 50, 34, 5))
-        self.results.append(Result(1, "Matt", "Stephen", self.validURL, 76, 79, 20))
-        self.results.append(Result(1, "Matt", "Will", self.validURL, 90, 88, 100))
+        self.results.append(Result(1, "matt_SqaureRoot.java", "armen_SqaureRoot.java", self.validURL, 90, 70, 20))
+        self.results.append(Result(1, "stephen_SqaureRoot.java", "previous_sam_SqaureRoot.java", self.validURL, 80, 43, 77))
+        self.results.append(Result(1, "matt_SqaureRoot.java", "previous_tori_SqaureRoot.java", self.validURL, 33, 70, 45))
+        self.results.append(Result(1, "armen_SqaureRoot.java", "previous_tori_SqaureRoot.java", self.validURL, 50, 34, 5))
+        self.results.append(Result(1, "matt_SqaureRoot.java", "stephen_SqaureRoot.java", self.validURL, 76, 79, 20))
+        self.results.append(Result(1, "matt_SqaureRoot.java", "will_SqaureRoot.java", self.validURL, 90, 88, 100))
+        self.results.append(Result(1, "previous_bob_SqaureRoot.java", "previous_nick_SqaureRoot.java", self.validURL, 55, 42, 81))
+        self.results.append(Result(1, "previous_nick_SqaureRoot.java", "previous_sam_SqaureRoot.java", self.validURL, 34, 21, 44))
 
 
         self.graph = Graph(self.results)
@@ -148,7 +151,7 @@ class MyTestCase(unittest.TestCase):
                 hasGroup = False
         self.assertTrue(hasGroup)
 
-    #Test that you get at least current year nodes
+    #Test that you get current year nodes
     def test_CurrentYearNodes(self):
         names = self.graph.getNodes(self.results)
         curr = False
@@ -156,6 +159,16 @@ class MyTestCase(unittest.TestCase):
             if name["group"] == "currentYear":
                 curr = True
         self.assertTrue(curr)
+
+    #Test that you get previous year nodes
+    def test_PreviousYearNodes(self):
+        names = self.graph.getNodes(self.results)
+        prev = False
+        for name in names:
+            if name["group"] == "previousYear":
+                prev = True
+        self.assertTrue(prev)
+
 
     #Test no duplicate named nodes
     def test_NoDuplicateNames(self):
