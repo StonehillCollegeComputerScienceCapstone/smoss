@@ -5,32 +5,43 @@ from MossParser import MossParser
 
 class MossParserUnitTest(unittest.TestCase):
 
-    # - Test testValidURL() on an valid url
-    # - Test testValidURL() on an invalid url
-    # - Test getHtml() on a valid url
-    # - Test processHtml() on valid output
-    # - Test processHtml() on invalid output
-    # - Test getName() with previous file
-    # - Test getName() with current file
-    # - Test for previousYearMatch() for current years (current, current)
-    # - Test for previousYearMatch() for different years (current, previous)
-    # - Test for previousYearMatch() for previous years (previous, previous)
-    # New tests March 26th
-    # - Test for parseMultiple()
-    # - Test for processTableStrings()
-    # - Test for parse()
-    # - Test for formatTableString()
-    # - Test for testFileNaming()
+    # - testValidURL() Test for valid URL
+    # - testValidURL() Test for inValid URL
+    # - testValidURL() Test for invalid URL that will return a 200 ok response
+    # - testValidURL() Test testUrl on empty string
+    # - testValidURL() Test testUrl on string "moss"
+    # - testValidURL() Test testUrl on valid URL + extra chars
+    # - testValidURL() Test testURL on carriage return
+    # - testValidURL() Test testUrl on numeric value
+    # - testValidURL() Test testUrl on list
+    # - testValidURL() Test testUrl on a list of MOSS URL's
+    # - testValidURL() Test testUrl on None
+    # - testValidURL() Test testUrl on Valid IP
+    # - getHtml() Test method on invalid MOSS URL
+    # - getHtml() Test method on valid MOSS URL
+    # - processHtml() Test on valid output
+    # - processHtml() Test on invalid output
+    # - getName() Test with previous file
+    # - getName() Test with current file
+    # - previousYearMatch() Test for current years (current, current)
+    # - previousYearMatch() Test for different years (current, previous)
+    # - previousYearMatch() Test for previous years (previous, previous)
+    # - parseMultiple() Test for
+    # - processTableStrings() Test for
+    # - formatTableString() Test for
+    # - testFileNaming() Test for
     # Tests for inner class "myHTMLParser"
-    # - Test for handle_starttag()
-    # - Test for handle_endtag()
-    # - Test for handle_data()
+    # - handle_starttag() Test for
+    # - handle_endtag() Test for
+    # - handle_data() Test for
+    # - parse() Test for
 
 
     def setUp(self):
         self.mp = MossParser("csv.csv")
         self.config = Config()
         self.validUrl = self.config.getWarmup()
+
 
 #
 # testUrl()
@@ -454,16 +465,51 @@ class MossParserUnitTest(unittest.TestCase):
         file2 = "previous_eyo_HomeValue.java"
         self.assertTrue(self.mp.previousYearMatch(file1,file2))
 
+    #difference in capitalization
+    def test_previousYears(self):
+        file1 = "previous_test.java"
+        file2 = "PREVIOUS_test2.java"
+        self.assertTrue(self.mp.previousYearMatch(file1, file2))
 
+    #difference in capitalization in both files
+    def test_previousYears(self):
+        file1 = "pReviOus_test.java"
+        file2 = "PReVIOUS_test2.java"
+        self.assertTrue(self.mp.previousYearMatch(file1, file2))
 
-   
+    #incorrect spelling of previous
+    def test_previousYears(self):
+        file1 = "pr3vious_test.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    #incorrect use of special characters
+    def test_previousYears(self):
+        file1 = "previ0us_test.java"
+        file2 = "previou$_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    # missing '_' in name
+    def test_previousYears(self):
+        file1 = "previoustest.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    # dash does not count as underscore
+    def test_previousYears(self):
+        file1 = "previous-test.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
 #
 # processTableStrings()
 #
 
     #Testing on no output
     def test_processTableStrings1(self):
-        url = "http://moss.stanford.edu/results/315964287"
+        f = open('testurls.txt')
+        testlines = f.readlines()
+        url = testlines[0]
+        url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
@@ -471,52 +517,58 @@ class MossParserUnitTest(unittest.TestCase):
 
     #Testing on expected output
     def test_processTableStrings2(self):
-        url = "http://moss.stanford.edu/results/486773409"
+        f = open('testurls.txt')
+        testlines = f.readlines()
+        url = testlines[1]
+        url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/486773409/match0.html"],
-                    ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/486773409/match1.html"]], True)
+        expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/419896306/match0.html"],
+                    ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/419896306/match1.html"]], True)
         self.assertEqual(result, expected)
 
     #Testing on expected output
     def test_processTableStrings3(self):
-        url = "http://moss.stanford.edu/results/20984829/"
+        f = open('testurls.txt')
+        testlines = f.readlines()
+        url = testlines[2]
+        url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/20984829/match0.html"]], True)
+        expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/386314775/match0.html"]], True)
         self.assertEqual(result, expected)
 
     #Testing on expected output
-    def test_processTableStrings4(self):
-        url = "http://moss.stanford.edu/results/907948014/"
-        html = self.mp.getHtml(url)
-        tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbaxter5","jbaxter5_TwentyOne.java","5","jbaxter5","jbaxter5_Warmup.java","43","6","http://moss.stanford.edu/results/907948014/match0.html"],
-                    ["jbaxter5","jbaxter5_Insipid.java","11","jbaxter5","jbaxter5_TwentyOne.java","5","5","http://moss.stanford.edu/results/907948014/match1.html"]],True)
-        self.assertEqual(result, expected)
+    #def test_processTableStrings4(self):
+    #    url = "http://moss.stanford.edu/results/907948014/"
+    #    html = self.mp.getHtml(url)
+    #    tableStrings = self.mp.processHtml(html)
+    #    result = self.mp.processTableStrings(tableStrings)
+    #    expected = ([["jbaxter5","jbaxter5_TwentyOne.java","5","jbaxter5","jbaxter5_Warmup.java","43","6","http://moss.stanford.edu/results/907948014/match0.html"],
+    #                ["jbaxter5","jbaxter5_Insipid.java","11","jbaxter5","jbaxter5_TwentyOne.java","5","5","http://moss.stanford.edu/results/907948014/match1.html"]],True)
+    #    self.assertEqual(result, expected)
 
 
     #Testing on unexpected output
-    def test_processTableStrings5(self):
-        url = "http://moss.stanford.edu/results/20984829/"
-        html = self.mp.getHtml(url)
-        tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
-        expected = ([[ "jbxter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
-        self.assertNotEqual(result, expected)
+    #def test_processTableStrings5(self):
+    #    url = "http://moss.stanford.edu/results/20984829/"
+    #    html = self.mp.getHtml(url)
+    #    tableStrings = self.mp.processHtml(html)
+    #    result = self.mp.processTableStrings(tableStrings)
+    #    expected = ([[ "jter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
+    #    self.assertNotEqual(result, expected)
 
 
     #Testing on unexpected output
-    def test_processTableStrings6(self):
-        url = "http://moss.stanford.edu/results/624615253"
-        html = self.mp.getHtml(url)
-        tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbxter_Warmup.java","91","jbaxter_Warmup.java","91","12","http://moss.stanford.edu/results/20984829/match0.html"]],True)
-        self.assertNotEqual(result, expected)
+    #def test_processTableStrings6(self):
+    #    url = "http://moss.stanford.edu/results/624615253"
+    #    html = self.mp.getHtml(url)
+    #    tableStrings = self.mp.processHtml(html)
+    #    result = self.mp.processTableStrings(tableStrings)
+    #    expected = ([["jbxter_Warmup.java","91","jbaxter_Warmup.java","91","12","http://moss.stanford.edu/results/20984829/match0.html"]],True)
+    #    self.assertNotEqual(result, expected)
 #
 # testFileNaming()
 #
@@ -529,6 +581,31 @@ class MossParserUnitTest(unittest.TestCase):
     def test_fileIsDigit(self):
         file1 = "558924359787"
         self.assertFalse(self.mp.testFileNaming(file1))
+
+    # no '_' which would need a username appended to the front
+    def test_testFileNaming(self):
+        file = "invalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
+    # this naming is valid because it
+    def test_testFileNaming2(self):
+        file = "bsmith_validfile.java"
+        self.assertTrue(self.mp.testFileNaming(file))
+
+    # no extension needed
+    def test_testFileNaming3(self):
+        file = "bsmith_validfile"
+        self.assertTrue(self.mp.testFileNaming(file))
+
+    # underscore precedes the filename
+    def test_testFileNaming4(self):
+        file = "_bsmithinvalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
+    # valid filename but underscore precedes the filename, making it invalid
+    def test_testFileNaming5(self):
+        file = "_bsmith_invalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
 
     #get table string values test, make sure the split functionality works
     def test_getTableStringValues(self):

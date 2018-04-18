@@ -364,7 +364,7 @@ class MossURLsTests(unittest.TestCase):
         urls = [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone(), self.config.getWarmup()]
         duplicates, nonDuplicates = self.retriever.getDuplicateUrls(urls)
         self.assertListEqual(duplicates, [self.config.getWarmup()])
-        self.assertListEqual(nonDuplicates, [self.config.getInsipid(), self.config.getTwentyone()])
+        self.assertListEqual(nonDuplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
 
     # Test all duplicates
     def test_getDuplicateUrlsAllDuplicate(self):
@@ -372,7 +372,7 @@ class MossURLsTests(unittest.TestCase):
                 self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()]
         duplicates, nonDuplicates = self.retriever.getDuplicateUrls(urls)
         self.assertListEqual(duplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
-        self.assertListEqual(nonDuplicates, [])
+        self.assertListEqual(nonDuplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
 
 #
 # validateData()

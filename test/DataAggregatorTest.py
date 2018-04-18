@@ -270,6 +270,47 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(array[1].data, 71)
         self.assertEqual(array[2].data, 55)
 
+#
+# aggregateData()
+#
+    # Valid variable type
+    def test_validResultsType(self):
+        self.assertTrue(self.ag.aggregateData())
+
+    # Invalid variable type
+    def test_invalidResultsType(self):
+        self.ag.results = 5
+        self.assertFalse(self.ag.aggregateData())
+
+    # Invalid None type
+    def test_invalidResultsTypeNone(self):
+        self.ag.results = None
+        self.assertFalse(self.ag.aggregateData())
+
+    # Too high percentage value as a string
+    def test_percentTooHighAsString(self):
+        self.ag.results = []
+        self.ag.results.append(Result(2, "Matt", "Sam", self.validURL, "200", "101", 15))
+        self.assertFalse(self.ag.aggregateData())
+
+    # Negative percentage value as a string
+    def test_negativePercentAsString(self):
+        self.ag.results = []
+        self.ag.results.append(Result(2, "Matt", "Sam", self.validURL, "-100", "-200", 15))
+        self.assertFalse(self.ag.aggregateData())
+
+    # Too high percentage value as an int
+    def test_percentTooHighAsInt(self):
+        self.ag.results = []
+        self.ag.results.append(Result(2, "Matt", "Sam", self.validURL, 200, 101, 15))
+        self.assertFalse(self.ag.aggregateData())
+
+    # Negative percentage value as an int
+    def test_negativePercentAsInt(self):
+        self.ag.results = []
+        self.ag.results.append(Result(2, "Matt", "Sam", self.validURL, -101, -101, 15))
+        self.assertFalse(self.ag.aggregateData())
+
 
 if __name__ == '__main__':
     unittest.main()
