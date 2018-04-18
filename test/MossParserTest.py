@@ -465,9 +465,30 @@ class MossParserUnitTest(unittest.TestCase):
         file2 = "previous_eyo_HomeValue.java"
         self.assertTrue(self.mp.previousYearMatch(file1,file2))
 
+    #difference in capitalization
+    def test_previousYears(self):
+        file1 = "previous_test.java"
+        file2 = "PREVIOUS_test2.java"
+        self.assertTrue(self.mp.previousYearMatch(file1, file2))
 
+    #difference in capitalization in both files
+    def test_previousYears(self):
+        file1 = "pReviOus_test.java"
+        file2 = "PReVIOUS_test2.java"
+        self.assertTrue(self.mp.previousYearMatch(file1, file2))
 
-   
+    #incorrect spelling of previous
+    def test_previousYears(self):
+        file1 = "pr3vious_test.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    #incorrect use of special characters
+    def test_previousYears(self):
+        file1 = "previ0us_test.java"
+        file2 = "previou$_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
 #
 # processTableStrings()
 #
