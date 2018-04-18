@@ -45,13 +45,11 @@ class DataAggregator:
         names = []
 
         # For every row from MOSS
-
         for result in results:
-            if result.fileOne not in names:
-                names.append(result.fileOne)
-            if result.fileTwo not in names:
-                names.append(result.fileTwo)
-
+            if result.getNameOne() not in names:
+                names.append(result.getNameOne())
+            if result.getNameTwo() not in names:
+                names.append(result.getNameTwo())
         return names
 
     # Returns an array of assignment numbers in results
@@ -72,11 +70,11 @@ class DataAggregator:
         for number in assignmentNumbers:
             data = []
             for result in results:
-                if (result.assignmentNumber == number and dataType is "lines" and ((result.fileOne == name) or (result.fileTwo == name))):
+                if (result.assignmentNumber == number and dataType is "lines" and ((result.getNameOne() == name) or (result.getNameTwo() == name))):
                     data.append(int(result.linesMatched))
-                elif (result.assignmentNumber == number and dataType is "percents" and result.fileOne == name):
+                elif (result.assignmentNumber == number and dataType is "percents" and result.getNameOne() == name):
                     data.append(int(result.fileOnePercent))
-                elif (result.assignmentNumber == number and dataType is "percents" and result.fileTwo == name):
+                elif (result.assignmentNumber == number and dataType is "percents" and result.getNameTwo() == name):
                     data.append(int(result.fileTwoPercent))
             if (data != []):
                 parsedData.append(max(data))
@@ -96,9 +94,8 @@ class DataAggregator:
 
     # Aggregates the data and populates the two fields
     def aggregateData(self):
-        if (not self.validateResults):
-            sys.exit()
-
+        if (not self.validateResults(self.results)):
+            return False
         names = self.populateNames(self.results)
 
         aggregatePercents = []
@@ -108,8 +105,7 @@ class DataAggregator:
             # Parse the highest percents for a given name
             percents = self.parseData(self.results, name,"percents")
             if ((not self.validateArray(percents)) or (not self.validatePercents(percents))):
-                sys.exit()
-
+                return False
             # Parse the highest lines matched for a given name
             lines = self.parseData(self.results, name, "lines")
 
@@ -124,3 +120,5 @@ class DataAggregator:
         # We only want the top ten results
         self.topPercents = aggregatePercents[:10]
         self.topLines = aggregateLines[:10]
+
+        return True

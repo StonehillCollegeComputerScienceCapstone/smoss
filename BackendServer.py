@@ -36,9 +36,9 @@ def _Index ():
     if request.method == "POST":
         inputURLs = request.form['text'] # Get input from the user
         urls = inputURLs.split("\n")
-        urls = list(filter(None, urls))
         for i in range(len(urls)):
             urls[i] = urls[i].rstrip()
+        urls = list(filter(None, urls))
         session['urls'] = encode(urls)
 
         valid, url = retriever.isValidUrlList(urls)
@@ -116,9 +116,8 @@ def _MOSSOutput ():
     linesValues = aggregator.topLines
 
     graph = Graph(results)
-    graphJson = graph.getJsonObject(results)
-    nodes = graphJson["nodes"]
-    edges = graphJson["edges"]
+    nodes = graph.graph["nodes"]
+    edges = graph.graph["edges"]
     return render_template(template, value=value, percentsValues=percentsValues, linesValues=linesValues, nodes=nodes, edges=edges)
 
 #

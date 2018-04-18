@@ -11,7 +11,7 @@
 <body>
 <h1>Moss Results</h1>
 <HR>
-[ <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A> ]
+<A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A>
 </HR>
 
 
@@ -153,9 +153,9 @@
     var pinks = ['#FF99CC', '#FF00FF', '#FF0099', '#FF0066'];
     var purples = ['#CC99FF', '#996699', '#9900FF', '#49008d'];
     var yellows = ['#FFCC00', '#CCCC00', '#FFC100', '#AC8B1F'];
-    var oranges = ['#FF9900', '#FEB495', '#FF4D00', '#FF6666'];
+    var oranges = ['#FFCC99', '#FEB495', '#FF4D00', '#FF6666'];
     var blues = ['#99CCFF', '#33CCFF', '#7c99ff', '#000999'];
-    var greens = ['#99CC99', '#00CC99', '#006666', '#336633'];
+    var greens = ['#99FF99', '#00CC66', '#006666', '#336633'];
     var possibleColors = [reds, blues, oranges, purples, greens, pinks, yellows];
 
 
@@ -181,8 +181,9 @@
         var x = mynetwork.offsetWidth + mynetwork.offsetWidth;
         var y = -mynetwork.offsetHeight - mynetwork.offsetHeight;
         var step = 110;
+        var idNum = 1000;
         nodes.push({
-            id: 1000,
+            id: idNum,
             x: x,
             y: y,
             label: "Previous Year",
@@ -194,8 +195,9 @@
                 size: 20
             }
         });
+        idNum = idNum+1;
         nodes.push({
-            id: 1001,
+            id: idNum,
             x: x,
             y: y+step,
             label: "Current Year",
@@ -206,7 +208,7 @@
                 size : 20
             }
         });
-        var id = 1002;
+        idNum = idNum+1;
         var label;
         var colorStr;
         var json;
@@ -217,7 +219,7 @@
                 "background": colorStr
             };
             nodes.push({
-                id: id,
+                id: idNum,
                 x:x,
                 y: y+(step*(i+2)),
                 label: label,
@@ -230,7 +232,7 @@
                     size: 20
                 }
             });
-            id++;
+            idNum++;
         }
 
         console.log(edges);
@@ -360,8 +362,7 @@
     }
 
     function reDraw() {
-        for (var i = 0; i < oldEdges.length; i++)
-        {
+        for (var i = 0; i < oldEdges.length; i++){
             if (parseInt(oldEdges[i].value) < slider.value) {
                 oldEdges[i].hidden = true
             }

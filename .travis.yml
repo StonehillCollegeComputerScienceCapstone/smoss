@@ -3,10 +3,6 @@ language: python
 python:
   - 3.6
 
-env:
-  global:
-    - CC_TEST_REPORTER_ID=2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
-
 install:
   - pip install -r requirements.txt
   - npm install -g node-qunit-phantomjs vis
@@ -14,7 +10,7 @@ install:
 before_script:
   - python BuildMachineSetup.py
   - python BackendServer.py &
-  - ./BrowserStackLinux --key GRsnMzVEkcDGYmH8cmpE &
+  - ./BrowserStackLinux --key $BROWSERSTACK_ACCESS_KEY &
   - ./code-coverage.sh
 
 script:
@@ -25,13 +21,7 @@ script:
 
 after_script:
   - coverage xml --omit *Test.py
-  - ./coverage-app after-build -t coverage.py -r 2f167deefe7bd9525853084266d81d722e67d9ae8475db0e2c46fd8ee568129e
+  - ./coverage-app after-build -t coverage.py -r $CC_TEST_REPORTER
 
 notifications:
   slack: csc400a-s18:DR0cXd2Zsp7iuPZmEElgs9Cp
-
-addons:
-  browserstack:
-    username: "traviscibuildmac1"
-    access_key:
-      secure: "RhEaOPZqya9vq5ZfhlY7KbwMv3BW+u3Jp560U8QDN/Ngk3cTf2I0OA5Bkdmb2epKbe2AnWiNyjs4RL5yTfHFhkcWUHuOTB+cO+R6mBQjLyop3AbHesh54V+1s9OVk9dmu1BE4pBYoAtjeURAnI0EdKdfuY7O4o+9osKegpaVrPDf0rYc5RTD6H0GHYUPzdx9mHB9OC7ZMEabtnZ9NuQr3BVUnhKJ7d1NkUvSC+OV9juRGiJEqys9eVwEgPYuEz4lg0TaNjq18Ht/eLlwlVCVSKOAKGT7D5g8DIMQiPM7AJtWgPxZuPQ+v1o3BiIwDtEnybLC+9ZJQzr2Pl3gre87xco+hdlDmh15uZdnHWWaqmDrU6O/Rtb9r6d8E3ubSWnMcJ2DyLWRk08pUYRbQag8NzqLXvGdzDdnvI2FWtU3qMmq8yaUF1B24l/tvt2++kz2hUArWyHnMXKJja8iKzukyYoKdIe6V9zyNwnDmB4uhq6u6991OqGnaV7PNjJfg3R6Sq7MXHRCRDMJjYN+gVw6z4IYQKRMsQ6Gud/P63bwhlsGm4EDHMgg3A4YWMz4GVRkwHmmMPVsBZ0HYnNWcDR0Sgy9McLCHoOpC9BbpR/dX1E6vId+wSFB7gEH+Qf2awwCbgQzVx00lynM2NXFOY1N+dy/SlD3f/YjfYDVymbIkjo="
