@@ -9,14 +9,14 @@ function main
 	cd data
 	
 	# For each assignment in the array, run MOSS and store the results
-	for assignment in "${assignments[@]}"
-	do
-		echo "Retrieving $assignment..."
-		mossResults=$(perl ../moss.pl -l java *"$assignment".java)
-		url=$(echo $mossResults | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*') # Search the results for the regular expression
-		echo "$url"
-		urls+=($url)
-	done
+	#for assignment in "${assignments[@]}"
+	#do
+	#	echo "Retrieving $assignment..."
+	#	mossResults=$(perl ../moss.pl -l java *"$assignment".java)
+	#	url=$(echo $mossResults | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*') # Search the results for the regular expression
+	#	echo "$url"
+	#	urls+=($url)
+	#done
 
 
 	#URLs for testing
@@ -46,6 +46,13 @@ function main
     echo "Retrieving url for test_processTableStrings4"
     test4=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Insipid.java stentacles_Warmup.java stentacles_Insipid.java)
     url=$(echo $test4 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
+    echo $url
+    #echo "\n"
+    testurls+=($url)
+
+    echo "Retrieving url for test_processTableStrings5"
+    test5=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Warmup.java)
+    url=$(echo $test5 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
     echo $url
     #echo "\n"
     testurls+=($url)
