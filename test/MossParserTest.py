@@ -477,6 +477,7 @@ class MossParserUnitTest(unittest.TestCase):
         f = open('testurls.txt')
         testlines = f.readlines()
         url = testlines[0]
+        url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
@@ -487,11 +488,12 @@ class MossParserUnitTest(unittest.TestCase):
         f = open('testurls.txt')
         testlines = f.readlines()
         url = testlines[1]
+        url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/486773409/match0.html"],
-                    ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/486773409/match1.html"]], True)
+        expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/419896306/match0.html"],
+                    ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/419896306/match1.html"]], True)
         self.assertEqual(result, expected)
 
     #Testing on expected output
@@ -499,10 +501,11 @@ class MossParserUnitTest(unittest.TestCase):
         f = open('testurls.txt')
         testlines = f.readlines()
         url = testlines[2]
+        url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
-        expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/20984829/match0.html"]], True)
+        expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/386314775/match0.html"]], True)
         self.assertEqual(result, expected)
 
     #Testing on expected output

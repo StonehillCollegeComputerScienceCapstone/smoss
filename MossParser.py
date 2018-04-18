@@ -53,7 +53,7 @@ class MossParser ():
 
     # Returns True if the URL is valid, else returns False
     def testUrl(self, url):
-        if ((not isinstance(url, str)) or (("moss.stanford.edu/results" not in url) and ("171.64.78.49" not in url))):
+        if (not (isinstance(url, str)) or (("moss.stanford.edu/results" not in url) and ("171.64.78.49" not in url))):
             return False
         try:
             text=lxml.html.parse(url)
@@ -84,7 +84,7 @@ class MossParser ():
         return splitStrings
 
     def getHtml(self, url):
-        if(self.testUrl(url)):
+        if(self.testUrl(url) is True):
             html = urllib.request.urlopen(url)
             mybytes = html.read()
             mystr = mybytes.decode("utf8")
