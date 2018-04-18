@@ -465,9 +465,41 @@ class MossParserUnitTest(unittest.TestCase):
         file2 = "previous_eyo_HomeValue.java"
         self.assertTrue(self.mp.previousYearMatch(file1,file2))
 
+    #difference in capitalization
+    def test_previousYears(self):
+        file1 = "previous_test.java"
+        file2 = "PREVIOUS_test2.java"
+        self.assertTrue(self.mp.previousYearMatch(file1, file2))
 
+    #difference in capitalization in both files
+    def test_previousYears(self):
+        file1 = "pReviOus_test.java"
+        file2 = "PReVIOUS_test2.java"
+        self.assertTrue(self.mp.previousYearMatch(file1, file2))
 
-   
+    #incorrect spelling of previous
+    def test_previousYears(self):
+        file1 = "pr3vious_test.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    #incorrect use of special characters
+    def test_previousYears(self):
+        file1 = "previ0us_test.java"
+        file2 = "previou$_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    # missing '_' in name
+    def test_previousYears(self):
+        file1 = "previoustest.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
+
+    # dash does not count as underscore
+    def test_previousYears(self):
+        file1 = "previous-test.java"
+        file2 = "previous_test2.java"
+        self.assertFalse(self.mp.previousYearMatch(file1, file2))
 #
 # processTableStrings()
 #
@@ -549,6 +581,31 @@ class MossParserUnitTest(unittest.TestCase):
     def test_fileIsDigit(self):
         file1 = "558924359787"
         self.assertFalse(self.mp.testFileNaming(file1))
+
+    # no '_' which would need a username appended to the front
+    def test_testFileNaming(self):
+        file = "invalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
+    # this naming is valid because it
+    def test_testFileNaming2(self):
+        file = "bsmith_validfile.java"
+        self.assertTrue(self.mp.testFileNaming(file))
+
+    # no extension needed
+    def test_testFileNaming3(self):
+        file = "bsmith_validfile"
+        self.assertTrue(self.mp.testFileNaming(file))
+
+    # underscore precedes the filename
+    def test_testFileNaming4(self):
+        file = "_bsmithinvalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
+
+    # valid filename but underscore precedes the filename, making it invalid
+    def test_testFileNaming5(self):
+        file = "_bsmith_invalidfile.java"
+        self.assertFalse(self.mp.testFileNaming(file))
 
     #get table string values test, make sure the split functionality works
     def test_getTableStringValues(self):

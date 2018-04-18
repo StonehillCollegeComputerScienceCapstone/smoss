@@ -103,16 +103,12 @@ class MossParser ():
         tableStringValues = tableString.split(",")
         return tableStringValues
 
-    def getValues(self, fileName1, fileName2):
-        values1 = fileName2.split("_")
-        values2 = fileName1.split("_")
-        return values1, values2
-
 
     def processTableStrings(self, tableStrings):
         # Go through list and turn them into Result object
-        csvStrings=csvPreviousStrings = []
-        previousSet=set()
+        csvStrings = []
+        csvPreviousStrings = []
+        previousSet = set()
         for tableString in tableStrings:
             tableStringValues=self.getTableStringValues(tableString)
             fileName1=tableStringValues[1].strip()
@@ -120,14 +116,13 @@ class MossParser ():
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
                 csvString=[self.getName(fileName1), fileName1, tableStringValues[2], self.getName(fileName2), fileName2, tableStringValues[5],tableStringValues[6], tableStringValues[0]];
-                names = self.getValues(fileName1,fileName2)
-                if self.previousYearMatch(names[0],names[1]):#self.getValues(fileName1, fileName2)):
+                if self.previousYearMatch(fileName1,fileName2):
                     previousSet.add(fileName1)
                     csvPreviousStrings.append(csvString)
                 else:
                     csvStrings.append(csvString)
 
-        #Returns
+        # Returns
         if len(csvStrings)>0:
             return csvStrings, True
         elif len(csvPreviousStrings)>0:
@@ -135,17 +130,24 @@ class MossParser ():
         else:
             return None, True
 
+
     def testFileNaming(self, fileName):
         if fileName[0].isdigit():
             return False
-        return True
 
-
-    def previousYearMatch(self, values1, values2):
-        if values1[0] == values2[0]:
+        # we need an underscore to seperate username and the assignment name,
+        #  _ is suppose to seperate, not precede the name
+        if "_" in fileName and ("_" is not fileName[0]):
             return True
+
         return False
 
+    def previousYearMatch(self, filename1, filename2):
+        #  make sure that potential difference in casing does not cause a problem with the 'previous' tag
+        filename1.lower()
+        filename2.lower()
+
+        return ("previous_" in filename1) and ("previous_" in filename2)
 
     def formatTableString(self,tableString):
         tableString.lstrip()
