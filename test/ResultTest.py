@@ -156,6 +156,77 @@ class MyTestCase(unittest.TestCase):
     def test_validTrue(self):
         self.assertTrue(self.result.isValid())
 
+    def test_validateFiles1(self):
+        self.assertTrue(self.result.validateFiles())
+
+    def test_validateFiles2(self):
+        self.result.fileOne = 23
+        self.assertFalse(self.result.validateFiles())
+
+    def test_validateFiles3(self):
+        self.result.fileTwo = 201.3
+        self.assertFalse(self.result.validateFiles())
+
+    def test_validateFiles4(self):
+        self.result.fileOne = True
+        self.assertFalse(self.result.validateFiles())
+
+    def test_validatePercents1(self):
+        self.assertTrue(self.result.validatePercents())
+
+    def test_validatePercents2(self):
+        self.result.fileOnePercent = "not an int"
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents3(self):
+        self.result.fileTwoPercent = "not an int"
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents4(self):
+        self.result.fileOnePercent = -10
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents5(self):
+        self.result.fileTwoPercent = -32
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents6(self):
+        self.result.fileOnePercent = 0
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents7(self):
+        self.result.fileTwoPercent = 0
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validateURL1(self):
+        self.assertTrue(self.result.validateURL())
+
+    def test_validateURL2(self):
+        self.result.url = 10329
+        self.assertFalse(self.result.validateURL())
+
+    def test_validateURL3(self):
+        self.result.url = True
+        self.assertFalse(self.result.validateURL())
+
+    def test_validateLinesMatched1(self):
+        self.assertTrue(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched2(self):
+        self.result.linesMatched = "not an int"
+        self.assertFalse(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched3(self):
+        self.result.linesMatched = -10
+        self.assertFalse(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched4(self):
+        self.result.linesMatched = 0
+        self.assertFalse(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched5(self):
+        self.result.linesMatched = False
+        self.assertFalse(self.result.validateLinesMatched())
 
 if __name__ == '__main__':
     unittest.main()
