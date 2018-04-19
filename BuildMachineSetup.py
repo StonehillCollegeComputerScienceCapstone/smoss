@@ -15,14 +15,7 @@ import getpass
 import os
 
 # Make the request to the BrowserStack API to get our builds
-username = ''
-password = ''
-
-username = os.environ['BROWSERSTACK_USER']
-password = os.environ['BROWSERSTACK_ACCESS_KEY']
-
-
-browserStackBuilds = requests.get ('https://api.browserstack.com/automate/builds.json', auth = (username, password))
+browserStackBuilds = requests.get ('https://api.browserstack.com/automate/builds.json', auth = (os.environ['BROWSERSTACK_USER'], os.environ['BROWSERSTACK_ACCESS_KEY']))
 
 if browserStackBuilds.status_code is 200:
     # If the request returns data:
@@ -35,7 +28,7 @@ if browserStackBuilds.status_code is 200:
             url = 'https://api.browserstack.com/automate/builds/' + buildHash + '.json'
 
             # Make the request
-            deletePreviousData = requests.delete (url, auth = (username, password))
+            deletePreviousData = requests.delete (url, auth = (os.environ['BROWSERSTACK_USER'], os.environ['BROWSERSTACK_ACCESS_KEY']))
 
 
             # Print the output for logging purposes
