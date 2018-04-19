@@ -18,6 +18,9 @@ class MossParser ():
         # Get the html text from the URL
         html = self.getHtml(url)
 
+        if html is None:
+            return False
+
         # Process the html into table strings
         tableStrings = self.processHtml(html)
 
@@ -26,6 +29,9 @@ class MossParser ():
 
         if(validFileName):
             self.toCsv(csvStrings, 'w')
+            return True
+        else:
+            return False
 
     def toCsv(self, csvStrings, type):
         if(type == 'w'):

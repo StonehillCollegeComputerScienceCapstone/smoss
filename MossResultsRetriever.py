@@ -47,9 +47,10 @@ class MossResultsRetriever:
         csv = "csv.csv"
         m = MossParser(csv)
         assignmentNum = 0
+        validFlag = False
 
         for url in self.urls:
-            m.parse(url)
+            validFlag = m.parse(url)
             file = open(csv)
             lines = file.readlines()
             lines.pop(0) # Remove header from csv
@@ -61,6 +62,8 @@ class MossResultsRetriever:
 
             file.close()
             assignmentNum = assignmentNum + 1
+            if not validFlag:
+                print("ERROR invalid URL")
 
     # Returns a set of duplicate urls and a set of urls to be processed
     def getDuplicateUrls(self, urls):
