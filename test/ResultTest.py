@@ -49,7 +49,7 @@ class MyTestCase(unittest.TestCase):
         self.assertNotEqual(self.result.getNameOne(), "nmarth")
 
 #
-# getNameOne()
+# getNameTwo()
 #
     def test_getNameTwo(self):
         self.result = Result(1, "hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
@@ -64,6 +64,19 @@ class MyTestCase(unittest.TestCase):
     def test_getNameTwoNotOne(self):
         self.result = Result(1, "previous_hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
         self.assertNotEqual(self.result.getNameTwo(), "hpotter")
+
+#
+# getName()
+#
+    def test_getName(self):
+        self.result = Result(1, "hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertEqual(self.result.getName(self.result.fileTwo), "nmarth")
+        self.assertNotEqual(self.result.getName(self.result.fileTwo), "Warmup.java")
+
+    def test_getNameNotPrevious(self):
+        self.result = Result(1, "previous_hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertEqual(self.result.getName(self.result.fileTwo), "nmarth")
+        self.assertNotEqual(self.result.getName(self.result.fileTwo), "previous")
 
 #
 # nameOneIsPrevious()
@@ -86,6 +99,16 @@ class MyTestCase(unittest.TestCase):
     def test_nameTwoIsPreviousFalse(self):
         self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
         self.assertFalse(self.result.nameTwoIsPrevious())
+
+# isNamePrevious()
+
+    def test_isNamePreviousTrue(self):
+        self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertTrue(self.result.isNamePrevious(self.result.fileOne))
+
+    def test_isNamePreviousFalse(self):
+        self.result = Result(1, "hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertFalse(self.result.isNamePrevious(self.result.fileOne))
 
 #
 # toString()

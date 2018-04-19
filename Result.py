@@ -30,28 +30,26 @@ class Result:
         return self.linesMatched
 
     def getNameOne(self):
-        list = self.fileOne.split('_')
-        if list[0] == "previous":
-            return list[1]
-        return list[0]
+        return self.getName(self.fileOne)
 
     def getNameTwo(self):
-        list = self.fileTwo.split('_')
-        if list[0] == "previous":
-            return list[1]
-        return list[0]
+        return self.getName(self.fileTwo)
+
+    def getName(self, file):
+        fileName = file.split('_')
+        if fileName[0] == "previous":
+            return fileName[1]
+        return fileName[0]
 
     def nameOneIsPrevious(self):
-        list = self.fileOne.split('_')
-        if list[0] == "previous":
-            return True
-        return False
+        return self.isNamePrevious(self.fileOne)
 
     def nameTwoIsPrevious(self):
-        list = self.fileTwo.split('_')
-        if list[0] == "previous":
-            return True
-        return False
+        return self.isNamePrevious(self.fileTwo)
+
+    def isNamePrevious(self, name):
+        prev = name.split('_')
+        return prev[0] == "previous"
 
     def toString(self):
         return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
