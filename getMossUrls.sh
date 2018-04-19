@@ -44,7 +44,7 @@ function main
     testurls+=($url)
 
     echo "Retrieving url for test_processTableStrings4"
-    test4=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Insipid.java stentacles_Warmup.java stentacles_Insipid.java)
+    test4=$(perl ../moss.pl -l java jbaxter5_Warmup.java stentacles_Warmup.java jbaxter5_Insipid.java stentacles_Insipid.java )
     url=$(echo $test4 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
     echo $url
     #echo "\n"
@@ -62,10 +62,10 @@ function main
 	cd ..
 	
 	# Write all URLs to mossUrls.txt
-	for url in "${urls[@]}"
-	do 
-		echo "$url"
-	done > mossUrls.txt
+	#for url in "${urls[@]}"
+	#do
+	#	echo "$url"
+	#done > mossUrls.txt
 
 	# Write test urls to testurls.txt
 	for url in "${testurls[@]}"
