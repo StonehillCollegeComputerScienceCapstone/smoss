@@ -41,6 +41,7 @@ class FrontEndTestSuite (unittest.TestCase):
 
         tempConfigObject = Config ()
         self.testURL = tempConfigObject.getTwentyone ()
+        self.testURLGroup = [tempConfigObject.getInsipid (), tempConfigObject.getRodentia (), tempConfigObject.getWarmup (), tempConfigObject.getSquareroot ()]
 
 
     #
