@@ -541,6 +541,12 @@ class MossParserUnitTest(unittest.TestCase):
         response = self.mp.getTableStringValues("jbxter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html")
         self.assertTrue((len(response)==6))
 
+    def test_invalidCsvFormatString(self):
+        self.assertFalse(self.mp.getTableStringValues('invalid'))
+
+    def test_invalidTypeAsString(self):
+        self.assertFalse(self.mp.getTableStringValues(5))
+
     def test_formatTableString(self):
         data = "<td> a href http://moss.stanford.edu/results/490959839/match249.html jlacey_Rodentia.java (9%) a      <td> a href http://moss.stanford.edu/results/490959839/match249.html pbaelish_Rodentia.java (10%) a  <td> align right 16 "
         result = self.mp.formatTableString(data)

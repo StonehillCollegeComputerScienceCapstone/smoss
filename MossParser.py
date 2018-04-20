@@ -28,10 +28,7 @@ class MossParser ():
         csvStrings, validFileName = self.processTableStrings(tableStrings)
 
         if(validFileName):
-            self.toCsv(csvStrings, 'w')
-            return True
-        else:
-            return False
+            return self.toCsv(csvStrings, 'w')
 
     def toCsv(self, csvStrings, type):
         if(type == 'w'):
@@ -103,6 +100,8 @@ class MossParser ():
             return None
 
     def getTableStringValues(self, tableString):
+        if not isinstance(tableString, str):
+            return False
         tableString=self.formatTableString(tableString)
 
         # if we didn't get a csv format string, that's an error
