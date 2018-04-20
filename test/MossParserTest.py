@@ -624,5 +624,45 @@ class MossParserUnitTest(unittest.TestCase):
         expected = ",http://moss.stanford.edu/results/490959839/match249.html,jlacey_Rodentia.java,9,http://moss.stanford.edu/results/490959839/match249.html,pbaelish_Rodentia.java,10,16,"
         self.assertEqual(result, expected)
 
+#
+# parse()
+#
+    # Break method if getHtml(url) returns None
+    def test_InvalidMossUrl(self):
+        self.assertFalse(self.mp.parse("invalid.com"))
+
+#
+# toCsv()
+#
+    # Correct write with 'w'
+    def test_validWriteCsvStrings(self):
+        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
+        self.assertTrue(self.mp.toCsv(csvStrings, 'w'))
+
+    # Correct write with 'a'
+    def test_validAppendCsvStrings(self):
+        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
+        self.assertTrue(self.mp.toCsv(csvStrings, 'a'))
+
+    # Invalid type to write/append
+    def test_invalidTypeForWriteOrAppend(self):
+        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
+        self.assertFalse(self.mp.toCsv(csvStrings, 'z'))
+
+    # Invalid CsvStrings type
+    def test_invalidCsvStringsTypeInt(self):
+        self.assertFalse(self.mp.toCsv(5, 'a'))
+
+    # CsvStrings needs to be a list
+    def test_invalidCsvStringsTypeString(self):
+        self.assertFalse(self.mp.toCsv('string', 'a'))
+
+    # Invalid type of write/append argument
+    def test_invalidTypeInt(self):
+        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
+        self.assertFalse(self.mp.toCsv(csvStrings, 5))
+
+
+
 if __name__ == '__main__':
     unittest.main()
