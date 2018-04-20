@@ -275,7 +275,22 @@ class MossURLsTests(unittest.TestCase):
 #
 # populateResults()
 #
-    #
+
+    # test that results are not empty
+    def test_notEmpty(self):
+        url =  self.validUrl
+        self.retriever.appendUrl(url)
+        self.retriever.populateResults()
+        if not self.retriever.results:
+            self.assertFalse(False)
+
+
+
+
+
+    #test that results are not empyty
+    #check that results is a list
+    #test that
 
 #
 # getDuplicateUrls()
