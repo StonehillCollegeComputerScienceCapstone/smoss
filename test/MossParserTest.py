@@ -40,7 +40,7 @@ class MossParserUnitTest(unittest.TestCase):
     def setUp(self):
         self.mp = MossParser("csv.csv")
         self.config = Config()
-        self.validUrl = self.config.getPalindrome()
+        self.validUrl = self.config.getMagicsquare()
 
 #
 # parse()
@@ -98,7 +98,7 @@ class MossParserUnitTest(unittest.TestCase):
 
     # Test testUrl on a list of MOSS URL's
     def test_invalidURLOnListOfMOSSURLs(self):
-        l = [self.config.getPalindrome(), self.config.getTwentyone(), self.config.getMagicsquare()]
+        l = [self.config.getMagicsquare(), self.config.getTwentyone(), self.config.getTwentyone()]
         self.assertFalse(self.mp.testUrl(l))
 
     # Test testUrl on None
@@ -361,7 +361,7 @@ class MossParserUnitTest(unittest.TestCase):
                              """<tr><td><a href="http://moss.stanford.edu/results/11690537/match41.html">cchase_Palindrome.java (11%)</a>
                                  </td><td><a href="http://moss.stanford.edu/results/11690537/match41.html">jcary_Palindrome.java (22%)</a>
                              </td><td align="right">7
-                             </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getPalindrome())))
+                             </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getMagicsquare())))
 
 #
 # getName()
@@ -440,7 +440,7 @@ class MossParserUnitTest(unittest.TestCase):
 
     #Testing on no output
     def test_processTableStrings1(self):
-        f = open('testurls.txt')
+        f = open('./test/testurls.txt')
         testlines = f.readlines()
         url = testlines[0]
         url=url.replace('\n','')

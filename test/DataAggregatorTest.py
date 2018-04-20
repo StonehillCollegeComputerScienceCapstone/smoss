@@ -18,7 +18,7 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.config = Config()
-        self.validURL = self.config.getWarmup()
+        self.validURL = self.config.getTwentyone()
         self.results = []
 
         self.results.append(Result(1, "Matt", "Armen", self.validURL, 90, 70, 20))

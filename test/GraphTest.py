@@ -57,7 +57,7 @@ class MyTestCase(unittest.TestCase):
 
     def setUp(self):
         self.config = Config()
-        self.validURL = self.config.getWarmup()
+        self.validURL = self.config.getPalindrome()
 
         self.results = []
         self.results.append(Result(1, "matt_SquareRoot.java", "armen_SquareRoot.java", self.validURL, 90, 70, 20))

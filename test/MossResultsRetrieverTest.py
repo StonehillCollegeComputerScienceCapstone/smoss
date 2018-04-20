@@ -6,7 +6,7 @@ from Result import Result
 class MossURLsTests(unittest.TestCase):
     def setUp(self):
         self.config = Config()
-        self.validUrl = self.config.getWarmup()
+        self.validUrl = self.config.getMagicsquare()
         self.retriever = MossResultsRetriever()
         self.results = Result(1, "f1", "f2", "url", 40, 50, 60)
 
@@ -175,15 +175,15 @@ class MossURLsTests(unittest.TestCase):
 
     # Test multiple valid
     def test_isValidUrlListMultipleValid(self):
-        urls = [self.config.getWarmup(), self.config.getTwentyone(), self.config.getInsipid()]
+        urls = [self.config.getMagicsquare(), self.config.getTwentyone(), self.config.getTwentyone()]
         isValid, url = self.retriever.isValidUrlList(urls)
         self.assertTrue(isValid)
         self.assertEqual(url, "success")
 
     # Test multiple valid with duplicates
     def test_isValidUrlListMultipleValidDuplicates(self):
-        urls = [self.config.getWarmup(), self.config.getTwentyone(), self.config.getInsipid(),
-                self.config.getWarmup(), self.config.getTwentyone(), self.config.getInsipid()]
+        urls = [self.config.getMagicsquare(), self.config.getTwentyone(), self.config.getTwentyone(),
+                self.config.getMagicsquare(), self.config.getTwentyone(), self.config.getTwentyone()]
         isValid, url = self.retriever.isValidUrlList(urls)
         self.assertTrue(isValid)
         self.assertEqual(url, "success")
@@ -354,25 +354,25 @@ class MossURLsTests(unittest.TestCase):
 
     # Test no duplicates
     def test_getDuplicateUrlsNoDuplicates(self):
-        urls = [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()]
+        urls = [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()]
         duplicates, nonDuplicates = self.retriever.getDuplicateUrls(urls)
         self.assertListEqual(duplicates, [])
-        self.assertListEqual(nonDuplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
+        self.assertListEqual(nonDuplicates, [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()])
 
     # Test one duplicate
     def test_getDuplicateUrlsOneDuplicate(self):
-        urls = [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone(), self.config.getWarmup()]
+        urls = [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone(), self.config.getMagicsquare()]
         duplicates, nonDuplicates = self.retriever.getDuplicateUrls(urls)
-        self.assertListEqual(duplicates, [self.config.getWarmup()])
-        self.assertListEqual(nonDuplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
+        self.assertListEqual(duplicates, [self.config.getMagicsquare()])
+        self.assertListEqual(nonDuplicates, [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()])
 
     # Test all duplicates
     def test_getDuplicateUrlsAllDuplicate(self):
-        urls = [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone(),
-                self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()]
+        urls = [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone(),
+                self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()]
         duplicates, nonDuplicates = self.retriever.getDuplicateUrls(urls)
-        self.assertListEqual(duplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
-        self.assertListEqual(nonDuplicates, [self.config.getWarmup(), self.config.getInsipid(), self.config.getTwentyone()])
+        self.assertListEqual(duplicates, [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()])
+        self.assertListEqual(nonDuplicates, [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()])
 
 #
 # validateData()
