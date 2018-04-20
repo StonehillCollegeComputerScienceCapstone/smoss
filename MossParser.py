@@ -41,13 +41,17 @@ class MossParser ():
         elif (type == 'a'):
             f = open(self.csvFileName, 'a')
         else:
-            return
-        for item in csvStrings:
-            for value in item[:-1]:
-                f.write(value+",")
-            f.write(item[-1])
-            f.write('\n')
+            return False
+        if (isinstance(csvStrings, list)):
+            for item in csvStrings:
+                for value in item[:-1]:
+                    f.write(value+",")
+                f.write(item[-1])
+                f.write('\n')
+            f.close()
+            return True
         f.close()
+        return False
 
     # Gets the name of the student for a given file name
     def getName(self, fileName):
