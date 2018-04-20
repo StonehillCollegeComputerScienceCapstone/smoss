@@ -114,8 +114,7 @@ class MossParser ():
 
     def processTableStrings(self, tableStrings):
         # Go through list and turn them into Result object
-        csvStrings = []
-        csvPreviousStrings = []
+        csvStrings = csvPreviousStrings = []
         previousSet = set()
         for tableString in tableStrings:
             tableStringValues=self.getTableStringValues(tableString)
