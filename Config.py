@@ -1,7 +1,7 @@
 import logging
 class Config:
 
-    mossUrlsFile = 'mossUrls.txt'
+    mossUrlsFile = './test/mossUrls.txt'
     file = open(mossUrlsFile, 'r').read()
     lines = file.split('\n')
 
