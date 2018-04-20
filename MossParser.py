@@ -36,8 +36,7 @@ class MossParser ():
     def toCsv(self, csvStrings, type):
         if(type == 'w'):
             f = open(self.csvFileName, 'w')
-            f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL")
-            f.write('\n')
+            f.write("User1,FileName1,Match1,User2,FileName2,Match2,Lines_Matched,URL" + '\n')
         elif (type == 'a'):
             f = open(self.csvFileName, 'a')
         else:
