@@ -29,7 +29,7 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
         driver = self.InitializeBrowserStackConnection ("Test an Expired URL")
         
         # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        driver.get ("http://localhost:5000/")
 
         # Find textarea and input expired URL
         driver.find_element_by_name ("text").click ()
@@ -50,7 +50,7 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
         driver = self.InitializeBrowserStackConnection ("Test an Expired URL")
         
         # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        driver.get ("http://localhost:5000/")
 
         # Find textarea and input expired URL
         driver.find_element_by_name ("text").click ()
@@ -75,7 +75,7 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
         driver = self.InitializeBrowserStackConnection ("Test an Expired URL")
         
         # Navigate to page
-        driver.get ("http://127.0.0.1:5000/")
+        driver.get ("http://localhost:5000/")
 
         # Find textarea, input a collection of URLs, and submit form data
         driver.find_element_by_name ("text").click ()
