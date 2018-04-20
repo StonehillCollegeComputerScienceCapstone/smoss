@@ -28,7 +28,7 @@ class SingleAssignmentCrossYearTest (FrontEndConfig.FrontEndTestSuite):
         # NEW PAGE      ->      http://localhost:5000/selectionpage
         
         # Click the expected radio button and click submit button:
-        radioButton = browser.find_element_by_css_selector ("input[type='radio'][value='" + url + "']").click ()
+        radioButton = browser.find_element_by_css_selector ("input[type='radio'][value='" + self.testURL + "']").click ()
         submitButton = browser.find_element_by_css_selector ("input[type='submit']").click ()
 
         # NEW PAGE      ->      http://localhost:5000/moss
