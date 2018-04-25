@@ -41,6 +41,19 @@ class Result:
             return fileName[1]
         return fileName[0]
 
+    def getAssignmentName(self):
+        listOne = self.fileOne.split('_')
+        listTwo = self.fileTwo.split('_')
+        assignmentOne = listOne[-1]
+        assignmentTwo = listTwo[-1]
+
+        if assignmentOne != assignmentTwo:
+            return "Error! Different file names!"
+
+        return assignmentOne
+
+
+
     def nameOneIsPrevious(self):
         return self.isNamePrevious(self.fileOne)
 
