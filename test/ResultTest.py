@@ -49,7 +49,7 @@ class MyTestCase(unittest.TestCase):
         self.assertNotEqual(self.result.getNameOne(), "nmarth")
 
 #
-# getNameOne()
+# getNameTwo()
 #
     def test_getNameTwo(self):
         self.result = Result(1, "hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
@@ -64,6 +64,19 @@ class MyTestCase(unittest.TestCase):
     def test_getNameTwoNotOne(self):
         self.result = Result(1, "previous_hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
         self.assertNotEqual(self.result.getNameTwo(), "hpotter")
+
+#
+# getName()
+#
+    def test_getName(self):
+        self.result = Result(1, "hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertEqual(self.result.getName(self.result.fileTwo), "nmarth")
+        self.assertNotEqual(self.result.getName(self.result.fileTwo), "Warmup.java")
+
+    def test_getNameNotPrevious(self):
+        self.result = Result(1, "previous_hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
+        self.assertEqual(self.result.getName(self.result.fileTwo), "nmarth")
+        self.assertNotEqual(self.result.getName(self.result.fileTwo), "previous")
 
 #
 # nameOneIsPrevious()
@@ -86,6 +99,35 @@ class MyTestCase(unittest.TestCase):
     def test_nameTwoIsPreviousFalse(self):
         self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
         self.assertFalse(self.result.nameTwoIsPrevious())
+
+#
+# isNamePrevious()
+#
+    # Test previous file name
+    def test_isNamePreviousTrue(self):
+        self.assertTrue(self.result.isNamePrevious("previous_hpotter_Insipid.java"))
+
+    # Test current file name
+    def test_isNamePreviousFalse(self):
+        self.assertFalse(self.result.isNamePrevious("hpotter_Insipid.java"))
+
+    # Test incorrect spelling of previous
+    def test_isNamePreviousFalseWrongSpelling(self):
+        self.assertFalse(self.result.isNamePrevious("pr3vious_test.java"))
+
+    # Test incorrect use of special characters
+    def test_isNamePreviousSpecialChars(self):
+        self.assertFalse(self.result.isNamePrevious("previ0us_test.java"))
+        self.assertFalse(self.result.isNamePrevious("previou$_test2.java"))
+
+    # Test missing '_' in name
+    def test_isNamePreviousMissingUnderscore(self):
+        self.assertFalse(self.result.isNamePrevious("previoustest.java"))
+
+    # Test dash (does not count as underscore)
+    def test_isNamePrevious(self):
+        self.result.fileOne = "previous-test.java"
+        self.assertFalse(self.result.isNamePrevious("previous-test.java"))
 
 #
 # toString()
@@ -156,6 +198,77 @@ class MyTestCase(unittest.TestCase):
     def test_validTrue(self):
         self.assertTrue(self.result.isValid())
 
+    def test_validateFiles1(self):
+        self.assertTrue(self.result.validateFiles())
+
+    def test_validateFiles2(self):
+        self.result.fileOne = 23
+        self.assertFalse(self.result.validateFiles())
+
+    def test_validateFiles3(self):
+        self.result.fileTwo = 201.3
+        self.assertFalse(self.result.validateFiles())
+
+    def test_validateFiles4(self):
+        self.result.fileOne = True
+        self.assertFalse(self.result.validateFiles())
+
+    def test_validatePercents1(self):
+        self.assertTrue(self.result.validatePercents())
+
+    def test_validatePercents2(self):
+        self.result.fileOnePercent = "not an int"
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents3(self):
+        self.result.fileTwoPercent = "not an int"
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents4(self):
+        self.result.fileOnePercent = -10
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents5(self):
+        self.result.fileTwoPercent = -32
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents6(self):
+        self.result.fileOnePercent = 0
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validatePercents7(self):
+        self.result.fileTwoPercent = 0
+        self.assertFalse(self.result.validatePercents())
+
+    def test_validateURL1(self):
+        self.assertTrue(self.result.validateURL())
+
+    def test_validateURL2(self):
+        self.result.url = 10329
+        self.assertFalse(self.result.validateURL())
+
+    def test_validateURL3(self):
+        self.result.url = True
+        self.assertFalse(self.result.validateURL())
+
+    def test_validateLinesMatched1(self):
+        self.assertTrue(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched2(self):
+        self.result.linesMatched = "not an int"
+        self.assertFalse(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched3(self):
+        self.result.linesMatched = -10
+        self.assertFalse(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched4(self):
+        self.result.linesMatched = 0
+        self.assertFalse(self.result.validateLinesMatched())
+
+    def test_validateLinesMatched5(self):
+        self.result.linesMatched = False
+        self.assertFalse(self.result.validateLinesMatched())
 
 if __name__ == '__main__':
     unittest.main()

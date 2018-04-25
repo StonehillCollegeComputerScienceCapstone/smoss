@@ -9,7 +9,6 @@
 #   This suite runs all of the UAT's from Story #154706492. 
 #
 import test.frontend.FrontEndConfig as FrontEndConfig
-import Config
 
 class SingleAssignmentCrossYearTest (FrontEndConfig.FrontEndTestSuite):    
     #  
@@ -17,20 +16,19 @@ class SingleAssignmentCrossYearTest (FrontEndConfig.FrontEndTestSuite):
     #  
     def test_CurrentAndCurrentPairing (self):  
         browser = self.InitializeBrowserStackConnection ('Single Assign. X-Year - Current & Current Pairing')  
-        url = self.getUrl ()
 
         # Navigate to the homepage:
         browser.get ('http://localhost:5000/')
 
         # Target the textarea element and send it one of the Config file's pre-saved URL's
         textSubmission = browser.find_element_by_tag_name ('textarea')
-        textSubmission.send_keys (url)
+        textSubmission.send_keys (self.testURL)
         textSubmission.submit ()
 
         # NEW PAGE      ->      http://localhost:5000/selectionpage
         
         # Click the expected radio button and click submit button:
-        radioButton = browser.find_element_by_css_selector ("input[type='radio'][value='" + url + "']").click ()
+        radioButton = browser.find_element_by_css_selector ("input[type='radio'][value='" + self.testURL + "']").click ()
         submitButton = browser.find_element_by_css_selector ("input[type='submit']").click ()
 
         # NEW PAGE      ->      http://localhost:5000/moss
@@ -39,14 +37,6 @@ class SingleAssignmentCrossYearTest (FrontEndConfig.FrontEndTestSuite):
 
         self.assertEqual (browser.current_url, 'http://localhost:5000/moss')        
 
-
-
-    #
-    #   getUrl ():      Creates a 
-    #
-    def getUrl (self):
-        temp = Config.Config ()
-        return temp.rodentia
 
 '''
 TODO:   These are the remaining UAT's for this file:

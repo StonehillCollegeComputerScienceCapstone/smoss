@@ -30,28 +30,26 @@ class Result:
         return self.linesMatched
 
     def getNameOne(self):
-        list = self.fileOne.split('_')
-        if list[0] == "previous":
-            return list[1]
-        return list[0]
+        return self.getName(self.fileOne)
 
     def getNameTwo(self):
-        list = self.fileTwo.split('_')
-        if list[0] == "previous":
-            return list[1]
-        return list[0]
+        return self.getName(self.fileTwo)
+
+    def getName(self, file):
+        fileName = file.split('_')
+        if fileName[0] == "previous":
+            return fileName[1]
+        return fileName[0]
 
     def nameOneIsPrevious(self):
-        list = self.fileOne.split('_')
-        if list[0] == "previous":
-            return True
-        return False
+        return self.isNamePrevious(self.fileOne)
 
     def nameTwoIsPrevious(self):
-        list = self.fileTwo.split('_')
-        if list[0] == "previous":
-            return True
-        return False
+        return self.isNamePrevious(self.fileTwo)
+
+    def isNamePrevious(self, name):
+        prev = name.split('_')
+        return prev[0] == "previous"
 
     def toString(self):
         return str(self.assignmentNumber) + "\t" + str(self.fileOne) + "\t" + str(self.fileTwo) + "\t" + str(self.url) \
@@ -64,11 +62,18 @@ class Result:
                (self.linesMatched == result.linesMatched)
 
     def isValid(self):
-        if isinstance(self.getFileOne(), str) and isinstance(self.getFileTwo(), str) and \
-                isinstance(self.getPercentOne(), int) and isinstance(self.getPercentTwo(), int) and \
-                isinstance(self.getUrl(), str) and isinstance(self.getLinesMatched(), int) and \
-                (self.getPercentOne() > 0) and (self.getPercentTwo() > 0) and (self.getLinesMatched() > 0):
-            return True
-        return False
+        return self.validateFiles() and self.validatePercents() and self.validateURL() and self.validateLinesMatched()
 
+    def validateFiles(self):
+        return isinstance(self.getFileOne(), str) and isinstance(self.getFileTwo(), str)
 
+    def validatePercents(self):
+        var1 = self.getPercentOne()
+        var2 = self.getPercentTwo()
+        return isinstance(var1, int) and isinstance(var2, int) and var1 > 0 and var2 > 0
+
+    def validateURL(self):
+        return isinstance(self.getUrl(), str)
+
+    def validateLinesMatched(self):
+        return isinstance(self.linesMatched, int) and self.linesMatched > 0

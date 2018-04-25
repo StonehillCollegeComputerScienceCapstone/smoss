@@ -41,6 +41,7 @@ class FrontEndTestSuite (unittest.TestCase):
 
         tempConfigObject = Config ()
         self.testURL = tempConfigObject.getTwentyone ()
+        self.testURLGroup = [tempConfigObject.getMagicsquare (), tempConfigObject.getPalindrome (), tempConfigObject.getTwentyone ()]
 
 
     #

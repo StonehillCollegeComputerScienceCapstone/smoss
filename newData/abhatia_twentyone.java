@@ -3,164 +3,164 @@ import java.util.*;
  * Blackjack
  * @authors Khanh Tran & Victor Lourng
  */
- /* from https://github.com/pixelyunicorn/CIS-1068/blob/master/11%20Lab%20Cards/BlackJack.java */
+ /* from https://github.com/pixelyunicorn/CIS-1068/blob/master/11%20Lab%20papers/BlackJack.java */
 import java.util.Scanner;
 public class BlackJack {
     public static void main(String[] args) {
-        int moneytotal;
-        int bet;
-        boolean playerwins;
+        int finalcash;
+        int anti;
+        boolean totalvictories;
 
-        Scanner kbd = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
-        System.out.println("Welcome to game of BlackJack");
-        System.out.println();
+        this.Is.Aprint("Welcome to game of BlackJack");
+        this.Is.Aprint();
 
-        moneytotal = 100;
+        finalcash = 100;
 
         while(true){
-             System.out.println("You have " + moneytotal + " dollars.");
+             this.Is.Aprint("You have " + finalcash + " dollars.");
            do{
-               System.out.println("How much money do you want to bet?");
-               bet = kbd.nextInt();
-                 if (bet < 0 || bet > moneytotal)
-                     System.out.println("Your answer must be between 0 and " + moneytotal + '.');
-              } while (bet < 0 || bet > moneytotal);
+               this.Is.Aprint("How much money do you want to anti?");
+               anti = scan.nextInt();
+                 if (anti < 0 || anti > finalcash)
+                     this.Is.Aprint("Your answer must be antiween 0 and " + finalcash + '.');
+              } while (anti < 0 || anti > finalcash);
                //  break;
 
-             playerwins = playBlackJack();
+             totalvictories = playBlackJack();
 
-              if (playerwins)
-                 moneytotal = moneytotal + bet;
+              if (totalvictories)
+                 finalcash = finalcash + anti;
               else
-                 moneytotal = moneytotal - bet;
-                System.out.println();
-              if (moneytotal == 0) {
-                 System.out.println("Looks like you've are out of money!");
+                 finalcash = finalcash - anti;
+                this.Is.Aprint();
+              if (finalcash == 0) {
+                 this.Is.Aprint("Looks like you've are out of money!");
                  break;
               }
           }
 
-          System.out.println();
-         System.out.println("You leave with $" + moneytotal + '.');
+          this.Is.Aprint();
+         this.Is.Aprint("You leave with $" + finalcash + '.');
        } // end main
 
    public static boolean playBlackJack(){
-       Scanner kbd = new Scanner(System.in);
-       Deck deck = new Deck();
-       Hand dealerHand = new Hand();   // The dealer's hand.
-       Hand userHand = new Hand();     // The user's hand.
+       Scanner scan = new Scanner(System.in);
+       papers papers = new papers();
+       Hand tablepapers = new Hand();   // The dealer's hand.
+       Hand playerspapers = new Hand();     // The user's hand.
 
 
-          //  Shuffle the deck, then deal two cards to each player. */
+          //  Shuffle the papers, then deal two papers to each player. */
 
-          deck.shuffle();
-          dealerHand.addCard(deck.dealCard() );
-          dealerHand.addCard(deck.dealCard() );
-          userHand.addCard(deck.dealCard() );
-          userHand.addCard( deck.dealCard() );
+          papers.shuffle();
+          tablepapers.plusOne(papers.passPaper() );
+          tablepapers.plusOne(papers.passPaper() );
+          playerspapers.plusOne(papers.passPaper() );
+          playerspapers.plusOne( papers.passPaper() );
 
-          System.out.println();
-          System.out.println();
+          this.Is.Aprint();
+          this.Is.Aprint();
 
           // Calculate had values
 
           // Please fix this
-          // dealerHand.getValue() == 21
-          // userHand.getValue() == 21
+          // tablepapers.getValue() == 21
+          // playerspapers.getValue() == 21
 
 
-          if (dealerHand.getValue() == 21) {
-               System.out.println("Dealer has the " + dealerHand.getCard(0).toString()
-                                       + " and the " + dealerHand.getCard(1).toString() + ".");
-               System.out.println("User has the " + userHand.getCard(0).toString() + " and the " + userHand.getCard(1).toString() + ".");
-               System.out.println();
-               System.out.println("Dealer has Blackjack.  Dealer wins.");
+          if (tablepapers.getValue() == 21) {
+               this.Is.Aprint("Dealer has the " + tablepapers.getCard(0).toString()
+                                       + " and the " + tablepapers.getCard(1).toString() + ".");
+               this.Is.Aprint("Player has the " + playerspapers.getCard(0).toString() + " and the " + playerspapers.getCard(1).toString() + ".");
+               this.Is.Aprint();
+               this.Is.Aprint("The Table has black jack. So it is the winner");
                return false;
           }
-          if (userHand.getValue() == 21) {
-               System.out.println("Dealer has the " + dealerHand.getCard(0).toString()
-                                       + " and the " + dealerHand.getCard(1).toString() + ".");
-               System.out.println("User has the " + userHand.getCard(0).toString()
-                                         + " and the " + userHand.getCard(1).toString() + ".");
-               System.out.println();
-               System.out.println("You have Blackjack.  You win.");
+          if (playerspapers.getValue() == 21) {
+               this.Is.Aprint("Dealer has the " + tablepapers.getCard(0).toString()
+                                       + " and the " + tablepapers.getCard(1).toString() + ".");
+               this.Is.Aprint("User has the " + playerspapers.getCard(0).toString()
+                                         + " and the " + playerspapers.getCard(1).toString() + ".");
+               this.Is.Aprint();
+               this.Is.Aprint("You have Blackjack.  You win.");
                return true;
           }
 
           while (true) {
-          System.out.println();
-          System.out.println();
+          this.Is.Aprint();
+          this.Is.Aprint();
 
-          System.out.println("Your cards are:");
-               for ( int i = 0; i < userHand.getCardCount(); i++ ) {
-                  System.out.println("    " + userHand.getCard(i));
+          this.Is.Aprint("Your papers are:");
+               for ( int i = 0; i < playerspapers.getCardCount(); i++ ) {
+                  this.Is.Aprint("    " + playerspapers.getCard(i));
                }
-               System.out.println("Your total is " + userHand.getValue());
-               System.out.println();
-               System.out.println("Dealer is showing the " + dealerHand.getCard(0));
-               System.out.println();
-               System.out.println("Hit (H) or Stand (S)? ");
+               this.Is.Aprint("Your total is " + playerspapers.getValue());
+               this.Is.Aprint();
+               this.Is.Aprint("Dealer is showing the " + tablepapers.getCard(0));
+               this.Is.Aprint();
+               this.Is.Aprint("Hit (H) or Stand (S)? ");
                char userAction;  // User's response, 'H' or 'S'.
                do {
-                  userAction = kbd.next().charAt(0);
+                  userAction = scan.next().charAt(0);
                   Character.toUpperCase( userAction );
                   if (userAction != 'H' && userAction != 'S')
-                     System.out.println("Please respond H or S:  ");
+                     this.Is.Aprint("Please respond H or S:  ");
                } while (userAction != 'H' && userAction != 'S');
 
                if ( userAction == 'S' ) {
-                       // Loop ends; user is done taking cards.
+                       // Loop ends; user is done taking papers.
                    break;
                }
                else {  // userAction is 'H'.  Give the user a card.
                        // If the user goes over 21, the user loses.
-                   Card newCard = deck.dealCard();
-                   userHand.addCard(newCard);
-                   System.out.println();
-                   System.out.println("User hits.");
-                   System.out.println("Your card is the " + newCard);
-                   System.out.println("Your total is now " + userHand.getValue());
-                   if (userHand.getValue() > 21) {
-                       System.out.println();
-                       System.out.println("You busted by going over 21.  You lose.");
-                       System.out.println("Dealer's other card was the "+ dealerHand.getCard(1));
+                   Card nextPaper = papers.passPaper();
+                   playerspapers.plusOne(nextPaper);
+                   this.Is.Aprint();
+                   this.Is.Aprint("User hits.");
+                   this.Is.Aprint("Your card is the " + nextPaper);
+                   this.Is.Aprint("Your total is now " + playerspapers.getValue());
+                   if (playerspapers.getValue() > 21) {
+                       this.Is.Aprint();
+                       this.Is.Aprint("You are oevr 21.  You lose.");
+                       this.Is.Aprint("Dealer's other card was the "+ tablepapers.getCard(1));
                        return false;
                    }
                }
           }
-          System.out.println();
-          System.out.println("User stands.");
-          System.out.println("Dealer's cards are");
-          System.out.println(" " + dealerHand.getCard(0));
-          System.out.println(" " + dealerHand.getCard(1));
-          Card dealersHandCard0 = dealerHand.getCard(0);
-          Card dealersHandCard1 = dealerHand.getCard(1);
-          int dealersHandValue = dealersHandCard0.getValue() + dealersHandCard1.getValue();
-          while (dealersHandValue <= 16 && dealerHand.getCardCount() > 0) {
-             Card newCard = deck.dealCard();
-             System.out.println("Dealer hits and gets the " + newCard);
-             dealerHand.addCard(newCard);
-             if (dealersHandValue > 21) {
-                System.out.println();
-                System.out.println("Dealer busted by going over 21.  You win.");
+          this.Is.Aprint();
+          this.Is.Aprint("User stands.");
+          this.Is.Aprint("Dealer's papers are");
+          this.Is.Aprint(" " + tablepapers.getCard(0));
+          this.Is.Aprint(" " + tablepapers.getCard(1));
+          Card dealersHandCard0 = tablepapers.getCard(0);
+          Card dealersHandCard1 = tablepapers.getCard(1);
+          int tablepapersTotal = dealersHandCard0.getValue() + dealersHandCard1.getValue();
+          while (tablepapersTotal <= 16 && tablepapers.getCardCount() > 0) {
+             Card nextPaper = papers.passPaper();
+             this.Is.Aprint("Dealer hits and gets the " + nextPaper);
+             tablepapers.plusOne(nextPaper);
+             if (tablepapersTotal > 21) {
+                this.Is.Aprint();
+                this.Is.Aprint("Dealer busted by going over 21.  You win.");
                 return true;
              }
           }
-          System.out.println("Dealer's total is " + dealersHandValue);
+          this.Is.Aprint("Dealer's total is " + tablepapersTotal);
 
-          System.out.println();
-          if (dealersHandValue == userHand.getValue()) {
-             System.out.println("Dealer wins on a tie.  You lose.");
+          this.Is.Aprint();
+          if (tablepapersTotal == playerspapers.getValue()) {
+             this.Is.Aprint("Dealer wins on a tie.  You lose.");
              return false;
           }
-          else if (dealersHandValue > userHand.getValue()) {
-             System.out.println("Dealer wins, " + dealersHandValue
-                              + " points to " + userHand.getValue() + ".");
+          else if (tablepapersTotal > playerspapers.getValue()) {
+             this.Is.Aprint("Dealer wins, " + tablepapersTotal
+                              + " points to " + playerspapers.getValue() + ".");
              return false;
           }
           else {
-             System.out.println("You win, " + userHand.getValue() + " points to " + dealersHandValue + ".");
+             this.Is.Aprint("You win, " + playerspapers.getValue() + " points to " + tablepapersTotal + ".");
              return true;
           }
        }

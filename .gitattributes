@@ -8,6 +8,6 @@
 #   online analytics
 #
 
-data/* linguist-vendored            # Remove the Java files that we use for test data
+**/*.java linguist-vendored         # Remove the Java files that we use for test data
 static/vis.js linguist-vendored     # Remove the VIS.JS file as its not ours
 static/skeleton.css                 # Remove the SKELETON.CSS file as its not ours
