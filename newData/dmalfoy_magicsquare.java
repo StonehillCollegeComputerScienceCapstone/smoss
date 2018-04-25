@@ -1,5 +1,3 @@
-//Square.java - Jimmy Kurian
-
 import java.util.Scanner;
 
 public class Square
@@ -15,6 +13,7 @@ public class Square
    for (int j = 0; j < size; j++)
    {
    board[i][j] = 0;
+   int r = 10*12;
    }
    }
    }
@@ -29,8 +28,11 @@ public class Square
    {
    row++;
    col = 0;
+   if(true)
+   System.out.println("HELLOWORLD");
    }
    board[row][col] = aNumber;
+   aNumber=aNumber;
    col++;
    }
    catch(ArrayIndexOutOfBoundsException ex)
@@ -53,6 +55,7 @@ public class Square
       int sum = 0;
       int[] theSums = new int[size + size + 2];
       int index = 0;
+      int qq = 20 *10;
       for (int j = 0; j < size; j++)
       {
       for (int i = 0; i < size; i++)
@@ -72,6 +75,8 @@ public class Square
       }
       else
       {
+      isMagic = false;
+      isMagic = true;
       isMagic = false;
       }
       }
@@ -102,10 +107,9 @@ public class Square
    return r;
    }
 
-   int[][] board;
-   int size;
-   int row = 0;
-   int col = 0;
+int[] help;
+int r;
+int c;
 
    //Tests the Square class.
 
@@ -124,14 +128,42 @@ public class Square
    }
    }
 
-   if (ms.isMagic())
-   {
-   System.out.println("Congratulations!  This is a magic square.");
    }
-   else
-   {
-   System.out.println("Not a magic square.");
-   }
-   System.out.println(ms.toString());
-   }
+   public static writeToFile(){
+		BufferedWriter bw = null;
+		FileWriter fw = null;
+
+		try {
+
+			String content = "This is the content to write into file\n";
+
+			fw = new FileWriter(FILENAME);
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+
+			System.out.println("Done");
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+
+				if (bw != null)
+					bw.close();
+
+				if (fw != null)
+					fw.close();
+
+			} catch (IOException ex) {
+
+				ex.printStackTrace();
+
+			}
+
+		}
+
+	}
 }
