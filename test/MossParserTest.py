@@ -377,6 +377,7 @@ class MossParserUnitTest(unittest.TestCase):
         tableStrings = self.mp.processHtml(html)
         result = self.mp.processTableStrings(tableStrings)
         self.assertTrue(result, "")
+        f.close()
 
     #Testing on expected output
     #def test_processTableStrings2(self):
@@ -391,6 +392,7 @@ class MossParserUnitTest(unittest.TestCase):
     #    expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/"+mossNumber+"/match0.html"],
     #                ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/"+mossNumber+"/match1.html"]], True)
     #    self.assertEqual(result, expected)
+    #    f.close()
 
     #Testing on expected output
     #def test_processTableStrings3(self):
@@ -404,6 +406,7 @@ class MossParserUnitTest(unittest.TestCase):
     #    result = self.mp.processTableStrings(tableStrings)
     #    expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/"+mossNumber+"/match0.html"]], True)
     #    self.assertEqual(result, expected)
+    #    f.close()
 
     #Testing on unexpected output
     #def test_processTableStrings4(self):
@@ -416,6 +419,7 @@ class MossParserUnitTest(unittest.TestCase):
        # result = self.mp.processTableStrings(tableStrings)
        # expected = ([[ "jter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
        # self.assertNotEqual(result, expected)
+       # f.close()
 #
 # testFileNaming()
 #
