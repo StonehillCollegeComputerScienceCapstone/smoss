@@ -380,19 +380,46 @@ class MossParserUnitTest(unittest.TestCase):
         f.close()
 
     #Testing on expected output
-    #def test_processTableStrings2(self):
-    #    f = open('testurls.txt')
+    def test_processTableStrings2(self):
+        f = open('./test/testurls.txt')
+        testlines = f.readlines()
+        url = testlines[1]
+        url = url.replace('\n', '')
+        html = self.mp.getHtml(url)
+        tableStrings = self.mp.processHtml(html)
+        result, valid = self.mp.processTableStrings(tableStrings, 0)
+
+        expectedAssignmentNumber = 0
+        expectedFileOne = "abhatia_magicsquare.java"
+        expectedFileTwo = "abhatia_magicsquare.java"
+        expectedUrl = "http://moss.stanford.edu/results/548425735/match0.html"
+        expectedPercentOne = 95
+        expectedPercentTwo = 95
+        expectedLinesMatched = 11
+
+        self.assertEqual(result[0].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[0].getFileOne(), expectedFileOne)
+        self.assertEqual(result[0].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[0].getUrl(), expectedUrl)
+        self.assertEqual(result[0].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[0].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[0].getLinesMatched(), expectedLinesMatched)
+
+        f.close()
+
+    #Testing on expected output
+    #def test_processTableStrings3(self):
+    #    f = open('./test/testurls.txt')
     #    testlines = f.readlines()
     #    url = testlines[1]
-    #    url=url.replace('\n','')
-    #    mossNumber = url[33:]
+    #    url = url.replace('\n', '')
     #    html = self.mp.getHtml(url)
     #    tableStrings = self.mp.processHtml(html)
-    #    result = self.mp.processTableStrings(tableStrings, 0)
-    #    expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/"+mossNumber+"/match0.html"],
-    #                ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/"+mossNumber+"/match1.html"]], True)
-    #    self.assertEqual(result, expected)
+    #    result, valid = self.mp.processTableStrings(tableStrings, 0)
+    #    fileOne = "abhatia_magicsquare.java"
+    #    self.assertEqual(result[0].getFileOne(), fileNameOne)
     #    f.close()
+
 
     #Testing on expected output
     #def test_processTableStrings3(self):

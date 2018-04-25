@@ -29,12 +29,12 @@ function main
 	#echo "\n"
 	testurls+=($url)
 
-	#echo "Retrieving url for test_processTableStrings2"
-	#test2=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Insipid.java stentacles_Warmup.java stentacles_Insipid.java)
-	#url=$(echo $test2 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
-	#echo "$url"
+	echo "Retrieving url for test_processTableStrings2"
+	test2=$(perl ../moss.pl -l java abhatia_magicsquare.java abhatia_magicsquare.java )
+	url=$(echo $test2 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
+	echo "$url"
 	#echo "\n"
-	#testurls+=($url)
+	testurls+=($url)
 
     #echo "Retrieving url for test_processTableStrings3"
     #test3=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Warmup.java)
