@@ -4,14 +4,26 @@ import urllib.error
 from Result import Result
 from MossParser import MossParser
 from Config import Config
-import os
-import csv
 
 class MossResultsRetriever:
     def __init__(self):
         self.config = Config()
         self.urls = []
         self.results = []
+
+    # Populate the results object with the lines from the csv
+    def populateResults(self):
+        m = MossParser()
+        assignmentNum = 0
+
+        for url in self.urls:
+            data = m.parse(url)
+
+            for result in data:
+                r = Result(assignmentNum, result[0], result[2], result[5].strip(), int(result[1]), int(result[3]), int(result[4]))
+                self.results.append(r)
+
+            assignmentNum = assignmentNum + 1
 
     # If url is valid, return true. Else, return false
     def isValidUrl(self, url):
@@ -41,29 +53,6 @@ class MossResultsRetriever:
     def appendUrl(self, url):
         if (url not in self.urls) and (self.isValidUrl(url)):
             self.urls.append(url)
-
-    # Populate the results object with the lines from the csv
-    def populateResults(self):
-        csv = "csv.csv"
-        m = MossParser(csv)
-        assignmentNum = 0
-        validFlag = False
-
-        for url in self.urls:
-            validFlag = m.parse(url)
-            file = open(csv)
-            lines = file.readlines()
-            lines.pop(0) # Remove header from csv
-
-            for line in lines:
-                data = line.split(',')
-                r = Result(assignmentNum, data[1], data[4], data[7].strip(), int(data[2]), int(data[5]), int(data[6]))
-                self.results.append(r)
-
-            file.close()
-            assignmentNum = assignmentNum + 1
-            if not validFlag:
-                print("ERROR invalid URL")
 
     # Returns a set of duplicate urls and a set of urls to be processed
     def getDuplicateUrls(self, urls):

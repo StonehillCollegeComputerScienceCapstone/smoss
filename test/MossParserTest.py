@@ -38,7 +38,7 @@ class MossParserUnitTest(unittest.TestCase):
 
 
     def setUp(self):
-        self.mp = MossParser("csv.csv")
+        self.mp = MossParser()
         self.config = Config()
         self.validUrl = self.config.getMagicsquare()
 
@@ -364,20 +364,6 @@ class MossParserUnitTest(unittest.TestCase):
                              </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getMagicsquare())))
 
 #
-# getName()
-#
-    # 6. Test getName with previous file
-    def test_getName_previuos(self):
-        string = "previous_msmith_HomeValue.java (21%)"
-        self.assertEqual(self.mp.getName(string), "msmith")
-
-    #7.  Test get name with current file
-    def test_getName_current (self):
-        string = "msmith_HomeValue.java (21%)"
-        self.assertEqual(self.mp.getName(string), "msmith")
-
-
-#
 # previousyearMatch()
 #
     # 8. Test for same year assignment
@@ -559,37 +545,6 @@ class MossParserUnitTest(unittest.TestCase):
     # Break method if getHtml(url) returns None
     def test_InvalidMossUrl(self):
         self.assertFalse(self.mp.parse("invalid.com"))
-
-#
-# toCsv()
-#
-    # Correct write with 'w'
-    def test_validWriteCsvStrings(self):
-        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
-        self.assertTrue(self.mp.toCsv(csvStrings, 'w'))
-
-    # Correct write with 'a'
-    def test_validAppendCsvStrings(self):
-        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
-        self.assertTrue(self.mp.toCsv(csvStrings, 'a'))
-
-    # Invalid type to write/append
-    def test_invalidTypeForWriteOrAppend(self):
-        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
-        self.assertFalse(self.mp.toCsv(csvStrings, 'z'))
-
-    # Invalid CsvStrings type
-    def test_invalidCsvStringsTypeInt(self):
-        self.assertFalse(self.mp.toCsv(5, 'a'))
-
-    # CsvStrings needs to be a list
-    def test_invalidCsvStringsTypeString(self):
-        self.assertFalse(self.mp.toCsv('string', 'a'))
-
-    # Invalid type of write/append argument
-    def test_invalidTypeInt(self):
-        csvStrings = [['clannister', 'clannister_Warmup.java', '82', 'jbaxter5', 'jbaxter5_Warmup.java', '72', '17', 'http://moss.stanford.edu/results/373890203/match0.html']]
-        self.assertFalse(self.mp.toCsv(csvStrings, 5))
 
 
 
