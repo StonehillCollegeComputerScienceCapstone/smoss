@@ -48,11 +48,11 @@ class MossParserUnitTest(unittest.TestCase):
 
     def test_parse(self):
         url = Config.palindrome
-        self.assertTrue(self.mp.parse(url))
+        self.assertTrue(self.mp.parse(url, 0))
 
     def test_parseInvalidURL(self):
         url = "fake url"
-        self.assertFalse(self.mp.parse(url))
+        self.assertFalse(self.mp.parse(url, 0))
 
 #
 # testUrl()
@@ -375,7 +375,7 @@ class MossParserUnitTest(unittest.TestCase):
         url=url.replace('\n','')
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
-        result = self.mp.processTableStrings(tableStrings)
+        result = self.mp.processTableStrings(tableStrings, 0)
         self.assertTrue(result, "")
         f.close()
 
@@ -388,7 +388,7 @@ class MossParserUnitTest(unittest.TestCase):
     #    mossNumber = url[33:]
     #    html = self.mp.getHtml(url)
     #    tableStrings = self.mp.processHtml(html)
-    #    result = self.mp.processTableStrings(tableStrings)
+    #    result = self.mp.processTableStrings(tableStrings, 0)
     #    expected = ([["jbaxter5","jbaxter5_Warmup.java","65","stentacles","stentacles_Warmup.java","86","16","http://moss.stanford.edu/results/"+mossNumber+"/match0.html"],
     #                ["jbaxter5","jbaxter5_Insipid.java","17","stentacles","stentacles_Insipid.java","17","11","http://moss.stanford.edu/results/"+mossNumber+"/match1.html"]], True)
     #    self.assertEqual(result, expected)
@@ -403,7 +403,7 @@ class MossParserUnitTest(unittest.TestCase):
     #    mossNumber = url[33:]
     #    html = self.mp.getHtml(url)
     #    tableStrings = self.mp.processHtml(html)
-    #    result = self.mp.processTableStrings(tableStrings)
+    #    result = self.mp.processTableStrings(tableStrings, 0)
     #    expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/"+mossNumber+"/match0.html"]], True)
     #    self.assertEqual(result, expected)
     #    f.close()
@@ -416,7 +416,7 @@ class MossParserUnitTest(unittest.TestCase):
        # url=url.replace('\n','')
        # html = self.mp.getHtml(url)
        # tableStrings = self.mp.processHtml(html)
-       # result = self.mp.processTableStrings(tableStrings)
+       # result = self.mp.processTableStrings(tableStrings, 0)
        # expected = ([[ "jter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
        # self.assertNotEqual(result, expected)
        # f.close()
@@ -491,7 +491,7 @@ class MossParserUnitTest(unittest.TestCase):
 #
     # Break method if getHtml(url) returns None
     def test_InvalidMossUrl(self):
-        self.assertFalse(self.mp.parse("invalid.com"))
+        self.assertFalse(self.mp.parse("invalid.com", 0))
 
 
 

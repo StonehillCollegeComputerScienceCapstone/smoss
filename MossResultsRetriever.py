@@ -16,12 +16,8 @@ class MossResultsRetriever:
         assignmentNum = 0
 
         for url in self.urls:
-            data = m.parse(url)
-
-            for result in data:
-                result.assignmentNumber = assignmentNum
-                self.results.append(result)
-
+            data = m.parse(url, assignmentNum)
+            self.results = self.results + data
             assignmentNum = assignmentNum + 1
 
     # If url is valid, return true. Else, return false

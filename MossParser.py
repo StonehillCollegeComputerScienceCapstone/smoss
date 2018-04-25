@@ -14,7 +14,7 @@ class MossParser ():
         self.config = Config()
 
     # Parse a single URL
-    def parse(self, url):
+    def parse(self, url, assignmentNum):
         # Get the html text from the URL
         html = self.getHtml(url)
 
@@ -25,7 +25,7 @@ class MossParser ():
         tableStrings = self.processHtml(html)
 
         # Process the table strings into csv strings
-        data, validFileName = self.processTableStrings(tableStrings)
+        data, validFileName = self.processTableStrings(tableStrings, assignmentNum)
 
         if(validFileName):
             return data
@@ -84,7 +84,7 @@ class MossParser ():
         tableStringValues = tableString.split(",")
         return tableStringValues
 
-    def processTableStrings(self, tableStrings):
+    def processTableStrings(self, tableStrings, assignmentNum):
         # Go through list and turn them into a list of data
         results = []
         previousResults = []
@@ -95,7 +95,7 @@ class MossParser ():
             fileName2 = tableStringValues[4].strip().lower()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
-                result = Result(0, fileName1, fileName2, tableStringValues[0].strip(), int(tableStringValues[2]), int(tableStringValues[5]), int(tableStringValues[6]))
+                result = Result(assignmentNum, fileName1, fileName2, tableStringValues[0].strip(), int(tableStringValues[2]), int(tableStringValues[5]), int(tableStringValues[6]))
                 if result.nameOneIsPrevious() and result.nameTwoIsPrevious():
                     previousResults.append(result)
                 else:
