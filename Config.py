@@ -9,6 +9,7 @@ class Config:
     magicsquare = lines[0]
     palindrome = lines[1]
     twentyone = lines[2]
+    pascalstriangle = lines[3]
     #Logger Setup------------------------------------->
     FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
     logging.basicConfig(filename='output.log', format=FORMAT)
@@ -33,4 +34,7 @@ class Config:
 
     def getPalindrome(self):
         return self.palindrome
+
+    def getPascalsTriangle(self):
+        return self.pascalstriangle;
 
