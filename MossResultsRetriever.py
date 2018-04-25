@@ -1,7 +1,6 @@
 import urllib
 import urllib.request
 import urllib.error
-from Result import Result
 from MossParser import MossParser
 from Config import Config
 
@@ -70,7 +69,7 @@ class MossResultsRetriever:
                 duplicates.append(url)
         return duplicates, urlList
 
-    def validateData(self):
+    def resultsAreValid(self):
         for result in self.results:
             if not result.isValid():
                 return False

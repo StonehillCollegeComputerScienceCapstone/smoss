@@ -276,21 +276,15 @@ class MossURLsTests(unittest.TestCase):
 # populateResults()
 #
 
-    # test that results are not empty
-    def test_notEmpty(self):
-        url =  self.validUrl
-        self.retriever.appendUrl(url)
+    def test_populateResultsOneUrl(self):
+        self.retriever.urls = [self.config.getTwentyone()]
         self.retriever.populateResults()
-        if not self.retriever.results:
-            self.assertFalse(False)
+        self.assertNotEqual(len(self.retriever.results), 0)
 
-
-
-
-
-    #test that results are not empyty
-    #check that results is a list
-    #test that
+    def test_populateResultsMultipleUrls(self):
+        self.retriever.urls = [self.config.getTwentyone(), self.config.getMagicsquare(), self.config.getPalindrome()]
+        self.retriever.populateResults()
+        self.assertGreater(len(self.retriever.results), 3)
 
 #
 # getDuplicateUrls()
@@ -390,12 +384,12 @@ class MossURLsTests(unittest.TestCase):
         self.assertListEqual(nonDuplicates, [self.config.getMagicsquare(), self.config.getPalindrome(), self.config.getTwentyone()])
 
 #
-# validateData()
+# resultsAreValid()
 #
     # Tests all the correct types for Result object
     def test_validData(self):
         self.retriever.results =[self.results, self.results]
-        self.assertTrue(self.retriever.validateData())
+        self.assertTrue(self.retriever.resultsAreValid())
 
     # Tests all the incorrect types for Result object
     def test_invalidData(self):
@@ -405,7 +399,7 @@ class MossURLsTests(unittest.TestCase):
         self.results.fileTwoPercent = "58"
         self.results.url = 51
         self.retriever.results = [self.results, self.results]
-        self.assertFalse(self.retriever.validateData())
+        self.assertFalse(self.retriever.resultsAreValid())
 
     def tearDown(self):
         self.retriever = None

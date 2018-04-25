@@ -142,7 +142,7 @@ def _MOSSurlvalidation():
 #  getMossTemplate(): Returns the MOSS template if valid
 #
 def getMossTemplate(retriever):
-    if retriever.validateData():
+    if retriever.resultsAreValid():
         template = "templates/MOSSoutput.html"
         value = retriever.results
     else:
