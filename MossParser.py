@@ -6,6 +6,7 @@ import urllib.request
 import lxml.html
 from html.parser import HTMLParser
 from Config import Config
+from Result import Result
 
 
 class MossParser ():
@@ -85,7 +86,8 @@ class MossParser ():
 
     def processTableStrings(self, tableStrings):
         # Go through list and turn them into a list of data
-        data = []
+        results = []
+        previousResults = []
 
         for tableString in tableStrings:
             tableStringValues = self.getTableStringValues(tableString)
@@ -93,12 +95,17 @@ class MossParser ():
             fileName2 = tableStringValues[4].strip()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
-                line = [fileName1, tableStringValues[2], fileName2, tableStringValues[5], tableStringValues[6], tableStringValues[0]]
-                data.append(line)
+                result = Result(0, fileName1, fileName2, tableStringValues[0].strip(), int(tableStringValues[2]), int(tableStringValues[5]), int(tableStringValues[6]))
+                if self.previousYearMatch(fileName1, fileName2):
+                    previousResults.append(result)
+                else:
+                    results.append(result)
 
         # Returns
-        if len(data)>0:
-            return data, True
+        if len(results)>0:
+            return results, True
+        elif len(previousResults) > 0:
+            return previousResults, True
         return None, False
 
 

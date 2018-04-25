@@ -20,8 +20,8 @@ class MossResultsRetriever:
             data = m.parse(url)
 
             for result in data:
-                r = Result(assignmentNum, result[0], result[2], result[5].strip(), int(result[1]), int(result[3]), int(result[4]))
-                self.results.append(r)
+                result.assignmentNumber = assignmentNum
+                self.results.append(result)
 
             assignmentNum = assignmentNum + 1
 
