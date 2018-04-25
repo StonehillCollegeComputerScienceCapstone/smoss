@@ -100,15 +100,34 @@ class MyTestCase(unittest.TestCase):
         self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
         self.assertFalse(self.result.nameTwoIsPrevious())
 
+#
 # isNamePrevious()
-
+#
+    # Test previous file name
     def test_isNamePreviousTrue(self):
-        self.result = Result(1, "previous_hpotter_Insipid.java", "nmarth_Warmup.java", "url", 40, 50, 60)
-        self.assertTrue(self.result.isNamePrevious(self.result.fileOne))
+        self.assertTrue(self.result.isNamePrevious("previous_hpotter_Insipid.java"))
 
+    # Test current file name
     def test_isNamePreviousFalse(self):
-        self.result = Result(1, "hpotter_Insipid.java", "previous_nmarth_Warmup.java", "url", 40, 50, 60)
-        self.assertFalse(self.result.isNamePrevious(self.result.fileOne))
+        self.assertFalse(self.result.isNamePrevious("hpotter_Insipid.java"))
+
+    # Test incorrect spelling of previous
+    def test_isNamePreviousFalseWrongSpelling(self):
+        self.assertFalse(self.result.isNamePrevious("pr3vious_test.java"))
+
+    # Test incorrect use of special characters
+    def test_isNamePreviousSpecialChars(self):
+        self.assertFalse(self.result.isNamePrevious("previ0us_test.java"))
+        self.assertFalse(self.result.isNamePrevious("previou$_test2.java"))
+
+    # Test missing '_' in name
+    def test_isNamePreviousMissingUnderscore(self):
+        self.assertFalse(self.result.isNamePrevious("previoustest.java"))
+
+    # Test dash (does not count as underscore)
+    def test_isNamePrevious(self):
+        self.result.fileOne = "previous-test.java"
+        self.assertFalse(self.result.isNamePrevious("previous-test.java"))
 
 #
 # toString()

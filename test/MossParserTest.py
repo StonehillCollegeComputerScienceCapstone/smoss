@@ -364,63 +364,6 @@ class MossParserUnitTest(unittest.TestCase):
                              </td></tr>"""], self.mp.processHtml(self.mp.getHtml(self.config.getMagicsquare())))
 
 #
-# previousyearMatch()
-#
-    # 8. Test for same year assignment
-    def test_currentYears(self):
-        file1="lhbox_HomeValue.java"
-        file2="eyo_HomeValue.java"
-        self.assertFalse(self.mp.previousYearMatch(file1,file2))
-
-    # 9. Test for different year assignment
-    def test_differentYears(self):
-        file1 = "previous_lhbox_HomeValue.java"
-        file2 = "eyo_HomeValue.java"
-        self.assertFalse(self.mp.previousYearMatch(file1, file2))
-
-
-    # 10. Test for past assignments
-    def test_previousYears(self):
-        file1 = "previous_lhbox_HomeValue.java"
-        file2 = "previous_eyo_HomeValue.java"
-        self.assertTrue(self.mp.previousYearMatch(file1,file2))
-
-    #difference in capitalization
-    def test_previousYears(self):
-        file1 = "previous_test.java"
-        file2 = "PREVIOUS_test2.java"
-        self.assertTrue(self.mp.previousYearMatch(file1, file2))
-
-    #difference in capitalization in both files
-    def test_previousYears(self):
-        file1 = "pReviOus_test.java"
-        file2 = "PReVIOUS_test2.java"
-        self.assertTrue(self.mp.previousYearMatch(file1, file2))
-
-    #incorrect spelling of previous
-    def test_previousYears(self):
-        file1 = "pr3vious_test.java"
-        file2 = "previous_test2.java"
-        self.assertFalse(self.mp.previousYearMatch(file1, file2))
-
-    #incorrect use of special characters
-    def test_previousYears(self):
-        file1 = "previ0us_test.java"
-        file2 = "previou$_test2.java"
-        self.assertFalse(self.mp.previousYearMatch(file1, file2))
-
-    # missing '_' in name
-    def test_previousYears(self):
-        file1 = "previoustest.java"
-        file2 = "previous_test2.java"
-        self.assertFalse(self.mp.previousYearMatch(file1, file2))
-
-    # dash does not count as underscore
-    def test_previousYears(self):
-        file1 = "previous-test.java"
-        file2 = "previous_test2.java"
-        self.assertFalse(self.mp.previousYearMatch(file1, file2))
-#
 # processTableStrings()
 #
 

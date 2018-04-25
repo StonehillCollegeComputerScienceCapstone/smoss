@@ -91,12 +91,12 @@ class MossParser ():
 
         for tableString in tableStrings:
             tableStringValues = self.getTableStringValues(tableString)
-            fileName1 = tableStringValues[1].strip()
-            fileName2 = tableStringValues[4].strip()
+            fileName1 = tableStringValues[1].strip().lower()
+            fileName2 = tableStringValues[4].strip().lower()
 
             if self.testFileNaming(fileName1) and self.testFileNaming(fileName2):
                 result = Result(0, fileName1, fileName2, tableStringValues[0].strip(), int(tableStringValues[2]), int(tableStringValues[5]), int(tableStringValues[6]))
-                if self.previousYearMatch(fileName1, fileName2):
+                if result.nameOneIsPrevious() and result.nameTwoIsPrevious():
                     previousResults.append(result)
                 else:
                     results.append(result)
@@ -110,22 +110,12 @@ class MossParser ():
 
 
     def testFileNaming(self, fileName):
-        if fileName[0].isdigit():
-            return False
-
         # we need an underscore to seperate username and the assignment name,
         #  _ is suppose to seperate, not precede the name
         if "_" in fileName and ("_" is not fileName[0]):
             return True
 
         return False
-
-    def previousYearMatch(self, filename1, filename2):
-        #  make sure that potential difference in casing does not cause a problem with the 'previous' tag
-        filename1.lower()
-        filename2.lower()
-
-        return ("previous_" in filename1) and ("previous_" in filename2)
 
     def formatTableString(self,tableString):
         tableString.lstrip()
