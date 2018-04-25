@@ -79,6 +79,39 @@ class MyTestCase(unittest.TestCase):
         self.assertNotEqual(self.result.getName(self.result.fileTwo), "previous")
 
 #
+# getAssignmentName()
+#
+    # Test two current files
+    def test_getAssignmentName(self):
+        self.result.fileOne = "hpotter_Insipid.java"
+        self.result.fileTwo = "nmarth_Insipid.java"
+        self.assertEqual("Insipid.java", self.result.getAssignmentName())
+
+    # Test previous and current files
+    def test_getAssignmentNameOnePrevious(self):
+        self.result.fileOne = "previous_hpotter_Insipid.java"
+        self.result.fileTwo = "nmarth_Insipid.java"
+        self.assertEqual("Insipid.java", self.result.getAssignmentName())
+
+    # Test previous and current files reverse
+    def test_getAssignmentNameTwoPrevious(self):
+        self.result.fileOne = "previous_hpotter_Insipid.java"
+        self.result.fileTwo = "nmarth_Insipid.java"
+        self.assertEqual("Insipid.java", self.result.getAssignmentName())
+
+    # Test two previous files
+    def test_getAssignmentNameBothPrevious(self):
+        self.result.fileOne = "previous_hpotter_Insipid.java"
+        self.result.fileTwo = "previous_nmarth_Insipid.java"
+        self.assertEqual("Insipid.java", self.result.getAssignmentName())
+
+    def test_getAssignmentNameDifferentAssignments(self):
+        self.result.fileOne = "hpotter_Warmup.java"
+        self.result.fileTwo = "previous_nmarth_Insipid.java"
+        self.assertNotEqual("Warmup.java", self.result.getAssignmentName())
+        self.assertNotEqual("Insipid.java", self.result.getAssignmentName())
+
+#
 # nameOneIsPrevious()
 #
     def test_nameOneIsPreviousTrue(self):

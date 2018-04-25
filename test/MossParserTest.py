@@ -2,6 +2,7 @@ import unittest
 import urllib
 from Config import Config
 from MossParser import MossParser
+from Result import Result
 
 class MossParserUnitTest(unittest.TestCase):
 
@@ -53,6 +54,13 @@ class MossParserUnitTest(unittest.TestCase):
     def test_parseInvalidURL(self):
         url = "fake url"
         self.assertFalse(self.mp.parse(url, 0))
+    def test_parseValidOutputType(self):
+        data=self.mp.parse(self.validUrl, 0)
+        error=False
+        for item in data:
+            if(not isinstance(Result,item)):
+                error=True
+        self.assertEqual(error,True)
 
 #
 # testUrl()

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width">
     <title>MOSS JS Unit Testing</title>
     <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.5.0.css">
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
 </head>
 
 <style type="text/css">
@@ -17,7 +20,7 @@
         height: 400px;
         border: 3px solid lightgray;
     }
-       .slidecontainer {
+    .slidecontainer {
         width: 100%; /* Width of the outside container */
     }
 
@@ -58,16 +61,19 @@
 </style>
 
 <body>
-    <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
-    <script src="https://code.jquery.com/qunit/qunit-2.5.0.js"></script>
-    <script type="text/javascript" src="../static/vis.js"></script>
-    <script src="MossOutputGraphTest.js"></script>
-    <p> Sample Graph Data for JS </p>
-    <div id="mynetwork"></div>
-    <div class="slidecontainer">
-        <input type="range" min="0" max="100" value="1" class="slider" id="chosenRange">
-        <p>Slider inactive for testing </p>
-    </div>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="https://code.jquery.com/qunit/qunit-2.5.0.js"></script>
+<script type="text/javascript" src="../static/vis.js"></script>
+
+
+<script src="MossOutputGraphTest.js"></script>
+<p> Sample Graph Data for JS </p>
+
+<div id="mynetwork"></div>
+<div class="slidecontainer">
+    <input type="range" min="0" max="100" value="1" class="slider" id="chosenRange">
+    <p>Slider inactive for testing </p>
+</div>
 </body>
 </html>

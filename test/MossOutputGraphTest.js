@@ -107,7 +107,7 @@ QUnit.test("Slider - All Edges Visible", function(assert){
     }
 
     assert.ok(true, visible, "When slider value is 1, all nodes are visible");
-})
+});
 
 QUnit.test("Slider Bar - Single Test", function(assert){
     this.slider.value = 25;
