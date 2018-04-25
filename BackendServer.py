@@ -24,6 +24,24 @@ config = Config()
 logger = config.logger
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
 
+# Try to retriever retriever session variable
+def getRetrieverSession():
+    try:
+        retriever = decode(session['retriever'])
+    except:
+        logger.info("Session variable 'retriever' does not exist!")
+        retriever = MossResultsRetriever()
+    return retriever
+
+# Try to retrieve urls session variable
+def getUrlsSession():
+    try:
+        urls = decode(session['urls'])
+    except:
+        logger.info("Session variable 'urls' does not exist!")
+        urls = []
+    return urls
+
 #
 #   _Index (): Generates the landing page for SMOSS.
 #
@@ -62,13 +80,7 @@ def _MOSSselectpage():
     template = "templates/SelectionPage.html"
 
     retriever = MossResultsRetriever()
-    urls = []
-
-    # Try to retrieve the session variables
-    try:
-        urls = decode(session['urls'])
-    except:
-        logger.info('Session variable does not exist!')
+    urls = getUrlsSession()
 
     if request.method == "POST":
         selection = request.form['selection']
@@ -103,22 +115,13 @@ def _MOSSselectpage():
 def _MOSSOutput ():
     logger.info('[BackendServer]\tMOSS Output page displayed!')
 
-    try:
-        retriever = decode(session['retriever'])
-    except:
-        logger.info('Session variable does not exist!')
-        retriever = MossResultsRetriever()
-
+    retriever = getRetrieverSession()
     template, value = getMossTemplate(retriever)
-    results = retriever.results
-    aggregator = DataAggregator(results)
-    percentsValues = aggregator.topPercents
-    linesValues = aggregator.topLines
+    aggregator = DataAggregator(retriever.results)
+    graph = Graph(retriever.results)
 
-    graph = Graph(results)
-    nodes = graph.graph["nodes"]
-    edges = graph.graph["edges"]
-    return render_template(template, value=value, percentsValues=percentsValues, linesValues=linesValues, nodes=nodes, edges=edges)
+    return render_template(template, value=value, percentsValues=aggregator.topPercents, linesValues=aggregator.topLines,
+                           nodes=graph.graph["nodes"], edges=graph.graph["edges"])
 
 #
 #   _MOSSurlvalidation(): Validates the URLs
