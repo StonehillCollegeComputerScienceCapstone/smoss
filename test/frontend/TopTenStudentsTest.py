@@ -72,7 +72,7 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
     #   SingleURLCheckUsingAllURLsButton ():    Enters in a valid URL and submits using the 'All URLs' button to confirm data entry
     #
     def test_SingleURLCheckUsingAllURLsButton (self):
-        driver = self.InitializeBrowserStackConnection ("Test an Expired URL")
+        driver = self.InitializeBrowserStackConnection ("Submit One URL - Select all")
         
         # Navigate to page
         driver.get ("http://localhost:5000/")
@@ -97,7 +97,7 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
     #   MultipleURLsProvidedOneChosen ():   Enters in multiple URLs but only selects one URL to investigate
     #
     def test_MultipleURLsProvidedOneChosen (self):
-        driver = self.InitializeBrowserStackConnection ("Test an Expired URL")
+        driver = self.InitializeBrowserStackConnection ("Submit multiple URLs - Select one")
         
         # Navigate to page
         driver.get ("http://localhost:5000/")
@@ -121,7 +121,7 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
     #   MultipleURLsProvidedAllChosen ():   Enters in multiple URLs but only selects one URL to investigate
     #
     def test_MultipleURLsProvidedAllChosen (self):
-        driver = self.InitializeBrowserStackConnection ("Test an Expired URL")
+        driver = self.InitializeBrowserStackConnection ("Submit multiple URLs - Select all")
         
         # Navigate to page
         driver.get ("http://localhost:5000/")
