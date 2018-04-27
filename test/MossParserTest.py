@@ -56,11 +56,11 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertFalse(self.mp.parse(url, 0))
     def test_parseValidOutputType(self):
         data=self.mp.parse(self.validUrl, 0)
-        error=False
+        error = False
         for item in data:
-            if(not isinstance(Result,item)):
-                error=True
-        self.assertEqual(error,True)
+            if(not isinstance(item, Result)):
+                error = True
+        self.assertFalse(error)
 
 #
 # testUrl()
