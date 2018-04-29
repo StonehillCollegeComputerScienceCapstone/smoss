@@ -62,6 +62,14 @@ class MossParser ():
         del(splitStrings[0])
         return splitStrings
 
+    def getSizeOfTables(self, urls):
+        tableSizes = []
+        for url in urls:
+            html = self.getHtml(url)
+            tableSizes.append(len(self.processHtml(html)))
+        return tableSizes
+
+
     def getHtml(self, url):
         if(self.testUrl(url) is True):
             html = urllib.request.urlopen(url)

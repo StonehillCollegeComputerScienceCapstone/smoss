@@ -9,6 +9,7 @@ class MossResultsRetriever:
         self.config = Config()
         self.urls = []
         self.results = []
+        self.urlsTableRowsSize = []
 
     # Populate the results object with the lines from the csv
     def populateResults(self):
@@ -17,6 +18,7 @@ class MossResultsRetriever:
 
         for url in self.urls:
             results = m.parse(url, assignmentNum)
+            self.urlsTableRowsSize.append(len(results))
             self.results = self.results + results
             assignmentNum = assignmentNum + 1
 

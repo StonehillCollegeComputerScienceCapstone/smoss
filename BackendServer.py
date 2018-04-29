@@ -17,6 +17,8 @@ from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
 import os
 from Config import Config
+from MossDownloader import MossDownloader
+from MossParser import MossParser
 
 # Global Variables
 app = Flask(__name__, template_folder=os.path.dirname('./'))
@@ -57,11 +59,19 @@ def _Index ():
         for i in range(len(urls)):
             urls[i] = urls[i].rstrip()
         urls = list(filter(None, urls))
-        session['urls'] = encode(urls)
 
         valid, url = retriever.isValidUrlList(urls)
+
         if valid:
-            return redirect('selectionpage')
+            if 'download' in request.form:
+                parser = MossParser()
+                downloader = MossDownloader()
+                assignmentIds = downloader.getAssignmentIds(urls)
+                downloader.downloadAllMatches(assignmentIds, parser.getSizeOfTables(urls))
+                return send_from_directory(directory='./', filename='mossURLs.zip', as_attachment=True)
+            else:
+                session['urls'] = encode(urls)
+                return redirect('selectionpage')
         else:
             template = "templates/errorpage.html"
             error = ("Invalid URL: "+ url)
@@ -81,6 +91,8 @@ def _MOSSselectpage():
 
     retriever = MossResultsRetriever()
     urls = getUrlsSession()
+
+    MossDownloader.removeAllTempFiles()
 
     if request.method == "POST":
         selection = request.form['selection']
@@ -111,7 +123,7 @@ def _MOSSselectpage():
 #   _MOSSOutput (): Formerly held within ResultsSorter.py
 # , this displays the MOSSoutput template at localhost:5000/moss
 #
-@app.route ('/moss')
+@app.route ('/moss', methods = ['GET', 'POST'])
 def _MOSSOutput ():
     logger.info('[BackendServer]\tMOSS Output page displayed!')
 
@@ -119,6 +131,13 @@ def _MOSSOutput ():
     template, value = getMossTemplate(retriever)
     aggregator = DataAggregator(retriever.results)
     graph = Graph(retriever.results)
+    MossDownloader.removeAllTempFiles()
+
+    if request.method == "POST":
+        downloader = MossDownloader()
+        assignmentIds = downloader.getAssignmentIds(retriever.urls)
+        downloader.downloadAllMatches(assignmentIds, retriever.urlsTableRowsSize)
+        return send_from_directory(directory='./', filename='mossURLs.zip', as_attachment=True)
 
     return render_template(template, value=value, percentsValues=aggregator.topPercents, linesValues=aggregator.topLines,
                            nodes=graph.graph["nodes"], edges=graph.graph["edges"])

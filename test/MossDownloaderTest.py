@@ -17,10 +17,37 @@ class MossDownloaderTest (unittest.TestCase):
     #
     #   setUp():    Creates a MossDownloader object to be used in all tests
     #
-    def setUp (self):
-        self.downloader = MossDownloader ()
-        self.config = Config ()
-        
+    def setUp(self):
+        self.downloader = MossDownloader()
+        self.config = Config()
+        self.downloader = MossDownloader()
+
+    def test_invalidResultsId(self):
+        self.assertFalse(self.downloader.downloadAllMatches(['99999999999999999'], [20]))
+
+    def test_removeZipFile(self):
+        file = open('mossURLs.zip', 'w')
+        file.close()
+        self.downloader.removeAllTempFiles()
+        self.assertFalse(os.path.exists('./mossURLs.zip'))
+
+    def test_removeArchiveDirectory(self):
+        os.makedirs('archive')
+        self.downloader.removeAllTempFiles()
+        self.assertFalse(os.path.isdir('./archive'))
+
+    def test_removeZipFileAndArchiveDirectory(self):
+        file = open('mossURLs.zip', 'w')
+        file.close()
+        os.makedirs('archive')
+        self.downloader.removeAllTempFiles()
+        self.assertFalse(os.path.exists('./mossURLs.zip') and (os.path.isdir('./archive')))
+
+    #def test_createZipFile(self):
+    #def test_createArchiveDirectory(self):
+
+
+
 
     '''
     --------------------------------
