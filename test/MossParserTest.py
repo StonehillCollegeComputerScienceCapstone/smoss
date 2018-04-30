@@ -393,6 +393,7 @@ class MossParserUnitTest(unittest.TestCase):
         testlines = f.readlines()
         url = testlines[1]
         url = url.replace('\n', '')
+        mossNumber = url[33:]
         html = self.mp.getHtml(url)
         tableStrings = self.mp.processHtml(html)
         result, valid = self.mp.processTableStrings(tableStrings, 0)
@@ -400,7 +401,7 @@ class MossParserUnitTest(unittest.TestCase):
         expectedAssignmentNumber = 0
         expectedFileOne = "abhatia_magicsquare.java"
         expectedFileTwo = "abhatia_magicsquare.java"
-        expectedUrl = "http://moss.stanford.edu/results/548425735/match0.html"
+        expectedUrl = "http://moss.stanford.edu/results/"+mossNumber+"/match0.html"
         expectedPercentOne = 95
         expectedPercentTwo = 95
         expectedLinesMatched = 11
@@ -414,6 +415,35 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertEqual(result[0].getLinesMatched(), expectedLinesMatched)
 
         f.close()
+
+    #Testing on expected output
+    def test_processTableStrings3(self):
+        f = open('./test/testurls.txt')
+        testlines = f.readlines()
+        url = testlines[2]
+        url = url.replace('\n', '')
+        mossNumber = url[33:]
+        print (mossNumber)
+        html = self.mp.getHtml(url)
+        tableStrings = self.mp.processHtml(html)
+        result, valid = self.mp.processTableStrings(tableStrings, 0)
+
+        #Checking First Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "dtargaryen_twentyone.java"
+        expectedFileTwo = "jdalbey_twentyone.java"
+        expectedUrl = "http://moss.stanford.edu/results/"+mossNumber+"/match0.html"
+        expectedPercentOne = 96
+        expectedPercentTwo = 96
+        expectedLinesMatched = 366
+
+        self.assertEqual(result[0].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[0].getFileOne(), expectedFileOne)
+        self.assertEqual(result[0].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[0].getUrl(), expectedUrl)
+        self.assertEqual(result[0].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[0].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[0].getLinesMatched(), expectedLinesMatched)
 
     #Testing on expected output
     #def test_processTableStrings3(self):
