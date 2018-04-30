@@ -5,3 +5,4 @@ requests
 coverage
 lxml
 jsonpickle
+wget
