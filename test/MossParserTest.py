@@ -576,6 +576,142 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertEqual(result[4].getPercentTwo(), expectedPercentTwo)
         self.assertEqual(result[4].getLinesMatched(), expectedLinesMatched)
 
+        # Checking Sixth Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "jdandy_palindrome.java"
+        expectedFileTwo = "rbravaco_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match5.html"
+        expectedPercentOne = 79
+        expectedPercentTwo = 75
+        expectedLinesMatched = 22
+
+        self.assertEqual(result[5].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[5].getFileOne(), expectedFileOne)
+        self.assertEqual(result[5].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[5].getUrl(), expectedUrl)
+        self.assertEqual(result[5].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[5].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[5].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Seventh Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "jdandy_palindrome.java"
+        expectedFileTwo = "jsnow_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match6.html"
+        expectedPercentOne = 79
+        expectedPercentTwo = 82
+        expectedLinesMatched = 19
+
+        self.assertEqual(result[6].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[6].getFileOne(), expectedFileOne)
+        self.assertEqual(result[6].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[6].getUrl(), expectedUrl)
+        self.assertEqual(result[6].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[6].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[6].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Eigth Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "abhatia_palindrome.java"
+        expectedFileTwo = "jdandy_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match7.html"
+        expectedPercentOne = 82
+        expectedPercentTwo = 79
+        expectedLinesMatched = 19
+
+        self.assertEqual(result[7].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[7].getFileOne(), expectedFileOne)
+        self.assertEqual(result[7].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[7].getUrl(), expectedUrl)
+        self.assertEqual(result[7].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[7].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[7].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Ninth Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "adumbledore_palindrome.java"
+        expectedFileTwo = "rweasley_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match8.html"
+        expectedPercentOne = 50
+        expectedPercentTwo = 75
+        expectedLinesMatched = 19
+
+        self.assertEqual(result[8].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[8].getFileOne(), expectedFileOne)
+        self.assertEqual(result[8].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[8].getUrl(), expectedUrl)
+        self.assertEqual(result[8].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[8].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[8].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Tenth Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "adumbledore_palindrome.java"
+        expectedFileTwo = "dtargaryen_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match9.html"
+        expectedPercentOne = 41
+        expectedPercentTwo = 42
+        expectedLinesMatched = 14
+
+        self.assertEqual(result[9].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[9].getFileOne(), expectedFileOne)
+        self.assertEqual(result[9].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[9].getUrl(), expectedUrl)
+        self.assertEqual(result[9].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[9].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[9].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Eleventh Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "dmalfoy_palindrome.java"
+        expectedFileTwo = "hgrainger_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match10.html"
+        expectedPercentOne = 41
+        expectedPercentTwo = 36
+        expectedLinesMatched = 14
+
+        self.assertEqual(result[10].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[10].getFileOne(), expectedFileOne)
+        self.assertEqual(result[10].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[10].getUrl(), expectedUrl)
+        self.assertEqual(result[10].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[10].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[10].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Twelfth Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "adent_palindrome.java"
+        expectedFileTwo = "rbravaco_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match11.html"
+        expectedPercentOne = 22
+        expectedPercentTwo = 27
+        expectedLinesMatched = 7
+
+        self.assertEqual(result[11].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[11].getFileOne(), expectedFileOne)
+        self.assertEqual(result[11].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[11].getUrl(), expectedUrl)
+        self.assertEqual(result[11].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[11].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[11].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Thirteenth Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "adent_palindrome.java"
+        expectedFileTwo = "jsnow_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match12.html"
+        expectedPercentOne = 22
+        expectedPercentTwo = 29
+        expectedLinesMatched = 7
+
+        self.assertEqual(result[12].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[12].getFileOne(), expectedFileOne)
+        self.assertEqual(result[12].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[12].getUrl(), expectedUrl)
+        self.assertEqual(result[12].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[12].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[12].getLinesMatched(), expectedLinesMatched)
+
 
 #
 # testFileNaming()
