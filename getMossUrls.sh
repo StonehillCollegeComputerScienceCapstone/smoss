@@ -42,6 +42,13 @@ function main
 	echo "$url"
 	testurls+=($url)
 
+	echo "Retrieiving url for test_processTableString4"
+	test4=$(perl ../moss.pl -l java *palindrome.java)
+	url=$(echo $test4 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
+	echo "$url"
+	testurls+=($url)
+
+
     #echo "Retrieving url for test_processTableStrings3"
     #test3=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Warmup.java)
     #url=$(echo $test3 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
