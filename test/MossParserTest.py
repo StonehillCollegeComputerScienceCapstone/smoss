@@ -445,46 +445,39 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertEqual(result[0].getPercentTwo(), expectedPercentTwo)
         self.assertEqual(result[0].getLinesMatched(), expectedLinesMatched)
 
-    #Testing on expected output
-    #def test_processTableStrings3(self):
-    #    f = open('./test/testurls.txt')
-    #    testlines = f.readlines()
-    #    url = testlines[1]
-    #    url = url.replace('\n', '')
-    #    html = self.mp.getHtml(url)
-    #    tableStrings = self.mp.processHtml(html)
-    #    result, valid = self.mp.processTableStrings(tableStrings, 0)
-    #    fileOne = "abhatia_magicsquare.java"
-    #    self.assertEqual(result[0].getFileOne(), fileNameOne)
-    #    f.close()
+        #Checking Second Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "jdalbey_twentyone.java"
+        expectedFileTwo = "ssnape_twentyone.java"
+        expectedUrl = "http://moss.stanford.edu/results/"+mossNumber+"/match1.html"
+        expectedPercentOne = 2
+        expectedPercentTwo = 3
+        expectedLinesMatched = 5
 
+        self.assertEqual(result[1].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[1].getFileOne(), expectedFileOne)
+        self.assertEqual(result[1].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[1].getUrl(), expectedUrl)
+        self.assertEqual(result[1].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[1].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[1].getLinesMatched(), expectedLinesMatched)
 
-    #Testing on expected output
-    #def test_processTableStrings3(self):
-    #    f = open('testurls.txt')
-    #    testlines = f.readlines()
-    #    url = testlines[2]
-    #    url=url.replace('\n','')
-    #    mossNumber = url[33:]
-    #    html = self.mp.getHtml(url)
-    #    tableStrings = self.mp.processHtml(html)
-    #    result = self.mp.processTableStrings(tableStrings, 0)
-    #    expected = ([["jbaxter5","jbaxter5_Warmup.java","91","jbaxter5","jbaxter5_Warmup.java","91","12","http://moss.stanford.edu/results/"+mossNumber+"/match0.html"]], True)
-    #    self.assertEqual(result, expected)
-    #    f.close()
+        #Checking Third Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "dtargaryen_twentyone.java"
+        expectedFileTwo = "ssnape_twentyone.java"
+        expectedUrl = "http://moss.stanford.edu/results/"+mossNumber+"/match2.html"
+        expectedPercentOne = 2
+        expectedPercentTwo = 3
+        expectedLinesMatched = 5
 
-    #Testing on unexpected output
-    #def test_processTableStrings4(self):
-     #   f = open('testurls.txt')
-      #  testlines = f.readlines()
-       # url = testlines[4]
-       # url=url.replace('\n','')
-       # html = self.mp.getHtml(url)
-       # tableStrings = self.mp.processHtml(html)
-       # result = self.mp.processTableStrings(tableStrings, 0)
-       # expected = ([[ "jter_Warmup.java,91,jbaxter_Warmup.java,91,12,http://moss.stanford.edu/results/20984829/match0.html"]],True)
-       # self.assertNotEqual(result, expected)
-       # f.close()
+        self.assertEqual(result[2].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[2].getFileOne(), expectedFileOne)
+        self.assertEqual(result[2].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[2].getUrl(), expectedUrl)
+        self.assertEqual(result[2].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[2].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[2].getLinesMatched(), expectedLinesMatched)
 #
 # testFileNaming()
 #
