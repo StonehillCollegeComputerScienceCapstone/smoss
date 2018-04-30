@@ -764,6 +764,53 @@ class MossParserUnitTest(unittest.TestCase):
         self.assertEqual(result[15].getLinesMatched(), expectedLinesMatched)
 
 
+    # Testing on different assignment submissions
+    def test_processTableStrings5(self):
+        f = open('./test/testurls.txt')
+        testlines = f.readlines()
+        url = testlines[4]
+        url = url.replace('\n', '')
+        mossNumber = url[33:]
+        print(mossNumber)
+        html = self.mp.getHtml(url)
+        tableStrings = self.mp.processHtml(html)
+        result, valid = self.mp.processTableStrings(tableStrings, 0)
+
+        #Checking First Result
+        expectedAssignmentNumber = 0
+        expectedFileOne = "dtargaryen_twentyone.java"
+        expectedFileTwo = "jdalbey_twentyone.java"
+        expectedUrl = "http://moss.stanford.edu/results/"+mossNumber+"/match0.html"
+        expectedPercentOne = 96
+        expectedPercentTwo = 96
+        expectedLinesMatched = 366
+
+        self.assertEqual(result[0].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[0].getFileOne(), expectedFileOne)
+        self.assertEqual(result[0].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[0].getUrl(), expectedUrl)
+        self.assertEqual(result[0].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[0].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[0].getLinesMatched(), expectedLinesMatched)
+
+        # Checking Second Result
+        expectedAssignmentNumber = 0  
+        expectedFileOne = "abhatia_palindrome.java"
+        expectedFileTwo = "jsnow_palindrome.java"
+        expectedUrl = "http://moss.stanford.edu/results/" + mossNumber + "/match1.html"
+        expectedPercentOne = 98
+        expectedPercentTwo = 98
+        expectedLinesMatched = 21
+
+        self.assertEqual(result[1].getAssignmentNumber(), expectedAssignmentNumber)
+        self.assertEqual(result[1].getFileOne(), expectedFileOne)
+        self.assertEqual(result[1].getFileTwo(), expectedFileTwo)
+        self.assertEqual(result[1].getUrl(), expectedUrl)
+        self.assertEqual(result[1].getPercentOne(), expectedPercentOne)
+        self.assertEqual(result[1].getPercentTwo(), expectedPercentTwo)
+        self.assertEqual(result[1].getLinesMatched(), expectedLinesMatched)
+
+
 #
 # testFileNaming()
 #

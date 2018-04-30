@@ -49,26 +49,11 @@ function main
 	testurls+=($url)
 
 
-    #echo "Retrieving url for test_processTableStrings3"
-    #test3=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Warmup.java)
-    #url=$(echo $test3 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
-    #echo $url
-    #echo "\n"
-    #testurls+=($url)
-
-    #echo "Retrieving url for test_processTableStrings4"
-    #test4=$(perl ../moss.pl -l java jbaxter5_Warmup.java stentacles_Warmup.java jbaxter5_Insipid.java stentacles_Insipid.java )
-    #url=$(echo $test4 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
-    #echo $url
-    #echo "\n"
-    #testurls+=($url)
-
-    #echo "Retrieving url for test_processTableStrings5"
-    #test5=$(perl ../moss.pl -l java jbaxter5_Warmup.java jbaxter5_Warmup.java)
-    #url=$(echo $test5 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
-    #echo $url
-    #echo "\n"
-    #testurls+=($url)
+    echo "Retrieivng url for test_processTableStrings5"
+    test5=$(perl ../moss.pl -l java abhatia_palindrome.java jsnow_palindrome.java dtargaryen_twentyone.java jdalbey_twentyone.java)
+    url=$(echo $test5 | grep -o 'http:\/\/moss\.stanford\.edu\/results\/[0-9][0-9]*')
+    echo "$url"
+    testurls+=($url)
 
 
 	#cd back to smoss directory
