@@ -28,9 +28,7 @@ class Graph:
         cpNames = []
         currentYear = "currentYear"
         previousYear = "previousYear"
-        nameOne = ""
-        nameTwo = ""
-        nameOnePrevious, nameTwoPrevious = False, False
+
         for result in results:
             nameOne = result.getNameOne()
             nameTwo = result.getNameTwo()

@@ -1,12 +1,11 @@
 # Directories:
 .idea/
 /flask_session
-/data
+/archive
 
 # Extensions:
 *pyc
 **/*.log
 
-# Files
-csv.csv
-/test/csv.csv
+# Files:
+mossUrls.zip

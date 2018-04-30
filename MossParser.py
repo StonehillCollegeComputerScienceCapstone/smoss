@@ -24,7 +24,7 @@ class MossParser ():
         # Process the html into table strings
         tableStrings = self.processHtml(html)
 
-        # Process the table strings into csv strings
+        # Process the table strings into Result objects
         data, validFileName = self.processTableStrings(tableStrings, assignmentNum)
 
         if(validFileName):
@@ -45,16 +45,17 @@ class MossParser ():
         except:
             return False
 
+    # Return a list representing the table
     def processHtml(self, html):
         # Parse until table
-        htmlParser=myHtmlParser()
+        htmlParser = myHtmlParser()
         htmlParser.feed(html)
 
         # Here we have all of the rows in one long string
         # now we parse through the string and split them up into individual strings
-        stripped=htmlParser.tableString.strip('\n')
+        stripped = htmlParser.tableString.strip('\n')
         stripped = stripped.replace('\n', '')
-        splitStrings=stripped.split("<tr>")
+        splitStrings = stripped.split("<tr>")
 
         # Have list of strings split up
         # first two indexes are a blank space and the header, so remove them
@@ -62,6 +63,7 @@ class MossParser ():
         del(splitStrings[0])
         return splitStrings
 
+    # Get the size of the table
     def getSizeOfTables(self, urls):
         tableSizes = []
         for url in urls:
@@ -69,7 +71,7 @@ class MossParser ():
             tableSizes.append(len(self.processHtml(html)))
         return tableSizes
 
-
+    # Takes a url and returns its html
     def getHtml(self, url):
         if(self.testUrl(url) is True):
             html = urllib.request.urlopen(url)

@@ -67,6 +67,7 @@ class MossResultsRetriever:
                 duplicates.append(url)
         return duplicates, urlList
 
+    # Returns every result in results is valid, else false
     def resultsAreValid(self):
         for result in self.results:
             if not result.isValid():

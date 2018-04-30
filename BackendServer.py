@@ -26,6 +26,12 @@ config = Config()
 logger = config.logger
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
 
+# Create mossURLs.zip to be downloaded
+def createZipDirectory(urls, tableSize):
+    downloader = MossDownloader()
+    assignmentIds = downloader.getAssignmentIds(urls)
+    downloader.downloadAllMatches(assignmentIds, tableSize)
+
 # Try to retriever retriever session variable
 def getRetrieverSession():
     try:
@@ -65,9 +71,7 @@ def _Index ():
         if valid:
             if 'download' in request.form:
                 parser = MossParser()
-                downloader = MossDownloader()
-                assignmentIds = downloader.getAssignmentIds(urls)
-                downloader.downloadAllMatches(assignmentIds, parser.getSizeOfTables(urls))
+                createZipDirectory(urls, parser.getSizeOfTables(urls))
                 return send_from_directory(directory='./', filename='mossURLs.zip', as_attachment=True)
             else:
                 session['urls'] = encode(urls)
@@ -92,8 +96,6 @@ def _MOSSselectpage():
     retriever = MossResultsRetriever()
     urls = getUrlsSession()
 
-    MossDownloader.removeAllTempFiles()
-
     if request.method == "POST":
         selection = request.form['selection']
 
@@ -103,6 +105,7 @@ def _MOSSselectpage():
         else:
             retriever.appendUrl(selection)
 
+        # Get the results from the urls above
         retriever.populateResults()
 
         # If the results are empty
@@ -131,12 +134,9 @@ def _MOSSOutput ():
     template, value = getMossTemplate(retriever)
     aggregator = DataAggregator(retriever.results)
     graph = Graph(retriever.results)
-    MossDownloader.removeAllTempFiles()
 
     if request.method == "POST":
-        downloader = MossDownloader()
-        assignmentIds = downloader.getAssignmentIds(retriever.urls)
-        downloader.downloadAllMatches(assignmentIds, retriever.urlsTableRowsSize)
+        createZipDirectory(retriever.urls, retriever.urlsTableRowsSize)
         return send_from_directory(directory='./', filename='mossURLs.zip', as_attachment=True)
 
     return render_template(template, value=value, percentsValues=aggregator.topPercents, linesValues=aggregator.topLines,

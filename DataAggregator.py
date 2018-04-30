@@ -61,9 +61,7 @@ class DataAggregator:
                 numbers.append(result.assignmentNumber)
         return numbers
 
-    #
     # Returns an array of data based off of chosen data type
-    #
     def parseData(self, results, name, dataType):
         parsedData = []
         assignmentNumbers = self.getAssignmentNumbers(results)

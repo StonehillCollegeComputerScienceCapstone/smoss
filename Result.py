@@ -52,8 +52,6 @@ class Result:
 
         return assignmentOne
 
-
-
     def nameOneIsPrevious(self):
         return self.isNamePrevious(self.fileOne)
 
