@@ -150,12 +150,7 @@ def _MOSSOutput ():
 #
 @app.route('/URLvalidation')
 def _MOSSurlvalidation():
-    try:
-        retriever = decode(session['retriever'])
-    except:
-        logger.info('Session variable does not exist!')
-        retriever = MossResultsRetriever()
-
+    retriever = getRetrieverSession()
     logger.info('[BackendServer]\tMOSS URL validation page displayed!')
     template, value = getMossTemplate(retriever)
     return render_template(template, value=value)
