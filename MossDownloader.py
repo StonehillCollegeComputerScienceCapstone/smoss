@@ -16,13 +16,31 @@ class MossDownloader ():
     def __init__(self, sessionId):
         self.sessionId = sessionId
 
+    # Sometimes there is an error accessing a valid url. This enables the program to try to access the url multiple
+    # times before throwing an error
+    def tryDownload(self, url, directory):
+        i = 0
+        urlSuccess = False
+
+        # Try to access the url 5 times
+        while i < 5 and (not urlSuccess):
+            try:
+                wget.download(url, directory)
+                urlSuccess = True
+            except:
+                i = i + 1
+
+        # If the URL was not successful, try one more time and let the exception get thrown automatically
+        if not urlSuccess:
+            wget.download(url, directory)
+
     # Given the base URL, download all 4 HTML files that come with an assignment analysis
     def downloadMatch(self, urlBase, mossID):
         dirName = './' + self.sessionId + 'archive/' + mossID
-        wget.download(urlBase + '.html', dirName)
-        wget.download(urlBase + '-top.html', dirName)
-        wget.download(urlBase + '-0.html', dirName)
-        wget.download(urlBase + '-1.html', dirName)
+        self.tryDownload(urlBase + '.html', dirName)
+        self.tryDownload(urlBase + '-top.html', dirName)
+        self.tryDownload(urlBase + '-0.html', dirName)
+        self.tryDownload(urlBase + '-1.html', dirName)
 
     # Given a MOSS ID and the number of matches in the ID, call downloadMatch() on all matches in the submission
     def downloadAllMatchesForAssignment (self, mossID, numberOfMatches):
