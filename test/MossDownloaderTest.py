@@ -22,9 +22,6 @@ class MossDownloaderTest (unittest.TestCase):
         self.downloader = MossDownloader(self.sessionId)
         self.config = Config()
 
-    def test_invalidResultsId(self):
-        self.assertFalse(self.downloader.downloadAllMatches(['99999999999999999'], [20]))
-
     def test_removeZipFile(self):
         file = open(self.sessionId + 'mossURLs.zip', 'w')
         file.close()

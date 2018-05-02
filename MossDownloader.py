@@ -50,10 +50,6 @@ class MossDownloader ():
     # Given a 2D array of MOSS ID's and number of matches for the ID, run
     def downloadAllMatches(self, mossIDs, numberOfMatches):
         self.removeAllTempFiles()
-        mossRetriever = MossResultsRetriever()
-        for id in mossIDs:
-            if not mossRetriever.isValidUrl('http://moss.stanford.edu/results/' + id):
-                return False
         for assignment in range(0, len(mossIDs)):
             self.downloadSummaryPage(mossIDs[assignment])
             self.downloadAllMatchesForAssignment(mossIDs[assignment], numberOfMatches[assignment])
@@ -65,12 +61,16 @@ class MossDownloader ():
         if os.path.isdir(directory + mossID):
             shutil.rmtree(directory + mossID)
         os.makedirs(directory + mossID)
-        wget.download('http://moss.stanford.edu/results/' + mossID, './' + directory + mossID)
-        os.rename('./' + directory + mossID + '/' + mossID, './' + directory + mossID + '/' + mossID + '.html')
-        with open('./' + directory + mossID + '/' + mossID + '.html', 'r') as file:
+        self.tryDownload('http://moss.stanford.edu/results/' + mossID, './' + directory + mossID)
+
+        oldName = './' + directory + mossID + '/' + mossID
+        newName = oldName + '.html'
+
+        os.rename(oldName, newName)
+        with open(newName, 'r') as file:
             original = file.read()
         original = original.replace('http://moss.stanford.edu/results/' + mossID + '/', '')
-        with open('./' + directory + mossID + '/' + mossID + '.html', 'w') as file:
+        with open(newName, 'w') as file:
             file.write(original)
 
     # Takes away the http:..../results/
