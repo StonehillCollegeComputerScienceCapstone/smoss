@@ -12,12 +12,17 @@ from MossResultsRetriever import MossResultsRetriever
 
 class MossDownloader ():
 
+    # Constructor
+    def __init__(self, sessionId):
+        self.sessionId = sessionId
+
     # Given the base URL, download all 4 HTML files that come with an assignment analysis
     def downloadMatch(self, urlBase, mossID):
-        wget.download(urlBase + '.html', './archive/' + mossID)
-        wget.download(urlBase + '-top.html', './archive/' + mossID)
-        wget.download(urlBase + '-0.html', './archive/' + mossID)
-        wget.download(urlBase + '-1.html', './archive/' + mossID)
+        dirName = './' + self.sessionId + 'archive/' + mossID
+        wget.download(urlBase + '.html', dirName)
+        wget.download(urlBase + '-top.html', dirName)
+        wget.download(urlBase + '-0.html', dirName)
+        wget.download(urlBase + '-1.html', dirName)
 
     # Given a MOSS ID and the number of matches in the ID, call downloadMatch() on all matches in the submission
     def downloadAllMatchesForAssignment (self, mossID, numberOfMatches):
@@ -38,15 +43,16 @@ class MossDownloader ():
 
     # Given MOSS's ID number, it downloads MOSS's index page of all assignment rankings
     def downloadSummaryPage(self, mossID):
-        if os.path.isdir('archive/' + mossID):
-            shutil.rmtree('archive/' + mossID)
-        os.makedirs('archive/' + mossID)
-        wget.download('http://moss.stanford.edu/results/' + mossID, './archive/' + mossID)
-        os.rename('./archive/' + mossID + '/' + mossID, './archive/' + mossID + '/' + mossID + '.html')
-        with open('./archive/' + mossID + '/' + mossID + '.html', 'r') as file:
+        directory = self.sessionId + 'archive/'
+        if os.path.isdir(directory + mossID):
+            shutil.rmtree(directory + mossID)
+        os.makedirs(directory + mossID)
+        wget.download('http://moss.stanford.edu/results/' + mossID, './' + directory + mossID)
+        os.rename('./' + directory + mossID + '/' + mossID, './' + directory + mossID + '/' + mossID + '.html')
+        with open('./' + directory + mossID + '/' + mossID + '.html', 'r') as file:
             original = file.read()
         original = original.replace('http://moss.stanford.edu/results/' + mossID + '/', '')
-        with open('./archive/' + mossID + '/' + mossID + '.html', 'w') as file:
+        with open('./' + directory + mossID + '/' + mossID + '.html', 'w') as file:
             file.write(original)
 
     # Takes away the http:..../results/
@@ -58,14 +64,15 @@ class MossDownloader ():
 
     # Creates a .zip of the archive directory
     def zipFile(self):
-        zipName = 'mossURLs'
-        directoryName = './archive'
+        zipName = self.sessionId + 'mossURLs'
+        directoryName = './' + self.sessionId + 'archive'
         shutil.make_archive(zipName, 'zip', directoryName)
 
     # Removes mossURLs.zip and the archive directory if either exist
-    @staticmethod
-    def removeAllTempFiles():
-        if os.path.exists('./mossURLs.zip'):
-            os.remove('./mossURLs.zip')
-        if os.path.isdir('./archive'):
-            shutil.rmtree('./archive')
+    def removeAllTempFiles(self):
+        zipFileName = './' +  self.sessionId + 'mossURLs.zip'
+        archiveFileName = './' + self.sessionId + 'archive'
+        if os.path.exists(zipFileName):
+            os.remove(zipFileName)
+        if os.path.isdir(archiveFileName):
+            shutil.rmtree(archiveFileName)

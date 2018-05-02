@@ -9,13 +9,14 @@
 #   This file comprises the code that runs the Flask server for our MOSS solution.
 #
 
+import os
 from flask import *
 from flask_session import Session
 from jsonpickle import encode, decode
+from uuid import uuid4
 from DataAggregator import DataAggregator
 from MossResultsRetriever import MossResultsRetriever
 from Graph import Graph
-import os
 from Config import Config
 from MossDownloader import MossDownloader
 from MossParser import MossParser
@@ -27,8 +28,8 @@ logger = config.logger
 FORMAT = "[%(filename)s:%(lineno)s - %(funcName)10s() ] %(message)s"
 
 # Create mossURLs.zip to be downloaded
-def createZipDirectory(urls, tableSize):
-    downloader = MossDownloader()
+def createZipDirectory(urls, tableSize, sessionId):
+    downloader = MossDownloader(sessionId)
     assignmentIds = downloader.getAssignmentIds(urls)
     downloader.downloadAllMatches(assignmentIds, tableSize)
 
@@ -70,9 +71,10 @@ def _Index ():
 
         if valid:
             if 'download' in request.form:
+                sessionId = str(uuid4())
                 parser = MossParser()
-                createZipDirectory(urls, parser.getSizeOfTables(urls))
-                return send_from_directory(directory='./', filename='mossURLs.zip', as_attachment=True)
+                createZipDirectory(urls, parser.getSizeOfTables(urls), sessionId)
+                return send_from_directory(directory='./', filename=sessionId+'mossURLs.zip', as_attachment=True)
             else:
                 session['urls'] = encode(urls)
                 return redirect('selectionpage')
@@ -136,8 +138,9 @@ def _MOSSOutput ():
     graph = Graph(retriever.results)
 
     if request.method == "POST":
-        createZipDirectory(retriever.urls, retriever.urlsTableRowsSize)
-        return send_from_directory(directory='./', filename='mossURLs.zip', as_attachment=True)
+        sessionId = str(uuid4())
+        createZipDirectory(retriever.urls, retriever.urlsTableRowsSize, sessionId)
+        return send_from_directory(directory='./', filename=sessionId+'mossURLs.zip', as_attachment=True)
 
     return render_template(template, value=value, percentsValues=aggregator.topPercents, linesValues=aggregator.topLines,
                            nodes=graph.graph["nodes"], edges=graph.graph["edges"])
