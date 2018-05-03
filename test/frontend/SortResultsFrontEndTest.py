@@ -2,7 +2,7 @@
 
 #
 #   FILE:       SortResultsFrontEndTest.py
-#   AUTHOR:     nvidyarthy, mmiddleton
+#   AUTHOR:     nvidyarthy, mmiddleton, wgreelish
 #   DATE:       10 APR 2018
 #
 #   DESCRIPTION:   
@@ -11,7 +11,9 @@
 
 import test.frontend.FrontEndConfig as FrontEndConfig
 
+
 class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
+
     #
     #   setUp ():       Specifies the build name for the test suite
     #
@@ -19,7 +21,60 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         FrontEndConfig.FrontEndTestSuite.setUp (self)
         self.buildName = "154731155 - Sort Results"
 
+    #
+    #   ExpiredURLSubmission ():    Enters in an expired URL into the text ara and submits it
+    #
+    def test_ExpiredURLSubmission(self):
+        driver = self.InitializeBrowserStackConnection("Test an Expired URL")
 
+        # Navigate to page
+        driver.get("http://localhost:5000/")
+
+        # Find textarea and input expired URL
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/388411051")
+
+        # Submit form data
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Assertion
+        self.assertEqual("Uh Oh!", driver.find_element_by_xpath("//h1").text)
+
+    #
+    #   InvalidURLSubmission ():    Enters in an expired URL into the text ara and submits it
+    #
+    def test_InvalidURLSubmission(self):
+        driver = self.InitializeBrowserStackConnection("Test an Invalid URL")
+
+        # Navigate to page
+        driver.get("http://localhost:5000/")
+
+        # Find textarea and input expired URL
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/xyz")
+
+        # Submit form data
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Assertion
+        self.assertEqual("Uh Oh!", driver.find_element_by_xpath("//h1").text)
+
+    #
+    #   TableRenders    -   Ensure that the sortable table is visible to the user
+    #
+    def test_TableRenders(self):
+        driver = self.InitializeBrowserStackConnection("Test Table Renders")
+        driver.get("http://localhost:5000/")
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").clear()
+        driver.find_element_by_name("text").send_keys('\n'.join(self.testURLGroup))
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+        driver.find_element_by_xpath("(//input[@name='selection'])[4]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+        try:
+            self.assertTrue(driver.find_element_by_id("MOSSResults").is_displayed())
+        except AssertionError as e:
+            self.verificationErrors.append(str(e))
 
     #
     #   PercentSortedLowToHigh     -    Ensure that the whole table is sorted low-to-high by percentage
@@ -56,7 +111,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -76,8 +130,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
                 break
 
         self.assertTrue (isSorted)
-
-
 
     #
     #   PercentSortedHighToLow     -    Ensure that the whole table is sorted low-to-high by percentage
@@ -115,7 +167,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -135,8 +186,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
                 break
 
         self.assertTrue (isSorted)
-
-
 
     #
     #   LinesSortedLowToHigh    -   Ensure that the whole table is sorted low-to-high by lines
@@ -173,7 +222,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -193,8 +241,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
                 break
 
         self.assertTrue (isSorted)
-
-
 
     #
     #   LinesSortedHighToLow    -   Ensure that the whole table is sorted high-to-low by lines
@@ -232,7 +278,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -252,8 +297,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
                 break
 
         self.assertTrue (isSorted)
-
-
 
     #
     #   UserOneFilenameAToZ     -   Ensure that the whole table's User One Filename is sorted A-to-Z
@@ -290,7 +333,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -310,8 +352,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
                 break
 
         self.assertTrue (isSorted)
-
-
 
     #
     #   UserOneFilenameZToA     -   Ensure that the whole table's User One Filename is sorted Z-to-A
@@ -349,7 +389,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -370,13 +409,11 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
 
         self.assertTrue (isSorted)
 
-
-
     #
     #   UserTwoFilenameAToZ     -   Ensure that the whole table's User One Filename is sorted A-to-Z
     #
     def test_UserTwoFilenameAToZ (self):
-        driver = self.InitializeBrowserStackConnection ("UserOne Filename A to Z")
+        driver = self.InitializeBrowserStackConnection ("UserTwo Filename A to Z")
         isSorted = False
         
         try:
@@ -407,8 +444,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -429,13 +464,11 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
 
         self.assertTrue (isSorted)
 
-
-
     #
     #   UserTwoFilenameZToA     -   Ensure that the whole table's User One Filename is sorted A-to-Z
     #
     def test_UserTwoFilenameZToA (self):
-        driver = self.InitializeBrowserStackConnection ("UserOne Filename Z to A")
+        driver = self.InitializeBrowserStackConnection ("UserTwo Filename Z to A")
         isSorted = False
 
         try:
@@ -467,7 +500,6 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
         except Exception as error:
             print ("\n\n" + str (error) + "\n")
 
-
         # Continuing checking until we hit an invalid index OR variable1 > variable2
         index = 3
 
@@ -487,3 +519,68 @@ class SortResultsFrontEndTest (FrontEndConfig.FrontEndTestSuite):
                 break
 
         self.assertTrue (isSorted)
+
+    #
+    #   SingleURLCheckUsingAllURLsButton ():    Enters in a valid URL and submits using the 'All URLs' button to confirm data entry
+    #
+    def test_SingleURLCheckUsingAllURLsButton(self):
+        driver = self.InitializeBrowserStackConnection("Test Single URL Using All Button")
+
+        # Navigate to page
+        driver.get("http://localhost:5000/")
+
+        # Find textarea and input expired URL
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").send_keys(self.testURL)
+
+        # Submit form data
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Select 'All URLs' button and submit
+        driver.find_element_by_xpath("(//input[@name='selection'])[last()]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Assert that we successfully landed on the /moss page when submitting in this way.
+        self.assertEqual(driver.current_url, 'http://localhost:5000/moss')
+
+    #
+    #   MultipleURLsProvidedOneChosen ():   Enters in multiple URLs but only selects one URL to investigate
+    #
+    def test_MultipleURLsProvidedOneChosen(self):
+        driver = self.InitializeBrowserStackConnection("Test Multiple URLs One Selected")
+
+        # Navigate to page
+        driver.get("http://localhost:5000/")
+
+        # Find textarea, input a collection of URLs, and submit form data
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").send_keys('\n'.join(self.testURLGroup))
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Select the second item in the list of submitted URLs and submit form data again
+        driver.find_element_by_xpath("(//input[@name='selection'])[2]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Assert that we successfully landed on the /moss page when submitting in this way
+        self.assertEqual(driver.current_url, 'http://localhost:5000/moss')
+
+    #
+    #   MultipleURLsProvidedAllChosen ():   Enters in multiple URLs but only selects one URL to investigate
+    #
+    def test_MultipleURLsProvidedAllChosen(self):
+        driver = self.InitializeBrowserStackConnection("Test Multiple URLs All Button")
+
+        # Navigate to page
+        driver.get("http://localhost:5000/")
+
+        # Find textarea, input a collection of URLs, and submit form data
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").send_keys('\n'.join(self.testURLGroup))
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Select the last item in the list of submitted URLs and submit form data again
+        driver.find_element_by_xpath("(//input[@name='selection'])[last()]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+        # Assert that we successfully landed on the /moss page when submitting in this way
+        self.assertEqual(driver.current_url, 'http://localhost:5000/moss')
