@@ -61,79 +61,134 @@ class TopTenStudentsTest (FrontEndConfig.FrontEndTestSuite):
 
         # Assertion
         self.assertEqual ("Uh Oh!", driver.find_element_by_xpath("//h1").text)
+    '''
+    def test_MultipleURLsTopTenLinesMultipleAssignments(self):
+        driver = self.InitializeBrowserStackConnection("Test Top Ten Lines Matched Multiples Assignments")
 
-
-
-
-
-
-
-    #
-    #   SingleURLCheckUsingAllURLsButton ():    Enters in a valid URL and submits using the 'All URLs' button to confirm data entry
-    #
-    def test_SingleURLCheckUsingAllURLsButton (self):
-        driver = self.InitializeBrowserStackConnection ("Submit One URL - Select all")
-        
         # Navigate to page
-        driver.get ("http://localhost:5000/")
+        driver.get("http://localhost:5000/")
 
-        # Find textarea and input expired URL
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name ("text").send_keys (self.testURL)
-
+        # Find textarea and input Single URLs
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").clear()
+        driver.find_element_by_name("text").send_keys(self.testURL)
         # Submit form data
-        driver.find_element_by_xpath("//input[@value='Submit']").click ()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select 'All URLs' button and submit
-        driver.find_element_by_xpath ("(//input[@name='selection'])[last()]").click ()
-        driver.find_element_by_xpath ("//input[@value='Submit']").click ()
+        # Select the sixth item in the list of submitted URLs and submit form data again
+        driver.find_element_by_xpath("(//input[@name='selection'])[2]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Assert that we successfully landed on the /moss page when submitting in this way.
-        self.assertEqual (driver.current_url, 'http://localhost:5000/moss')
+        # Store the values of the top ten lines matched
+        var1 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr/td[2]").text
+        var2 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[2]/td[2]").text
+        var3 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[3]/td[2]").text
+        var4 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[4]/td[2]").text
+        var5 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[5]/td[2]").text
+        var6 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[6]/td[2]").text
+        var7 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[7]/td[2]").text
+        var8 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[8]/td[2]").text
+        var9 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[9]/td[2]").text
+        var10 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[10]/td[2]").text
 
+        # Assertion
+        self.assertTrue(var1 >= var2 >= var3 >= var4 >= var5 >= var6 >= var7 >= var8 >= var9 >= var10)
+    '''
+    def test_MultipleURLsTopTenPercentsMultipleAssignments(self):
+        driver = self.InitializeBrowserStackConnection("Test Top Ten Percent Matched Multiple Assignments")
 
-
-    #
-    #   MultipleURLsProvidedOneChosen ():   Enters in multiple URLs but only selects one URL to investigate
-    #
-    def test_MultipleURLsProvidedOneChosen (self):
-        driver = self.InitializeBrowserStackConnection ("Submit multiple URLs - Select one")
-        
         # Navigate to page
-        driver.get ("http://localhost:5000/")
+        driver.get("http://localhost:5000/")
 
-        # Find textarea, input a collection of URLs, and submit form data
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name ("text").send_keys('\n'.join (self.testURLGroup))        
-        driver.find_element_by_xpath ("//input[@value='Submit']").click ()
+        # Find textarea and input Single URLs
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").clear()
+        driver.find_element_by_name("text").send_keys(self.testURL)
+        # Submit form data
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select the second item in the list of submitted URLs and submit form data again
-        driver.find_element_by_xpath ("(//input[@name='selection'])[2]").click ()
-        driver.find_element_by_xpath ("//input[@value='Submit']").click ()
+        # Select the sixth item in the list of submitted URLs and submit form data again
+        driver.find_element_by_xpath("(//input[@name='selection'])[2]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Assert that we successfully landed on the /moss page when submitting in this way
-        self.assertEqual (driver.current_url, 'http://localhost:5000/moss')
+        # Store the values of the top ten lines matched
+        var1 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr/td[2]").text
+        var2 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[2]/td[2]").text
+        var3 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[3]/td[2]").text
+        var4 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[4]/td[2]").text
+        var5 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[5]/td[2]").text
+        var6 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[6]/td[2]").text
+        var7 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[7]/td[2]").text
+        var8 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[8]/td[2]").text
+        var9 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[9]/td[2]").text
+        var10 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[10]/td[2]").text
 
+        # Assertion
+        self.assertTrue(var1 >= var2 >= var3 >= var4 >= var5 >= var6 >= var7 >= var8 >= var9 >= var10)
+    '''
+    def test_MultipleURLsTopTenLinesSingleAssignment(self):
+        driver = self.InitializeBrowserStackConnection("Test Top Ten Lines Matched Single Assignment")
+        driver.get("http://localhost:5000/")
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").clear()
+        driver.find_element_by_name("text").send_keys("http://moss.stanford.edu/results/47342166")
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+        driver.find_element_by_xpath("(//input[@name='selection'])[2]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+        var1 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr/td[2]").text
+        var2 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[2]/td[2]").text
+        var3 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[3]/td[2]").text
+        var4 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[4]/td[2]").text
+        var5 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[5]/td[2]").text
+        var6 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[6]/td[2]").text
+        var7 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[7]/td[2]").text
+        var8 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[8]/td[2]").text
+        var9 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[9]/td[2]").text
+        var10 = driver.find_element_by_xpath("//table[@id='HighestLinesMatched']/tbody/tr[10]/td[2]").text
 
+        # Assertion
+        self.assertTrue(var1 >= var2 >= var3 >= var4 >= var5 >= var6 >= var7 >= var8 >= var9 >= var10)
+    '''
 
+    def test_MultipleURLsTopTenPercentSingleAssignment(self):
+        driver = self.InitializeBrowserStackConnection("Test Top Ten Percent Matched Single Assignment")
 
-    #
-    #   MultipleURLsProvidedAllChosen ():   Enters in multiple URLs but only selects one URL to investigate
-    #
-    def test_MultipleURLsProvidedAllChosen (self):
-        driver = self.InitializeBrowserStackConnection ("Submit multiple URLs - Select all")
-        
         # Navigate to page
-        driver.get ("http://localhost:5000/")
+        driver.get("http://localhost:5000/")
 
-        # Find textarea, input a collection of URLs, and submit form data
-        driver.find_element_by_name ("text").click ()
-        driver.find_element_by_name ("text").send_keys('\n'.join (self.testURLGroup))        
-        driver.find_element_by_xpath ("//input[@value='Submit']").click ()
+        # Find textarea and input Single URLs
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").clear()
+        driver.find_element_by_name("text").send_keys(self.testURL)
+        # Submit form data
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Select the last item in the list of submitted URLs and submit form data again
-        driver.find_element_by_xpath ("(//input[@name='selection'])[last()]").click ()
-        driver.find_element_by_xpath ("//input[@value='Submit']").click ()
+        # Select the sixth item in the list of submitted URLs and submit form data again
+        driver.find_element_by_xpath("(//input[@name='selection'])[2]").click()
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
 
-        # Assert that we successfully landed on the /moss page when submitting in this way
-        self.assertEqual (driver.current_url, 'http://localhost:5000/moss')
+        # Store the values of the top ten lines matched
+        var1 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr/td[2]").text
+        var2 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[2]/td[2]").text
+        var3 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[3]/td[2]").text
+        var4 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[4]/td[2]").text
+        var5 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[5]/td[2]").text
+        var6 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[6]/td[2]").text
+        var7 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[7]/td[2]").text
+        var8 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[8]/td[2]").text
+        var9 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[9]/td[2]").text
+        var10 = driver.find_element_by_xpath("//table[@id='HighestPercentMatched']/tbody/tr[10]/td[2]").text
+
+        # Assertion
+        self.assertTrue(var1 >= var2 >= var3 >= var4 >= var5 >= var6 >= var7 >= var8 >= var9 >= var10)
+
+    def test_MultipleURLFormSubmission(self):
+        driver = self.InitializeBrowserStackConnection("Test Multiple URL Form Submission")
+        driver = self.driver
+        driver.get("http://localhost:5000/")
+        driver.find_element_by_name("text").click()
+        driver.find_element_by_name("text").clear()
+        driver.find_element_by_name("text").send_keys('\n'.join(self.testURLGroup))
+        driver.find_element_by_xpath("//input[@value='Submit']").click()
+
+

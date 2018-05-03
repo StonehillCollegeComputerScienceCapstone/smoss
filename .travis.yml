@@ -14,13 +14,13 @@ before_script:
   - ./code-coverage.sh
 
 script:
-  - coverage run --omit **/python3.6/**/* -m unittest -v test/*Test.py
+  - coverage run --omit **/python3.*/**/* -m unittest -v test/*Test.py
   - node-qunit-phantomjs test/junittestharness.html
-  - coverage run -a --omit **/python3.6/**/* -m unittest -v test/frontend/*Test.py
-  - coverage report --omit *Test.py
+  - coverage run -a --omit **/python3.*/**/* -m unittest -v test/frontend/*Test.py
+  - coverage report --omit *Test.py **/__init__.py
 
 after_script:
-  - coverage xml --omit *Test.py
+  - coverage xml --omit=test/*
   - ./coverage-app after-build -t coverage.py -r $CC_TEST_REPORTER
 
 notifications:

@@ -58,7 +58,7 @@ class Graph:
             edgeTo = self.nameList.index(result.getNameTwo())
             value = self.getGreaterPercentage(result)
             valueString = str(value) + "% matched"
-            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.assignmentNumber, "color": 0})
+            edges.append({"from": edgeFrom, "to": edgeTo, "value": value, "title": valueString, "assignment": result.getAssignmentName(), "color": 0})
         return edges
 
     # Return the greater value between two percentages

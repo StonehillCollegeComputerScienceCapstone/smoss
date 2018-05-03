@@ -437,14 +437,14 @@ class MyTestCase(unittest.TestCase):
                 hasAsgNum = False
         self.assertTrue(hasAsgNum)
 
-    # Test edge 'assignment' is int
-    def test_edgeAsgNumIsInt(self):
+    # Test edge 'assignment' is string
+    def test_edgeAsgNumIsString(self):
         edges = self.graph.getEdges(self.results)
-        asgInt = True
+        asgStr = True
         for edge in edges:
-            if not isinstance(edge["assignment"], int):
-                asgInt = False
-        self.assertTrue(asgInt)
+            if not isinstance(edge["assignment"], str):
+                asgStr = False
+        self.assertTrue(asgStr)
 
     #Test that each edge has a color attribute
     def test_edgeHasColor(self):

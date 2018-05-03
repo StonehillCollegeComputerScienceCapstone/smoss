@@ -179,7 +179,7 @@
 
         oldEdges = JSON.parse(edges);
         edges = new vis.DataSet(oldEdges);
-        setEdgeColors();
+        var assignments = setEdgeColors();
 
         //Graph Legend
         var mynetwork = document.getElementById('mynetwork');
@@ -218,7 +218,7 @@
         var colorStr;
         var json;
         for(var i=0; i<edgeColors.length; i++){
-            label = "Assignment " + i;
+            label = assignments[i];
             colorStr = edgeColors[i];
             json = {
                 "background": colorStr
@@ -332,6 +332,7 @@
                 assignments.push(oldEdges[i]["assignment"]);
             }
         }
+        console.log(assignments);
 
         for(var i=0; i<assignments.length; i++){
             if(tempEdgeColors.length == 28){
@@ -357,13 +358,15 @@
         var colorStr;
         var json;
         for(var i=0; i<oldEdges.length; i++){
-            colorStr = edgeColors[oldEdges[i]["assignment"]];
+            colorStr = edgeColors[(assignments.indexOf(oldEdges[i]["assignment"]))];
             json = {
                 "color": colorStr
             };
             oldEdges[i]["color"] = json;
         }
         edges.update(oldEdges);
+
+        return assignments;
     }
 
     function reDraw() {
