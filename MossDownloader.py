@@ -19,6 +19,8 @@ class MossDownloader ():
     # Sometimes there is an error accessing a valid url. This enables the program to try to access the url multiple
     # times before throwing an error
     def tryDownload(self, url, directory):
+        if not isinstance(url, str) or not isinstance(directory, str):
+            return False
         i = 0
         urlSuccess = False
 
@@ -36,6 +38,8 @@ class MossDownloader ():
 
     # Given the base URL, download all 4 HTML files that come with an assignment analysis
     def downloadMatch(self, urlBase, mossID):
+        if not isinstance(urlBase, str) or not isinstance(mossID, str):
+            return False
         dirName = './' + self.sessionId + 'archive/' + mossID
         self.tryDownload(urlBase + '.html', dirName)
         self.tryDownload(urlBase + '-top.html', dirName)
@@ -44,11 +48,19 @@ class MossDownloader ():
 
     # Given a MOSS ID and the number of matches in the ID, call downloadMatch() on all matches in the submission
     def downloadAllMatchesForAssignment (self, mossID, numberOfMatches):
+        if not isinstance(mossID, str) or not isinstance(numberOfMatches, int):
+            return False
         for match in range(0, numberOfMatches):
             self.downloadMatch('http://moss.stanford.edu/results/' + mossID + '/' + 'match' + str(match), mossID)
 
     # Given a 2D array of MOSS ID's and number of matches for the ID, run
     def downloadAllMatches(self, mossIDs, numberOfMatches):
+        if not isinstance(mossIDs, list) or not isinstance(numberOfMatches, list):
+            return False
+        else:
+            for assignment in range(0, len(mossIDs)):
+                if not isinstance(mossIDs[assignment], str) or not isinstance(numberOfMatches[assignment], int):
+                    return False
         self.removeAllTempFiles()
         for assignment in range(0, len(mossIDs)):
             self.downloadSummaryPage(mossIDs[assignment])
@@ -57,6 +69,8 @@ class MossDownloader ():
 
     # Given MOSS's ID number, it downloads MOSS's index page of all assignment rankings
     def downloadSummaryPage(self, mossID):
+        if not isinstance(mossID, str):
+            return False
         directory = self.sessionId + 'archive/'
         if os.path.isdir(directory + mossID):
             shutil.rmtree(directory + mossID)
@@ -75,6 +89,12 @@ class MossDownloader ():
 
     # Takes away the http:..../results/
     def getAssignmentIds(self, urls):
+        if not isinstance(urls, list):
+            return False
+        else:
+            for url in urls:
+                if not isinstance(url, str):
+                    return False
         adjustedList = []
         for url in urls:
             adjustedList.append(url.replace('http://moss.stanford.edu/results/', ''))
