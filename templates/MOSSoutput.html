@@ -1,408 +1,384 @@
+<!--
+    FILE:       MOSSoutput.html
+    AUTHOR:     wgreelish, vmoeckel, nlisichenok, myoung, mmiddleton
+    DATE:       20 FEB. 2018
+
+    DESCRIPTION:
+    This page will be displayed at "/moss" and shows all the data SMOSS receives from MOSS and
+    culminates it on our graph.
+-->
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+    <head>
+        <title>Stonehill College MOSS Environment</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Stylesheets: -->
+        <!-- <link rel="stylesheet" type="text/css" href="../static/smoss.css" /> -->
+        <!-- <link rel="stylesheet" type="text/css" href="../static/vis-network.min.css" /> -->
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='smoss.css')}} />
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='vis-network.min.css')}} />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
 
-</head>
+        <!-- Scripts: -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+        <!-- <script type="text/javascript" src="../static/vis.js"></script> -->
+        <script type="text/javascript "src={{url_for('static', filename='vis.js')}}></script>
+        
 
-<body>
-<h1>Moss Results</h1>
-<HR>
-<A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A>
-</HR>
+        <!-- Meta data: -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
 
+    <body onload="draw()">
+        <h1>Moss Results</h1>
+        <hr>
+            <A HREF="http://moss.stanford.edu/general/format.html" TARGET="_top"> How to Read the Results</A> | <A HREF="http://moss.stanford.edu/general/tips.html" TARGET="_top"> Tips</A> | <A HREF="http://moss.stanford.edu/general/faq.html"> FAQ</A> | <A HREF="mailto:moss-request@cs.stanford.edu">Contact</A> | <A HREF="http://moss.stanford.edu/general/scripts.html">Submission Scripts</A> | <A HREF="http://moss.stanford.edu/general/credits.html" TARGET="_top"> Credits</A>
+        </hr>
+        <script>
+            $(function() {
+                $('#MOSSResults').dataTable({"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]});
+            })
+        </script>
+        
+        </br>
+        </br>
+        
+        <form id="download" method="POST">
+            <input type="submit" value="Download Moss Results">
+        </form>
 
-<script>
-    $(document).ready(function() {
-        $('#MOSSResults').dataTable({"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ]});
-    })
-</script>
-<br>
-<br>
-<form method="POST">
-    <input type="submit" value="Download Moss Results">
-</form>
-
-<table id="MOSSResults" class ="display" border=1 cellpadding=7>
-    <thead>
-    <tr>
-        <th>User One</th>
-        <th>Percent Matched for User One</th>
-        <th>User Two</th>
-        <th>Percent Matched for User Two</th>
-        <th>User One's Filename</th>
-        <th>User Two's Filename</th>
-        <th>Lines Matched</th>
-        <th>URL</th>
-    </tr>
-    </thead>
-
-
-    <br> </br>
-
-    <tbody>
-    <tr>{% for obj in value %}
-        <td>{{ obj.getNameOne() }}</td>
-        <td>{{ obj.getPercentOne() }}</td>
-        <td>{{ obj.getNameTwo() }}</td>
-        <td>{{ obj.getPercentTwo() }}</td>
-        <td>{{ obj.getFileOne() }}</td>
-        <td>{{ obj.getFileTwo() }}</td>
-        <td>{{ obj.getLinesMatched() }}</td>
-        <td><a href = {{ obj.getUrl() }}>{{ obj.getUrl() }}</a></td>
-    </tr>{% endfor %}
-    </tbody>
-</table>
-
-<br> </br>
-
-<table id="HighestPercentMatched" class ="display" border=1 cellpadding=7>
-    <thead>
-    <tr>
-        <th>User</th>
-        <th>Average Highest Percent Matched</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr>{% for obj in percentsValues %}
-        <td>{{ obj.getName() }}</td>
-        <td>{{ obj.getData() }}</td>
-    </tr>{% endfor %}
-    </tbody>
-</table>
-
-<br> </br>
-
-<table id="HighestLinesMatched" class ="display" border=1 cellpadding=7>
-    <thead>
-    <tr>
-        <th>User</th>
-        <th>Total Number of Lines Matched</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>{% for obj in linesValues %}
-        <td>{{ obj.getName() }}</td>
-        <td>{{ obj.getData() }}</td>
-    </tr>{% endfor %}
-    </tbody>
-</table>
-
-<br> </br>
-
-<h3> MOSS Results Graph </h3>
-
-<style type="text/css">
-    html, body {
-        font: 10pt arial;
-    }
-    #mynetwork {
-        width: 600px;
-        height: 600px;
-        border: 1px solid lightgray;
-    }
-    .slidecontainer {
-        width: 100%; /* Width of the outside container */
-    }
-    /* The slider itself */
-    .slider {
-        -webkit-appearance: none;  /* Override default CSS styles */
-        appearance: none;
-        width: 600px; /* Slider as wide as graph */
-        height: 25px; /* Specified height */
-        background: #d3d3d3; /* Grey background */
-        outline: none; /* Remove outline */
-        opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-        transition: opacity .2s;
-    }
-    /* Mouse-over effects */
-    .slider:hover {
-        opacity: 1; /* Fully shown on mouse-over */
-    }
-    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-    .slider::-webkit-slider-thumb {
-        -webkit-appearance: none; /* Override default look */
-        appearance: none;
-        width: 25px; /* Set a specific slider handle width */
-        height: 25px; /* Slider handle height */
-        background: #4CAF50; /* Green background */
-        cursor: pointer; /* Cursor on hover */
-    }
-    .slider::-moz-range-thumb {
-        width: 25px; /* Set a specific slider handle width */
-        height: 25px; /* Slider handle height */
-        background: #4CAF50; /* Green background */
-        cursor: pointer; /* Cursor on hover */
-    }
-</style>
-
-<script type="text/javascript" src="../static/vis.js"></script>
-<link href="../static/vis-network.min.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript">
-    var nodes = null;
-    var edges = null;
-    var network = null;
-    var container = null;
-    var data = null;
-    var options = null;
-    var oldEdges = null;
-    var edgeColors = [];
-
-    var reds = ['#FF9999', '#ff5d56', '#9e0000', '#663333'];
-    var pinks = ['#FF99CC', '#FF00FF', '#FF0099', '#FF0066'];
-    var purples = ['#CC99FF', '#996699', '#9900FF', '#49008d'];
-    var yellows = ['#FFCC00', '#CCCC00', '#FFC100', '#AC8B1F'];
-    var oranges = ['#FFCC99', '#FEB495', '#FF4D00', '#FF6666'];
-    var blues = ['#99CCFF', '#33CCFF', '#7c99ff', '#000999'];
-    var greens = ['#99FF99', '#00CC66', '#006666', '#336633'];
-    var possibleColors = [reds, blues, oranges, purples, greens, pinks, yellows];
+        <table id="MOSSResults" class ="display" border=1 cellpadding=7>
+            <thead>
+            <tr>
+                <th>User One</th>
+                <th>Percent Matched for User One</th>
+                <th>User Two</th>
+                <th>Percent Matched for User Two</th>
+                <th>User One's Filename</th>
+                <th>User Two's Filename</th>
+                <th>Lines Matched</th>
+                <th>URL</th>
+            </tr>
+            </thead>
 
 
-    function draw() {
-        //Create graph nodes and edges
-        //...When the data is sent from flask to html the quotation marks are
-        //...changed from " to their ascii value &#39;
-        //...must do string replace in the json objects for nodes and edges to
-        //...replace back to quotation marks
-        nodes = '{{nodes}}'
-        nodes = nodes.replace(/&#39;/g, "\"")
-        nodes = JSON.parse(nodes);
-        edges = '{{edges}}'
-        edges = edges.replace(/&#39;/g, "\"")
-        edges = edges.replace(/&#34;/g, "\"")
+            
 
-        oldEdges = JSON.parse(edges);
-        edges = new vis.DataSet(oldEdges);
-        var assignments = setEdgeColors();
+            <tbody>
+            <tr>{% for obj in value %}
+                <td>{{ obj.getNameOne() }}</td>
+                <td>{{ obj.getPercentOne() }}</td>
+                <td>{{ obj.getNameTwo() }}</td>
+                <td>{{ obj.getPercentTwo() }}</td>
+                <td>{{ obj.getFileOne() }}</td>
+                <td>{{ obj.getFileTwo() }}</td>
+                <td>{{ obj.getLinesMatched() }}</td>
+                <td><a href = {{ obj.getUrl() }}>{{ obj.getUrl() }}</a></td>
+            </tr>{% endfor %}
+            </tbody>
+        </table>
 
-        //Graph Legend
-        var mynetwork = document.getElementById('mynetwork');
-        var x = mynetwork.offsetWidth + mynetwork.offsetWidth;
-        var y = -mynetwork.offsetHeight - mynetwork.offsetHeight;
-        var step = 110;
-        var idNum = 1000;
-        nodes.push({
-            id: idNum,
-            x: x,
-            y: y,
-            label: "Previous Year",
-            group: 'previousYear',
-            value: 25,
-            fixed: true,
-            physics: false,
-            font: {
-                size: 20
-            }
-        });
-        idNum = idNum+1;
-        nodes.push({
-            id: idNum,
-            x: x,
-            y: y+step,
-            label: "Current Year",
-            group: 'currentYear',
-            value: 25, 'fixed': true,
-            physics: false,
-            font: {
-                size : 20
-            }
-        });
-        idNum = idNum+1;
-        var label;
-        var colorStr;
-        var json;
-        for(var i=0; i<edgeColors.length; i++){
-            label = assignments[i];
-            colorStr = edgeColors[i];
-            json = {
-                "background": colorStr
-            };
-            nodes.push({
-                id: idNum,
-                x:x,
-                y: y+(step*(i+2)),
-                label: label,
-                value: 25,
-                color: json,
-                fixed: true,
-                physics: false,
-                shape: 'square',
-                font: {
-                    size: 20
-                }
-            });
-            idNum++;
-        }
+        </br>        
+        </br>        
+        </br>        
 
-        console.log(edges);
-        console.log(nodes);
+        <table id="HighestPercentMatched" class ="display">
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Average Highest Percent Matched</th>
+            </tr>
+            </thead>
 
-        // value corresponds with the age of the person
-        // Instantiate our network object.
-        container = document.getElementById('mynetwork');
-        data = {
-            nodes: nodes,
-            edges: edges
-        };
-        options = {
-            nodes: {
-                shape: 'dot',
-                color: {
-                    highlight: '#000000'
-                },
-                font: {
-                    color: '#000000',
-                    size: 18
-                }
-            },
-            groups: {
-                previousYear: {
-                    color: {
-                        background: '#cd0014',
-                        highlight: {
-                            background: '#000000'
-                        },
-                        hover: {
-                            background: '#ff6e80',
-                            border: '#cd0014'
-                        },
-                        border: '#8e000b'
+            <tbody>
+            <tr>{% for obj in percentsValues %}
+                <td>{{ obj.getName() }}</td>
+                <td>{{ obj.getData() }}</td>
+            </tr>{% endfor %}
+            </tbody>
+        </table>
+
+        <table id="HighestLinesMatched" class ="display">
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Total Number of Lines Matched</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>{% for obj in linesValues %}
+                <td>{{ obj.getName() }}</td>
+                <td>{{ obj.getData() }}</td>
+            </tr>{% endfor %}
+            </tbody>
+        </table>
+
+        </br>        
+        </br>        
+        </br>        
+
+        <h3>MOSS Results Graph</h3>
+
+        <p>Graph of Student Nodes and Percentage Matched Edges</p>
+
+        <!-- Graph Script: -->
+        <script type="text/javascript">
+            var nodes = null;
+            var edges = null;
+            var network = null;
+            var container = null;
+            var data = null;
+            var options = null;
+            var oldEdges = null;
+            var edgeColors = [];
+
+            var reds = ['#FF9999', '#ff5d56', '#9e0000', '#663333'];
+            var pinks = ['#FF99CC', '#FF00FF', '#FF0099', '#FF0066'];
+            var purples = ['#CC99FF', '#996699', '#9900FF', '#49008d'];
+            var yellows = ['#FFCC00', '#CCCC00', '#FFC100', '#AC8B1F'];
+            var oranges = ['#FFCC99', '#FEB495', '#FF4D00', '#FF6666'];
+            var blues = ['#99CCFF', '#33CCFF', '#7c99ff', '#000999'];
+            var greens = ['#99FF99', '#00CC66', '#006666', '#336633'];
+            var possibleColors = [reds, blues, oranges, purples, greens, pinks, yellows];
+
+
+            function draw() {
+                //Create graph nodes and edges
+                //...When the data is sent from flask to html the quotation marks are
+                //...changed from " to their ascii value &#39;
+                //...must do string replace in the json objects for nodes and edges to
+                //...replace back to quotation marks
+                nodes = '{{nodes}}'
+                nodes = nodes.replace(/&#39;/g, "\"")
+                nodes = JSON.parse(nodes);
+                edges = '{{edges}}'
+                edges = edges.replace(/&#39;/g, "\"")
+                edges = edges.replace(/&#34;/g, "\"")
+
+                oldEdges = JSON.parse(edges);
+                edges = new vis.DataSet(oldEdges);
+                var assignments = setEdgeColors();
+
+                //Graph Legend
+                var mynetwork = document.getElementById('mynetwork');
+                var x = mynetwork.offsetWidth + mynetwork.offsetWidth;
+                var y = -mynetwork.offsetHeight - mynetwork.offsetHeight;
+                var step = 110;
+                var idNum = 1000;
+                nodes.push({
+                    id: idNum,
+                    x: x,
+                    y: y,
+                    label: "Previous Year",
+                    group: 'previousYear',
+                    value: 25,
+                    fixed: true,
+                    physics: false,
+                    font: {
+                        size: 20
                     }
-                },
-                currentYear: {
-                    color: {
-                        background: '#0056ff',
-                        highlight: {
-                            background: '#000000'
+                });
+                idNum = idNum+1;
+                nodes.push({
+                    id: idNum,
+                    x: x,
+                    y: y+step,
+                    label: "Current Year",
+                    group: 'currentYear',
+                    value: 25, 'fixed': true,
+                    physics: false,
+                    font: {
+                        size : 20
+                    }
+                });
+                idNum = idNum+1;
+                var label;
+                var colorStr;
+                var json;
+                for(var i=0; i<edgeColors.length; i++){
+                    label = assignments[i];
+                    colorStr = edgeColors[i];
+                    json = {
+                        "background": colorStr
+                    };
+                    nodes.push({
+                        id: idNum,
+                        x:x,
+                        y: y+(step*(i+2)),
+                        label: label,
+                        value: 25,
+                        color: json,
+                        fixed: true,
+                        physics: false,
+                        shape: 'square',
+                        font: {
+                            size: 20
+                        }
+                    });
+                    idNum++;
+                }
+
+                console.log(edges);
+                console.log(nodes);
+
+                // value corresponds with the age of the person
+                // Instantiate our network object.
+                container = document.getElementById('mynetwork');
+                data = {
+                    nodes: nodes,
+                    edges: edges
+                };
+                options = {
+                    nodes: {
+                        shape: 'dot',
+                        color: {
+                            highlight: '#000000'
                         },
-                        hover: {
-                            background: '#A9CFFF',
-                            border: '#0056ff'
+                        font: {
+                            color: '#000000',
+                            size: 18
+                        }
+                    },
+                    groups: {
+                        previousYear: {
+                            color: {
+                                background: '#cd0014',
+                                highlight: {
+                                    background: '#000000'
+                                },
+                                hover: {
+                                    background: '#ff6e80',
+                                    border: '#cd0014'
+                                },
+                                border: '#8e000b'
+                            }
                         },
-                        border: '#00339d'
+                        currentYear: {
+                            color: {
+                                background: '#0056ff',
+                                highlight: {
+                                    background: '#000000'
+                                },
+                                hover: {
+                                    background: '#A9CFFF',
+                                    border: '#0056ff'
+                                },
+                                border: '#00339d'
+                            }
+                        }
+                    },
+                    interaction: {
+                        navigationButtons: true,
+                        keyboard: true,
+                        hover: true,
+                        hoverConnectedEdges: true
+                    },
+                    edges: {
+                        color: {
+                            highlight: '#6f6f6f',
+                            hover: '#bababa'
+                        },
+                        smooth: {
+                            type: 'continuous'
+                        },
+                    },
+                    physics: {
+                        barnesHut: {
+                            gravitationalConstant: -5000,
+                            springConstant: 0.001,
+                            springLength: 50,
+                            centralGravity: 1,
+                            avoidOverlap: 1
+                        },
+                    }
+                };
+                network = new vis.Network(container, data, options);
+                network.on("stabilizationIterationsDone", function() {
+                    network.setOptions({physics: {timestep: 0}});
+                });
+            }
+
+            function setEdgeColors(){
+                edgeColors = [];
+                var colorIndex = 0;
+                var shadeIndex = 0;
+                //Set edge color
+                var assignments = [];
+                var tempEdgeColors = [];
+                for(var i=0; i<oldEdges.length; i++){
+                    if(!assignments.includes(oldEdges[i]["assignment"])){
+                        assignments.push(oldEdges[i]["assignment"]);
                     }
                 }
-            },
-            interaction: {
-                navigationButtons: true,
-                keyboard: true,
-                hover: true,
-                hoverConnectedEdges: true
-            },
-            edges: {
-                color: {
-                    highlight: '#6f6f6f',
-                    hover: '#bababa'
-                },
-                smooth: {
-                    type: 'continuous'
-                },
-            },
-            physics: {
-                barnesHut: {
-                    gravitationalConstant: -5000,
-                    springConstant: 0.001,
-                    springLength: 50,
-                    centralGravity: 1,
-                    avoidOverlap: 1
-                },
-            }
-        };
-        network = new vis.Network(container, data, options);
-        network.on("stabilizationIterationsDone", function() {
-            network.setOptions({physics: {timestep: 0}});
-        });
-    }
+                console.log(assignments);
 
-    function setEdgeColors(){
-        edgeColors = [];
-        var colorIndex = 0;
-        var shadeIndex = 0;
-        //Set edge color
-        var assignments = [];
-        var tempEdgeColors = [];
-        for(var i=0; i<oldEdges.length; i++){
-            if(!assignments.includes(oldEdges[i]["assignment"])){
-                assignments.push(oldEdges[i]["assignment"]);
-            }
-        }
-        console.log(assignments);
-
-        for(var i=0; i<assignments.length; i++){
-            if(tempEdgeColors.length == 28){
+                for(var i=0; i<assignments.length; i++){
+                    if(tempEdgeColors.length == 28){
+                        for(var i=0; i<tempEdgeColors.length; i++){
+                            edgeColors.push(tempEdgeColors[i]);
+                        }
+                        tempEdgeColors = [];
+                    }
+                    tempEdgeColors.push(possibleColors[colorIndex][shadeIndex]);
+                    colorIndex++;
+                    if(colorIndex == possibleColors.length-1){
+                        colorIndex = 0;
+                        shadeIndex++;
+                        if(shadeIndex == 4){
+                            shadeIndex = 0;
+                        }
+                    }
+                }
                 for(var i=0; i<tempEdgeColors.length; i++){
                     edgeColors.push(tempEdgeColors[i]);
                 }
-                tempEdgeColors = [];
-            }
-            tempEdgeColors.push(possibleColors[colorIndex][shadeIndex]);
-            colorIndex++;
-            if(colorIndex == possibleColors.length-1){
-                colorIndex = 0;
-                shadeIndex++;
-                if(shadeIndex == 4){
-                    shadeIndex = 0;
+
+                var colorStr;
+                var json;
+                for(var i=0; i<oldEdges.length; i++){
+                    colorStr = edgeColors[(assignments.indexOf(oldEdges[i]["assignment"]))];
+                    json = {
+                        "color": colorStr
+                    };
+                    oldEdges[i]["color"] = json;
                 }
+                edges.update(oldEdges);
+
+                return assignments;
             }
-        }
-        for(var i=0; i<tempEdgeColors.length; i++){
-            edgeColors.push(tempEdgeColors[i]);
-        }
 
-        var colorStr;
-        var json;
-        for(var i=0; i<oldEdges.length; i++){
-            colorStr = edgeColors[(assignments.indexOf(oldEdges[i]["assignment"]))];
-            json = {
-                "color": colorStr
-            };
-            oldEdges[i]["color"] = json;
-        }
-        edges.update(oldEdges);
-
-        return assignments;
-    }
-
-    function reDraw() {
-        for (var i = 0; i < oldEdges.length; i++){
-            if (parseInt(oldEdges[i].value) < slider.value) {
-                oldEdges[i].hidden = true
+            function reDraw() {
+                for (var i = 0; i < oldEdges.length; i++){
+                    if (parseInt(oldEdges[i].value) < slider.value) {
+                        oldEdges[i].hidden = true
+                    }
+                    else {
+                        oldEdges[i].hidden = false
+                    }
+                }
+                edges.update(oldEdges)
             }
-            else {
-                oldEdges[i].hidden = false
+        </script>
+        
+        <!-- Graph will appear in this div-->
+        <div id="mynetwork"></div>
+
+        <div class="slidecontainer">
+            <input type="range" min="0" max="100" value="1" class="slider" id="chosenRange">
+            <p>Minimum Percent: <span id="selected"></span> %</p>
+        </div>
+
+        <!--    Slider script:  -->
+        <script type="text/javascript">
+            var slider = document.getElementById("chosenRange");
+            var output = document.getElementById("selected");
+            output.innerHTML = slider.value;
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+                reDraw()
             }
-        }
-        edges.update(oldEdges)
-    }
-</script>
-
-</body>
-<body onload="draw()">
-<p>
-    Graph of Student Nodes and Percentage Matched Edges
-</p>
-<div id="mynetwork"></div>
-
-<div class="slidecontainer">
-    <input type="range" min="0" max="100" value="1" class="slider" id="chosenRange">
-    <p>Minimum Percent: <span id="selected"></span> %</p>
-</div>
-
-<script>
-    var slider = document.getElementById("chosenRange");
-    var output = document.getElementById("selected");
-    output.innerHTML = slider.value;
-    slider.oninput = function() {
-        output.innerHTML = this.value;
-        reDraw()
-    }
-</script>
-
-</body>
+        </script>
+    </body>
 </html>
